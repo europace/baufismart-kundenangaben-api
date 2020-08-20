@@ -8,7 +8,7 @@ info:
     name: Europace AG
     url: http://developer.europace.de
     email: info@europace.de
-  version: 1.0-alpha1; 21d2210b10df6f37bb296383f3c004815650af32
+  version: 1.0-alpha1; 3391e0db7c0742a0d64133fca4aa73890888b3af
 externalDocs:
   url: https://developer.europace.de/api/kundenangaben-api
 servers:
@@ -51,7 +51,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/KundenangabenImportResponse'
         "400":
-          description: There must be something seriously wrong
+          description: Der Request hat ein fehlerhaftes Format oder der Datentyp eines
+            Felds weicht von der Spezifikation ab.
       security:
       - OAuth2:
         - baufinanzierung:vorgang:schreiben
@@ -675,9 +676,6 @@ components:
       - '@type'
       type: object
       properties:
-        darlehenskontonummer:
-          type: string
-          description: IBAN des Darlehenskontos
         abloesung:
           $ref: '#/components/schemas/AbloesungBestehendesDarlehen'
         darlehensgeber:
@@ -705,6 +703,9 @@ components:
           format: date
         restschuld:
           $ref: '#/components/schemas/Restschuld'
+        darlehenskontonummer:
+          type: string
+          description: IBAN des Darlehenskontos
         '@type':
           type: string
       discriminator:

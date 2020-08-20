@@ -87,7 +87,15 @@ die neuste Version der API verwendet.
 
 | Request Header Name |   Header Value                    |
 |---------------------|-----------------------------------|
-| Content-Type        | application/json; version=@apiVersion@ |
+| Content-Type        | application/json;version=@apiVersion@ |
+
+## Strategie für das _Tolerant Reader Pattern_
+
+Einige Felder der Kundenangaben verfügen über einen eingeschränkten Wertebereich.
+Beispielsweise sind im Typ `Bauspardarlehen.abschlussgebuehrmodus` nur die Werte
+`SOFORTZAHLUNG` und `VERRECHNUNG` erlaubt.
+Andere Werte werden von der Schnittstelle ignoriert und so verarbeitet, als wäre
+das Feld leer.
 
 ## Fehlercodes
 
@@ -96,6 +104,7 @@ die neuste Version der API verwendet.
 | Fehlercode | Nachricht       | weitere Attribute          | Erklärung                            |
 |------------|-----------------|----------------------------|--------------------------------------|
 | 401        | Unauthorized    | -                          | Authentifizierung ist fehlgeschlagen |
+| 400        | Bad Request     | -                          | Der Request hat ein fehlerhaftes Format oder der Datentyp eines Felds weicht von der Spezifikation ab. |
 
 ### Weitere Fehler
 
