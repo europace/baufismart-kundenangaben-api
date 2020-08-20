@@ -8,7 +8,7 @@ info:
     name: Europace AG
     url: http://developer.europace.de
     email: info@europace.de
-  version: 1.0-alpha1; 2baca8c0de1780c1718d91c14bf5824d6d3e67ce
+  version: 1.0-alpha1; f8616e4ab4554e7325bc6a9ba00fb40550fd7fa8
 externalDocs:
   url: https://developer.europace.de/api/kundenangaben-api
 servers:
@@ -674,8 +674,6 @@ components:
       - '@type'
       type: object
       properties:
-        abloesung:
-          $ref: '#/components/schemas/AbloesungBestehendesDarlehen'
         darlehensgeber:
           oneOf:
           - $ref: '#/components/schemas/NichtGesetzterDarlehensgeber'
@@ -704,6 +702,8 @@ components:
         darlehenskontonummer:
           type: string
           description: IBAN des Darlehenskontos
+        abloesung:
+          $ref: '#/components/schemas/AbloesungBestehendesDarlehen'
         '@type':
           type: string
       discriminator:
@@ -981,7 +981,14 @@ components:
           kommentar:
             type: string
     Familienstand:
+      required:
+      - '@type'
       type: object
+      properties:
+        '@type':
+          type: string
+      discriminator:
+        propertyName: '@type'
     FinanzielleSituation:
       type: object
       properties:
