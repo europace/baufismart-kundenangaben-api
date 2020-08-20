@@ -8,7 +8,7 @@ info:
     name: Europace AG
     url: http://developer.europace.de
     email: info@europace.de
-  version: 1.0-alpha1; 3391e0db7c0742a0d64133fca4aa73890888b3af
+  version: 1.0-alpha1; fc76b7b13e170ca0fd618928607072601ca730e2
 externalDocs:
   url: https://developer.europace.de/api/kundenangaben-api
 servers:
@@ -166,8 +166,6 @@ components:
       type: object
       properties:
         name:
-          type: string
-        land:
           type: string
         inDeutschland:
           type: boolean
@@ -982,6 +980,8 @@ components:
             format: double
           kommentar:
             type: string
+    Familienstand:
+      type: object
     FinanzielleSituation:
       type: object
       properties:
@@ -1233,6 +1233,19 @@ components:
           $ref: '#/components/schemas/Nutzung'
         modernisierung:
           $ref: '#/components/schemas/Modernisierung'
+    Geschieden:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/Familienstand'
+    GetrenntLebend:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/Familienstand'
+      - type: object
+        properties:
+          guetertrennungVereinbart:
+            type: boolean
+            description: Wurde zwischen den Partnern Gütertrennung vereinbart
     GirokontoPraeferenz:
       type: object
       properties:
@@ -1740,11 +1753,16 @@ components:
       - referenzId
       type: object
       properties:
+        externeKundenId:
+          type: string
+          description: Externe ID für diesen Kunden. In anderen APIs auch als externeAntragstellerId
+            bezeichnet.
         referenzId:
           type: string
           description: "Eindeutige Referenz-ID für diesen Kunden. Sie gilt nur innerhalb\
             \ dieses Aufrufs, ist freiwählbar und wird nicht abgespeichert. Auf sie\
-            \ wird an mehreren Stellen verwiesen."
+            \ wird an mehreren Stellen verwiesen. Hier kann auch die externeKundenId\
+            \ verwendet werden."
         personendaten:
           $ref: '#/components/schemas/Personendaten'
         wohnsituation:
@@ -1855,6 +1873,19 @@ components:
         verwaltungsgebuehrenJaehrlich:
           type: number
           format: double
+    Lebenspartnerschaft:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/Familienstand'
+      - type: object
+        properties:
+          guetertrennungVereinbart:
+            type: boolean
+            description: Wurde zwischen den Partnern Gütertrennung vereinbart
+    Ledig:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/Familienstand'
     Mehrfamilienhaus:
       type: object
       allOf:
@@ -2074,14 +2105,13 @@ components:
         staatsangehoerigkeit:
           type: string
         familienstand:
-          type: string
-          enum:
-          - LEDIG
-          - VERHEIRATET
-          - VERWITWET
-          - GESCHIEDEN
-          - GETRENNT_LEBEND
-          - LEBENSPARTNERSCHAFT
+          oneOf:
+          - $ref: '#/components/schemas/Geschieden'
+          - $ref: '#/components/schemas/GetrenntLebend'
+          - $ref: '#/components/schemas/Lebenspartnerschaft'
+          - $ref: '#/components/schemas/Ledig'
+          - $ref: '#/components/schemas/Verheiratet'
+          - $ref: '#/components/schemas/Verwitwet'
     Praeferenzen:
       type: object
       properties:
@@ -3638,6 +3668,15 @@ components:
         properties:
           kommentar:
             type: string
+    Verheiratet:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/Familienstand'
+      - type: object
+        properties:
+          guetertrennungVereinbart:
+            type: boolean
+            description: Wurde zwischen den Partnern Gütertrennung vereinbart
     Verwendung:
       required:
       - '@type'
@@ -3650,6 +3689,10 @@ components:
         mapping:
           AUFLOESUNG_ALS_VERWENDUNG: '#/components/schemas/AufloesungAlsVerwendung'
           ABTRETEN_ALS_VERWENDUNG: '#/components/schemas/AbtretenAlsVerwendung'
+    Verwitwet:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/Familienstand'
     Volltilger:
       type: object
       allOf:
