@@ -8,7 +8,7 @@ info:
     name: Europace AG
     url: http://developer.europace.de
     email: info@europace.de
-  version: 1.0-alpha1; fc76b7b13e170ca0fd618928607072601ca730e2
+  version: 1.0-alpha1; 2baca8c0de1780c1718d91c14bf5824d6d3e67ce
 externalDocs:
   url: https://developer.europace.de/api/kundenangaben-api
 servers:
@@ -189,7 +189,7 @@ components:
         arbeitserlaubnisBefristetBis:
           type: string
           format: date
-        aufenthaltBefristetBis:
+        aufenthaltstitelBefristetBis:
           type: string
           format: date
         aufenthaltstitel:
