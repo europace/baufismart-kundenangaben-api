@@ -7,21 +7,33 @@ info:
   contact:
     name: Europace AG
     url: http://developer.europace.de
-    email: info@europace.de
-  version: 1.0-alpha1; f8616e4ab4554e7325bc6a9ba00fb40550fd7fa8
+    email: helpdesk@europace2.de
+  version: 1.0-alpha2; b007e0d611c653cd526bbdb5030a9a720433718f
 externalDocs:
   url: https://developer.europace.de/api/kundenangaben-api
 servers:
 - url: https://baufismart.api.europace.de
   description: Produktion Server
+tags:
+- name: Kundenangaben
+  description: Kundenangaben in einen neuen Vorgang importieren
 paths:
   /kundenangaben:
     post:
       tags:
-      - model-rest-controller
+      - Kundenangaben
       summary: Kundenangaben in einen neuen Vorgang importieren
+      description: Mit Hilfe dieses Endpunkts werden Kundenangaben in BaufiSmart importiert.
+        Dabei wird gleichzeitig einVorgang angelegt.
       operationId: importKundenangaben
       parameters:
+      - name: Authorization
+        in: header
+        description: Authorization Bearer Token
+        required: true
+        schema:
+          type: string
+      - $ref: '#/parameters/TraceId'
       - name: sendEmailNotification
         in: query
         description: "Sendet eine E-Mail an den angegebenen Berater, wenn true übergeben\
@@ -47,7 +59,7 @@ paths:
         "201":
           description: Kundenangaben in neuen Vorgang importiert
           content:
-            '*/*':
+            application/json; version=1:
               schema:
                 $ref: '#/components/schemas/KundenangabenImportResponse'
         "400":
@@ -104,6 +116,11 @@ components:
             $ref: '#/components/schemas/SituationNachRenteneintritt'
           beschaeftigungsverhaeltnis:
             $ref: '#/components/schemas/Beschaeftigungsverhaeltnis'
+          beschaeftigungsstatus:
+            type: string
+            enum:
+            - UNBEFRISTET
+            - BEFRISTET
     Annuitaetendarlehen:
       type: object
       allOf:
@@ -162,6 +179,11 @@ components:
             $ref: '#/components/schemas/SituationNachRenteneintritt'
           beschaeftigungsverhaeltnis:
             $ref: '#/components/schemas/Beschaeftigungsverhaeltnis'
+          beschaeftigungsstatus:
+            type: string
+            enum:
+            - UNBEFRISTET
+            - BEFRISTET
     Arbeitgeber:
       type: object
       properties:
@@ -572,6 +594,15 @@ components:
         zuteilungsdatum:
           type: string
           format: date
+    Beamter:
+      type: object
+      properties:
+        beruf:
+          type: string
+        situationNachRenteneintritt:
+          $ref: '#/components/schemas/SituationNachRenteneintritt'
+        beschaeftigungsverhaeltnis:
+          $ref: '#/components/schemas/Beschaeftigungsverhaeltnis'
     BereitstellungszinsfreieZeitPraeferenz:
       required:
       - '@type'
@@ -600,6 +631,7 @@ components:
           HAUSHALTENDE_PERSON: '#/components/schemas/HaushaltendePerson'
           ANGESTELLTER: '#/components/schemas/Angestellter'
           ARBEITER: '#/components/schemas/Arbeiter'
+          BEAMTER: '#/components/schemas/Beamter'
           SELBSTSTAENDIGER: '#/components/schemas/Selbststaendiger'
           FREIBERUFLER: '#/components/schemas/Freiberufler'
           RENTNER: '#/components/schemas/Rentner'
@@ -623,11 +655,6 @@ components:
         beschaeftigtSeit:
           type: string
           format: date
-        beschaeftigungsstatus:
-          type: string
-          enum:
-          - UNBEFRISTET
-          - BEFRISTET
     BestandteileDerFinanzierungPraeferenz:
       type: object
       properties:
@@ -3878,15 +3905,28 @@ components:
         email:
           type: string
       description: Ein registrierter Europace Nutzer.
+  parameters:
+    Authorization:
+      name: Authorization
+      in: Header
+      description: Authorization Bearer Token
+      required: true
+      schema: {}
+    TraceId:
+      name: X-TraceId
+      in: Header
+      description: A unique id to reference this request
+      required: false
+      schema: {}
   securitySchemes:
     BearerAuth:
       type: http
       scheme: bearer
+      bearerFormat: JWT
     OAuth2:
       type: oauth2
       flows:
-        authorizationCode:
-          authorizationUrl: https://api.europace.de/auth/authorize
+        clientCredentials:
           tokenUrl: https://api.europace.de/auth/access-token
           scopes:
             baufinanzierung:vorgang:schreiben: Erzeugen eines neuen Vorgangs

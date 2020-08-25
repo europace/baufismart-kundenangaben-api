@@ -1,6 +1,6 @@
 # Importieren von Kundenangaben in einen neuen Vorgang
 
-Version: 1.0-alpha1
+Version: 1.0-alpha2
 
 > :warning: Diese Schnittstelle wird kontinuierlich weiterentwickelt. Daher erwarten wir
 > von allen Nutzern dieser Schnittstelle, dass sie das "[Tolerant Reader Pattern](https://martinfowler.com/bliki/TolerantReader.html)" nutzen, d.h.
