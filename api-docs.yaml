@@ -8,7 +8,7 @@ info:
     name: Europace AG
     url: http://developer.europace.de
     email: helpdesk@europace2.de
-  version: 1.0-alpha.2; 4e2796d48445023197929a28845ef8d2e91a8c34
+  version: 1.0-alpha.2; 29db31a48df169f02375548658a7eb486f6321f6
 externalDocs:
   url: https://developer.europace.de/api/kundenangaben-api
 servers:
@@ -3908,16 +3908,18 @@ components:
   parameters:
     Authorization:
       name: Authorization
-      in: Header
+      in: header
       description: Authorization Bearer Token
       required: true
-      schema: {}
+      schema:
+        type: string
     TraceId:
       name: X-TraceId
-      in: Header
+      in: header
       description: A unique id to reference this request
       required: false
-      schema: {}
+      schema:
+        type: string
   securitySchemes:
     BearerAuth:
       type: http
