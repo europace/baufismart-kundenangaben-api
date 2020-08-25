@@ -1,6 +1,6 @@
 # Importieren von Kundenangaben in einen neuen Vorgang
 
-Version: 1.0-alpha1
+Version: 1.0-alpha.2
 
 > :warning: Diese Schnittstelle wird kontinuierlich weiterentwickelt. Daher erwarten wir
 > von allen Nutzern dieser Schnittstelle, dass sie das "[Tolerant Reader Pattern](https://martinfowler.com/bliki/TolerantReader.html)" nutzen, d.h.
@@ -118,8 +118,7 @@ Die OpenAPI-Spezifikation ist in der Datei [api-docs.yaml](./api-docs.yaml)
 zu finden. Alternativ steht eine JSON-Version [api-docs.json](./api-docs.json) zur Verfügung.
 
 ## API Referenz
-Die API-Referenz ist der [OpenAPI](./api-docs.yaml) Spezifikation zu entnehmen.
-
+Die API-Referenz ist [reference/index.html](./reference/index.html) zu finden.
 
 ## Beispiel
 
