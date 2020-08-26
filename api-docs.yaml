@@ -8,7 +8,7 @@ info:
     name: Europace AG
     url: http://developer.europace.de
     email: helpdesk@europace2.de
-  version: 1.0-alpha.2; 29db31a48df169f02375548658a7eb486f6321f6
+  version: 1.0-alpha.2; 4de6202ca7a5ec100dacc2e00c6772bd86ed7a26
 externalDocs:
   url: https://developer.europace.de/api/kundenangaben-api
 servers:
@@ -596,13 +596,16 @@ components:
           format: date
     Beamter:
       type: object
-      properties:
-        beruf:
-          type: string
-        situationNachRenteneintritt:
-          $ref: '#/components/schemas/SituationNachRenteneintritt'
-        beschaeftigungsverhaeltnis:
-          $ref: '#/components/schemas/Beschaeftigungsverhaeltnis'
+      allOf:
+      - $ref: '#/components/schemas/Beschaeftigung'
+      - type: object
+        properties:
+          beruf:
+            type: string
+          situationNachRenteneintritt:
+            $ref: '#/components/schemas/SituationNachRenteneintritt'
+          beschaeftigungsverhaeltnis:
+            $ref: '#/components/schemas/Beschaeftigungsverhaeltnis'
     BereitstellungszinsfreieZeitPraeferenz:
       required:
       - '@type'
@@ -1016,6 +1019,13 @@ components:
           type: string
       discriminator:
         propertyName: '@type'
+        mapping:
+          LEDIG: '#/components/schemas/Ledig'
+          VERHEIRATET: '#/components/schemas/Verheiratet'
+          VERWITWET: '#/components/schemas/Verwitwet'
+          GESCHIEDEN: '#/components/schemas/Geschieden'
+          GETRENNT_LEBEND: '#/components/schemas/GetrenntLebend'
+          LEBENSPARTNERSCHAFT: '#/components/schemas/Lebenspartnerschaft'
     FinanzielleSituation:
       type: object
       properties:
@@ -1041,6 +1051,7 @@ components:
           - $ref: '#/components/schemas/Angestellter'
           - $ref: '#/components/schemas/Arbeiter'
           - $ref: '#/components/schemas/Arbeitsloser'
+          - $ref: '#/components/schemas/Beamter'
           - $ref: '#/components/schemas/Freiberufler'
           - $ref: '#/components/schemas/HaushaltendePerson'
           - $ref: '#/components/schemas/Rentner'
