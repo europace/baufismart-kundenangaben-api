@@ -2,6 +2,9 @@
 
 Version: 1.0-alpha.2
 
+[API-Referenz](https://htmlpreview.github.io/?https://raw.githubusercontent.com/europace/kundenangaben-api/master/reference/index.html)
+
+
 > :warning: Diese Schnittstelle wird kontinuierlich weiterentwickelt. Daher erwarten wir
 > von allen Nutzern dieser Schnittstelle, dass sie das "[Tolerant Reader Pattern](https://martinfowler.com/bliki/TolerantReader.html)" nutzen, d.h.
 > tolerant gegenüber kompatiblen API-Änderungen beim Lesen und Prozessieren der Daten sind:
@@ -118,7 +121,7 @@ Die OpenAPI-Spezifikation ist in der Datei [api-docs.yaml](./api-docs.yaml)
 zu finden. Alternativ steht eine JSON-Version [api-docs.json](./api-docs.json) zur Verfügung.
 
 ## API Referenz
-Die API-Referenz ist [reference/index.html](./reference/index.html) zu finden.
+Die API-Referenz ist [reference/index.html](https://htmlpreview.github.io/?https://raw.githubusercontent.com/europace/kundenangaben-api/master/reference/index.html) zu finden.
 
 ## Beispiel
 
