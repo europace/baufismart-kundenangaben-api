@@ -8,7 +8,7 @@ info:
     name: Europace AG
     url: http://developer.europace.de
     email: helpdesk@europace2.de
-  version: 1.0-alpha.2; 4de6202ca7a5ec100dacc2e00c6772bd86ed7a26
+  version: 1.0-alpha.2; 451c87cafb6eb636197ad02bfb2d9a960b51076f
 externalDocs:
   url: https://developer.europace.de/api/kundenangaben-api
 servers:
