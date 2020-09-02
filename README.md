@@ -41,7 +41,9 @@ Die Schnittstelle ermöglicht es, Kundenangaben[^1] in einen BaufiSmart Vorgang 
 des Imports automatisch erzeugt. Informationen über den erzeugten Vorgang, wie beispielsweise die Vorgangsnummer sind der
 Response zu entnehmen.
 
-Für einen Schnelleinstieg, siehe [Tools](#tools)
+Die neue Kundenangaben-API wird die alte BEX-API ersetzen. Die alte API ist hier dokumentiert: https://github.com/europace/baufismart-vorgang-anlegen-api
+
+Für einen Schnelleinstieg in die neue Kundeneingaben-API, siehe [Tools](#tools)
 
 [^1]: Kundenangaben sind in anderen APIs von BaufiSmart auch als _Erfasste Daten_ bekannt
 
