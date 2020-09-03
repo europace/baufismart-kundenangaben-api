@@ -130,9 +130,8 @@ Die API-Referenz ist [reference/index.html](https://htmlpreview.github.io/?https
 Folgt
 
 ## FAQs
-Q: Wird die alte BEX-Schnittstelle durch die neue Kundenangaben-API ersetzt werden? Wird die alte BEX-Schnittstelle noch weiterentwickelt?
-A: Die neue Kundenangaben-API wird die alte BEX-Schnittstelle ersetzen. 
-   Die alte BEX-Schnittstelle wird nicht mehr weiterentwickelt und Mitte 2021 abgeschaltet.
+
+Folgt
 
 ## Tools
 
