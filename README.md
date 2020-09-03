@@ -1,6 +1,6 @@
 # Importieren von Kundenangaben in einen neuen Vorgang
 
-Version: 1.0-alpha.2
+Version: 1.0-alpha.3
 
 [API-Referenz](https://htmlpreview.github.io/?https://raw.githubusercontent.com/europace/kundenangaben-api/master/reference/index.html)
 
@@ -130,7 +130,9 @@ Die API-Referenz ist [reference/index.html](https://htmlpreview.github.io/?https
 Folgt
 
 ## FAQs
+
 Q: Wird die alte BEX-Schnittstelle durch die neue Kundenangaben-API ersetzt werden? Wird die alte BEX-Schnittstelle noch weiterentwickelt?
+
 A: Die neue Kundenangaben-API wird die alte BEX-Schnittstelle ersetzen. 
    Die alte BEX-Schnittstelle wird nicht mehr weiterentwickelt und Mitte 2021 abgeschaltet.
 

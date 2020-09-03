@@ -8,7 +8,7 @@ info:
     name: Europace AG
     url: http://developer.europace.de
     email: helpdesk@europace2.de
-  version: 1.0-alpha.2; 451c87cafb6eb636197ad02bfb2d9a960b51076f
+  version: 1.0-alpha.3; fc6f4220e1950aee7d9a035f3739dd56151b94cc
 externalDocs:
   url: https://developer.europace.de/api/kundenangaben-api
 servers:
@@ -704,6 +704,13 @@ components:
       - '@type'
       type: object
       properties:
+        abloesung:
+          $ref: '#/components/schemas/AbloesungBestehendesDarlehen'
+        laufzeitende:
+          type: string
+          format: date
+        restschuld:
+          $ref: '#/components/schemas/Restschuld'
         darlehensgeber:
           oneOf:
           - $ref: '#/components/schemas/NichtGesetzterDarlehensgeber'
@@ -724,16 +731,9 @@ components:
         zinsbindungBis:
           type: string
           format: date
-        laufzeitende:
-          type: string
-          format: date
-        restschuld:
-          $ref: '#/components/schemas/Restschuld'
         darlehenskontonummer:
           type: string
           description: IBAN des Darlehenskontos
-        abloesung:
-          $ref: '#/components/schemas/AbloesungBestehendesDarlehen'
         '@type':
           type: string
       discriminator:
@@ -2435,9 +2435,11 @@ components:
             - NORDTHUERINGER_VOBA
             - NORISBANK
             - NORISBANK_RATENKREDIT
+            - NRW_BANK
             - OAB
             - OAB_RATENKREDIT
             - OLB
+            - ONE_CLICK_BAUFI
             - OSD_ONLINE
             - OSTFRIESISCHE_VOBA
             - OSTSAECHSISCHE_SPK_DRESDEN
@@ -2521,9 +2523,11 @@ components:
             - RAIBA_RATZEBURG
             - RAIBA_RAVENSBURG
             - RAIBA_RIED
+            - RAIBA_ROSENSTEIN
             - RAIBA_SCHWABEN_MITTE
             - RAIBA_SIMMERATH
             - RAIBA_STRAUBING
+            - RAIBA_SUEDSTORMARN
             - RAIBA_TANNHAUSEN
             - RAIBA_WEISSENBURG
             - RAIBA_WESERMARSCH
@@ -2695,6 +2699,7 @@ components:
             - SPK_LANGEN_SELIGENSTADT
             - SPK_LEERWITTMUND
             - SPK_LEIPZIG
+            - SPK_LEIPZIG_RATENKREDIT
             - SPK_LEMGO
             - SPK_LEVERKUSEN
             - SPK_LIPPSTADT
@@ -2812,6 +2817,7 @@ components:
             - SPREEWALDBANK
             - SSK_BLOMBERG
             - SSK_BOCHOLT
+            - SSK_BURGDORF
             - SSK_CUXHAVEN
             - SSK_DELBRUECK
             - SSK_DESSAU
@@ -2852,6 +2858,7 @@ components:
             - VB_GMHUETTE_HAGEN_B
             - VB_JEVER
             - VB_KUR_U_RHEIN
+            - VB_MARL_RECKLINGHAUS
             - VB_MINDENER_LAND
             - VB_OLDENBURG
             - VB_REUTLINGEN
@@ -2947,6 +2954,7 @@ components:
             - VOBA_KAMEN_WERNE
             - VOBA_KARLSRUHE
             - VOBA_KD_BANK
+            - VOBA_KIELER
             - VOBA_KIRCHHEIM
             - VOBA_KLEVERLAND
             - VOBA_KONSTANZ
@@ -3004,6 +3012,7 @@ components:
             - VOBA_PIRNA
             - VOBA_POMMERN
             - VOBA_REMSCHEID_SOLINGEN
+            - VOBA_REMSECK
             - VOBA_REUTLINGEN
             - VOBA_RHEIN_AHR_E
             - VOBA_RHEIN_LAHN
@@ -3054,6 +3063,8 @@ components:
             - VON_ESSEN_BANKGH
             - VR_BAD_HERSFELD
             - VR_BAMBERG
+            - VR_BANK_IN_MITTELBAD
+            - VR_BANK_MONHEIM
             - VR_BANK_OSTALB
             - VR_BAYERN_MITTE
             - VR_BERNHAUSER_BANK
