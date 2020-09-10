@@ -1,6 +1,12 @@
 # Importieren von Kundenangaben in einen neuen Vorgang
 
-Version: 1.0-alpha.3
+Version: 1.0-alpha.4
+
+:warning: Momentan befindet sich die API noch in der Entwicklung. Der Endpunkt ist öffentlich noch nicht ansprechbar.
+Die Alpha-Version der API-Spezifikation steht als OpenAPI Spezifikation im [JSON](./api-docs.json) und [YAML](./api-docs.yaml)
+Format zur Verfügung. 
+
+Feedback und Fragen zum Modell sind als [GitHub Issue](https://github.com/europace/kundenangaben-api/issues/new) willkommen.
 
 [API-Referenz](https://htmlpreview.github.io/?https://raw.githubusercontent.com/europace/kundenangaben-api/master/reference/index.html)
 
@@ -138,7 +144,7 @@ A: Die neue Kundenangaben-API wird die alte BEX-Schnittstelle ersetzen.
 
 ## Tools
 
-Für [Postman](https://www.getpostman.com/) stellen wir im [Schnellstarter-Projekt](https://github.com/europace/api-schnellstart/)
+Für [Postman](https://www.getpostman.com/) stellen wir zukünftig im [Schnellstarter-Projekt](https://github.com/europace/api-schnellstart/)
 auch eine Collection mit einem Beispiel für die Kundenangaben-API zur Verfügung.
 
 ## Kontakt

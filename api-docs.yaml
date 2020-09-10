@@ -8,7 +8,7 @@ info:
     name: Europace AG
     url: http://developer.europace.de
     email: helpdesk@europace2.de
-  version: 1.0-alpha.3; fc6f4220e1950aee7d9a035f3739dd56151b94cc
+  version: 1.0-alpha.4; 882cd4d573c2e686eef322b5cde64073b763e6d8
 externalDocs:
   url: https://developer.europace.de/api/kundenangaben-api
 servers:
@@ -23,8 +23,7 @@ paths:
       tags:
       - Kundenangaben
       summary: Kundenangaben in einen neuen Vorgang importieren
-      description: Mit Hilfe dieses Endpunkts werden Kundenangaben in BaufiSmart importiert.
-        Dabei wird gleichzeitig einVorgang angelegt.
+      description: Kundenangaben werden in BaufiSmart in einen neuen Vorgang importiert.
       operationId: importKundenangaben
       parameters:
       - name: Authorization
@@ -44,14 +43,16 @@ paths:
           default: false
       - name: datenkontext
         in: query
-        description: Legt den Datenkontext fest
         required: false
         schema:
           type: string
-          default: ECHTES_GESCHAEFT
+          enum:
+          - TEST_MODUS
+          - ECHT_GESCHAEFT
+          default: ECHT_GESCHAEFT
       requestBody:
         content:
-          application/json; version=1:
+          application/json; version=1.0:
             schema:
               $ref: '#/components/schemas/Kundenangaben'
         required: true
@@ -59,7 +60,7 @@ paths:
         "201":
           description: Kundenangaben in neuen Vorgang importiert
           content:
-            application/json; version=1:
+            application/json; version=1.0:
               schema:
                 $ref: '#/components/schemas/KundenangabenImportResponse'
         "400":
@@ -704,13 +705,25 @@ components:
       - '@type'
       type: object
       properties:
-        abloesung:
-          $ref: '#/components/schemas/AbloesungBestehendesDarlehen'
+        zinsbindungBis:
+          type: string
+          format: date
         laufzeitende:
           type: string
           format: date
         restschuld:
           $ref: '#/components/schemas/Restschuld'
+        darlehenskontonummer:
+          type: string
+          description: IBAN des Darlehenskontos
+        abloesung:
+          $ref: '#/components/schemas/AbloesungBestehendesDarlehen'
+        rateMonatlich:
+          type: number
+          format: double
+        sollzins:
+          type: number
+          format: double
         darlehensgeber:
           oneOf:
           - $ref: '#/components/schemas/NichtGesetzterDarlehensgeber'
@@ -722,18 +735,6 @@ components:
         darlehensbetrag:
           type: number
           format: double
-        rateMonatlich:
-          type: number
-          format: double
-        sollzins:
-          type: number
-          format: double
-        zinsbindungBis:
-          type: string
-          format: date
-        darlehenskontonummer:
-          type: string
-          description: IBAN des Darlehenskontos
         '@type':
           type: string
       discriminator:
@@ -1067,7 +1068,7 @@ components:
       properties:
         '@type':
           type: string
-      description: In anderen APIs als 'Finanzierungswunsch' bezeichnet.
+      description: In anderen APIs im 'Finanzierungswunsch' zu finden.
       discriminator:
         propertyName: '@type'
         mapping:
@@ -1112,7 +1113,7 @@ components:
           $ref: '#/components/schemas/Praeferenzen'
         finanzierungsbausteine:
           type: array
-          description: In anderen APIs als 'Finanzierungswunsch' bezeichnet.
+          description: In anderen APIs im 'Finanzierungswunsch' zu finden.
           items:
             oneOf:
             - $ref: '#/components/schemas/Annuitaetendarlehen'
@@ -1125,8 +1126,9 @@ components:
             - $ref: '#/components/schemas/Zwischenfinanzierung'
         ratenschutzbausteine:
           type: array
-          description: Alle Absicherungswünsche in Form von Ratenschutzversicherungen.
-            In anderen APIs als 'absicherungsWunsch' bezeichnet.
+          description: Absicherungswünsche in Form von Ratenschutzversicherungen.
+            In anderen APIs im 'absicherungsWunsch' zu finden. Maximal ein Baustein
+            je Kunde.
           items:
             $ref: '#/components/schemas/Ratenschutz'
       description: Der Finanzierungsbedarf beinhaltet alle relevanten Finanzierungsinformationen.
@@ -1313,6 +1315,8 @@ components:
         ort:
           type: string
         blatt:
+          type: string
+        amtsgericht:
           type: string
         flurstueck:
           type: array
@@ -3255,8 +3259,8 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Risikoabsicherungswunsch'
-      description: Alle Absicherungswünsche in Form von Ratenschutzversicherungen.
-        In anderen APIs als 'absicherungsWunsch' bezeichnet.
+      description: Absicherungswünsche in Form von Ratenschutzversicherungen. In anderen
+        APIs im 'absicherungsWunsch' zu finden. Maximal ein Baustein je Kunde.
     Ratenspanne:
       type: object
       allOf:
