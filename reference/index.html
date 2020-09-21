@@ -2514,7 +2514,7 @@
               <!--<li><a href="#_absicherung">Absicherung</a></li>-->
               <li><a href="#_ZeitlicherRahmenPraeferenz">ZeitlicherRahmenPraeferenz</a></li>
               <!--<li><a href="#_absicherung">Absicherung</a></li>-->
-              <li><a href="#_ZinsbindungInJahrenPraeferenz">ZinsbindungInJahrenPraeferenz</a></li>
+              <li><a href="#_ZinsbindungInJahren">ZinsbindungInJahren</a></li>
               <!--<li><a href="#_absicherung">Absicherung</a></li>-->
               <li><a href="#_ZinsbindungPraeferenz">ZinsbindungPraeferenz</a></li>
               <!--<li><a href="#_absicherung">Absicherung</a></li>-->
@@ -2547,14 +2547,14 @@
           <div class="sect2">
             <h3 id="_aktuelle_version">Aktuelle Version</h3>
             <div class="paragraph">
-              <p><em>Version</em> : 1.0-alpha.4; 882cd4d573c2e686eef322b5cde64073b763e6d8</p>
+              <p><em>Version</em> : 1.0-alpha.4; 6c87902b4a80a3a1ac9e5c457fb0220bc207a545</p>
             </div>
           </div>
         <div class="sect2">
           <h3 id="_kontaktinformationen">Kontaktinformationen</h3>
           <div class="paragraph">
             <p><em>Kontakt</em> : Europace AG<br>
-              <em>Kontakt E-Mail</em> : <a href="mailto:helpdesk@europace2.de">helpdesk@europace2.de</a>
+              <em>Kontakt E-Mail</em> : <a href="mailto:devsupport@europace2.de">devsupport@europace2.de</a>
               <em>Weitere Informationen</em> : <a href="http://developer.europace.de">http://developer.europace.de</a>
             </p>
           </div>
@@ -4807,36 +4807,6 @@
                   <td class="tableblock halign-left valign-middle">
                     <div class="content">
                       <div class="paragraph">
-                        <p><strong>kreditinstitut</strong>
-                          <br><em>optional</em>
-                        </p>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                        <p></p>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                      <p>
-  
-                          <a href="#_string">String</a>
-  
-  
-                        </p>
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
                         <p><strong>kundenreferenzIdsDerKontoinhaber</strong>
                           <br><em>optional</em>
                         </p>
@@ -4987,7 +4957,7 @@
           <div class="sect2">
             <h3 id="_Bauspardarlehen">Bauspardarlehen</h3>
             <div class="paragraph">
-              <p></p>
+              <p>Für leer gelassene Parameter werden automatisch Vorschläge berechnet.</p>
             </div>
             <table class="tableblock frame-all grid-all stretch">
               <colgroup>
@@ -5158,6 +5128,72 @@
                       <p>
   
                           <a href="#_double">Double</a>
+  
+  
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p><strong>sparbeginn</strong>
+                          <br><em>optional</em>
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p></p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                      <p>
+  
+                          <a href="#_date">date</a>
+  
+  
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p><strong>tarifListe</strong>
+                          <br><em>optional</em>
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p></p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                      <p>
+  
+                          <a href="#_string">array[String]</a>
+                          <div>
+                            Mögliche Werte:
+                            <ul>
+
+                            </ul>
+                          </div>
   
   
                         </p>
@@ -5377,6 +5413,72 @@
                   <td class="tableblock halign-left valign-middle">
                     <div class="content">
                       <div class="paragraph">
+                        <p><strong>tarif</strong>
+                          <br><em>optional</em>
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p></p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                      <p>
+  
+                          <a href="#_string">String</a>
+                          <div>
+                            Mögliche Werte:
+                            <ul>
+                                <li>BKM_MAX_PREMIUM_OPTIMAL</li>                                <li>BKM_MAX_PREMIUM_NIEDRIGE_SPARRATE</li>                                <li>BKM_MAX_PREMIUM_NIEDRIGE_TILGUNG</li>                                <li>BKM_MAX_PREMIUM_BESTER_ZINS</li>                                <li>FUCHS_IMMO_1</li>                                <li>FUCHS_IMMO_1_PLUS</li>                                <li>FUCHS_IMMO_2</li>                                <li>FUCHS_IMMO_3</li>                                <li>FUCHS_IMMO_4</li>                                <li>FUCHS_IMMO_5</li>                                <li>FUCHS_IMMO_6</li>                                <li>FUCHS_IMMO_7</li>                                <li>LBS_BAYERN_W4</li>                                <li>LBS_BAYERN_W4_X30</li>                                <li>LBS_BAYERN_W4_X35</li>                                <li>LBS_BAYERN_W4_X40</li>                                <li>LBS_BAYERN_W6</li>                                <li>LBS_BAYERN_W9</li>                                <li>LBS_BAYERN_WF</li>                                <li>LBS_BAYERN_WU</li>                                <li>LBS_HT_CLASSIC_S_2015</li>                                <li>LBS_HT_CLASSIC_F_2015</li>                                <li>LBS_HT_CLASSIC_L_2015</li>                                <li>LBS_HT_CLASSIC_N_2015</li>                                <li>LBS_HT_HOME_M</li>                                <li>LBS_HT_HOME_L</li>                                <li>LBS_HT_HOME_XL</li>                                <li>LBS_HT_COMFORT_S</li>                                <li>LBS_HT_COMFORT_N</li>                                <li>LBS_HT_FLEX</li>                                <li>LBS_NORD_N_STARTER_S4</li>                                <li>LBS_NORD_N_STARTER_Q5</li>                                <li>LBS_NORD_N_STARTER_S5</li>                                <li>LBS_NORD_N_STARTER_S6</li>                                <li>LBS_NORD_N_FINANZIERER_F3</li>                                <li>LBS_NORD_N_FINANZIERER_F4</li>                                <li>LBS_NORD_N_FINANZIERER_F5</li>                                <li>LBS_NORD_N_FINANZIERER_F6</li>                                <li>LBS_NORD_N_FINANZIERER_F7</li>                                <li>LBS_NORD_N_MODERNISIERER_MINIZINS</li>                                <li>LBS_NORD_N_MODERNISIERER_M8</li>                                <li>LBS_NORD_N_MODERNISIERER_MX</li>                                <li>LBS_OST_CLASSIC15_F5</li>                                <li>LBS_OST_CLASSIC_F15_F5</li>                                <li>LBS_OST_CLASSIC_F_H4</li>                                <li>LBS_OST_CLASSIC_F_H5</li>                                <li>LBS_OST_CLASSIC_12_C4</li>                                <li>LBS_OST_CLASSIC_12_C9</li>                                <li>LBS_OST_CLASSIC15_F3</li>                                <li>LBS_OST_CLASSIC15_F4</li>                                <li>LBS_OST_CLASSIC15_F6</li>                                <li>LBS_OST_CLASSIC15_F8</li>                                <li>LBS_OST_CLASSIC15_PLUS_F</li>                                <li>LBS_OST_CLASSIC15_PLUS_S</li>                                <li>LBS_OST_VARIO_FLEX</li>                                <li>LBS_OST_CLASSIC20_F3</li>                                <li>LBS_OST_CLASSIC20_F8</li>                                <li>LBS_OST_CLASSIC20_PLUS_F</li>                                <li>LBS_SHH_PRIMUS_SC</li>                                <li>LBS_SHH_PRIMUS_SD</li>                                <li>LBS_SHH_PRIMUS_SH</li>                                <li>LBS_SHH_PRIMUS_SI</li>                                <li>LBS_SHH_PRIMUS_SJ</li>                                <li>LBS_SHH_TREND_SD</li>                                <li>LBS_SHH_PRIMUS_TC</li>                                <li>LBS_SHH_PRIMUS_TH</li>                                <li>LBS_SHH_PRIMUS_TI</li>                                <li>LBS_SHH_PRIMUS_TJ</li>                                <li>LBS_SHH_PRIMUS_TD</li>                                <li>LBS_SHH_TREND_TD</li>                                <li>LBS_WEST_ZUHAUSE_DIREKT_10</li>                                <li>LBS_WEST_ZUHAUSE_DIREKT_15</li>                                <li>LBS_WEST_ZUHAUSE_PLUS</li>                                <li>LBS_WEST_ZUHAUSE_FLEX_4_S</li>                                <li>LBS_WEST_ZUHAUSE_FLEX_4_L</li>                                <li>LBS_WEST_ZUHAUSE_FLEX_5_S</li>                                <li>LBS_WEST_ZUHAUSE_FLEX_5_L</li>                                <li>LBS_WEST_ZUHAUSE_FLEX_6_S</li>                                <li>LBS_WEST_ZUHAUSE_FLEX_6_L</li>                                <li>LBS_WEST_ZUHAUSE_FLEX_8_S</li>                                <li>LBS_WEST_ZUHAUSE_FLEX_8_L</li>                                <li>LBS_WEST_ZUHAUSE_PRIMA</li>                                <li>LBS_WEST_ZUHAUSE_PRIMA_10</li>                                <li>LBS_WEST_ZUHAUSE_FLEX_4</li>                                <li>LBS_WEST_ZUHAUSE_FLEX_5</li>                                <li>LBS_WEST_ZUHAUSE_FLEX_6</li>                                <li>LBS_WEST_ZUHAUSE_FLEX_8</li>                                <li>LBS_WEST_ZUHAUSE_YOUNG</li>                                <li>LBS_WEST_ZUHAUSE_SPEZIAL</li>                                <li>LBS_WEST_RIESTER_ZUHAUSE_DIREKT_10</li>                                <li>LBS_WEST_RIESTER_ZUHAUSE_DIREKT_15</li>                                <li>LBS_WEST_RIESTER_ZUHAUSE_DIREKT_PLUS</li>                                <li>LBS_WEST_RIESTER_ZUHAUSE_FLEX_4</li>                                <li>LBS_WEST_RIESTER_ZUHAUSE_FLEX_5</li>                                <li>LBS_WEST_RIESTER_ZUHAUSE_FLEX_6</li>                                <li>LBS_WEST_RIESTER_ZUHAUSE_FLEX_8</li>                                <li>LBS_WEST_RIESTER_ZUHAUSE_FLEX_4_S</li>                                <li>LBS_WEST_RIESTER_ZUHAUSE_FLEX_5_S</li>                                <li>LBS_WEST_RIESTER_ZUHAUSE_FLEX_6_S</li>                                <li>LBS_WEST_RIESTER_ZUHAUSE_FLEX_8_S</li>                                <li>LBS_WEST_RIESTER_ZUHAUSE_FLEX_4_L</li>                                <li>LBS_WEST_RIESTER_ZUHAUSE_FLEX_5_L</li>                                <li>LBS_WEST_RIESTER_ZUHAUSE_FLEX_6_L</li>                                <li>LBS_WEST_RIESTER_ZUHAUSE_FLEX_8_L</li>                                <li>LBS_WEST_RIESTER_ZUHAUSE_SPEZIAL</li>                                <li>LBS_SUEDWEST_KLASSIK_PLUS_2018</li>                                <li>LBS_SUEDWEST_LANGZEIT_PLUS_2019</li>                                <li>LBS_SAAR_PREMIUM_FLEX_18</li>                                <li>LBS_SAAR_PREMIUM_SICHER_18</li>                                <li>LBS_SAAR_PREMIUM_TOP_18</li>                                <li>LBS_SAAR_EXTRA_GUENSTIG_18</li>                                <li>LBS_SAAR_EXTRA_SICHER_18</li>                                <li>LBS_SAAR_EXTRA_SPEZIAL_18</li>                                <li>SIGNAL_IDUNA_FREIRAUM_F_30</li>                                <li>SIGNAL_IDUNA_FREIRAUM_F_30_16</li>                                <li>SIGNAL_IDUNA_FREIRAUM_F_35</li>                                <li>SIGNAL_IDUNA_FREIRAUM_F_35_16</li>                                <li>SIGNAL_IDUNA_FREIRAUM_F_40</li>                                <li>SIGNAL_IDUNA_FREIRAUM_F_40_16</li>                                <li>SIGNAL_IDUNA_FREIRAUM_F_45</li>                                <li>SIGNAL_IDUNA_FREIRAUM_F_45_16</li>                                <li>SIGNAL_IDUNA_FREIRAUM_F_50</li>                                <li>SIGNAL_IDUNA_FREIRAUM_F_60</li>                                <li>SIGNAL_IDUNA_FREIRAUM_F_30_MZ</li>                                <li>SIGNAL_IDUNA_FREIRAUM_F_30_MZ_16</li>                                <li>SIGNAL_IDUNA_FREIRAUM_F_35_MZ</li>                                <li>SIGNAL_IDUNA_FREIRAUM_F_35_MZ_16</li>                                <li>SIGNAL_IDUNA_FREIRAUM_F_40_MZ</li>                                <li>SIGNAL_IDUNA_FREIRAUM_F_40_MZ_16</li>                                <li>SIGNAL_IDUNA_FREIRAUM_F_45_MZ</li>                                <li>SIGNAL_IDUNA_FREIRAUM_F_45_MZ_16</li>                                <li>SIGNAL_IDUNA_FREIRAUM_F_50_MZ</li>                                <li>SIGNAL_IDUNA_FREIRAUM_F_60_MZ</li>                                <li>BHW_TARIF_FI1</li>                                <li>BHW_TARIF_FI2</li>                                <li>BHW_TARIF_FI3</li>                                <li>BHW_TARIF_FI4</li>                                <li>BHW_TARIF_FX1</li>                                <li>BHW_TARIF_FX2</li>                                <li>BHW_TARIF_REN</li>                                <li>BHW_TARIF_FI1N</li>                                <li>BHW_TARIF_FI2N</li>                                <li>BHW_TARIF_FX1N</li>                                <li>BHW_TARIF_FX2N</li>                                <li>DT_RING_TARIF_FT</li>                                <li>DT_RING_TARIF_FT_0</li>                                <li>DT_RING_TARIF_FT_1</li>                                <li>DT_RING_TARIF_FT_2</li>                                <li>DT_RING_TARIF_XT_1</li>                                <li>DT_RING_TARIF_XT_0</li>                                <li>DT_RING_TARIF_F_1</li>                                <li>ALTE_LEIPZIGER_150X</li>                                <li>ALTE_LEIPZIGER_160X</li>                                <li>ALTE_LEIPZIGER_170X</li>                                <li>ALTE_LEIPZIGER_180X</li>                                <li>ALTE_LEIPZIGER_190X</li>                                <li>ALTE_LEIPZIGER_200X</li>                                <li>ALTE_LEIPZIGER_150X_MZ</li>                                <li>ALTE_LEIPZIGER_160X_MZ</li>                                <li>ALTE_LEIPZIGER_170X_MZ</li>                                <li>ALTE_LEIPZIGER_180X_MZ</li>                                <li>ALTE_LEIPZIGER_190X_MZ</li>                                <li>ALTE_LEIPZIGER_200X_MZ</li>                                <li>ALTE_LEIPZIGER_ZG_21XX_20</li>                                <li>ALTE_LEIPZIGER_ZG_21XX_30</li>                                <li>ALTE_LEIPZIGER_ZG_25XX_49</li>                                <li>ALTE_LEIPZIGER_21XX_27</li>                                <li>ALTE_LEIPZIGER_21XX_33</li>                                <li>ALTE_LEIPZIGER_21XX</li>                                <li>ALTE_LEIPZIGER_25XX_30</li>                                <li>ALTE_LEIPZIGER_25XX_45</li>                                <li>ALTE_LEIPZIGER_22XX_33</li>                                <li>ALTE_LEIPZIGER_22XX_27</li>                                <li>ALTE_LEIPZIGER_22XX</li>                                <li>ALTE_LEIPZIGER_26XX_30</li>                                <li>ALTE_LEIPZIGER_26XX_45</li>                                <li>WUESTENROT_01063_4</li>                                <li>WUESTENROT_01063_5</li>                                <li>WUESTENROT_01063_6</li>                                <li>WUESTENROT_01063_7</li>                                <li>WUESTENROT_01063_8</li>                                <li>WUESTENROT_01063_9</li>                                <li>WUESTENROT_01063_10</li>                                <li>WUESTENROT_01063_12</li>                                <li>WUESTENROT_01064_4</li>                                <li>WUESTENROT_01064_6</li>                                <li>WUESTENROT_01064_8</li>                                <li>WUESTENROT_01064_10</li>                                <li>WUESTENROT_01064_12</li>                                <li>WUESTENROT_01061_10</li>                                <li>WUESTENROT_01062_4</li>                                <li>WUESTENROT_01061_10_0000</li>                                <li>WUESTENROT_01062_04_0000</li>                                <li>WUESTENROT_01063_05_3585</li>                                <li>WUESTENROT_01063_07_5110</li>                                <li>WUESTENROT_01063_09_0000</li>                                <li>WUESTENROT_01064_10_0000</li>                                <li>WUESTENROT_01064_04_0000</li>                                <li>WUESTENROT_01064_04_5000</li>                                <li>WUESTENROT_01064_05_4121</li>                                <li>WUESTENROT_01064_06_0000</li>                                <li>WUESTENROT_01064_07_5161</li>                                <li>WUESTENROT_01064_09_0000</li>                                <li>WUESTENROT_01073_04_5000</li>                                <li>WUESTENROT_01073_05_9000</li>                                <li>WUESTENROT_01073_08_0000</li>                                <li>DEUTSCHE_BANK_BAUSPAR_TARIF_FI1</li>                                <li>DEUTSCHE_BANK_BAUSPAR_TARIF_FI2</li>                                <li>DEUTSCHE_BANK_BAUSPAR_TARIF_FI3</li>                                <li>DEUTSCHE_BANK_BAUSPAR_TARIF_FI4</li>                                <li>DEUTSCHE_BANK_BAUSPAR_TARIF_FX1</li>                                <li>DEUTSCHE_BANK_BAUSPAR_TARIF_FX2</li>
+                            </ul>
+                          </div>
+  
+  
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p><strong>vertragsbeginn</strong>
+                          <br><em>optional</em>
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p></p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                      <p>
+  
+                          <a href="#_date">date</a>
+  
+  
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
                         <p><strong>jahresentgelt</strong>
                           <br><em>optional</em>
                         </p>
@@ -5526,42 +5628,6 @@
                   <td class="tableblock halign-left valign-middle">
                     <div class="content">
                       <div class="paragraph">
-                        <p><strong>tarif</strong>
-                          <br><em>optional</em>
-                        </p>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                        <p></p>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                      <p>
-  
-                          <a href="#_string">String</a>
-                          <div>
-                            Mögliche Werte:
-                            <ul>
-                                <li>BKM_MAX_PREMIUM_OPTIMAL</li>                                <li>BKM_MAX_PREMIUM_NIEDRIGE_SPARRATE</li>                                <li>BKM_MAX_PREMIUM_NIEDRIGE_TILGUNG</li>                                <li>BKM_MAX_PREMIUM_BESTER_ZINS</li>                                <li>FUCHS_IMMO_1</li>                                <li>FUCHS_IMMO_1_PLUS</li>                                <li>FUCHS_IMMO_2</li>                                <li>FUCHS_IMMO_3</li>                                <li>FUCHS_IMMO_4</li>                                <li>FUCHS_IMMO_5</li>                                <li>FUCHS_IMMO_6</li>                                <li>FUCHS_IMMO_7</li>                                <li>LBS_BAYERN_W4</li>                                <li>LBS_BAYERN_W4_X30</li>                                <li>LBS_BAYERN_W4_X35</li>                                <li>LBS_BAYERN_W4_X40</li>                                <li>LBS_BAYERN_W6</li>                                <li>LBS_BAYERN_W9</li>                                <li>LBS_BAYERN_WF</li>                                <li>LBS_BAYERN_WU</li>                                <li>LBS_HT_CLASSIC_S_2015</li>                                <li>LBS_HT_CLASSIC_F_2015</li>                                <li>LBS_HT_CLASSIC_L_2015</li>                                <li>LBS_HT_CLASSIC_N_2015</li>                                <li>LBS_HT_HOME_M</li>                                <li>LBS_HT_HOME_L</li>                                <li>LBS_HT_HOME_XL</li>                                <li>LBS_HT_COMFORT_S</li>                                <li>LBS_HT_COMFORT_N</li>                                <li>LBS_HT_FLEX</li>                                <li>LBS_NORD_N_STARTER_S4</li>                                <li>LBS_NORD_N_STARTER_Q5</li>                                <li>LBS_NORD_N_STARTER_S5</li>                                <li>LBS_NORD_N_STARTER_S6</li>                                <li>LBS_NORD_N_FINANZIERER_F3</li>                                <li>LBS_NORD_N_FINANZIERER_F4</li>                                <li>LBS_NORD_N_FINANZIERER_F5</li>                                <li>LBS_NORD_N_FINANZIERER_F6</li>                                <li>LBS_NORD_N_FINANZIERER_F7</li>                                <li>LBS_NORD_N_MODERNISIERER_MINIZINS</li>                                <li>LBS_NORD_N_MODERNISIERER_M8</li>                                <li>LBS_NORD_N_MODERNISIERER_MX</li>                                <li>LBS_OST_CLASSIC15_F5</li>                                <li>LBS_OST_CLASSIC_F15_F5</li>                                <li>LBS_OST_CLASSIC_F_H4</li>                                <li>LBS_OST_CLASSIC_F_H5</li>                                <li>LBS_OST_CLASSIC_12_C4</li>                                <li>LBS_OST_CLASSIC_12_C9</li>                                <li>LBS_OST_CLASSIC15_F3</li>                                <li>LBS_OST_CLASSIC15_F4</li>                                <li>LBS_OST_CLASSIC15_F6</li>                                <li>LBS_OST_CLASSIC15_F8</li>                                <li>LBS_OST_CLASSIC15_PLUS_F</li>                                <li>LBS_OST_CLASSIC15_PLUS_S</li>                                <li>LBS_OST_VARIO_FLEX</li>                                <li>LBS_OST_CLASSIC20_F3</li>                                <li>LBS_OST_CLASSIC20_F8</li>                                <li>LBS_OST_CLASSIC20_PLUS_F</li>                                <li>LBS_SHH_PRIMUS_SC</li>                                <li>LBS_SHH_PRIMUS_SD</li>                                <li>LBS_SHH_PRIMUS_SH</li>                                <li>LBS_SHH_PRIMUS_SI</li>                                <li>LBS_SHH_PRIMUS_SJ</li>                                <li>LBS_SHH_TREND_SD</li>                                <li>LBS_SHH_PRIMUS_TC</li>                                <li>LBS_SHH_PRIMUS_TH</li>                                <li>LBS_SHH_PRIMUS_TI</li>                                <li>LBS_SHH_PRIMUS_TJ</li>                                <li>LBS_SHH_PRIMUS_TD</li>                                <li>LBS_SHH_TREND_TD</li>                                <li>LBS_WEST_ZUHAUSE_DIREKT_10</li>                                <li>LBS_WEST_ZUHAUSE_DIREKT_15</li>                                <li>LBS_WEST_ZUHAUSE_PLUS</li>                                <li>LBS_WEST_ZUHAUSE_FLEX_4_S</li>                                <li>LBS_WEST_ZUHAUSE_FLEX_4_L</li>                                <li>LBS_WEST_ZUHAUSE_FLEX_5_S</li>                                <li>LBS_WEST_ZUHAUSE_FLEX_5_L</li>                                <li>LBS_WEST_ZUHAUSE_FLEX_6_S</li>                                <li>LBS_WEST_ZUHAUSE_FLEX_6_L</li>                                <li>LBS_WEST_ZUHAUSE_FLEX_8_S</li>                                <li>LBS_WEST_ZUHAUSE_FLEX_8_L</li>                                <li>LBS_WEST_ZUHAUSE_PRIMA</li>                                <li>LBS_WEST_ZUHAUSE_PRIMA_10</li>                                <li>LBS_WEST_ZUHAUSE_FLEX_4</li>                                <li>LBS_WEST_ZUHAUSE_FLEX_5</li>                                <li>LBS_WEST_ZUHAUSE_FLEX_6</li>                                <li>LBS_WEST_ZUHAUSE_FLEX_8</li>                                <li>LBS_WEST_ZUHAUSE_YOUNG</li>                                <li>LBS_WEST_ZUHAUSE_SPEZIAL</li>                                <li>LBS_WEST_RIESTER_ZUHAUSE_DIREKT_10</li>                                <li>LBS_WEST_RIESTER_ZUHAUSE_DIREKT_15</li>                                <li>LBS_WEST_RIESTER_ZUHAUSE_DIREKT_PLUS</li>                                <li>LBS_WEST_RIESTER_ZUHAUSE_FLEX_4</li>                                <li>LBS_WEST_RIESTER_ZUHAUSE_FLEX_5</li>                                <li>LBS_WEST_RIESTER_ZUHAUSE_FLEX_6</li>                                <li>LBS_WEST_RIESTER_ZUHAUSE_FLEX_8</li>                                <li>LBS_WEST_RIESTER_ZUHAUSE_FLEX_4_S</li>                                <li>LBS_WEST_RIESTER_ZUHAUSE_FLEX_5_S</li>                                <li>LBS_WEST_RIESTER_ZUHAUSE_FLEX_6_S</li>                                <li>LBS_WEST_RIESTER_ZUHAUSE_FLEX_8_S</li>                                <li>LBS_WEST_RIESTER_ZUHAUSE_FLEX_4_L</li>                                <li>LBS_WEST_RIESTER_ZUHAUSE_FLEX_5_L</li>                                <li>LBS_WEST_RIESTER_ZUHAUSE_FLEX_6_L</li>                                <li>LBS_WEST_RIESTER_ZUHAUSE_FLEX_8_L</li>                                <li>LBS_WEST_RIESTER_ZUHAUSE_SPEZIAL</li>                                <li>LBS_SUEDWEST_KLASSIK_PLUS_2018</li>                                <li>LBS_SUEDWEST_LANGZEIT_PLUS_2019</li>                                <li>LBS_SAAR_PREMIUM_FLEX_18</li>                                <li>LBS_SAAR_PREMIUM_SICHER_18</li>                                <li>LBS_SAAR_PREMIUM_TOP_18</li>                                <li>LBS_SAAR_EXTRA_GUENSTIG_18</li>                                <li>LBS_SAAR_EXTRA_SICHER_18</li>                                <li>LBS_SAAR_EXTRA_SPEZIAL_18</li>                                <li>SIGNAL_IDUNA_FREIRAUM_F_30</li>                                <li>SIGNAL_IDUNA_FREIRAUM_F_30_16</li>                                <li>SIGNAL_IDUNA_FREIRAUM_F_35</li>                                <li>SIGNAL_IDUNA_FREIRAUM_F_35_16</li>                                <li>SIGNAL_IDUNA_FREIRAUM_F_40</li>                                <li>SIGNAL_IDUNA_FREIRAUM_F_40_16</li>                                <li>SIGNAL_IDUNA_FREIRAUM_F_45</li>                                <li>SIGNAL_IDUNA_FREIRAUM_F_45_16</li>                                <li>SIGNAL_IDUNA_FREIRAUM_F_50</li>                                <li>SIGNAL_IDUNA_FREIRAUM_F_60</li>                                <li>SIGNAL_IDUNA_FREIRAUM_F_30_MZ</li>                                <li>SIGNAL_IDUNA_FREIRAUM_F_30_MZ_16</li>                                <li>SIGNAL_IDUNA_FREIRAUM_F_35_MZ</li>                                <li>SIGNAL_IDUNA_FREIRAUM_F_35_MZ_16</li>                                <li>SIGNAL_IDUNA_FREIRAUM_F_40_MZ</li>                                <li>SIGNAL_IDUNA_FREIRAUM_F_40_MZ_16</li>                                <li>SIGNAL_IDUNA_FREIRAUM_F_45_MZ</li>                                <li>SIGNAL_IDUNA_FREIRAUM_F_45_MZ_16</li>                                <li>SIGNAL_IDUNA_FREIRAUM_F_50_MZ</li>                                <li>SIGNAL_IDUNA_FREIRAUM_F_60_MZ</li>                                <li>BHW_TARIF_FI1</li>                                <li>BHW_TARIF_FI2</li>                                <li>BHW_TARIF_FI3</li>                                <li>BHW_TARIF_FI4</li>                                <li>BHW_TARIF_FX1</li>                                <li>BHW_TARIF_FX2</li>                                <li>BHW_TARIF_REN</li>                                <li>BHW_TARIF_FI1N</li>                                <li>BHW_TARIF_FI2N</li>                                <li>BHW_TARIF_FX1N</li>                                <li>BHW_TARIF_FX2N</li>                                <li>DT_RING_TARIF_FT</li>                                <li>DT_RING_TARIF_FT_0</li>                                <li>DT_RING_TARIF_FT_1</li>                                <li>DT_RING_TARIF_FT_2</li>                                <li>DT_RING_TARIF_XT_1</li>                                <li>DT_RING_TARIF_XT_0</li>                                <li>DT_RING_TARIF_F_1</li>                                <li>ALTE_LEIPZIGER_150X</li>                                <li>ALTE_LEIPZIGER_160X</li>                                <li>ALTE_LEIPZIGER_170X</li>                                <li>ALTE_LEIPZIGER_180X</li>                                <li>ALTE_LEIPZIGER_190X</li>                                <li>ALTE_LEIPZIGER_200X</li>                                <li>ALTE_LEIPZIGER_150X_MZ</li>                                <li>ALTE_LEIPZIGER_160X_MZ</li>                                <li>ALTE_LEIPZIGER_170X_MZ</li>                                <li>ALTE_LEIPZIGER_180X_MZ</li>                                <li>ALTE_LEIPZIGER_190X_MZ</li>                                <li>ALTE_LEIPZIGER_200X_MZ</li>                                <li>ALTE_LEIPZIGER_ZG_21XX_20</li>                                <li>ALTE_LEIPZIGER_ZG_21XX_30</li>                                <li>ALTE_LEIPZIGER_ZG_25XX_49</li>                                <li>ALTE_LEIPZIGER_21XX_27</li>                                <li>ALTE_LEIPZIGER_21XX_33</li>                                <li>ALTE_LEIPZIGER_21XX</li>                                <li>ALTE_LEIPZIGER_25XX_30</li>                                <li>ALTE_LEIPZIGER_25XX_45</li>                                <li>ALTE_LEIPZIGER_22XX_33</li>                                <li>ALTE_LEIPZIGER_22XX_27</li>                                <li>ALTE_LEIPZIGER_22XX</li>                                <li>ALTE_LEIPZIGER_26XX_30</li>                                <li>ALTE_LEIPZIGER_26XX_45</li>                                <li>WUESTENROT_01063_4</li>                                <li>WUESTENROT_01063_5</li>                                <li>WUESTENROT_01063_6</li>                                <li>WUESTENROT_01063_7</li>                                <li>WUESTENROT_01063_8</li>                                <li>WUESTENROT_01063_9</li>                                <li>WUESTENROT_01063_10</li>                                <li>WUESTENROT_01063_12</li>                                <li>WUESTENROT_01064_4</li>                                <li>WUESTENROT_01064_6</li>                                <li>WUESTENROT_01064_8</li>                                <li>WUESTENROT_01064_10</li>                                <li>WUESTENROT_01064_12</li>                                <li>WUESTENROT_01061_10</li>                                <li>WUESTENROT_01062_4</li>                                <li>WUESTENROT_01061_10_0000</li>                                <li>WUESTENROT_01062_04_0000</li>                                <li>WUESTENROT_01063_05_3585</li>                                <li>WUESTENROT_01063_07_5110</li>                                <li>WUESTENROT_01063_09_0000</li>                                <li>WUESTENROT_01064_10_0000</li>                                <li>WUESTENROT_01064_04_0000</li>                                <li>WUESTENROT_01064_04_5000</li>                                <li>WUESTENROT_01064_05_4121</li>                                <li>WUESTENROT_01064_06_0000</li>                                <li>WUESTENROT_01064_07_5161</li>                                <li>WUESTENROT_01064_09_0000</li>                                <li>WUESTENROT_01073_04_5000</li>                                <li>WUESTENROT_01073_05_9000</li>                                <li>WUESTENROT_01073_08_0000</li>                                <li>DEUTSCHE_BANK_BAUSPAR_TARIF_FI1</li>                                <li>DEUTSCHE_BANK_BAUSPAR_TARIF_FI2</li>                                <li>DEUTSCHE_BANK_BAUSPAR_TARIF_FI3</li>                                <li>DEUTSCHE_BANK_BAUSPAR_TARIF_FI4</li>                                <li>DEUTSCHE_BANK_BAUSPAR_TARIF_FX1</li>                                <li>DEUTSCHE_BANK_BAUSPAR_TARIF_FX2</li>
-                            </ul>
-                          </div>
-  
-  
-                        </p>
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
                         <p><strong>bausparsumme</strong>
                           <br><em>optional</em>
                         </p>
@@ -5581,36 +5647,6 @@
                       <p>
   
                           <a href="#_double">Double</a>
-  
-  
-                        </p>
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                        <p><strong>vertragsbeginn</strong>
-                          <br><em>optional</em>
-                        </p>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                        <p></p>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                      <p>
-  
-                          <a href="#_date">date</a>
   
   
                         </p>
@@ -6334,6 +6370,157 @@
                   <td class="tableblock halign-left valign-middle">
                     <div class="content">
                       <div class="paragraph">
+                        <p><strong>darlehensgeber</strong>
+                          <br><em>optional</em>
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p></p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                      <p>
+                          darlehensgeber
+  
+                          <a href="#_"></a>
+  
+  
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p><strong>grundschuld</strong>
+                          <br><em>optional</em>
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p></p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                      <p>
+  
+                          <a href="#_double">Double</a>
+  
+  
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p><strong>darlehensbetrag</strong>
+                          <br><em>optional</em>
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p></p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                      <p>
+  
+                          <a href="#_double">Double</a>
+  
+  
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p><strong>rateMonatlich</strong>
+                          <br><em>optional</em>
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p></p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                      <p>
+  
+                          <a href="#_double">Double</a>
+  
+  
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p><strong>sollzins</strong>
+                          <br><em>optional</em>
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p></p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                      <p>
+  
+                          <a href="#_double">Double</a>
+  
+  
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
                         <p><strong>zinsbindungBis</strong>
                           <br><em>optional</em>
                         </p>
@@ -6473,157 +6660,6 @@
                       <p>
   
                           <a href="#_AbloesungBestehendesDarlehen">AbloesungBestehendesDarlehen</a>
-  
-  
-                        </p>
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                        <p><strong>rateMonatlich</strong>
-                          <br><em>optional</em>
-                        </p>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                        <p></p>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                      <p>
-  
-                          <a href="#_double">Double</a>
-  
-  
-                        </p>
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                        <p><strong>sollzins</strong>
-                          <br><em>optional</em>
-                        </p>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                        <p></p>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                      <p>
-  
-                          <a href="#_double">Double</a>
-  
-  
-                        </p>
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                        <p><strong>darlehensgeber</strong>
-                          <br><em>optional</em>
-                        </p>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                        <p></p>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                      <p>
-                          darlehensgeber
-  
-                          <a href="#_"></a>
-  
-  
-                        </p>
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                        <p><strong>grundschuld</strong>
-                          <br><em>optional</em>
-                        </p>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                        <p></p>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                      <p>
-  
-                          <a href="#_double">Double</a>
-  
-  
-                        </p>
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                        <p><strong>darlehensbetrag</strong>
-                          <br><em>optional</em>
-                        </p>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                        <p></p>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                      <p>
-  
-                          <a href="#_double">Double</a>
   
   
                         </p>
@@ -6719,216 +6755,6 @@
               </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                        <p><strong>zinsbindungBis</strong>
-                          <br><em>optional</em>
-                        </p>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                        <p></p>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                      <p>
-  
-                          <a href="#_date">date</a>
-  
-  
-                        </p>
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                        <p><strong>laufzeitende</strong>
-                          <br><em>optional</em>
-                        </p>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                        <p></p>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                      <p>
-  
-                          <a href="#_date">date</a>
-  
-  
-                        </p>
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                        <p><strong>restschuld</strong>
-                          <br><em>optional</em>
-                        </p>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                        <p></p>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                      <p>
-  
-                          <a href="#_Restschuld">Restschuld</a>
-  
-  
-                        </p>
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                        <p><strong>darlehenskontonummer</strong>
-                          <br><em>optional</em>
-                        </p>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                        <p>IBAN des Darlehenskontos</p>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                      <p>
-  
-                          <a href="#_string">String</a>
-  
-  
-                        </p>
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                        <p><strong>abloesung</strong>
-                          <br><em>optional</em>
-                        </p>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                        <p></p>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                      <p>
-  
-                          <a href="#_AbloesungBestehendesDarlehen">AbloesungBestehendesDarlehen</a>
-  
-  
-                        </p>
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                        <p><strong>rateMonatlich</strong>
-                          <br><em>optional</em>
-                        </p>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                        <p></p>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                      <p>
-  
-                          <a href="#_double">Double</a>
-  
-  
-                        </p>
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                        <p><strong>sollzins</strong>
-                          <br><em>optional</em>
-                        </p>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                        <p></p>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                      <p>
-  
-                          <a href="#_double">Double</a>
-  
-  
-                        </p>
-                      </div>
-                    </div>
-                  </td>
-                </tr>
                 <tr>
                   <td class="tableblock halign-left valign-middle">
                     <div class="content">
@@ -7031,8 +6857,8 @@
                   <td class="tableblock halign-left valign-middle">
                     <div class="content">
                       <div class="paragraph">
-                        <p><strong>@type</strong>
-                          
+                        <p><strong>rateMonatlich</strong>
+                          <br><em>optional</em>
                         </p>
                       </div>
                     </div>
@@ -7049,7 +6875,7 @@
                       <div class="paragraph">
                       <p>
   
-                          <a href="#_string">String</a>
+                          <a href="#_double">Double</a>
   
   
                         </p>
@@ -7057,28 +6883,36 @@
                     </div>
                   </td>
                 </tr>
-              </tbody>
-            </table>
-          </div>
-          <div class="sect2">
-            <h3 id="_BestehendesFoerderdarlehen">BestehendesFoerderdarlehen</h3>
-            <div class="paragraph">
-              <p></p>
-            </div>
-            <table class="tableblock frame-all grid-all stretch">
-              <colgroup>
-                <col style="width: 16.6666%;">
-                <col style="width: 61.1111%;">
-                <col style="width: 22.2223%;">
-              </colgroup>
-              <thead>
-              <tr>
-                <th class="tableblock halign-left valign-middle">Name</th>
-                <th class="tableblock halign-left valign-middle">Beschreibung</th>
-                <th class="tableblock halign-left valign-middle">Typ</th>
-              </tr>
-              </thead>
-              <tbody>
+                <tr>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p><strong>sollzins</strong>
+                          <br><em>optional</em>
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p></p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                      <p>
+  
+                          <a href="#_double">Double</a>
+  
+  
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
                 <tr>
                   <td class="tableblock halign-left valign-middle">
                     <div class="content">
@@ -7233,8 +7067,8 @@
                   <td class="tableblock halign-left valign-middle">
                     <div class="content">
                       <div class="paragraph">
-                        <p><strong>rateMonatlich</strong>
-                          <br><em>optional</em>
+                        <p><strong>@type</strong>
+                          
                         </p>
                       </div>
                     </div>
@@ -7251,7 +7085,7 @@
                       <div class="paragraph">
                       <p>
   
-                          <a href="#_double">Double</a>
+                          <a href="#_string">String</a>
   
   
                         </p>
@@ -7259,36 +7093,28 @@
                     </div>
                   </td>
                 </tr>
-                <tr>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                        <p><strong>sollzins</strong>
-                          <br><em>optional</em>
-                        </p>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                        <p></p>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                      <p>
-  
-                          <a href="#_double">Double</a>
-  
-  
-                        </p>
-                      </div>
-                    </div>
-                  </td>
-                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="sect2">
+            <h3 id="_BestehendesFoerderdarlehen">BestehendesFoerderdarlehen</h3>
+            <div class="paragraph">
+              <p></p>
+            </div>
+            <table class="tableblock frame-all grid-all stretch">
+              <colgroup>
+                <col style="width: 16.6666%;">
+                <col style="width: 61.1111%;">
+                <col style="width: 22.2223%;">
+              </colgroup>
+              <thead>
+              <tr>
+                <th class="tableblock halign-left valign-middle">Name</th>
+                <th class="tableblock halign-left valign-middle">Beschreibung</th>
+                <th class="tableblock halign-left valign-middle">Typ</th>
+              </tr>
+              </thead>
+              <tbody>
                 <tr>
                   <td class="tableblock halign-left valign-middle">
                     <div class="content">
@@ -7373,6 +7199,216 @@
                       <p>
   
                           <a href="#_double">Double</a>
+  
+  
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p><strong>rateMonatlich</strong>
+                          <br><em>optional</em>
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p></p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                      <p>
+  
+                          <a href="#_double">Double</a>
+  
+  
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p><strong>sollzins</strong>
+                          <br><em>optional</em>
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p></p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                      <p>
+  
+                          <a href="#_double">Double</a>
+  
+  
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p><strong>zinsbindungBis</strong>
+                          <br><em>optional</em>
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p></p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                      <p>
+  
+                          <a href="#_date">date</a>
+  
+  
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p><strong>laufzeitende</strong>
+                          <br><em>optional</em>
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p></p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                      <p>
+  
+                          <a href="#_date">date</a>
+  
+  
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p><strong>restschuld</strong>
+                          <br><em>optional</em>
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p></p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                      <p>
+  
+                          <a href="#_Restschuld">Restschuld</a>
+  
+  
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p><strong>darlehenskontonummer</strong>
+                          <br><em>optional</em>
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p>IBAN des Darlehenskontos</p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                      <p>
+  
+                          <a href="#_string">String</a>
+  
+  
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p><strong>abloesung</strong>
+                          <br><em>optional</em>
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p></p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                      <p>
+  
+                          <a href="#_AbloesungBestehendesDarlehen">AbloesungBestehendesDarlehen</a>
   
   
                         </p>
@@ -7472,6 +7508,157 @@
                   <td class="tableblock halign-left valign-middle">
                     <div class="content">
                       <div class="paragraph">
+                        <p><strong>darlehensgeber</strong>
+                          <br><em>optional</em>
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p></p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                      <p>
+                          darlehensgeber
+  
+                          <a href="#_"></a>
+  
+  
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p><strong>grundschuld</strong>
+                          <br><em>optional</em>
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p></p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                      <p>
+  
+                          <a href="#_double">Double</a>
+  
+  
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p><strong>darlehensbetrag</strong>
+                          <br><em>optional</em>
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p></p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                      <p>
+  
+                          <a href="#_double">Double</a>
+  
+  
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p><strong>rateMonatlich</strong>
+                          <br><em>optional</em>
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p></p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                      <p>
+  
+                          <a href="#_double">Double</a>
+  
+  
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p><strong>sollzins</strong>
+                          <br><em>optional</em>
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p></p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                      <p>
+  
+                          <a href="#_double">Double</a>
+  
+  
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
                         <p><strong>zinsbindungBis</strong>
                           <br><em>optional</em>
                         </p>
@@ -7611,157 +7798,6 @@
                       <p>
   
                           <a href="#_AbloesungBestehendesDarlehen">AbloesungBestehendesDarlehen</a>
-  
-  
-                        </p>
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                        <p><strong>rateMonatlich</strong>
-                          <br><em>optional</em>
-                        </p>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                        <p></p>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                      <p>
-  
-                          <a href="#_double">Double</a>
-  
-  
-                        </p>
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                        <p><strong>sollzins</strong>
-                          <br><em>optional</em>
-                        </p>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                        <p></p>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                      <p>
-  
-                          <a href="#_double">Double</a>
-  
-  
-                        </p>
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                        <p><strong>darlehensgeber</strong>
-                          <br><em>optional</em>
-                        </p>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                        <p></p>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                      <p>
-                          darlehensgeber
-  
-                          <a href="#_"></a>
-  
-  
-                        </p>
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                        <p><strong>grundschuld</strong>
-                          <br><em>optional</em>
-                        </p>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                        <p></p>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                      <p>
-  
-                          <a href="#_double">Double</a>
-  
-  
-                        </p>
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                        <p><strong>darlehensbetrag</strong>
-                          <br><em>optional</em>
-                        </p>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                        <p></p>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                      <p>
-  
-                          <a href="#_double">Double</a>
   
   
                         </p>
@@ -7861,6 +7897,157 @@
                   <td class="tableblock halign-left valign-middle">
                     <div class="content">
                       <div class="paragraph">
+                        <p><strong>darlehensgeber</strong>
+                          <br><em>optional</em>
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p></p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                      <p>
+                          darlehensgeber
+  
+                          <a href="#_"></a>
+  
+  
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p><strong>grundschuld</strong>
+                          <br><em>optional</em>
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p></p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                      <p>
+  
+                          <a href="#_double">Double</a>
+  
+  
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p><strong>darlehensbetrag</strong>
+                          <br><em>optional</em>
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p></p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                      <p>
+  
+                          <a href="#_double">Double</a>
+  
+  
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p><strong>rateMonatlich</strong>
+                          <br><em>optional</em>
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p></p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                      <p>
+  
+                          <a href="#_double">Double</a>
+  
+  
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p><strong>sollzins</strong>
+                          <br><em>optional</em>
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p></p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                      <p>
+  
+                          <a href="#_double">Double</a>
+  
+  
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
                         <p><strong>zinsbindungBis</strong>
                           <br><em>optional</em>
                         </p>
@@ -8000,157 +8187,6 @@
                       <p>
   
                           <a href="#_AbloesungBestehendesDarlehen">AbloesungBestehendesDarlehen</a>
-  
-  
-                        </p>
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                        <p><strong>rateMonatlich</strong>
-                          <br><em>optional</em>
-                        </p>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                        <p></p>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                      <p>
-  
-                          <a href="#_double">Double</a>
-  
-  
-                        </p>
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                        <p><strong>sollzins</strong>
-                          <br><em>optional</em>
-                        </p>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                        <p></p>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                      <p>
-  
-                          <a href="#_double">Double</a>
-  
-  
-                        </p>
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                        <p><strong>darlehensgeber</strong>
-                          <br><em>optional</em>
-                        </p>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                        <p></p>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                      <p>
-                          darlehensgeber
-  
-                          <a href="#_"></a>
-  
-  
-                        </p>
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                        <p><strong>grundschuld</strong>
-                          <br><em>optional</em>
-                        </p>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                        <p></p>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                      <p>
-  
-                          <a href="#_double">Double</a>
-  
-  
-                        </p>
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                        <p><strong>darlehensbetrag</strong>
-                          <br><em>optional</em>
-                        </p>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                        <p></p>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                      <p>
-  
-                          <a href="#_double">Double</a>
   
   
                         </p>
@@ -8214,6 +8250,157 @@
                   <td class="tableblock halign-left valign-middle">
                     <div class="content">
                       <div class="paragraph">
+                        <p><strong>darlehensgeber</strong>
+                          <br><em>optional</em>
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p></p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                      <p>
+                          darlehensgeber
+  
+                          <a href="#_"></a>
+  
+  
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p><strong>grundschuld</strong>
+                          <br><em>optional</em>
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p></p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                      <p>
+  
+                          <a href="#_double">Double</a>
+  
+  
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p><strong>darlehensbetrag</strong>
+                          <br><em>optional</em>
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p></p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                      <p>
+  
+                          <a href="#_double">Double</a>
+  
+  
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p><strong>rateMonatlich</strong>
+                          <br><em>optional</em>
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p></p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                      <p>
+  
+                          <a href="#_double">Double</a>
+  
+  
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p><strong>sollzins</strong>
+                          <br><em>optional</em>
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p></p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                      <p>
+  
+                          <a href="#_double">Double</a>
+  
+  
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
                         <p><strong>zinsbindungBis</strong>
                           <br><em>optional</em>
                         </p>
@@ -8353,157 +8540,6 @@
                       <p>
   
                           <a href="#_AbloesungBestehendesDarlehen">AbloesungBestehendesDarlehen</a>
-  
-  
-                        </p>
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                        <p><strong>rateMonatlich</strong>
-                          <br><em>optional</em>
-                        </p>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                        <p></p>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                      <p>
-  
-                          <a href="#_double">Double</a>
-  
-  
-                        </p>
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                        <p><strong>sollzins</strong>
-                          <br><em>optional</em>
-                        </p>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                        <p></p>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                      <p>
-  
-                          <a href="#_double">Double</a>
-  
-  
-                        </p>
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                        <p><strong>darlehensgeber</strong>
-                          <br><em>optional</em>
-                        </p>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                        <p></p>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                      <p>
-                          darlehensgeber
-  
-                          <a href="#_"></a>
-  
-  
-                        </p>
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                        <p><strong>grundschuld</strong>
-                          <br><em>optional</em>
-                        </p>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                        <p></p>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                      <p>
-  
-                          <a href="#_double">Double</a>
-  
-  
-                        </p>
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                        <p><strong>darlehensbetrag</strong>
-                          <br><em>optional</em>
-                        </p>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                        <p></p>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                      <p>
-  
-                          <a href="#_double">Double</a>
   
   
                         </p>
@@ -8694,7 +8730,7 @@
                   <td class="tableblock halign-left valign-middle">
                     <div class="content">
                       <div class="paragraph">
-                        <p>Hier wird eine gültige PartnerId erwartet.</p>
+                        <p>Hier wird eine gültige PartnerId erwartet. Empfänger des Vorgangs.</p>
                       </div>
                     </div>
                   </td>
@@ -10372,7 +10408,7 @@
                     <div class="content">
                       <div class="paragraph">
                         <p><strong>erbbaurecht</strong>
-                          
+                          <br><em>optional</em>
                         </p>
                       </div>
                     </div>
@@ -11461,7 +11497,7 @@
                                 <li><a href="#_FlexibelKurzfristigHandlungsfaehig">FlexibelKurzfristigHandlungsfaehig</a></li>
                                 <li><a href="#_KeineZinsbindungPraeferenz">KeineZinsbindungPraeferenz</a></li>
                                 <li><a href="#_LangeZinssicherheit">LangeZinssicherheit</a></li>
-                                <li><a href="#_ZinsbindungInJahrenPraeferenz">ZinsbindungInJahrenPraeferenz</a></li>
+                                <li><a href="#_ZinsbindungInJahren">ZinsbindungInJahren</a></li>
                                 <li><a href="#_Zinsbindungsspanne">Zinsbindungsspanne</a></li>
                             </ul>
                           </div>
@@ -11556,7 +11592,7 @@
                   <td class="tableblock halign-left valign-middle">
                     <div class="content">
                       <div class="paragraph">
-                        <p><strong>tilgungsSatzWechsel</strong>
+                        <p><strong>tilgungssatzwechsel</strong>
                           <br><em>optional</em>
                         </p>
                       </div>
@@ -11573,7 +11609,7 @@
                     <div class="content">
                       <div class="paragraph">
                       <p>
-                          tilgungsSatzWechsel
+                          tilgungssatzwechsel
   
                           <a href="#_"></a>
   
@@ -15574,7 +15610,7 @@
                     <div class="content">
                       <div class="paragraph">
                         <p><strong>tilgungswunsch</strong>
-                          
+                          <br><em>optional</em>
                         </p>
                       </div>
                     </div>
@@ -19568,7 +19604,7 @@
                   <td class="tableblock halign-left valign-middle">
                     <div class="content">
                       <div class="paragraph">
-                        <p><strong>jahr</strong>
+                        <p><strong>betrag</strong>
                           <br><em>optional</em>
                         </p>
                       </div>
@@ -19586,7 +19622,7 @@
                       <div class="paragraph">
                       <p>
   
-                          <a href="#_integer">Integer</a>
+                          <a href="#_double">Double</a>
   
   
                         </p>
@@ -21646,7 +21682,7 @@
                       <div class="paragraph">
                       <p>
   
-                          <a href="#_integer">Integer</a>
+                          <a href="#_double">Double</a>
   
   
                         </p>
@@ -22024,7 +22060,7 @@
                       <div class="paragraph">
                       <p>
   
-                          <a href="#_integer">Integer</a>
+                          <a href="#_double">Double</a>
   
   
                         </p>
@@ -22054,7 +22090,7 @@
                       <div class="paragraph">
                       <p>
   
-                          <a href="#_integer">Integer</a>
+                          <a href="#_double">Double</a>
   
   
                         </p>
@@ -24483,7 +24519,7 @@
                     <div class="content">
                       <div class="paragraph">
                         <p><strong>tilgungssatzInProzent</strong>
-                          
+                          <br><em>optional</em>
                         </p>
                       </div>
                     </div>
@@ -26248,7 +26284,7 @@
             </table>
           </div>
           <div class="sect2">
-            <h3 id="_ZinsbindungInJahrenPraeferenz">ZinsbindungInJahrenPraeferenz</h3>
+            <h3 id="_ZinsbindungInJahren">ZinsbindungInJahren</h3>
             <div class="paragraph">
               <p></p>
             </div>
