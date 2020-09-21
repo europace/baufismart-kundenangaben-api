@@ -7,8 +7,8 @@ info:
   contact:
     name: Europace AG
     url: http://developer.europace.de
-    email: helpdesk@europace2.de
-  version: 1.0-alpha.4; 882cd4d573c2e686eef322b5cde64073b763e6d8
+    email: devsupport@europace2.de
+  version: 1.0-alpha.4; 6c87902b4a80a3a1ac9e5c457fb0220bc207a545
 externalDocs:
   url: https://developer.europace.de/api/kundenangaben-api
 servers:
@@ -256,8 +256,6 @@ components:
           type: string
         bic:
           type: string
-        kreditinstitut:
-          type: string
         kundenreferenzIdsDerKontoinhaber:
           type: array
           description: Liste von ReferenzIds der Kunden.
@@ -286,6 +284,7 @@ components:
       required:
       - sonderzahlungen
       type: object
+      description: Für leer gelassene Parameter werden automatisch Vorschläge berechnet.
       allOf:
       - $ref: '#/components/schemas/Finanzierungsbaustein'
       - type: object
@@ -309,6 +308,226 @@ components:
           tilgungsrateMonatlich:
             type: number
             format: double
+          sparbeginn:
+            type: string
+            format: date
+          tarifListe:
+            type: array
+            items:
+              type: string
+              enum:
+              - BKM_MAX_PREMIUM_OPTIMAL
+              - BKM_MAX_PREMIUM_NIEDRIGE_SPARRATE
+              - BKM_MAX_PREMIUM_NIEDRIGE_TILGUNG
+              - BKM_MAX_PREMIUM_BESTER_ZINS
+              - FUCHS_IMMO_1
+              - FUCHS_IMMO_1_PLUS
+              - FUCHS_IMMO_2
+              - FUCHS_IMMO_3
+              - FUCHS_IMMO_4
+              - FUCHS_IMMO_5
+              - FUCHS_IMMO_6
+              - FUCHS_IMMO_7
+              - LBS_BAYERN_W4
+              - LBS_BAYERN_W4_X30
+              - LBS_BAYERN_W4_X35
+              - LBS_BAYERN_W4_X40
+              - LBS_BAYERN_W6
+              - LBS_BAYERN_W9
+              - LBS_BAYERN_WF
+              - LBS_BAYERN_WU
+              - LBS_HT_CLASSIC_S_2015
+              - LBS_HT_CLASSIC_F_2015
+              - LBS_HT_CLASSIC_L_2015
+              - LBS_HT_CLASSIC_N_2015
+              - LBS_HT_HOME_M
+              - LBS_HT_HOME_L
+              - LBS_HT_HOME_XL
+              - LBS_HT_COMFORT_S
+              - LBS_HT_COMFORT_N
+              - LBS_HT_FLEX
+              - LBS_NORD_N_STARTER_S4
+              - LBS_NORD_N_STARTER_Q5
+              - LBS_NORD_N_STARTER_S5
+              - LBS_NORD_N_STARTER_S6
+              - LBS_NORD_N_FINANZIERER_F3
+              - LBS_NORD_N_FINANZIERER_F4
+              - LBS_NORD_N_FINANZIERER_F5
+              - LBS_NORD_N_FINANZIERER_F6
+              - LBS_NORD_N_FINANZIERER_F7
+              - LBS_NORD_N_MODERNISIERER_MINIZINS
+              - LBS_NORD_N_MODERNISIERER_M8
+              - LBS_NORD_N_MODERNISIERER_MX
+              - LBS_OST_CLASSIC15_F5
+              - LBS_OST_CLASSIC_F15_F5
+              - LBS_OST_CLASSIC_F_H4
+              - LBS_OST_CLASSIC_F_H5
+              - LBS_OST_CLASSIC_12_C4
+              - LBS_OST_CLASSIC_12_C9
+              - LBS_OST_CLASSIC15_F3
+              - LBS_OST_CLASSIC15_F4
+              - LBS_OST_CLASSIC15_F6
+              - LBS_OST_CLASSIC15_F8
+              - LBS_OST_CLASSIC15_PLUS_F
+              - LBS_OST_CLASSIC15_PLUS_S
+              - LBS_OST_VARIO_FLEX
+              - LBS_OST_CLASSIC20_F3
+              - LBS_OST_CLASSIC20_F8
+              - LBS_OST_CLASSIC20_PLUS_F
+              - LBS_SHH_PRIMUS_SC
+              - LBS_SHH_PRIMUS_SD
+              - LBS_SHH_PRIMUS_SH
+              - LBS_SHH_PRIMUS_SI
+              - LBS_SHH_PRIMUS_SJ
+              - LBS_SHH_TREND_SD
+              - LBS_SHH_PRIMUS_TC
+              - LBS_SHH_PRIMUS_TH
+              - LBS_SHH_PRIMUS_TI
+              - LBS_SHH_PRIMUS_TJ
+              - LBS_SHH_PRIMUS_TD
+              - LBS_SHH_TREND_TD
+              - LBS_WEST_ZUHAUSE_DIREKT_10
+              - LBS_WEST_ZUHAUSE_DIREKT_15
+              - LBS_WEST_ZUHAUSE_PLUS
+              - LBS_WEST_ZUHAUSE_FLEX_4_S
+              - LBS_WEST_ZUHAUSE_FLEX_4_L
+              - LBS_WEST_ZUHAUSE_FLEX_5_S
+              - LBS_WEST_ZUHAUSE_FLEX_5_L
+              - LBS_WEST_ZUHAUSE_FLEX_6_S
+              - LBS_WEST_ZUHAUSE_FLEX_6_L
+              - LBS_WEST_ZUHAUSE_FLEX_8_S
+              - LBS_WEST_ZUHAUSE_FLEX_8_L
+              - LBS_WEST_ZUHAUSE_PRIMA
+              - LBS_WEST_ZUHAUSE_PRIMA_10
+              - LBS_WEST_ZUHAUSE_FLEX_4
+              - LBS_WEST_ZUHAUSE_FLEX_5
+              - LBS_WEST_ZUHAUSE_FLEX_6
+              - LBS_WEST_ZUHAUSE_FLEX_8
+              - LBS_WEST_ZUHAUSE_YOUNG
+              - LBS_WEST_ZUHAUSE_SPEZIAL
+              - LBS_WEST_RIESTER_ZUHAUSE_DIREKT_10
+              - LBS_WEST_RIESTER_ZUHAUSE_DIREKT_15
+              - LBS_WEST_RIESTER_ZUHAUSE_DIREKT_PLUS
+              - LBS_WEST_RIESTER_ZUHAUSE_FLEX_4
+              - LBS_WEST_RIESTER_ZUHAUSE_FLEX_5
+              - LBS_WEST_RIESTER_ZUHAUSE_FLEX_6
+              - LBS_WEST_RIESTER_ZUHAUSE_FLEX_8
+              - LBS_WEST_RIESTER_ZUHAUSE_FLEX_4_S
+              - LBS_WEST_RIESTER_ZUHAUSE_FLEX_5_S
+              - LBS_WEST_RIESTER_ZUHAUSE_FLEX_6_S
+              - LBS_WEST_RIESTER_ZUHAUSE_FLEX_8_S
+              - LBS_WEST_RIESTER_ZUHAUSE_FLEX_4_L
+              - LBS_WEST_RIESTER_ZUHAUSE_FLEX_5_L
+              - LBS_WEST_RIESTER_ZUHAUSE_FLEX_6_L
+              - LBS_WEST_RIESTER_ZUHAUSE_FLEX_8_L
+              - LBS_WEST_RIESTER_ZUHAUSE_SPEZIAL
+              - LBS_SUEDWEST_KLASSIK_PLUS_2018
+              - LBS_SUEDWEST_LANGZEIT_PLUS_2019
+              - LBS_SAAR_PREMIUM_FLEX_18
+              - LBS_SAAR_PREMIUM_SICHER_18
+              - LBS_SAAR_PREMIUM_TOP_18
+              - LBS_SAAR_EXTRA_GUENSTIG_18
+              - LBS_SAAR_EXTRA_SICHER_18
+              - LBS_SAAR_EXTRA_SPEZIAL_18
+              - SIGNAL_IDUNA_FREIRAUM_F_30
+              - SIGNAL_IDUNA_FREIRAUM_F_30_16
+              - SIGNAL_IDUNA_FREIRAUM_F_35
+              - SIGNAL_IDUNA_FREIRAUM_F_35_16
+              - SIGNAL_IDUNA_FREIRAUM_F_40
+              - SIGNAL_IDUNA_FREIRAUM_F_40_16
+              - SIGNAL_IDUNA_FREIRAUM_F_45
+              - SIGNAL_IDUNA_FREIRAUM_F_45_16
+              - SIGNAL_IDUNA_FREIRAUM_F_50
+              - SIGNAL_IDUNA_FREIRAUM_F_60
+              - SIGNAL_IDUNA_FREIRAUM_F_30_MZ
+              - SIGNAL_IDUNA_FREIRAUM_F_30_MZ_16
+              - SIGNAL_IDUNA_FREIRAUM_F_35_MZ
+              - SIGNAL_IDUNA_FREIRAUM_F_35_MZ_16
+              - SIGNAL_IDUNA_FREIRAUM_F_40_MZ
+              - SIGNAL_IDUNA_FREIRAUM_F_40_MZ_16
+              - SIGNAL_IDUNA_FREIRAUM_F_45_MZ
+              - SIGNAL_IDUNA_FREIRAUM_F_45_MZ_16
+              - SIGNAL_IDUNA_FREIRAUM_F_50_MZ
+              - SIGNAL_IDUNA_FREIRAUM_F_60_MZ
+              - BHW_TARIF_FI1
+              - BHW_TARIF_FI2
+              - BHW_TARIF_FI3
+              - BHW_TARIF_FI4
+              - BHW_TARIF_FX1
+              - BHW_TARIF_FX2
+              - BHW_TARIF_REN
+              - BHW_TARIF_FI1N
+              - BHW_TARIF_FI2N
+              - BHW_TARIF_FX1N
+              - BHW_TARIF_FX2N
+              - DT_RING_TARIF_FT
+              - DT_RING_TARIF_FT_0
+              - DT_RING_TARIF_FT_1
+              - DT_RING_TARIF_FT_2
+              - DT_RING_TARIF_XT_1
+              - DT_RING_TARIF_XT_0
+              - DT_RING_TARIF_F_1
+              - ALTE_LEIPZIGER_150X
+              - ALTE_LEIPZIGER_160X
+              - ALTE_LEIPZIGER_170X
+              - ALTE_LEIPZIGER_180X
+              - ALTE_LEIPZIGER_190X
+              - ALTE_LEIPZIGER_200X
+              - ALTE_LEIPZIGER_150X_MZ
+              - ALTE_LEIPZIGER_160X_MZ
+              - ALTE_LEIPZIGER_170X_MZ
+              - ALTE_LEIPZIGER_180X_MZ
+              - ALTE_LEIPZIGER_190X_MZ
+              - ALTE_LEIPZIGER_200X_MZ
+              - ALTE_LEIPZIGER_ZG_21XX_20
+              - ALTE_LEIPZIGER_ZG_21XX_30
+              - ALTE_LEIPZIGER_ZG_25XX_49
+              - ALTE_LEIPZIGER_21XX_27
+              - ALTE_LEIPZIGER_21XX_33
+              - ALTE_LEIPZIGER_21XX
+              - ALTE_LEIPZIGER_25XX_30
+              - ALTE_LEIPZIGER_25XX_45
+              - ALTE_LEIPZIGER_22XX_33
+              - ALTE_LEIPZIGER_22XX_27
+              - ALTE_LEIPZIGER_22XX
+              - ALTE_LEIPZIGER_26XX_30
+              - ALTE_LEIPZIGER_26XX_45
+              - WUESTENROT_01063_4
+              - WUESTENROT_01063_5
+              - WUESTENROT_01063_6
+              - WUESTENROT_01063_7
+              - WUESTENROT_01063_8
+              - WUESTENROT_01063_9
+              - WUESTENROT_01063_10
+              - WUESTENROT_01063_12
+              - WUESTENROT_01064_4
+              - WUESTENROT_01064_6
+              - WUESTENROT_01064_8
+              - WUESTENROT_01064_10
+              - WUESTENROT_01064_12
+              - WUESTENROT_01061_10
+              - WUESTENROT_01062_4
+              - WUESTENROT_01061_10_0000
+              - WUESTENROT_01062_04_0000
+              - WUESTENROT_01063_05_3585
+              - WUESTENROT_01063_07_5110
+              - WUESTENROT_01063_09_0000
+              - WUESTENROT_01064_10_0000
+              - WUESTENROT_01064_04_0000
+              - WUESTENROT_01064_04_5000
+              - WUESTENROT_01064_05_4121
+              - WUESTENROT_01064_06_0000
+              - WUESTENROT_01064_07_5161
+              - WUESTENROT_01064_09_0000
+              - WUESTENROT_01073_04_5000
+              - WUESTENROT_01073_05_9000
+              - WUESTENROT_01073_08_0000
+              - DEUTSCHE_BANK_BAUSPAR_TARIF_FI1
+              - DEUTSCHE_BANK_BAUSPAR_TARIF_FI2
+              - DEUTSCHE_BANK_BAUSPAR_TARIF_FI3
+              - DEUTSCHE_BANK_BAUSPAR_TARIF_FI4
+              - DEUTSCHE_BANK_BAUSPAR_TARIF_FX1
+              - DEUTSCHE_BANK_BAUSPAR_TARIF_FX2
           weitereWunschparameter:
             $ref: '#/components/schemas/Bausparvertragsdetails'
           sonderzahlungen:
@@ -355,22 +574,6 @@ components:
           - WUESTENROT
         vertragsnummer:
           type: string
-        jahresentgelt:
-          type: number
-          format: double
-        details:
-          $ref: '#/components/schemas/Bausparvertragsdetails'
-        verwendung:
-          oneOf:
-          - $ref: '#/components/schemas/AbtretenAlsVerwendung'
-          - $ref: '#/components/schemas/AufloesungAlsVerwendung'
-      description: In anderen APIs als 'bestehenderBausparvertrag' bezeichnet.
-    Bausparvertragsdetails:
-      type: object
-      properties:
-        sparbeitragMonatlich:
-          type: number
-          format: double
         tarif:
           type: string
           enum:
@@ -586,12 +789,28 @@ components:
           - DEUTSCHE_BANK_BAUSPAR_TARIF_FI4
           - DEUTSCHE_BANK_BAUSPAR_TARIF_FX1
           - DEUTSCHE_BANK_BAUSPAR_TARIF_FX2
-        bausparsumme:
-          type: number
-          format: double
         vertragsbeginn:
           type: string
           format: date
+        jahresentgelt:
+          type: number
+          format: double
+        details:
+          $ref: '#/components/schemas/Bausparvertragsdetails'
+        verwendung:
+          oneOf:
+          - $ref: '#/components/schemas/AbtretenAlsVerwendung'
+          - $ref: '#/components/schemas/AufloesungAlsVerwendung'
+      description: In anderen APIs als 'bestehenderBausparvertrag' bezeichnet.
+    Bausparvertragsdetails:
+      type: object
+      properties:
+        sparbeitragMonatlich:
+          type: number
+          format: double
+        bausparsumme:
+          type: number
+          format: double
         zuteilungsdatum:
           type: string
           format: date
@@ -705,6 +924,23 @@ components:
       - '@type'
       type: object
       properties:
+        darlehensgeber:
+          oneOf:
+          - $ref: '#/components/schemas/NichtGesetzterDarlehensgeber'
+          - $ref: '#/components/schemas/ProduktanbieterDarlehensgeber'
+          - $ref: '#/components/schemas/SonstigerDarlehensgeber'
+        grundschuld:
+          type: number
+          format: double
+        darlehensbetrag:
+          type: number
+          format: double
+        rateMonatlich:
+          type: number
+          format: double
+        sollzins:
+          type: number
+          format: double
         zinsbindungBis:
           type: string
           format: date
@@ -718,23 +954,6 @@ components:
           description: IBAN des Darlehenskontos
         abloesung:
           $ref: '#/components/schemas/AbloesungBestehendesDarlehen'
-        rateMonatlich:
-          type: number
-          format: double
-        sollzins:
-          type: number
-          format: double
-        darlehensgeber:
-          oneOf:
-          - $ref: '#/components/schemas/NichtGesetzterDarlehensgeber'
-          - $ref: '#/components/schemas/ProduktanbieterDarlehensgeber'
-          - $ref: '#/components/schemas/SonstigerDarlehensgeber'
-        grundschuld:
-          type: number
-          format: double
-        darlehensbetrag:
-          type: number
-          format: double
         '@type':
           type: string
       discriminator:
@@ -798,7 +1017,7 @@ components:
       properties:
         kundenbetreuer:
           type: string
-          description: Hier wird eine gültige PartnerId erwartet.
+          description: Hier wird eine gültige PartnerId erwartet. Empfänger des Vorgangs.
         bearbeiter:
           type: string
           description: Hier wird eine gültige PartnerId erwartet. Diese kann identisch
@@ -972,8 +1191,6 @@ components:
           type: string
           format: date
     Erbbaurecht:
-      required:
-      - erbbaurecht
       type: object
       properties:
         erbbaurecht:
@@ -1141,7 +1358,7 @@ components:
           - $ref: '#/components/schemas/FlexibelKurzfristigHandlungsfaehig'
           - $ref: '#/components/schemas/KeineZinsbindungPraeferenz'
           - $ref: '#/components/schemas/LangeZinssicherheit'
-          - $ref: '#/components/schemas/ZinsbindungInJahrenPraeferenz'
+          - $ref: '#/components/schemas/ZinsbindungInJahren'
           - $ref: '#/components/schemas/Zinsbindungsspanne'
         laufzeit:
           oneOf:
@@ -1158,7 +1375,7 @@ components:
           - $ref: '#/components/schemas/Ratenspanne'
           - $ref: '#/components/schemas/VerfuegbaresEinkommenAusschoepfen'
           - $ref: '#/components/schemas/WarmmieteVonHeute'
-        tilgungsSatzWechsel:
+        tilgungssatzwechsel:
           oneOf:
           - $ref: '#/components/schemas/KeineTilgungssatzwechselPraeferenz'
           - $ref: '#/components/schemas/Mindestens'
@@ -1594,8 +1811,6 @@ components:
           kommentar:
             type: string
     KfwDarlehen:
-      required:
-      - tilgungswunsch
       type: object
       allOf:
       - $ref: '#/components/schemas/Finanzierungsbaustein'
@@ -2057,9 +2272,9 @@ components:
       - $ref: '#/components/schemas/RatenhoehePraeferenz'
       - type: object
         properties:
-          jahr:
-            type: integer
-            format: int32
+          betrag:
+            type: number
+            format: double
           kommentar:
             type: string
     MoeglichstSchnell:
@@ -3213,8 +3428,8 @@ components:
       - type: object
         properties:
           betrag:
-            type: integer
-            format: int32
+            type: number
+            format: double
           kommentar:
             type: string
     RatenhoehePraeferenz:
@@ -3268,11 +3483,11 @@ components:
       - type: object
         properties:
           von:
-            type: integer
-            format: int32
+            type: number
+            format: double
           bis:
-            type: integer
-            format: int32
+            type: number
+            format: double
           kommentar:
             type: string
     RechteAbteilung2:
@@ -3585,8 +3800,6 @@ components:
             type: string
             format: date
     TilgungInProzent:
-      required:
-      - tilgungssatzInProzent
       type: object
       allOf:
       - $ref: '#/components/schemas/Tilgungswunsch'
@@ -3819,7 +4032,7 @@ components:
           DEADLINE: '#/components/schemas/Deadline'
           SO_SCHNELL_WIE_MOEGLICH: '#/components/schemas/SoSchnellWieMoeglich'
           KEINE_ZEITLICHER_RAHMEN_PRAEFERENZ: '#/components/schemas/KeineZeitlicherRahmenPraeferenz'
-    ZinsbindungInJahrenPraeferenz:
+    ZinsbindungInJahren:
       type: object
       allOf:
       - $ref: '#/components/schemas/ZinsbindungPraeferenz'
@@ -3840,7 +4053,7 @@ components:
       discriminator:
         propertyName: '@type'
         mapping:
-          ZINSBINDUNG_IN_JAHREN_PRAEFERENZ: '#/components/schemas/ZinsbindungInJahrenPraeferenz'
+          ZINSBINDUNG_IN_JAHREN: '#/components/schemas/ZinsbindungInJahren'
           ZINSBINDUNGSSPANNE: '#/components/schemas/Zinsbindungsspanne'
           FLEXIBEL_KURZFRISTIG_HANDLUNGSFAEHIG: '#/components/schemas/FlexibelKurzfristigHandlungsfaehig'
           LANGE_ZINSSICHERHEIT: '#/components/schemas/LangeZinssicherheit'
