@@ -8,7 +8,7 @@ info:
     name: Europace AG
     url: http://developer.europace.de
     email: devsupport@europace2.de
-  version: 1.0-alpha.4; 6c87902b4a80a3a1ac9e5c457fb0220bc207a545
+  version: 1.0-alpha.4; 92b7b53e03933c5a72b543ff896a385fd0eac965
 externalDocs:
   url: https://developer.europace.de/api/kundenangaben-api
 servers:
@@ -1119,17 +1119,11 @@ components:
           items:
             $ref: '#/components/schemas/UnbesichertesExternesDarlehen'
         eigenleistung:
-          $ref: '#/components/schemas/Eigenleistung'
-    Eigenleistung:
-      type: object
-      properties:
-        arbeitWirdInEigenleistungErbracht:
-          type: boolean
-        arbeitsleistung:
           type: number
+          description: "Bei den Finanzierungszwecken 'NEUBAU','KAUF_NEUBAU_VOM_BAUTRAEGER',\
+            \ 'MODERNISIERUNG_UMBAU_ANBAU' kann persönlich erbrachte Arbeitsleistung\
+            \ als Eigenleistung erfasst werden"
           format: double
-      description: "Bei den Finanzierungszwecken 'NEUBAU','KAUF_NEUBAU_VOM_BAUTRAEGER',\
-        \ 'MODERNISIERUNG_UMBAU_ANBAU' kann Eigenleistung erfasst werden"
     Eigentumswohnung:
       type: object
       allOf:
@@ -1193,8 +1187,6 @@ components:
     Erbbaurecht:
       type: object
       properties:
-        erbbaurecht:
-          type: boolean
         erbbauzinsJaehrlich:
           type: number
           format: double
@@ -1739,13 +1731,6 @@ components:
             format: int32
           kommentar:
             type: string
-    Kapitalbeschaffung:
-      type: object
-      properties:
-        kapitalWirdBeschafft:
-          type: boolean
-        kapital:
-          $ref: '#/components/schemas/KommentierterBetrag'
     KeinZeitdruck:
       type: object
       allOf:
@@ -1916,8 +1901,8 @@ components:
             format: double
           modernisierung:
             $ref: '#/components/schemas/Modernisierungskosten'
-          kapitalbeschaffung:
-            $ref: '#/components/schemas/Kapitalbeschaffung'
+          zuBeschaffendesKapital:
+            $ref: '#/components/schemas/KommentierterBetrag'
     KostenKapitalbeschaffung:
       type: object
       description: "Wenn der Finanzierungszweck 'KAPITALBESCHAFFUNG' ist, dann werden\
@@ -1981,8 +1966,8 @@ components:
           renovierungskosten:
             type: number
             format: double
-          kapitalbeschaffung:
-            $ref: '#/components/schemas/Kapitalbeschaffung'
+          zuBeschaffendesKapital:
+            $ref: '#/components/schemas/KommentierterBetrag'
           anzahlTeilzahlungen:
             type: integer
             format: int32
@@ -2239,8 +2224,6 @@ components:
     Modernisierung:
       type: object
       properties:
-        modernisiert:
-          type: boolean
         jahr:
           type: integer
           format: int32
@@ -2253,9 +2236,6 @@ components:
     Modernisierungskosten:
       type: object
       properties:
-        modernisieren:
-          type: boolean
-          description: Wird eine Modernisierung oder Renovierung durchgeführt.
         modernisierungskostenInklEigenleistungen:
           type: number
           description: "Werterhöhende Maßnahmen wie Fenster, Heizung, Dach, Dämmung\
@@ -2272,9 +2252,6 @@ components:
       - $ref: '#/components/schemas/RatenhoehePraeferenz'
       - type: object
         properties:
-          betrag:
-            type: number
-            format: double
           kommentar:
             type: string
     MoeglichstSchnell:
