@@ -141,6 +141,21 @@ Q: Wird die alte BEX-Schnittstelle durch die neue Kundenangaben-API ersetzt werd
 
 A: Die neue Kundenangaben-API wird die alte BEX-Schnittstelle ersetzen. 
    Die alte BEX-Schnittstelle wird nicht mehr weiterentwickelt und Mitte 2021 abgeschaltet.
+   
+Q: Wie kommt es, das die Kundenangaben-API eine neue Struktur hat?
+
+A: Die Kundenangaben-API ermöglicht zum ersten Mal den Übertrag fast aller in BaufiSmart erfassbaren Daten. Die passende Struktur dazu soll übersichtlicher und besser verständlich sein. Wir haben die Struktur in mehreren Feedbackrunden geschärft. 
+ 
+Die alte Struktur der BEX-Schnittstelle und die Struktur der Vorgänge-API weichen historisch bedingt voneinander ab. Das Datenmodell der Kundenangaben-API setzt basierend auf Feedback den neuen Standard. Wir planen künftig neue APIs in Absprache mit unseren Partnern an die Struktur der Kundenangaben-API anzulehnen.
+
+Q: Wann ist es sinnvoll mit der Anbindung der Kundenangaben-API zu beginnen?
+A: Momentan befindet sich die Kundenangaben-API noch in der Entwicklung.
+
+Wir haben das Datenmodell bereits aufgestellt. Die API werden wir, wie in GitHub dokumentiert, umsetzen.
+
+Während der Umsetzung kann es zu kleinen Änderungen am Modell kommen. Diese werden jedoch nicht tiefgreifend sein.
+Unsere Partner können daher bereits mit dem Mapping des eigenen Modells auf das Kundenangaben-Modell beginnen.
+
 
 ## Tools
 
