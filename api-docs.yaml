@@ -8,12 +8,12 @@ info:
     name: Europace AG
     url: http://developer.europace.de
     email: devsupport@europace2.de
-  version: 1.0-alpha.4; 536f04d4221c3b9d14249431456ad83c2443bba4
+  version: 1.0-alpha.4; 256a64beb5a92f514915a3a656b9697a15aa850f
 externalDocs:
   url: https://developer.europace.de/api/kundenangaben-api
 servers:
-- url: https://baufismart.api.europace.de
-  description: Produktion Server
+- url: https://baufinanzierung.api.europace.de
+  description: Produktionsserver
 tags:
 - name: Kundenangaben
   description: Kundenangaben in einen neuen Vorgang importieren
