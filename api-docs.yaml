@@ -8,7 +8,7 @@ info:
     name: Europace AG
     url: http://developer.europace.de
     email: devsupport@europace2.de
-  version: 1.0-alpha.4; 256a64beb5a92f514915a3a656b9697a15aa850f
+  version: 1.0-alpha.4; 76fe091218c9f7fc8fd7f79a6173c43ae760c8c5
 externalDocs:
   url: https://developer.europace.de/api/kundenangaben-api
 servers:
@@ -1217,6 +1217,17 @@ components:
         beginnDerTaetigkeit:
           type: string
           format: date
+    EinmaligePraemienzahlung:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/Praemienzahlung'
+      - type: object
+        properties:
+          absicherungsfinanzierungsweise:
+            type: string
+            enum:
+            - DURCH_HAUPTDARLEHEN
+            - INDIVIDUELL
     Erbbaurecht:
       type: object
       properties:
@@ -2292,6 +2303,10 @@ components:
         properties:
           kommentar:
             type: string
+    MonatlichePraemienzahlung:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/Praemienzahlung'
     Nebenkosten:
       type: object
       properties:
@@ -2428,6 +2443,18 @@ components:
           $ref: '#/components/schemas/GirokontoPraeferenz'
         weiterePraeferenz:
           type: string
+    Praemienzahlung:
+      required:
+      - '@type'
+      type: object
+      properties:
+        '@type':
+          type: string
+      discriminator:
+        propertyName: '@type'
+        mapping:
+          MONATLICHE_PRAEMIENZAHLUNG: '#/components/schemas/MonatlichePraemienzahlung'
+          EINMALIGE_PRAEMIENZAHLUNG: '#/components/schemas/EinmaligePraemienzahlung'
     Privatdarlehen:
       type: object
       allOf:
@@ -3494,15 +3521,9 @@ components:
           type: integer
           format: int32
         praemienzahlung:
-          type: string
-          enum:
-          - EINMALIG
-          - MONATLICH
-        absicherungsfinanzierungsweise:
-          type: string
-          enum:
-          - DURCH_HAUPTDARLEHEN
-          - INDIVIDUELL
+          oneOf:
+          - $ref: '#/components/schemas/EinmaligePraemienzahlung'
+          - $ref: '#/components/schemas/MonatlichePraemienzahlung'
         risikoabsicherungswuensche:
           type: array
           items:
