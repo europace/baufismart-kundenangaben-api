@@ -8,7 +8,7 @@ info:
     name: Europace AG
     url: http://developer.europace.de
     email: devsupport@europace2.de
-  version: 1.0-alpha.5; 76011c984cbc8fa52dd6fb6be21afa51e1d248c7
+  version: 1.0-alpha.5; 653d93bcaf1ba59f81a36972a5d85869d6925688
 externalDocs:
   url: https://developer.europace.de/api/kundenangaben-api
 servers:
@@ -32,7 +32,11 @@ paths:
         required: true
         schema:
           type: string
-      - $ref: '#/parameters/TraceId'
+      - name: TraceId
+        in: header
+        description: Eine eindeutige technische Id zur Identifikation des Requests
+        schema:
+          type: string
       - name: sendEmailNotification
         in: query
         description: "Sendet eine E-Mail an den angegebenen Berater, wenn true übergeben\
@@ -107,8 +111,6 @@ components:
       - $ref: '#/components/schemas/Verwendung'
       - type: object
         properties:
-          abtreten:
-            type: boolean
           kommentar:
             type: string
     Angestellter:
@@ -175,8 +177,13 @@ components:
       - $ref: '#/components/schemas/Finanzierungszweck'
       - type: object
         properties:
-          kosten:
-            $ref: '#/components/schemas/KostenAnschlussfinanzierung'
+          bereitsBeglicheneKosten:
+            type: number
+            format: double
+          modernisierung:
+            $ref: '#/components/schemas/Modernisierungskosten'
+          zuBeschaffendesKapital:
+            $ref: '#/components/schemas/KommentierterBetrag'
           marktwertFinanzierungsobjekt:
             type: number
             format: double
@@ -254,6 +261,18 @@ components:
             type: string
           situationNachRenteneintritt:
             $ref: '#/components/schemas/SituationNachRenteneintritt'
+    Aufenthalt:
+      type: object
+      properties:
+        inDeutschlandSeit:
+          type: string
+          format: date
+        aufenthaltstitel:
+          oneOf:
+          - $ref: '#/components/schemas/Aufenthaltserlaubnis'
+          - $ref: '#/components/schemas/DaueraufenthaltEu'
+          - $ref: '#/components/schemas/Niederlassungserlaubnis'
+          - $ref: '#/components/schemas/Visum'
     Aufenthaltserlaubnis:
       type: object
       allOf:
@@ -285,8 +304,6 @@ components:
       - $ref: '#/components/schemas/Verwendung'
       - type: object
         properties:
-          aufloesen:
-            type: boolean
           maximalEinzusetzenderBetrag:
             type: number
             format: double
@@ -338,8 +355,6 @@ components:
             - LANDWIRTSCHAFTLICHES_GRUNDSTUECK
             - SONSTIGES_GRUNDSTUECK
     Bauspardarlehen:
-      required:
-      - sonderzahlungen
       type: object
       description: Für leer gelassene Parameter werden automatisch Vorschläge berechnet.
       allOf:
@@ -995,7 +1010,6 @@ components:
       properties:
         darlehensgeber:
           oneOf:
-          - $ref: '#/components/schemas/NichtGesetzterDarlehensgeber'
           - $ref: '#/components/schemas/ProduktanbieterDarlehensgeber'
           - $ref: '#/components/schemas/SonstigerDarlehensgeber'
         grundschuld:
@@ -1146,7 +1160,6 @@ components:
         propertyName: '@type'
         mapping:
           SONSTIGER_DARLEHENSGEBER: '#/components/schemas/SonstigerDarlehensgeber'
-          NICHT_GESETZTER_DARLEHENSGEBER: '#/components/schemas/NichtGesetzterDarlehensgeber'
           PRODUKTANBIETER_DARLEHENSGEBER: '#/components/schemas/ProduktanbieterDarlehensgeber'
     DaueraufenthaltEu:
       type: object
@@ -1286,10 +1299,6 @@ components:
         laufzeitBis:
           type: integer
           format: int32
-    EuBuerger:
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/Staatsangehoerigkeit'
     EuroEinmalig:
       type: object
       allOf:
@@ -1486,8 +1495,8 @@ components:
       properties:
         '@type':
           type: string
-      description: "Der Finanzierungszweck legt fest, wofür die gestellten Mittel\
-        \ verwendet werden, sowie jeweilige Besonderheiten."
+      description: "Der Finanzierungszweck zeigt an, wofür die gestellten Mittel verwendet\
+        \ werden und wie der Bedarf zusammen gesetzt ist."
       discriminator:
         propertyName: '@type'
         mapping:
@@ -1832,8 +1841,8 @@ components:
       - $ref: '#/components/schemas/Finanzierungszweck'
       - type: object
         properties:
-          kosten:
-            $ref: '#/components/schemas/KostenKapitalbeschaffung'
+          zuBeschaffendesKapital:
+            $ref: '#/components/schemas/KommentierterBetrag'
           marktwertFinanzierungsobjekt:
             type: number
             format: double
@@ -1843,16 +1852,31 @@ components:
       - $ref: '#/components/schemas/Finanzierungszweck'
       - type: object
         properties:
-          kosten:
-            $ref: '#/components/schemas/KostenKauf'
+          weitereKosten:
+            $ref: '#/components/schemas/WeitereKosten'
+          nebenkosten:
+            $ref: '#/components/schemas/Nebenkosten'
+          kaufpreis:
+            type: number
+            format: double
+          modernisierung:
+            $ref: '#/components/schemas/Modernisierungskosten'
     KaufNeubauVomBautraeger:
       type: object
       allOf:
       - $ref: '#/components/schemas/Finanzierungszweck'
       - type: object
         properties:
-          kosten:
-            $ref: '#/components/schemas/KostenKaufNeubauVomBautraeger'
+          weitereKosten:
+            $ref: '#/components/schemas/WeitereKosten'
+          nebenkosten:
+            $ref: '#/components/schemas/Nebenkosten'
+          kaufpreis:
+            type: number
+            format: double
+          anzahlTeilzahlungen:
+            type: integer
+            format: int32
           eigenleistung:
             type: number
             description: Persönlich erbrachte Arbeitsleistung als Eigenleistung
@@ -1999,89 +2023,6 @@ components:
           type: string
         weitereKontaktmoeglichkeiten:
           type: string
-    KostenAnschlussfinanzierung:
-      type: object
-      properties:
-        bereitsBeglicheneKosten:
-          type: number
-          format: double
-        modernisierung:
-          $ref: '#/components/schemas/Modernisierungskosten'
-        zuBeschaffendesKapital:
-          $ref: '#/components/schemas/KommentierterBetrag'
-      description: Alle bereits beglichenen und anfallenden Kosten
-    KostenKapitalbeschaffung:
-      type: object
-      properties:
-        zuBeschaffendesKapital:
-          $ref: '#/components/schemas/KommentierterBetrag'
-      description: Alle bereits beglichenen und anfallenden Kosten
-    KostenKauf:
-      type: object
-      properties:
-        weitereKosten:
-          $ref: '#/components/schemas/WeitereKosten'
-        nebenkosten:
-          $ref: '#/components/schemas/Nebenkosten'
-        kaufpreis:
-          type: number
-          format: double
-        modernisierung:
-          $ref: '#/components/schemas/Modernisierungskosten'
-      description: Alle bereits beglichenen und anfallenden Kosten
-    KostenKaufNeubauVomBautraeger:
-      type: object
-      properties:
-        weitereKosten:
-          $ref: '#/components/schemas/WeitereKosten'
-        nebenkosten:
-          $ref: '#/components/schemas/Nebenkosten'
-        kaufpreis:
-          type: number
-          format: double
-        anzahlTeilzahlungen:
-          type: integer
-          format: int32
-      description: Alle bereits beglichenen und anfallenden Kosten
-    KostenModernisierung:
-      type: object
-      properties:
-        weitereKosten:
-          $ref: '#/components/schemas/WeitereKosten'
-        modernisierungskostenInklEigenleistungen:
-          type: number
-          format: double
-        renovierungskosten:
-          type: number
-          format: double
-        zuBeschaffendesKapital:
-          $ref: '#/components/schemas/KommentierterBetrag'
-        anzahlTeilzahlungen:
-          type: integer
-          format: int32
-      description: Alle bereits beglichenen und anfallenden Kosten
-    KostenNeubau:
-      type: object
-      properties:
-        weitereKosten:
-          $ref: '#/components/schemas/WeitereKosten'
-        nebenkosten:
-          $ref: '#/components/schemas/Nebenkosten'
-        grundstueckskosten:
-          $ref: '#/components/schemas/Grundstueckskosten'
-        herstellungskostenInklusiveEigenleistungen:
-          type: number
-          format: double
-        aussenanlagen:
-          type: number
-          format: double
-        baunebenkosten:
-          type: number
-          format: double
-        anzahlTeilzahlungen:
-          type: integer
-          format: int32
-      description: Alle bereits beglichenen und anfallenden Kosten
     Kunde:
       required:
       - referenzId
@@ -2322,14 +2263,17 @@ components:
       - $ref: '#/components/schemas/Finanzierungszweck'
       - type: object
         properties:
-          kosten:
-            $ref: '#/components/schemas/KostenModernisierung'
+          weitereKosten:
+            $ref: '#/components/schemas/WeitereKosten'
+          modernisierung:
+            $ref: '#/components/schemas/Modernisierungskosten'
+          zuBeschaffendesKapital:
+            $ref: '#/components/schemas/KommentierterBetrag'
+          anzahlTeilzahlungen:
+            type: integer
+            format: int32
           marktwertFinanzierungsobjekt:
             type: number
-            format: double
-          eigenleistung:
-            type: number
-            description: Persönlich erbrachte Arbeitsleistung als Eigenleistung
             format: double
     Modernisierungskosten:
       type: object
@@ -2343,6 +2287,10 @@ components:
           type: number
           description: "Nicht werterhöhende Maßnahmen wie Malerarbeiten, kleine Reparaturen\
             \ etc."
+          format: double
+        eigenleistung:
+          type: number
+          description: Persönlich erbrachte Arbeitsleistung als Eigenleistung
           format: double
     MoeglichstNiedrigeRate:
       type: object
@@ -2379,8 +2327,24 @@ components:
       - $ref: '#/components/schemas/Finanzierungszweck'
       - type: object
         properties:
-          kosten:
-            $ref: '#/components/schemas/KostenNeubau'
+          weitereKosten:
+            $ref: '#/components/schemas/WeitereKosten'
+          nebenkosten:
+            $ref: '#/components/schemas/Nebenkosten'
+          grundstueckskosten:
+            $ref: '#/components/schemas/Grundstueckskosten'
+          herstellungskostenInklusiveEigenleistungen:
+            type: number
+            format: double
+          aussenanlagen:
+            type: number
+            format: double
+          baunebenkosten:
+            type: number
+            format: double
+          anzahlTeilzahlungen:
+            type: integer
+            format: int32
           eigenleistung:
             type: number
             description: Persönlich erbrachte Arbeitsleistung als Eigenleistung
@@ -2393,21 +2357,6 @@ components:
         properties:
           kommentar:
             type: string
-    NichtEuBuerger:
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/Staatsangehoerigkeit'
-      - type: object
-        properties:
-          inDeutschlandSeit:
-            type: string
-            format: date
-          aufenthaltstitel:
-            $ref: '#/components/schemas/Aufenthaltstitel'
-    NichtGesetzterDarlehensgeber:
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/Darlehensgeber'
     Niederlassungserlaubnis:
       type: object
       allOf:
@@ -2482,9 +2431,10 @@ components:
         geburtsort:
           type: string
         staatsangehoerigkeit:
-          oneOf:
-          - $ref: '#/components/schemas/EuBuerger'
-          - $ref: '#/components/schemas/NichtEuBuerger'
+          type: string
+          description: ISO 3166-1 alpha-2 code
+        nichtEuBuerger:
+          $ref: '#/components/schemas/Aufenthalt'
         familienstand:
           oneOf:
           - $ref: '#/components/schemas/Geschieden'
@@ -3622,8 +3572,6 @@ components:
     RechteAbteilung2:
       type: object
       properties:
-        vorhanden:
-          type: boolean
         betrag:
           type: number
           format: double
@@ -3895,20 +3843,6 @@ components:
           format: double
         verwendung:
           $ref: '#/components/schemas/AufloesungAlsVerwendung'
-    Staatsangehoerigkeit:
-      required:
-      - '@type'
-      type: object
-      properties:
-        land:
-          type: string
-        '@type':
-          type: string
-      discriminator:
-        propertyName: '@type'
-        mapping:
-          EU_BUERGER: '#/components/schemas/EuBuerger'
-          NICHT_EU_BUERGER: '#/components/schemas/NichtEuBuerger'
     Stellplatz:
       required:
       - typ
@@ -3958,9 +3892,6 @@ components:
         properties:
           bausparwunsch:
             $ref: '#/components/schemas/Bauspardarlehen'
-          tilgungsbeginn:
-            type: string
-            format: date
     TilgungInProzent:
       type: object
       allOf:
@@ -4344,13 +4275,6 @@ components:
       in: header
       description: Authorization Bearer Token
       required: true
-      schema:
-        type: string
-    TraceId:
-      name: X-TraceId
-      in: header
-      description: A unique id to reference this request
-      required: false
       schema:
         type: string
   securitySchemes:
