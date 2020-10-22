@@ -8,7 +8,7 @@ info:
     name: Europace AG
     url: http://developer.europace.de
     email: devsupport@europace2.de
-  version: 1.0-alpha.5; 653d93bcaf1ba59f81a36972a5d85869d6925688
+  version: 1.0-alpha.5; 42cf4b735d2b7322f03f1acd17339a81036d68ab
 externalDocs:
   url: https://developer.europace.de/api/kundenangaben-api
 servers:
@@ -1008,10 +1008,6 @@ components:
       - '@type'
       type: object
       properties:
-        darlehensgeber:
-          oneOf:
-          - $ref: '#/components/schemas/ProduktanbieterDarlehensgeber'
-          - $ref: '#/components/schemas/SonstigerDarlehensgeber'
         grundschuld:
           type: number
           format: double
@@ -1035,6 +1031,10 @@ components:
         darlehenskontonummer:
           type: string
           description: IBAN des Darlehenskontos
+        darlehensgeber:
+          oneOf:
+          - $ref: '#/components/schemas/ProduktanbieterDarlehensgeber'
+          - $ref: '#/components/schemas/SonstigerDarlehensgeber'
         '@type':
           type: string
       discriminator:
@@ -1428,6 +1428,8 @@ components:
             - $ref: '#/components/schemas/VariablesDarlehen'
             - $ref: '#/components/schemas/Zwischenfinanzierung'
         ratenschutzbausteine:
+          maxItems: 2
+          minItems: 0
           type: array
           description: Absicherungswünsche in Form von Ratenschutzversicherungen.
             In anderen APIs im 'absicherungsWunsch' zu finden. Maximal ein Baustein
@@ -1643,7 +1645,7 @@ components:
           type: string
         amtsgericht:
           type: string
-        flurstueck:
+        flurstuecke:
           type: array
           items:
             $ref: '#/components/schemas/Flurstueck'
@@ -1666,6 +1668,8 @@ components:
       type: object
       properties:
         kunden:
+          maxItems: 2
+          minItems: 0
           type: array
           description: In anderen APIs als 'Antragsteller' bezeichnet.
           items:
@@ -1730,10 +1734,14 @@ components:
       type: object
       properties:
         ratenkredite:
+          maxItems: 3
+          minItems: 0
           type: array
           items:
             $ref: '#/components/schemas/Verbindlichkeit'
         privatdarlehen:
+          maxItems: 3
+          minItems: 0
           type: array
           items:
             $ref: '#/components/schemas/Verbindlichkeit'
