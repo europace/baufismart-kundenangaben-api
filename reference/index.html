@@ -2196,6 +2196,10 @@
               <!--<li><a href="#_absicherung">Absicherung</a></li>-->
               <li><a href="#_AufloesungAlsVerwendung">AufloesungAlsVerwendung</a></li>
               <!--<li><a href="#_absicherung">Absicherung</a></li>-->
+              <li><a href="#_BadRequestProblem">BadRequestProblem</a></li>
+              <!--<li><a href="#_absicherung">Absicherung</a></li>-->
+              <li><a href="#_BadRequestProblem_violations">BadRequestProblem_violations</a></li>
+              <!--<li><a href="#_absicherung">Absicherung</a></li>-->
               <li><a href="#_BankUndSparguthaben">BankUndSparguthaben</a></li>
               <!--<li><a href="#_absicherung">Absicherung</a></li>-->
               <li><a href="#_Bankverbindung">Bankverbindung</a></li>
@@ -2436,6 +2440,8 @@
               <!--<li><a href="#_absicherung">Absicherung</a></li>-->
               <li><a href="#_Privatdarlehen">Privatdarlehen</a></li>
               <!--<li><a href="#_absicherung">Absicherung</a></li>-->
+              <li><a href="#_Problem">Problem</a></li>
+              <!--<li><a href="#_absicherung">Absicherung</a></li>-->
               <li><a href="#_ProduktanbieterDarlehensgeber">ProduktanbieterDarlehensgeber</a></li>
               <!--<li><a href="#_absicherung">Absicherung</a></li>-->
               <li><a href="#_ProzentDerDarlehenssumme">ProzentDerDarlehenssumme</a></li>
@@ -2465,10 +2471,6 @@
               <li><a href="#_Restschuld">Restschuld</a></li>
               <!--<li><a href="#_absicherung">Absicherung</a></li>-->
               <li><a href="#_Riesterangaben">Riesterangaben</a></li>
-              <!--<li><a href="#_absicherung">Absicherung</a></li>-->
-              <li><a href="#_RiesterfoerderungAnnuitaetendarlehen">RiesterfoerderungAnnuitaetendarlehen</a></li>
-              <!--<li><a href="#_absicherung">Absicherung</a></li>-->
-              <li><a href="#_RiesterfoerderungBauspardarlehen">RiesterfoerderungBauspardarlehen</a></li>
               <!--<li><a href="#_absicherung">Absicherung</a></li>-->
               <li><a href="#_Risikoabsicherungswunsch">Risikoabsicherungswunsch</a></li>
               <!--<li><a href="#_absicherung">Absicherung</a></li>-->
@@ -2573,7 +2575,7 @@
           <div class="sect2">
             <h3 id="_aktuelle_version">Aktuelle Version</h3>
             <div class="paragraph">
-              <p><em>Version</em> : 1.0-alpha.5; 42cf4b735d2b7322f03f1acd17339a81036d68ab</p>
+              <p><em>Version</em> : 1.0-alpha.6; 0466848440a4b71ce7d63228a3f010faaf3b7d04</p>
             </div>
           </div>
         <div class="sect2">
@@ -2918,6 +2920,75 @@
                           <td class="tableblock halign-left valign-middle">
                             <div class="content">
                               <div class="paragraph">
+                                <p><strong>403</strong></p>
+                              </div>
+                            </div>
+                          </td>
+                          <td class="tableblock halign-left valign-middle">
+                            <div class="content">
+                              <div class="paragraph">
+                                <p>Es fehlt die Berechtigung, um die Anfrage auszuführen</p>
+                              </div>
+                            </div>
+                          </td>
+                          <td class="tableblock halign-left valign-middle">
+                            <div class="content">
+                              <div class="paragraph">
+                                <p><a href="_#Problem">Problem</a></p>
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="tableblock halign-left valign-middle">
+                            <div class="content">
+                              <div class="paragraph">
+                                <p><strong>503</strong></p>
+                              </div>
+                            </div>
+                          </td>
+                          <td class="tableblock halign-left valign-middle">
+                            <div class="content">
+                              <div class="paragraph">
+                                <p>Der Service kann den Request momentan nicht verarbeiten</p>
+                              </div>
+                            </div>
+                          </td>
+                          <td class="tableblock halign-left valign-middle">
+                            <div class="content">
+                              <div class="paragraph">
+                                <p><a href="_#Problem">Problem</a></p>
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="tableblock halign-left valign-middle">
+                            <div class="content">
+                              <div class="paragraph">
+                                <p><strong>401</strong></p>
+                              </div>
+                            </div>
+                          </td>
+                          <td class="tableblock halign-left valign-middle">
+                            <div class="content">
+                              <div class="paragraph">
+                                <p>Die Authentifizierung ist fehlgeschlagen</p>
+                              </div>
+                            </div>
+                          </td>
+                          <td class="tableblock halign-left valign-middle">
+                            <div class="content">
+                              <div class="paragraph">
+                                <p><a href="_#"></a></p>
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="tableblock halign-left valign-middle">
+                            <div class="content">
+                              <div class="paragraph">
                                 <p><strong>400</strong></p>
                               </div>
                             </div>
@@ -2932,7 +3003,7 @@
                           <td class="tableblock halign-left valign-middle">
                             <div class="content">
                               <div class="paragraph">
-                                <p><a href="_#"></a></p>
+                                <p><a href="_#BadRequestProblem">BadRequestProblem</a></p>
                               </div>
                             </div>
                           </td>
@@ -2953,6 +3024,7 @@
                       <div class="ulist">
                         <ul>
                             <li><code>application/json; version=1.0</code></li>
+                            <li><code>application/problem+json</code></li>
                         </ul>
                       </div>
                     </div>
@@ -3639,7 +3711,7 @@
                   <td class="tableblock halign-left valign-middle">
                     <div class="content">
                       <div class="paragraph">
-                        <p><strong>riesterfoerderung</strong>
+                        <p><strong>kundenreferenzIdDerRiesterGefoerdertenPerson</strong>
                           <br><em>optional</em>
                         </p>
                       </div>
@@ -3648,7 +3720,7 @@
                   <td class="tableblock halign-left valign-middle">
                     <div class="content">
                       <div class="paragraph">
-                        <p></p>
+                        <p>ReferenzId des Kunden bei Riesterförderung.</p>
                       </div>
                     </div>
                   </td>
@@ -3657,7 +3729,7 @@
                       <div class="paragraph">
                       <p>
   
-                          <a href="#_RiesterfoerderungAnnuitaetendarlehen">RiesterfoerderungAnnuitaetendarlehen</a>
+                          <a href="#_string">String</a>
   
   
                         </p>
@@ -5088,6 +5160,290 @@
             </table>
           </div>
           <div class="sect2">
+            <h3 id="_BadRequestProblem">BadRequestProblem</h3>
+            <div class="paragraph">
+              <p></p>
+            </div>
+            <table class="tableblock frame-all grid-all stretch">
+              <colgroup>
+                <col style="width: 16.6666%;">
+                <col style="width: 61.1111%;">
+                <col style="width: 22.2223%;">
+              </colgroup>
+              <thead>
+              <tr>
+                <th class="tableblock halign-left valign-middle">Name</th>
+                <th class="tableblock halign-left valign-middle">Beschreibung</th>
+                <th class="tableblock halign-left valign-middle">Typ</th>
+              </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p><strong>type</strong>
+                          
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p>Eine absolute URI, die den Problemtyp eindeutig identifiziert.</p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                      <p>
+  
+                          <a href="#_string">String</a>
+  
+  
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p><strong>title</strong>
+                          
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p>Eine kurze Zusammenfassung des Problemtyps.</p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                      <p>
+  
+                          <a href="#_string">String</a>
+  
+  
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p><strong>status</strong>
+                          
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p>Der HTTP Statuscode des Services, bei dem das Problem ursprünglich aufgetreten ist.</p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                      <p>
+  
+                          <a href="#_BigDecimal">BigDecimal</a>
+  
+  
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p><strong>detail</strong>
+                          <br><em>optional</em>
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p>Ein menschenlesbarer Text, der das konkrete Problem beschreibt.</p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                      <p>
+  
+                          <a href="#_string">String</a>
+  
+  
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p><strong>instance</strong>
+                          <br><em>optional</em>
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p>Eine relative URI, die das Problem verursacht hat.</p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                      <p>
+  
+                          <a href="#_string">String</a>
+  
+  
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p><strong>violations</strong>
+                          <br><em>optional</em>
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p></p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                      <p>
+  
+                          <a href="#_BadRequestProblem_violations">BadRequestProblem_violations</a>
+  
+  
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="sect2">
+            <h3 id="_BadRequestProblem_violations">BadRequestProblem_violations</h3>
+            <div class="paragraph">
+              <p></p>
+            </div>
+            <table class="tableblock frame-all grid-all stretch">
+              <colgroup>
+                <col style="width: 16.6666%;">
+                <col style="width: 61.1111%;">
+                <col style="width: 22.2223%;">
+              </colgroup>
+              <thead>
+              <tr>
+                <th class="tableblock halign-left valign-middle">Name</th>
+                <th class="tableblock halign-left valign-middle">Beschreibung</th>
+                <th class="tableblock halign-left valign-middle">Typ</th>
+              </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p><strong>field</strong>
+                          
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p>Das Feld, welches einen ungültigen Wert beinhaltet</p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                      <p>
+  
+                          <a href="#_string">String</a>
+  
+  
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p><strong>message</strong>
+                          <br><em>optional</em>
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p>Eine genauere Beschreibung des Fehlers</p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                      <p>
+  
+                          <a href="#_string">String</a>
+  
+  
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="sect2">
             <h3 id="_BankUndSparguthaben">BankUndSparguthaben</h3>
             <div class="paragraph">
               <p></p>
@@ -5770,7 +6126,7 @@
                   <td class="tableblock halign-left valign-middle">
                     <div class="content">
                       <div class="paragraph">
-                        <p><strong>riesterfoerderung</strong>
+                        <p><strong>riesterzulagenverwendung</strong>
                           <br><em>optional</em>
                         </p>
                       </div>
@@ -5788,7 +6144,13 @@
                       <div class="paragraph">
                       <p>
   
-                          <a href="#_RiesterfoerderungBauspardarlehen">RiesterfoerderungBauspardarlehen</a>
+                          <a href="#_string">String</a>
+                          <div>
+                            Mögliche Werte:
+                            <ul>
+                                <li>SONDERZAHLUNG</li>                                <li>VERRECHNUNG</li>
+                            </ul>
+                          </div>
   
   
                         </p>
@@ -7154,36 +7516,6 @@
                   <td class="tableblock halign-left valign-middle">
                     <div class="content">
                       <div class="paragraph">
-                        <p><strong>darlehenskontonummer</strong>
-                          <br><em>optional</em>
-                        </p>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                        <p>IBAN des Darlehenskontos</p>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                      <p>
-  
-                          <a href="#_string">String</a>
-  
-  
-                        </p>
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
                         <p><strong>darlehensgeber</strong>
                           <br><em>optional</em>
                         </p>
@@ -7204,6 +7536,36 @@
                           darlehensgeber
   
                           <a href="#_"></a>
+  
+  
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p><strong>darlehenskontonummer</strong>
+                          <br><em>optional</em>
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p>IBAN des Darlehenskontos</p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                      <p>
+  
+                          <a href="#_string">String</a>
   
   
                         </p>
@@ -7513,36 +7875,6 @@
                   <td class="tableblock halign-left valign-middle">
                     <div class="content">
                       <div class="paragraph">
-                        <p><strong>darlehenskontonummer</strong>
-                          <br><em>optional</em>
-                        </p>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                        <p>IBAN des Darlehenskontos</p>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                      <p>
-  
-                          <a href="#_string">String</a>
-  
-  
-                        </p>
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
                         <p><strong>darlehensgeber</strong>
                           <br><em>optional</em>
                         </p>
@@ -7570,6 +7902,36 @@
                                 <li><a href="#_SonstigerDarlehensgeber">SonstigerDarlehensgeber</a></li>
                             </ul>
                           </div>
+  
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p><strong>darlehenskontonummer</strong>
+                          <br><em>optional</em>
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p>IBAN des Darlehenskontos</p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                      <p>
+  
+                          <a href="#_string">String</a>
+  
   
                         </p>
                       </div>
@@ -7934,36 +8296,6 @@
                   <td class="tableblock halign-left valign-middle">
                     <div class="content">
                       <div class="paragraph">
-                        <p><strong>darlehenskontonummer</strong>
-                          <br><em>optional</em>
-                        </p>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                        <p>IBAN des Darlehenskontos</p>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                      <p>
-  
-                          <a href="#_string">String</a>
-  
-  
-                        </p>
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
                         <p><strong>darlehensgeber</strong>
                           <br><em>optional</em>
                         </p>
@@ -7984,6 +8316,36 @@
                           darlehensgeber
   
                           <a href="#_"></a>
+  
+  
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p><strong>darlehenskontonummer</strong>
+                          <br><em>optional</em>
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p>IBAN des Darlehenskontos</p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                      <p>
+  
+                          <a href="#_string">String</a>
   
   
                         </p>
@@ -8293,36 +8655,6 @@
                   <td class="tableblock halign-left valign-middle">
                     <div class="content">
                       <div class="paragraph">
-                        <p><strong>darlehenskontonummer</strong>
-                          <br><em>optional</em>
-                        </p>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                        <p>IBAN des Darlehenskontos</p>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                      <p>
-  
-                          <a href="#_string">String</a>
-  
-  
-                        </p>
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
                         <p><strong>darlehensgeber</strong>
                           <br><em>optional</em>
                         </p>
@@ -8343,6 +8675,36 @@
                           darlehensgeber
   
                           <a href="#_"></a>
+  
+  
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p><strong>darlehenskontonummer</strong>
+                          <br><em>optional</em>
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p>IBAN des Darlehenskontos</p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                      <p>
+  
+                          <a href="#_string">String</a>
   
   
                         </p>
@@ -8652,36 +9014,6 @@
                   <td class="tableblock halign-left valign-middle">
                     <div class="content">
                       <div class="paragraph">
-                        <p><strong>darlehenskontonummer</strong>
-                          <br><em>optional</em>
-                        </p>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                        <p>IBAN des Darlehenskontos</p>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                      <p>
-  
-                          <a href="#_string">String</a>
-  
-  
-                        </p>
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
                         <p><strong>darlehensgeber</strong>
                           <br><em>optional</em>
                         </p>
@@ -8702,6 +9034,36 @@
                           darlehensgeber
   
                           <a href="#_"></a>
+  
+  
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p><strong>darlehenskontonummer</strong>
+                          <br><em>optional</em>
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p>IBAN des Darlehenskontos</p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                      <p>
+  
+                          <a href="#_string">String</a>
   
   
                         </p>
@@ -8975,36 +9337,6 @@
                   <td class="tableblock halign-left valign-middle">
                     <div class="content">
                       <div class="paragraph">
-                        <p><strong>darlehenskontonummer</strong>
-                          <br><em>optional</em>
-                        </p>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                        <p>IBAN des Darlehenskontos</p>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                      <p>
-  
-                          <a href="#_string">String</a>
-  
-  
-                        </p>
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
                         <p><strong>darlehensgeber</strong>
                           <br><em>optional</em>
                         </p>
@@ -9025,6 +9357,36 @@
                           darlehensgeber
   
                           <a href="#_"></a>
+  
+  
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p><strong>darlehenskontonummer</strong>
+                          <br><em>optional</em>
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p>IBAN des Darlehenskontos</p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                      <p>
+  
+                          <a href="#_string">String</a>
   
   
                         </p>
@@ -21544,6 +21906,178 @@
             </table>
           </div>
           <div class="sect2">
+            <h3 id="_Problem">Problem</h3>
+            <div class="paragraph">
+              <p></p>
+            </div>
+            <table class="tableblock frame-all grid-all stretch">
+              <colgroup>
+                <col style="width: 16.6666%;">
+                <col style="width: 61.1111%;">
+                <col style="width: 22.2223%;">
+              </colgroup>
+              <thead>
+              <tr>
+                <th class="tableblock halign-left valign-middle">Name</th>
+                <th class="tableblock halign-left valign-middle">Beschreibung</th>
+                <th class="tableblock halign-left valign-middle">Typ</th>
+              </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p><strong>type</strong>
+                          
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p>Eine absolute URI, die den Problemtyp eindeutig identifiziert.</p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                      <p>
+  
+                          <a href="#_string">String</a>
+  
+  
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p><strong>title</strong>
+                          
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p>Eine kurze Zusammenfassung des Problemtyps.</p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                      <p>
+  
+                          <a href="#_string">String</a>
+  
+  
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p><strong>status</strong>
+                          
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p>Der HTTP Statuscode des Services, bei dem das Problem ursprünglich aufgetreten ist.</p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                      <p>
+  
+                          <a href="#_BigDecimal">BigDecimal</a>
+  
+  
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p><strong>detail</strong>
+                          <br><em>optional</em>
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p>Ein menschenlesbarer Text, der das konkrete Problem beschreibt.</p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                      <p>
+  
+                          <a href="#_string">String</a>
+  
+  
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p><strong>instance</strong>
+                          <br><em>optional</em>
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p>Eine relative URI, die das Problem verursacht hat.</p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                      <p>
+  
+                          <a href="#_string">String</a>
+  
+  
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="sect2">
             <h3 id="_ProduktanbieterDarlehensgeber">ProduktanbieterDarlehensgeber</h3>
             <div class="paragraph">
               <p></p>
@@ -23268,176 +23802,6 @@
                       <p>
   
                           <a href="#_string">String</a>
-  
-  
-                        </p>
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <div class="sect2">
-            <h3 id="_RiesterfoerderungAnnuitaetendarlehen">RiesterfoerderungAnnuitaetendarlehen</h3>
-            <div class="paragraph">
-              <p></p>
-            </div>
-            <table class="tableblock frame-all grid-all stretch">
-              <colgroup>
-                <col style="width: 16.6666%;">
-                <col style="width: 61.1111%;">
-                <col style="width: 22.2223%;">
-              </colgroup>
-              <thead>
-              <tr>
-                <th class="tableblock halign-left valign-middle">Name</th>
-                <th class="tableblock halign-left valign-middle">Beschreibung</th>
-                <th class="tableblock halign-left valign-middle">Typ</th>
-              </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                        <p><strong>gefoerdert</strong>
-                          <br><em>optional</em>
-                        </p>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                        <p></p>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                      <p>
-  
-                          <a href="#_boolean">Boolean</a>
-  
-  
-                        </p>
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                        <p><strong>kundenreferenzIdDerGefoerdertenPerson</strong>
-                          <br><em>optional</em>
-                        </p>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                        <p>ReferenzId des Kunden.</p>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                      <p>
-  
-                          <a href="#_string">String</a>
-  
-  
-                        </p>
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <div class="sect2">
-            <h3 id="_RiesterfoerderungBauspardarlehen">RiesterfoerderungBauspardarlehen</h3>
-            <div class="paragraph">
-              <p></p>
-            </div>
-            <table class="tableblock frame-all grid-all stretch">
-              <colgroup>
-                <col style="width: 16.6666%;">
-                <col style="width: 61.1111%;">
-                <col style="width: 22.2223%;">
-              </colgroup>
-              <thead>
-              <tr>
-                <th class="tableblock halign-left valign-middle">Name</th>
-                <th class="tableblock halign-left valign-middle">Beschreibung</th>
-                <th class="tableblock halign-left valign-middle">Typ</th>
-              </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                        <p><strong>gefoerdert</strong>
-                          <br><em>optional</em>
-                        </p>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                        <p></p>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                      <p>
-  
-                          <a href="#_boolean">Boolean</a>
-  
-  
-                        </p>
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                        <p><strong>zulagenverwendung</strong>
-                          <br><em>optional</em>
-                        </p>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                        <p></p>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                      <p>
-  
-                          <a href="#_string">String</a>
-                          <div>
-                            Mögliche Werte:
-                            <ul>
-                                <li>SONDERZAHLUNG</li>                                <li>VERRECHNUNG</li>
-                            </ul>
-                          </div>
   
   
                         </p>

@@ -8,7 +8,7 @@ info:
     name: Europace AG
     url: http://developer.europace.de
     email: devsupport@europace2.de
-  version: 1.0-alpha.5; 42cf4b735d2b7322f03f1acd17339a81036d68ab
+  version: 1.0-alpha.6; 0466848440a4b71ce7d63228a3f010faaf3b7d04
 externalDocs:
   url: https://developer.europace.de/api/kundenangaben-api
 servers:
@@ -67,9 +67,14 @@ paths:
             application/json; version=1.0:
               schema:
                 $ref: '#/components/schemas/KundenangabenImportResponse'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "503":
+          $ref: '#/components/responses/ServiceNotAvailable'
+        "401":
+          description: Die Authentifizierung ist fehlgeschlagen
         "400":
-          description: Der Request hat ein fehlerhaftes Format oder der Datentyp eines
-            Felds weicht von der Spezifikation ab.
+          $ref: '#/components/responses/BadRequest'
       security:
       - OAuth2:
         - baufinanzierung:vorgang:schreiben
@@ -150,8 +155,9 @@ components:
           bereitstellungszinsfreieZeitInMonaten:
             type: integer
             format: int32
-          riesterfoerderung:
-            $ref: '#/components/schemas/RiesterfoerderungAnnuitaetendarlehen'
+          kundenreferenzIdDerRiesterGefoerdertenPerson:
+            type: string
+            description: ReferenzId des Kunden bei Riesterförderung.
           provision:
             type: number
             description: Angabe in Prozent.
@@ -606,8 +612,11 @@ components:
             type: array
             items:
               $ref: '#/components/schemas/Sonderzahlung'
-          riesterfoerderung:
-            $ref: '#/components/schemas/RiesterfoerderungBauspardarlehen'
+          riesterzulagenverwendung:
+            type: string
+            enum:
+            - SONDERZAHLUNG
+            - VERRECHNUNG
     BausparvertragAlsVermoegen:
       required:
       - bausparkasse
@@ -1028,13 +1037,13 @@ components:
           format: date
         restschuld:
           $ref: '#/components/schemas/Restschuld'
-        darlehenskontonummer:
-          type: string
-          description: IBAN des Darlehenskontos
         darlehensgeber:
           oneOf:
           - $ref: '#/components/schemas/ProduktanbieterDarlehensgeber'
           - $ref: '#/components/schemas/SonstigerDarlehensgeber'
+        darlehenskontonummer:
+          type: string
+          description: IBAN des Darlehenskontos
         '@type':
           type: string
       discriminator:
@@ -3660,24 +3669,6 @@ components:
           format: double
         sozialversicherungsnummer:
           type: string
-    RiesterfoerderungAnnuitaetendarlehen:
-      type: object
-      properties:
-        gefoerdert:
-          type: boolean
-        kundenreferenzIdDerGefoerdertenPerson:
-          type: string
-          description: ReferenzId des Kunden.
-    RiesterfoerderungBauspardarlehen:
-      type: object
-      properties:
-        gefoerdert:
-          type: boolean
-        zulagenverwendung:
-          type: string
-          enum:
-          - SONDERZAHLUNG
-          - VERRECHNUNG
     Risikoabsicherungswunsch:
       type: object
       properties:
@@ -4277,6 +4268,76 @@ components:
         email:
           type: string
       description: Ein registrierter Europace Nutzer.
+    Problem:
+      required:
+      - type
+      - title
+      - status
+      type: object
+      properties:
+        type:
+          type: string
+          description: "Eine absolute URI, die den Problemtyp eindeutig identifiziert."
+          format: uri
+          example: https://api.europace.de/problem/constraint-violation
+        title:
+          type: string
+          description: Eine kurze Zusammenfassung des Problemtyps.
+          example: Ressource unbekannt
+        status:
+          maximum: 600
+          exclusiveMaximum: true
+          minimum: 100
+          type: number
+          description: "Der HTTP Statuscode des Services, bei dem das Problem ursprü\
+            nglich aufgetreten ist."
+          example: 503
+        detail:
+          type: string
+          description: "Ein menschenlesbarer Text, der das konkrete Problem beschreibt."
+          example: Die Anfrage kann aufgrund fehlender Informationen nicht verarbeitet
+            werden.
+        instance:
+          type: string
+          description: "Eine relative URI, die das Problem verursacht hat. "
+          format: uri
+          example: /kundenangaben
+    BadRequestProblem:
+      allOf:
+      - $ref: '#/components/schemas/Problem'
+      - type: object
+        properties:
+          violations:
+            required:
+            - field
+            type: object
+            properties:
+              field:
+                type: string
+                description: "Das Feld, welches einen ungültigen Wert beinhaltet"
+              message:
+                type: string
+                description: Eine genauere Beschreibung des Fehlers
+  responses:
+    BadRequest:
+      description: Der Request hat ein fehlerhaftes Format oder der Datentyp eines
+        Felds weicht von der Spezifikation ab.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/BadRequestProblem'
+    Forbidden:
+      description: "Es fehlt die Berechtigung, um die Anfrage auszuführen"
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+    ServiceNotAvailable:
+      description: Der Service kann den Request momentan nicht verarbeiten
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
   parameters:
     Authorization:
       name: Authorization
