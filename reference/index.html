@@ -2240,8 +2240,6 @@
               <!--<li><a href="#_absicherung">Absicherung</a></li>-->
               <li><a href="#_Betrag">Betrag</a></li>
               <!--<li><a href="#_absicherung">Absicherung</a></li>-->
-              <li><a href="#_Betreuung">Betreuung</a></li>
-              <!--<li><a href="#_absicherung">Absicherung</a></li>-->
               <li><a href="#_BisZumJahr">BisZumJahr</a></li>
               <!--<li><a href="#_absicherung">Absicherung</a></li>-->
               <li><a href="#_BisZurRenteImJahr">BisZurRenteImJahr</a></li>
@@ -2428,8 +2426,6 @@
               <!--<li><a href="#_absicherung">Absicherung</a></li>-->
               <li><a href="#_Nutzungsart">Nutzungsart</a></li>
               <!--<li><a href="#_absicherung">Absicherung</a></li>-->
-              <li><a href="#_Partner">Partner</a></li>
-              <!--<li><a href="#_absicherung">Absicherung</a></li>-->
               <li><a href="#_Person">Person</a></li>
               <!--<li><a href="#_absicherung">Absicherung</a></li>-->
               <li><a href="#_Personendaten">Personendaten</a></li>
@@ -2556,7 +2552,6 @@
       </li>
         <li><a href="#_securityscheme">Sicherheit</a>
           <ul class="sectlevel2">
-              <li><a href="#_http">Bearer Authentication</a></li>
               <li><a href="#_oauth2">
                 OAuth Authorization</a></li>
           </ul>
@@ -2575,7 +2570,7 @@
           <div class="sect2">
             <h3 id="_aktuelle_version">Aktuelle Version</h3>
             <div class="paragraph">
-              <p><em>Version</em> : 1.0-alpha.6; 0466848440a4b71ce7d63228a3f010faaf3b7d04</p>
+              <p><em>Version</em> : 1.0-alpha.7; f9bfbb1aad1b82285279895c0d1defdeaf612073</p>
             </div>
           </div>
         <div class="sect2">
@@ -2601,16 +2596,7 @@
       <h2 id="_securityscheme">Sicherheit</h2>
       <div class="sectionbody">
           <div class="sect2">
-            <h3 id="_http">BearerAuth</h3>
-            <div class="paragraph">
-              <p><em>Typ</em> : http<br>
-                  <em>Scheme</em> : Bearer<br/>
-                  <em>Bearer Format</em> : JWT
-              </p>
-            </div>
-          </div>
-          <div class="sect2">
-            <h3 id="_oauth2">OAuth2</h3>
+            <h3 id="_oauth2">oAuth2</h3>
             <div class="paragraph">
               <p><em>Typ</em> : oauth2<br>
                   <em>Flow</em> : application<br>
@@ -2943,29 +2929,6 @@
                           <td class="tableblock halign-left valign-middle">
                             <div class="content">
                               <div class="paragraph">
-                                <p><strong>503</strong></p>
-                              </div>
-                            </div>
-                          </td>
-                          <td class="tableblock halign-left valign-middle">
-                            <div class="content">
-                              <div class="paragraph">
-                                <p>Der Service kann den Request momentan nicht verarbeiten</p>
-                              </div>
-                            </div>
-                          </td>
-                          <td class="tableblock halign-left valign-middle">
-                            <div class="content">
-                              <div class="paragraph">
-                                <p><a href="_#Problem">Problem</a></p>
-                              </div>
-                            </div>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td class="tableblock halign-left valign-middle">
-                            <div class="content">
-                              <div class="paragraph">
                                 <p><strong>401</strong></p>
                               </div>
                             </div>
@@ -2981,6 +2944,29 @@
                             <div class="content">
                               <div class="paragraph">
                                 <p><a href="_#"></a></p>
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="tableblock halign-left valign-middle">
+                            <div class="content">
+                              <div class="paragraph">
+                                <p><strong>503</strong></p>
+                              </div>
+                            </div>
+                          </td>
+                          <td class="tableblock halign-left valign-middle">
+                            <div class="content">
+                              <div class="paragraph">
+                                <p>Der Service kann den Request momentan nicht verarbeiten</p>
+                              </div>
+                            </div>
+                          </td>
+                          <td class="tableblock halign-left valign-middle">
+                            <div class="content">
+                              <div class="paragraph">
+                                <p><a href="_#Problem">Problem</a></p>
                               </div>
                             </div>
                           </td>
@@ -3055,7 +3041,7 @@
                           <td class="tableblock halign-left valign-middle">
                             <div class="content">
                               <div class="paragraph">
-                                <p><strong><a href="#_oauth2">OAuth2</a></strong></p>
+                                <p><strong><a href="#_oauth2">oAuth2</a></strong></p>
                               </div>
                             </div>
                           </td>
@@ -9535,88 +9521,6 @@
                       <p>
   
                           <a href="#_double">Double</a>
-  
-  
-                        </p>
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <div class="sect2">
-            <h3 id="_Betreuung">Betreuung</h3>
-            <div class="paragraph">
-              <p></p>
-            </div>
-            <table class="tableblock frame-all grid-all stretch">
-              <colgroup>
-                <col style="width: 16.6666%;">
-                <col style="width: 61.1111%;">
-                <col style="width: 22.2223%;">
-              </colgroup>
-              <thead>
-              <tr>
-                <th class="tableblock halign-left valign-middle">Name</th>
-                <th class="tableblock halign-left valign-middle">Beschreibung</th>
-                <th class="tableblock halign-left valign-middle">Typ</th>
-              </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                        <p><strong>kundenbetreuer</strong>
-                          
-                        </p>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                        <p>Hier wird eine gültige PartnerId erwartet. Empfänger des Vorgangs.</p>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                      <p>
-  
-                          <a href="#_string">String</a>
-  
-  
-                        </p>
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                        <p><strong>bearbeiter</strong>
-                          <br><em>optional</em>
-                        </p>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                        <p>Hier wird eine gültige PartnerId erwartet. Diese kann identisch zum Kundenbetreuer sein.</p>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                      <p>
-  
-                          <a href="#_string">String</a>
   
   
                         </p>
@@ -17803,68 +17707,8 @@
                   <td class="tableblock halign-left valign-middle">
                     <div class="content">
                       <div class="paragraph">
-                        <p><strong>betreuung</strong>
-                          <br><em>optional</em>
-                        </p>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                        <p></p>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                      <p>
-  
-                          <a href="#_Betreuung">Betreuung</a>
-  
-  
-                        </p>
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                        <p><strong>tippgeber</strong>
-                          <br><em>optional</em>
-                        </p>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                        <p></p>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                      <p>
-  
-                          <a href="#_Partner">Partner</a>
-  
-  
-                        </p>
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
                         <p><strong>teilvorgangId</strong>
-                          <br><em>optional</em>
+                          
                         </p>
                       </div>
                     </div>
@@ -17893,38 +17737,8 @@
                   <td class="tableblock halign-left valign-middle">
                     <div class="content">
                       <div class="paragraph">
-                        <p><strong>vorgangId</strong>
-                          <br><em>optional</em>
-                        </p>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                        <p></p>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                      <p>
-  
-                          <a href="#_string">String</a>
-  
-  
-                        </p>
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                        <p><strong>webUrl</strong>
-                          <br><em>optional</em>
+                        <p><strong>vorgangsnummer</strong>
+                          
                         </p>
                       </div>
                     </div>
@@ -19006,36 +18820,6 @@
               </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                        <p><strong>kundenbetreuer</strong>
-                          
-                        </p>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                        <p></p>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                      <p>
-  
-                          <a href="#_Betreuung">Betreuung</a>
-  
-  
-                        </p>
-                      </div>
-                    </div>
-                  </td>
-                </tr>
                 <tr>
                   <td class="tableblock halign-left valign-middle">
                     <div class="content">
@@ -20940,148 +20724,6 @@
                       <div class="paragraph">
                         <p><strong>@type</strong>
                           
-                        </p>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                        <p></p>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                      <p>
-  
-                          <a href="#_string">String</a>
-  
-  
-                        </p>
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <div class="sect2">
-            <h3 id="_Partner">Partner</h3>
-            <div class="paragraph">
-              <p>Ein registrierter Europace Nutzer.</p>
-            </div>
-            <table class="tableblock frame-all grid-all stretch">
-              <colgroup>
-                <col style="width: 16.6666%;">
-                <col style="width: 61.1111%;">
-                <col style="width: 22.2223%;">
-              </colgroup>
-              <thead>
-              <tr>
-                <th class="tableblock halign-left valign-middle">Name</th>
-                <th class="tableblock halign-left valign-middle">Beschreibung</th>
-                <th class="tableblock halign-left valign-middle">Typ</th>
-              </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                        <p><strong>partnerId</strong>
-                          <br><em>optional</em>
-                        </p>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                        <p></p>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                      <p>
-  
-                          <a href="#_string">String</a>
-  
-  
-                        </p>
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                        <p><strong>name</strong>
-                          <br><em>optional</em>
-                        </p>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                        <p></p>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                      <p>
-  
-                          <a href="#_string">String</a>
-  
-  
-                        </p>
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                        <p><strong>vorname</strong>
-                          <br><em>optional</em>
-                        </p>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                        <p></p>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                      <p>
-  
-                          <a href="#_string">String</a>
-  
-  
-                        </p>
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                        <p><strong>email</strong>
-                          <br><em>optional</em>
                         </p>
                       </div>
                     </div>
