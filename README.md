@@ -1,6 +1,11 @@
 # Importieren von Kundenangaben in einen neuen Vorgang
 
-Version: 1.0-alpha.6
+Version: 1.0-alpha.7
+
+:warning: In dieser Version der API wurden der Kundenbetreuer und Bearbeiter in der Import-Anfrage entfernt. Stattdessen
+wird der angemeldete Benutzer als Kundenbetreuer eingetragen. Nähere Informationen sind im Abschnitt
+[Authentifizieren verschiedener Benutzer mit einem Client](#authentifizieren-verschiedener-benutzer-mit-einem-client)
+zu finden.
 
 :warning: Momentan befindet sich die API noch in der Entwicklung. Der Endpunkt ist öffentlich noch nicht ansprechbar.
 Die Alpha-Version der API-Spezifikation steht als OpenAPI Spezifikation im [JSON](./api-docs.json) und [YAML](./api-docs.yaml)
@@ -26,6 +31,7 @@ Feedback und Fragen zum Modell sind als [GitHub Issue](https://github.com/europa
 
 * [Allgemeines](#allgemeines)
 * [Authentifizierung](#authentifizierung)
+   * [Authentifizieren verschiedener Benutzer mit einem Client](#authentifizieren-verschiedener-benutzer-mit-einem-client)
 * [TraceId zur Nachverfolgbarkeit von Requests](#traceid-zur-nachverfolgbarkeit-von-requests)
 * [Content-Type](#content-type)
 * [Fehlercodes](#fehlercodes)
@@ -76,6 +82,16 @@ Damit der Client für diese API genutzt werden kann, müssen im Partnermanagemen
 Schlägt die Authentifizierung fehl, erhält der Aufrufer eine HTTP Response mit Statuscode **401 UNAUTHORIZED**.
 
 Hat der Client nicht die benötigte Berechtigung, um die Resource abzurufen, erhält der Aufrufer eine HTTP Response mit Statuscode **403 FORBIDDEN**.
+
+### Authentifizieren verschiedener Benutzer mit einem Client
+
+Beim Importieren der Kundenangaben, wird der aktuelle Benutzer als Kundenbetreuer in den Vorgang eingetragen. Mit Hilfe der 
+sog. "Impersonierung" ist es möglich, den Import im Namen eines anderen Benutzers durchzuführen.
+Es reicht aus, einen Client für die Organisation als "Generalsschlüssel" zu registrieren und den Benutzer, der als Kundenbetreuer
+eingetragen werden soll, bei der Authentifizierung anzugeben.
+
+Eine nähere Beschreibung ist in der Dokumentation der [Authorization-API](https://github.com/europace/authorization-api#wie-authentifiziere-ich-verschiedene-benutzer-mit-einem-client-impersionieren)
+zu finden.
 
 ## TraceId zur Nachverfolgbarkeit von Requests
 

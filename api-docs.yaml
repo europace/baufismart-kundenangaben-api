@@ -8,7 +8,7 @@ info:
     name: Europace AG
     url: http://developer.europace.de
     email: devsupport@europace2.de
-  version: 1.0-alpha.6; 0466848440a4b71ce7d63228a3f010faaf3b7d04
+  version: 1.0-alpha.7; f9bfbb1aad1b82285279895c0d1defdeaf612073
 externalDocs:
   url: https://developer.europace.de/api/kundenangaben-api
 servers:
@@ -69,14 +69,14 @@ paths:
                 $ref: '#/components/schemas/KundenangabenImportResponse'
         "403":
           $ref: '#/components/responses/Forbidden'
-        "503":
-          $ref: '#/components/responses/ServiceNotAvailable'
         "401":
           description: Die Authentifizierung ist fehlgeschlagen
+        "503":
+          $ref: '#/components/responses/ServiceNotAvailable'
         "400":
           $ref: '#/components/responses/BadRequest'
       security:
-      - OAuth2:
+      - oAuth2:
         - baufinanzierung:vorgang:schreiben
 components:
   schemas:
@@ -1116,18 +1116,6 @@ components:
           betrag:
             type: number
             format: double
-    Betreuung:
-      required:
-      - kundenbetreuer
-      type: object
-      properties:
-        kundenbetreuer:
-          type: string
-          description: Hier wird eine gültige PartnerId erwartet. Empfänger des Vorgangs.
-        bearbeiter:
-          type: string
-          description: Hier wird eine gültige PartnerId erwartet. Diese kann identisch
-            zum Kundenbetreuer sein.
     BisZumJahr:
       type: object
       allOf:
@@ -2203,12 +2191,8 @@ components:
             type: integer
             format: int32
     Metadaten:
-      required:
-      - kundenbetreuer
       type: object
       properties:
-        kundenbetreuer:
-          $ref: '#/components/schemas/Betreuung'
         externeVorgangsId:
           type: string
           description: "Externe VorgangsId, mit welcher sich z.B. die importierten\
@@ -4243,31 +4227,16 @@ components:
             description: Angabe in Prozent.
             format: double
     KundenangabenImportResponse:
+      required:
+      - teilvorgangId
+      - vorgangsnummer
       type: object
       properties:
-        betreuung:
-          $ref: '#/components/schemas/Betreuung'
-        tippgeber:
-          $ref: '#/components/schemas/Partner'
         teilvorgangId:
           type: string
-        vorgangId:
-          type: string
-        webUrl:
+        vorgangsnummer:
           type: string
       description: Ergebnis des Imports der Kundenangaben.
-    Partner:
-      type: object
-      properties:
-        partnerId:
-          type: string
-        name:
-          type: string
-        vorname:
-          type: string
-        email:
-          type: string
-      description: Ein registrierter Europace Nutzer.
     Problem:
       required:
       - type
@@ -4338,20 +4307,8 @@ components:
         application/problem+json:
           schema:
             $ref: '#/components/schemas/Problem'
-  parameters:
-    Authorization:
-      name: Authorization
-      in: header
-      description: Authorization Bearer Token
-      required: true
-      schema:
-        type: string
   securitySchemes:
-    BearerAuth:
-      type: http
-      scheme: bearer
-      bearerFormat: JWT
-    OAuth2:
+    oAuth2:
       type: oauth2
       flows:
         clientCredentials:
