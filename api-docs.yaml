@@ -8,7 +8,7 @@ info:
     name: Europace AG
     url: http://developer.europace.de
     email: devsupport@europace2.de
-  version: 1.0-alpha.7; f9bfbb1aad1b82285279895c0d1defdeaf612073
+  version: 1.0-alpha.8; 0cf732880f9aa29c808a7fa79c5b7025e98db8d9
 externalDocs:
   url: https://developer.europace.de/api/kundenangaben-api
 servers:
@@ -23,7 +23,9 @@ paths:
       tags:
       - Kundenangaben
       summary: Kundenangaben in einen neuen Vorgang importieren
-      description: Kundenangaben werden in BaufiSmart in einen neuen Vorgang importiert.
+      description: "Kundenangaben werden in BaufiSmart in einen neuen Vorgang importiert.\
+        \ Der Scope `baufinanzierung:echtgeschaeft`wird benötigt, wenn der Datenkontext\
+        \ `ECHT_GESCHAEFT` gewählt wird."
       operationId: importKundenangaben
       parameters:
       - name: Authorization
@@ -37,16 +39,10 @@ paths:
         description: Eine eindeutige technische Id zur Identifikation des Requests
         schema:
           type: string
-      - name: sendEmailNotification
+      - name: datenkontext
         in: query
         description: "Sendet eine E-Mail an den angegebenen Berater, wenn true übergeben\
           \ wird "
-        required: false
-        schema:
-          type: boolean
-          default: false
-      - name: datenkontext
-        in: query
         required: false
         schema:
           type: string
@@ -54,6 +50,11 @@ paths:
           - TEST_MODUS
           - ECHT_GESCHAEFT
           default: ECHT_GESCHAEFT
+      - name: X-Feature
+        in: header
+        required: false
+        schema:
+          type: string
       requestBody:
         content:
           application/json; version=1.0:
@@ -67,17 +68,18 @@ paths:
             application/json; version=1.0:
               schema:
                 $ref: '#/components/schemas/KundenangabenImportResponse'
-        "403":
-          $ref: '#/components/responses/Forbidden'
         "401":
           description: Die Authentifizierung ist fehlgeschlagen
         "503":
           $ref: '#/components/responses/ServiceNotAvailable'
         "400":
           $ref: '#/components/responses/BadRequest'
+        "403":
+          $ref: '#/components/responses/Forbidden'
       security:
       - oAuth2:
         - baufinanzierung:vorgang:schreiben
+        - baufinanzierung:echtgeschaeft
 components:
   schemas:
     AbloesungBestehendesDarlehen:
@@ -386,9 +388,6 @@ components:
           tilgungsrateMonatlich:
             type: number
             format: double
-          sparbeginn:
-            type: string
-            format: date
           tarifListe:
             type: array
             items:
@@ -606,8 +605,14 @@ components:
               - DEUTSCHE_BANK_BAUSPAR_TARIF_FI4
               - DEUTSCHE_BANK_BAUSPAR_TARIF_FX1
               - DEUTSCHE_BANK_BAUSPAR_TARIF_FX2
-          weitereWunschparameter:
-            $ref: '#/components/schemas/Bausparvertragsdetails'
+          wunschparameter:
+            maxItems: 4
+            minItems: 0
+            type: array
+            description: Pro Art des Wunschparameters darf maximal ein Eintrag vorhanden
+              sein.
+            items:
+              $ref: '#/components/schemas/BauspardarlehenWunschparameter'
           sonderzahlungen:
             type: array
             items:
@@ -617,6 +622,31 @@ components:
             enum:
             - SONDERZAHLUNG
             - VERRECHNUNG
+    BauspardarlehenWunschparameter:
+      required:
+      - '@type'
+      type: object
+      properties:
+        '@type':
+          type: string
+      description: Pro Art des Wunschparameters darf maximal ein Eintrag vorhanden
+        sein.
+      discriminator:
+        propertyName: '@type'
+        mapping:
+          SPARBEGINN: '#/components/schemas/Sparbeginn'
+          BAUSPARSUMME: '#/components/schemas/Bausparsumme'
+          MONATLICHER_SPARBEITRAG: '#/components/schemas/MonatlicherSparbeitrag'
+          ZUTEILUNGSZEITPUNKT: '#/components/schemas/Zuteilungszeitpunkt'
+    Bausparsumme:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/BauspardarlehenWunschparameter'
+      - type: object
+        properties:
+          betrag:
+            type: number
+            format: double
     BausparvertragAlsVermoegen:
       required:
       - bausparkasse
@@ -1017,6 +1047,10 @@ components:
       - '@type'
       type: object
       properties:
+        darlehensgeber:
+          oneOf:
+          - $ref: '#/components/schemas/ProduktanbieterDarlehensgeber'
+          - $ref: '#/components/schemas/SonstigerDarlehensgeber'
         grundschuld:
           type: number
           format: double
@@ -1037,10 +1071,6 @@ components:
           format: date
         restschuld:
           $ref: '#/components/schemas/Restschuld'
-        darlehensgeber:
-          oneOf:
-          - $ref: '#/components/schemas/ProduktanbieterDarlehensgeber'
-          - $ref: '#/components/schemas/SonstigerDarlehensgeber'
         darlehenskontonummer:
           type: string
           description: IBAN des Darlehenskontos
@@ -2313,6 +2343,15 @@ components:
       type: object
       allOf:
       - $ref: '#/components/schemas/Praemienzahlung'
+    MonatlicherSparbeitrag:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/BauspardarlehenWunschparameter'
+      - type: object
+        properties:
+          betrag:
+            type: number
+            format: double
     Nebenkosten:
       type: object
       properties:
@@ -3815,6 +3854,15 @@ components:
           format: double
         verwendung:
           $ref: '#/components/schemas/AufloesungAlsVerwendung'
+    Sparbeginn:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/BauspardarlehenWunschparameter'
+      - type: object
+        properties:
+          beginn:
+            type: string
+            format: date
     Sparplaene:
       type: object
       properties:
@@ -4174,6 +4222,17 @@ components:
             format: int32
           kommentar:
             type: string
+    Zuteilungszeitpunkt:
+      required:
+      - zeitpunkt
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/BauspardarlehenWunschparameter'
+      - type: object
+        properties:
+          zeitpunkt:
+            type: string
+            format: date
     Zweifamilienhaus:
       type: object
       allOf:
@@ -4315,3 +4374,4 @@ components:
           tokenUrl: https://api.europace.de/auth/access-token
           scopes:
             baufinanzierung:vorgang:schreiben: Erzeugen eines neuen Vorgangs
+            baufinanzierung:echtgeschaeft: Erzeugen eines neuen Vorgangs im Echtgeschäft

@@ -1,6 +1,6 @@
 # Importieren von Kundenangaben in einen neuen Vorgang
 
-Version: 1.0-alpha.7
+Version: 1.0-alpha.8
 
 :warning: In dieser Version der API wurden der Kundenbetreuer und Bearbeiter in der Import-Anfrage entfernt. Stattdessen
 wird der angemeldete Benutzer als Kundenbetreuer eingetragen. Nähere Informationen sind im Abschnitt

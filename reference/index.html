@@ -2208,6 +2208,10 @@
               <!--<li><a href="#_absicherung">Absicherung</a></li>-->
               <li><a href="#_Bauspardarlehen">Bauspardarlehen</a></li>
               <!--<li><a href="#_absicherung">Absicherung</a></li>-->
+              <li><a href="#_BauspardarlehenWunschparameter">BauspardarlehenWunschparameter</a></li>
+              <!--<li><a href="#_absicherung">Absicherung</a></li>-->
+              <li><a href="#_Bausparsumme">Bausparsumme</a></li>
+              <!--<li><a href="#_absicherung">Absicherung</a></li>-->
               <li><a href="#_BausparvertragAlsVermoegen">BausparvertragAlsVermoegen</a></li>
               <!--<li><a href="#_absicherung">Absicherung</a></li>-->
               <li><a href="#_Bausparvertragsdetails">Bausparvertragsdetails</a></li>
@@ -2410,6 +2414,8 @@
               <!--<li><a href="#_absicherung">Absicherung</a></li>-->
               <li><a href="#_MonatlichePraemienzahlung">MonatlichePraemienzahlung</a></li>
               <!--<li><a href="#_absicherung">Absicherung</a></li>-->
+              <li><a href="#_MonatlicherSparbeitrag">MonatlicherSparbeitrag</a></li>
+              <!--<li><a href="#_absicherung">Absicherung</a></li>-->
               <li><a href="#_Nebenkosten">Nebenkosten</a></li>
               <!--<li><a href="#_absicherung">Absicherung</a></li>-->
               <li><a href="#_Neubau">Neubau</a></li>
@@ -2486,6 +2492,8 @@
               <!--<li><a href="#_absicherung">Absicherung</a></li>-->
               <li><a href="#_SonstigesVermoegen">SonstigesVermoegen</a></li>
               <!--<li><a href="#_absicherung">Absicherung</a></li>-->
+              <li><a href="#_Sparbeginn">Sparbeginn</a></li>
+              <!--<li><a href="#_absicherung">Absicherung</a></li>-->
               <li><a href="#_Sparplaene">Sparplaene</a></li>
               <!--<li><a href="#_absicherung">Absicherung</a></li>-->
               <li><a href="#_Stellplatz">Stellplatz</a></li>
@@ -2544,6 +2552,8 @@
               <!--<li><a href="#_absicherung">Absicherung</a></li>-->
               <li><a href="#_Zinsbindungsspanne">Zinsbindungsspanne</a></li>
               <!--<li><a href="#_absicherung">Absicherung</a></li>-->
+              <li><a href="#_Zuteilungszeitpunkt">Zuteilungszeitpunkt</a></li>
+              <!--<li><a href="#_absicherung">Absicherung</a></li>-->
               <li><a href="#_Zweifamilienhaus">Zweifamilienhaus</a></li>
               <!--<li><a href="#_absicherung">Absicherung</a></li>-->
               <li><a href="#_Zwischenfinanzierung">Zwischenfinanzierung</a></li>
@@ -2570,7 +2580,7 @@
           <div class="sect2">
             <h3 id="_aktuelle_version">Aktuelle Version</h3>
             <div class="paragraph">
-              <p><em>Version</em> : 1.0-alpha.7; f9bfbb1aad1b82285279895c0d1defdeaf612073</p>
+              <p><em>Version</em> : 1.0-alpha.8; 0cf732880f9aa29c808a7fa79c5b7025e98db8d9</p>
             </div>
           </div>
         <div class="sect2">
@@ -2633,6 +2643,22 @@
                       </div>
                     </td>
                   </tr>
+                  <tr>
+                    <td class="tableblock halign-left valign-middle">
+                      <div class="content">
+                        <div class="paragraph">
+                          <p><code>baufinanzierung:echtgeschaeft</code></p>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="tableblock halign-left valign-middle">
+                      <div class="content">
+                        <div class="paragraph">
+                          <p>Erzeugen eines neuen Vorgangs im Echtgeschäft</p>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
                 </tbody>
               </table>
           </div>
@@ -2657,7 +2683,7 @@
                   <div class="sect4">
                     <h5 id="_beschreibung">Beschreibung</h5>
                     <div class="paragraph">
-                      <p>Kundenangaben werden in BaufiSmart in einen neuen Vorgang importiert.</p>
+                      <p>Kundenangaben werden in BaufiSmart in einen neuen Vorgang importiert. Der Scope &lt;code&gt;baufinanzierung:echtgeschaeft&lt;/code&gt;wird benötigt, wenn der Datenkontext &lt;code&gt;ECHT_GESCHAEFT&lt;/code&gt; gewählt wird.</p>
                     </div>
                   </div>
                   <div class="sect4">
@@ -2805,7 +2831,7 @@
                           <td class="tableblock halign-left valign-middle">
                             <div class="content">
                               <div class="paragraph">
-                                <p><strong>sendEmailNotification</strong><br>
+                                <p><strong>datenkontext</strong><br>
                                   <em>optional</em></p>
                               </div>
                             </div>
@@ -2816,12 +2842,12 @@
                           <td class="tableblock halign-left valign-middle">
                             <div class="content">
                               <div class="paragraph">
-                                <p>Boolean</p>
+                                <p>String</p>
                               </div>
                             </div>
                           </td>
                           <td class="tableblock halign-left valign-middle">
-                            <div class="content"><code>false</code></div>
+                            <div class="content"><code>ECHT_GESCHAEFT</code></div>
                           </td>
                         </tr>
                         <tr>
@@ -2829,9 +2855,9 @@
                             <div class="content">
                               <div class="paragraph">
                                 <p>
+                                  <strong>Header</strong>
                                   
                                   
-                                  <strong>Query</strong>
                                   
                                   
                                 </p>
@@ -2841,7 +2867,7 @@
                           <td class="tableblock halign-left valign-middle">
                             <div class="content">
                               <div class="paragraph">
-                                <p><strong>datenkontext</strong><br>
+                                <p><strong>X-Feature</strong><br>
                                   <em>optional</em></p>
                               </div>
                             </div>
@@ -2857,7 +2883,7 @@
                             </div>
                           </td>
                           <td class="tableblock halign-left valign-middle">
-                            <div class="content"><code>ECHT_GESCHAEFT</code></div>
+                            <div class="content"></div>
                           </td>
                         </tr>
                       </tbody>
@@ -2898,29 +2924,6 @@
                             <div class="content">
                               <div class="paragraph">
                                 <p><a href="_#KundenangabenImportResponse">KundenangabenImportResponse</a></p>
-                              </div>
-                            </div>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td class="tableblock halign-left valign-middle">
-                            <div class="content">
-                              <div class="paragraph">
-                                <p><strong>403</strong></p>
-                              </div>
-                            </div>
-                          </td>
-                          <td class="tableblock halign-left valign-middle">
-                            <div class="content">
-                              <div class="paragraph">
-                                <p>Es fehlt die Berechtigung, um die Anfrage auszuführen</p>
-                              </div>
-                            </div>
-                          </td>
-                          <td class="tableblock halign-left valign-middle">
-                            <div class="content">
-                              <div class="paragraph">
-                                <p><a href="_#Problem">Problem</a></p>
                               </div>
                             </div>
                           </td>
@@ -2994,6 +2997,29 @@
                             </div>
                           </td>
                         </tr>
+                        <tr>
+                          <td class="tableblock halign-left valign-middle">
+                            <div class="content">
+                              <div class="paragraph">
+                                <p><strong>403</strong></p>
+                              </div>
+                            </div>
+                          </td>
+                          <td class="tableblock halign-left valign-middle">
+                            <div class="content">
+                              <div class="paragraph">
+                                <p>Es fehlt die Berechtigung, um die Anfrage auszuführen</p>
+                              </div>
+                            </div>
+                          </td>
+                          <td class="tableblock halign-left valign-middle">
+                            <div class="content">
+                              <div class="paragraph">
+                                <p><a href="_#Problem">Problem</a></p>
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
                       </tbody>
                     </table>
                   </div>
@@ -3049,6 +3075,7 @@
                             <div class="content">
                               <div class="paragraph">
                                   <p><code>baufinanzierung:vorgang:schreiben</code></p>
+                                  <p><code>baufinanzierung:echtgeschaeft</code></p>
                               </div>
                             </div>
                           </td>
@@ -5986,36 +6013,6 @@
                   <td class="tableblock halign-left valign-middle">
                     <div class="content">
                       <div class="paragraph">
-                        <p><strong>sparbeginn</strong>
-                          <br><em>optional</em>
-                        </p>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                        <p></p>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                      <p>
-  
-                          <a href="#_date">date</a>
-  
-  
-                        </p>
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
                         <p><strong>tarifListe</strong>
                           <br><em>optional</em>
                         </p>
@@ -6052,7 +6049,7 @@
                   <td class="tableblock halign-left valign-middle">
                     <div class="content">
                       <div class="paragraph">
-                        <p><strong>weitereWunschparameter</strong>
+                        <p><strong>wunschparameter</strong>
                           <br><em>optional</em>
                         </p>
                       </div>
@@ -6061,7 +6058,7 @@
                   <td class="tableblock halign-left valign-middle">
                     <div class="content">
                       <div class="paragraph">
-                        <p></p>
+                        <p>Pro Art des Wunschparameters darf maximal ein Eintrag vorhanden sein.</p>
                       </div>
                     </div>
                   </td>
@@ -6070,7 +6067,7 @@
                       <div class="paragraph">
                       <p>
   
-                          <a href="#_Bausparvertragsdetails">Bausparvertragsdetails</a>
+                          <a href="#_BauspardarlehenWunschparameter">array[BauspardarlehenWunschparameter]</a>
   
   
                         </p>
@@ -6137,6 +6134,140 @@
                                 <li>SONDERZAHLUNG</li>                                <li>VERRECHNUNG</li>
                             </ul>
                           </div>
+  
+  
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="sect2">
+            <h3 id="_BauspardarlehenWunschparameter">BauspardarlehenWunschparameter</h3>
+            <div class="paragraph">
+              <p>Pro Art des Wunschparameters darf maximal ein Eintrag vorhanden sein.</p>
+            </div>
+            <table class="tableblock frame-all grid-all stretch">
+              <colgroup>
+                <col style="width: 16.6666%;">
+                <col style="width: 61.1111%;">
+                <col style="width: 22.2223%;">
+              </colgroup>
+              <thead>
+              <tr>
+                <th class="tableblock halign-left valign-middle">Name</th>
+                <th class="tableblock halign-left valign-middle">Beschreibung</th>
+                <th class="tableblock halign-left valign-middle">Typ</th>
+              </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p><strong>@type</strong>
+                          
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p></p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                      <p>
+  
+                          <a href="#_string">String</a>
+  
+  
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="sect2">
+            <h3 id="_Bausparsumme">Bausparsumme</h3>
+            <div class="paragraph">
+              <p></p>
+            </div>
+            <table class="tableblock frame-all grid-all stretch">
+              <colgroup>
+                <col style="width: 16.6666%;">
+                <col style="width: 61.1111%;">
+                <col style="width: 22.2223%;">
+              </colgroup>
+              <thead>
+              <tr>
+                <th class="tableblock halign-left valign-middle">Name</th>
+                <th class="tableblock halign-left valign-middle">Beschreibung</th>
+                <th class="tableblock halign-left valign-middle">Typ</th>
+              </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p><strong>@type</strong>
+                          
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p></p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                      <p>
+  
+                          <a href="#_string">String</a>
+  
+  
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p><strong>betrag</strong>
+                          <br><em>optional</em>
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p></p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                      <p>
+  
+                          <a href="#_double">Double</a>
   
   
                         </p>
@@ -7292,6 +7423,37 @@
                   <td class="tableblock halign-left valign-middle">
                     <div class="content">
                       <div class="paragraph">
+                        <p><strong>darlehensgeber</strong>
+                          <br><em>optional</em>
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p></p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                      <p>
+                          darlehensgeber
+  
+                          <a href="#_"></a>
+  
+  
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
                         <p><strong>grundschuld</strong>
                           <br><em>optional</em>
                         </p>
@@ -7491,37 +7653,6 @@
                       <p>
   
                           <a href="#_Restschuld">Restschuld</a>
-  
-  
-                        </p>
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                        <p><strong>darlehensgeber</strong>
-                          <br><em>optional</em>
-                        </p>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                        <p></p>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                      <p>
-                          darlehensgeber
-  
-                          <a href="#_"></a>
   
   
                         </p>
@@ -7651,6 +7782,43 @@
                   <td class="tableblock halign-left valign-middle">
                     <div class="content">
                       <div class="paragraph">
+                        <p><strong>darlehensgeber</strong>
+                          <br><em>optional</em>
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p></p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                      <p>
+                          darlehensgeber
+  
+                          <a href="#_"></a>
+  
+                          <div class="param-desc"><span class="param-type">Ein Modell vom Typ:</span>
+                            <ul>
+                                <li><a href="#_ProduktanbieterDarlehensgeber">ProduktanbieterDarlehensgeber</a></li>
+                                <li><a href="#_SonstigerDarlehensgeber">SonstigerDarlehensgeber</a></li>
+                            </ul>
+                          </div>
+  
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
                         <p><strong>grundschuld</strong>
                           <br><em>optional</em>
                         </p>
@@ -7851,43 +8019,6 @@
   
                           <a href="#_Restschuld">Restschuld</a>
   
-  
-                        </p>
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                        <p><strong>darlehensgeber</strong>
-                          <br><em>optional</em>
-                        </p>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                        <p></p>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                      <p>
-                          darlehensgeber
-  
-                          <a href="#_"></a>
-  
-                          <div class="param-desc"><span class="param-type">Ein Modell vom Typ:</span>
-                            <ul>
-                                <li><a href="#_ProduktanbieterDarlehensgeber">ProduktanbieterDarlehensgeber</a></li>
-                                <li><a href="#_SonstigerDarlehensgeber">SonstigerDarlehensgeber</a></li>
-                            </ul>
-                          </div>
   
                         </p>
                       </div>
@@ -8072,6 +8203,37 @@
                   <td class="tableblock halign-left valign-middle">
                     <div class="content">
                       <div class="paragraph">
+                        <p><strong>darlehensgeber</strong>
+                          <br><em>optional</em>
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p></p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                      <p>
+                          darlehensgeber
+  
+                          <a href="#_"></a>
+  
+  
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
                         <p><strong>grundschuld</strong>
                           <br><em>optional</em>
                         </p>
@@ -8271,37 +8433,6 @@
                       <p>
   
                           <a href="#_Restschuld">Restschuld</a>
-  
-  
-                        </p>
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                        <p><strong>darlehensgeber</strong>
-                          <br><em>optional</em>
-                        </p>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                        <p></p>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                      <p>
-                          darlehensgeber
-  
-                          <a href="#_"></a>
   
   
                         </p>
@@ -8431,6 +8562,37 @@
                   <td class="tableblock halign-left valign-middle">
                     <div class="content">
                       <div class="paragraph">
+                        <p><strong>darlehensgeber</strong>
+                          <br><em>optional</em>
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p></p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                      <p>
+                          darlehensgeber
+  
+                          <a href="#_"></a>
+  
+  
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
                         <p><strong>grundschuld</strong>
                           <br><em>optional</em>
                         </p>
@@ -8630,37 +8792,6 @@
                       <p>
   
                           <a href="#_Restschuld">Restschuld</a>
-  
-  
-                        </p>
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                        <p><strong>darlehensgeber</strong>
-                          <br><em>optional</em>
-                        </p>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                        <p></p>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                      <p>
-                          darlehensgeber
-  
-                          <a href="#_"></a>
   
   
                         </p>
@@ -8790,6 +8921,37 @@
                   <td class="tableblock halign-left valign-middle">
                     <div class="content">
                       <div class="paragraph">
+                        <p><strong>darlehensgeber</strong>
+                          <br><em>optional</em>
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p></p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                      <p>
+                          darlehensgeber
+  
+                          <a href="#_"></a>
+  
+  
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
                         <p><strong>grundschuld</strong>
                           <br><em>optional</em>
                         </p>
@@ -8989,37 +9151,6 @@
                       <p>
   
                           <a href="#_Restschuld">Restschuld</a>
-  
-  
-                        </p>
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                        <p><strong>darlehensgeber</strong>
-                          <br><em>optional</em>
-                        </p>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                        <p></p>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                      <p>
-                          darlehensgeber
-  
-                          <a href="#_"></a>
   
   
                         </p>
@@ -9113,6 +9244,37 @@
                   <td class="tableblock halign-left valign-middle">
                     <div class="content">
                       <div class="paragraph">
+                        <p><strong>darlehensgeber</strong>
+                          <br><em>optional</em>
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p></p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                      <p>
+                          darlehensgeber
+  
+                          <a href="#_"></a>
+  
+  
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
                         <p><strong>grundschuld</strong>
                           <br><em>optional</em>
                         </p>
@@ -9312,37 +9474,6 @@
                       <p>
   
                           <a href="#_Restschuld">Restschuld</a>
-  
-  
-                        </p>
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                        <p><strong>darlehensgeber</strong>
-                          <br><em>optional</em>
-                        </p>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                        <p></p>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                      <p>
-                          darlehensgeber
-  
-                          <a href="#_"></a>
   
   
                         </p>
@@ -19904,6 +20035,88 @@
             </table>
           </div>
           <div class="sect2">
+            <h3 id="_MonatlicherSparbeitrag">MonatlicherSparbeitrag</h3>
+            <div class="paragraph">
+              <p></p>
+            </div>
+            <table class="tableblock frame-all grid-all stretch">
+              <colgroup>
+                <col style="width: 16.6666%;">
+                <col style="width: 61.1111%;">
+                <col style="width: 22.2223%;">
+              </colgroup>
+              <thead>
+              <tr>
+                <th class="tableblock halign-left valign-middle">Name</th>
+                <th class="tableblock halign-left valign-middle">Beschreibung</th>
+                <th class="tableblock halign-left valign-middle">Typ</th>
+              </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p><strong>@type</strong>
+                          
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p></p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                      <p>
+  
+                          <a href="#_string">String</a>
+  
+  
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p><strong>betrag</strong>
+                          <br><em>optional</em>
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p></p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                      <p>
+  
+                          <a href="#_double">Double</a>
+  
+  
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="sect2">
             <h3 id="_Nebenkosten">Nebenkosten</h3>
             <div class="paragraph">
               <p></p>
@@ -24421,6 +24634,88 @@
             </table>
           </div>
           <div class="sect2">
+            <h3 id="_Sparbeginn">Sparbeginn</h3>
+            <div class="paragraph">
+              <p></p>
+            </div>
+            <table class="tableblock frame-all grid-all stretch">
+              <colgroup>
+                <col style="width: 16.6666%;">
+                <col style="width: 61.1111%;">
+                <col style="width: 22.2223%;">
+              </colgroup>
+              <thead>
+              <tr>
+                <th class="tableblock halign-left valign-middle">Name</th>
+                <th class="tableblock halign-left valign-middle">Beschreibung</th>
+                <th class="tableblock halign-left valign-middle">Typ</th>
+              </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p><strong>@type</strong>
+                          
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p></p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                      <p>
+  
+                          <a href="#_string">String</a>
+  
+  
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p><strong>beginn</strong>
+                          <br><em>optional</em>
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p></p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                      <p>
+  
+                          <a href="#_date">date</a>
+  
+  
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="sect2">
             <h3 id="_Sparplaene">Sparplaene</h3>
             <div class="paragraph">
               <p></p>
@@ -27264,6 +27559,88 @@
                       <p>
   
                           <a href="#_string">String</a>
+  
+  
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="sect2">
+            <h3 id="_Zuteilungszeitpunkt">Zuteilungszeitpunkt</h3>
+            <div class="paragraph">
+              <p></p>
+            </div>
+            <table class="tableblock frame-all grid-all stretch">
+              <colgroup>
+                <col style="width: 16.6666%;">
+                <col style="width: 61.1111%;">
+                <col style="width: 22.2223%;">
+              </colgroup>
+              <thead>
+              <tr>
+                <th class="tableblock halign-left valign-middle">Name</th>
+                <th class="tableblock halign-left valign-middle">Beschreibung</th>
+                <th class="tableblock halign-left valign-middle">Typ</th>
+              </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p><strong>@type</strong>
+                          
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p></p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                      <p>
+  
+                          <a href="#_string">String</a>
+  
+  
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p><strong>zeitpunkt</strong>
+                          
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p></p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                      <p>
+  
+                          <a href="#_date">date</a>
   
   
                         </p>
