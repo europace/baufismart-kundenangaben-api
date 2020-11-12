@@ -1,8 +1,10 @@
 # Importieren von Kundenangaben in einen neuen Vorgang
 
-Version: 1.0-alpha.8
+Version: 1.0-alpha.10
 
-:warning: In dieser Version der API wurden der Kundenbetreuer und Bearbeiter in der Import-Anfrage entfernt. Stattdessen
+:information_source: Die Metadaten für den Import wurden aus den Kundenangaben auf die oberste Ebene des API-Schemas gezogen. 
+
+:warning: Kundenbetreuer und Bearbeiter wurden vorerst aus der Import-Anfrage entfernt. Stattdessen
 wird der angemeldete Benutzer als Kundenbetreuer eingetragen. Nähere Informationen sind im Abschnitt
 [Authentifizieren verschiedener Benutzer mit einem Client](#authentifizieren-verschiedener-benutzer-mit-einem-client)
 zu finden.

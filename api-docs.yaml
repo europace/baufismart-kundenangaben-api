@@ -8,7 +8,7 @@ info:
     name: Europace AG
     url: http://developer.europace.de
     email: devsupport@europace2.de
-  version: 1.0-alpha.8; 0cf732880f9aa29c808a7fa79c5b7025e98db8d9
+  version: 1.0-alpha.10; 92f3ab0c7f97f46e52c279f821b01af3677968ca
 externalDocs:
   url: https://developer.europace.de/api/kundenangaben-api
 servers:
@@ -39,17 +39,6 @@ paths:
         description: Eine eindeutige technische Id zur Identifikation des Requests
         schema:
           type: string
-      - name: datenkontext
-        in: query
-        description: "Sendet eine E-Mail an den angegebenen Berater, wenn true übergeben\
-          \ wird "
-        required: false
-        schema:
-          type: string
-          enum:
-          - TEST_MODUS
-          - ECHT_GESCHAEFT
-          default: ECHT_GESCHAEFT
       - name: X-Feature
         in: header
         required: false
@@ -59,7 +48,7 @@ paths:
         content:
           application/json; version=1.0:
             schema:
-              $ref: '#/components/schemas/Kundenangaben'
+              $ref: '#/components/schemas/ImportKundenangabenRequest'
         required: true
       responses:
         "201":
@@ -385,9 +374,6 @@ components:
             enum:
             - FREI_BESPAREN
             - ABTRETEN
-          tilgungsrateMonatlich:
-            type: number
-            format: double
           tarifListe:
             type: array
             items:
@@ -1281,17 +1267,6 @@ components:
             $ref: '#/components/schemas/Nutzflaechen'
           fertighaus:
             type: boolean
-    Einkommen:
-      type: object
-      properties:
-        einkommenNetto:
-          type: number
-          format: double
-        bezugsrahmen:
-          type: string
-          enum:
-          - MONATLICH
-          - JAEHRLICH
     EinkuenfteAusNebentaetigkeit:
       type: object
       properties:
@@ -1394,8 +1369,9 @@ components:
           - $ref: '#/components/schemas/HaushaltendePerson'
           - $ref: '#/components/schemas/Rentner'
           - $ref: '#/components/schemas/Selbststaendiger'
-        einkommen:
-          $ref: '#/components/schemas/Einkommen'
+        einkommenNetto:
+          type: number
+          format: double
         riesterangaben:
           $ref: '#/components/schemas/Riesterangaben'
     Finanzierungsbaustein:
@@ -1414,9 +1390,8 @@ components:
           PRIVATDARLEHEN: '#/components/schemas/Privatdarlehen'
           ZWISCHENFINANZIERUNG: '#/components/schemas/Zwischenfinanzierung'
           VARIABLES_DARLEHEN: '#/components/schemas/VariablesDarlehen'
-          KFW_DARLEHEN: '#/components/schemas/KfwDarlehen'
-          REGIONALE_FOERDERBANK_DARLEHEN: '#/components/schemas/RegionaleFoerderbankDarlehen'
           BAUSPARDARLEHEN: '#/components/schemas/Bauspardarlehen'
+          KFW_DARLEHEN: '#/components/schemas/KfwDarlehen'
     Finanzierungsbedarf:
       type: object
       properties:
@@ -1442,6 +1417,8 @@ components:
         praeferenzen:
           $ref: '#/components/schemas/Praeferenzen'
         finanzierungsbausteine:
+          maxItems: 5
+          minItems: 0
           type: array
           description: In anderen APIs im 'Finanzierungswunsch' zu finden.
           items:
@@ -1451,7 +1428,6 @@ components:
             - $ref: '#/components/schemas/Forwarddarlehen'
             - $ref: '#/components/schemas/KfwDarlehen'
             - $ref: '#/components/schemas/Privatdarlehen'
-            - $ref: '#/components/schemas/RegionaleFoerderbankDarlehen'
             - $ref: '#/components/schemas/VariablesDarlehen'
             - $ref: '#/components/schemas/Zwischenfinanzierung'
         ratenschutzbausteine:
@@ -1848,6 +1824,54 @@ components:
           MEHRFAMILIENHAUS: '#/components/schemas/Mehrfamilienhaus'
           REIHENHAUS: '#/components/schemas/Reihenhaus'
           IMMOBILIE_OHNE_TYP: '#/components/schemas/ImmobilieOhneTyp'
+    ImportKundenangabenRequest:
+      required:
+      - importMetadaten
+      - kundenangaben
+      type: object
+      properties:
+        kundenangaben:
+          $ref: '#/components/schemas/Kundenangaben'
+        importMetadaten:
+          $ref: '#/components/schemas/ImportMetadaten'
+    ImportMetadaten:
+      required:
+      - datenkontext
+      type: object
+      properties:
+        datenkontext:
+          type: string
+          description: In welchem Kontext (Echtgeschäft oder Testmodus) wird der Request
+            verarbeitet.
+          enum:
+          - TEST_MODUS
+          - ECHT_GESCHAEFT
+          default: ECHT_GESCHAEFT
+        externeVorgangsId:
+          type: string
+          description: "Externe VorgangsId, mit welcher sich z.B. die importierten\
+            \ Daten suchen lassen."
+        importquelle:
+          type: string
+          description: "Quelle, aus der die Kundenangaben importiert werden. Kann\
+            \ im Reporting zur Gruppierung verwendet werden."
+        leadtracking:
+          $ref: '#/components/schemas/Leadtracking'
+        zusaetzlicherEreignistext:
+          type: string
+          description: Bei erfolgreichem Import der Kundenangaben wird ein 'Vorgang
+            angelegt' Ereignis erzeugt. Hier kann ein ergänzender Text hinzugefügt
+            werden.
+        prioritaet:
+          type: string
+          description: Die Priorität dient der Sortierung und Filterung von Vorgängen
+            im Vorgangsmanagement.
+          enum:
+          - NIEDRIG
+          - NEUTRAL
+          - HOCH
+        tippgeber:
+          $ref: '#/components/schemas/Tippgeber'
     InJahren:
       type: object
       allOf:
@@ -1985,6 +2009,10 @@ components:
           kommentar:
             type: string
     KfwDarlehen:
+      required:
+      - darlehensbetrag
+      - kfwEndfaellig
+      - programm
       type: object
       allOf:
       - $ref: '#/components/schemas/Finanzierungsbaustein'
@@ -1993,38 +2021,173 @@ components:
           darlehensbetrag:
             type: number
             format: double
-          laufzeitInJahren:
-            type: integer
-            format: int32
-          tilgungsfreieAnlaufjahre:
-            type: integer
-            format: int32
-          zinsbindungInJahren:
-            type: integer
-            format: int32
-          tilgungswunsch:
-            $ref: '#/components/schemas/Tilgungswunsch'
-          kfwProgramm:
-            type: string
-            enum:
-            - PROGRAMM_124
-            - PROGRAMM_151
-            - PROGRAMM_152
-            - PROGRAMM_153
-            - PROGRAMM_159
-            - PROGRAMM_167
-          kfwEnergieEffizienzStandard:
-            type: string
-            enum:
-            - STANDARD_40_PLUS
-            - STANDARD_40
-            - STANDARD_55
           kfwEndfaellig:
             type: string
             enum:
             - NEIN
             - ENDFAELLIG_BERECHNET
             - ENDFAELLIG_EIGENES_ANGEBOT
+          tilgungswunsch:
+            $ref: '#/components/schemas/Tilgungswunsch'
+          programm:
+            $ref: '#/components/schemas/KfwProgramm'
+    KfwProgramm:
+      required:
+      - '@type'
+      type: object
+      properties:
+        '@type':
+          type: string
+      discriminator:
+        propertyName: '@type'
+        mapping:
+          KFW_PROGRAMM_124: '#/components/schemas/KfwProgramm124'
+          KFW_PROGRAMM_151: '#/components/schemas/KfwProgramm151'
+          KFW_PROGRAMM_152: '#/components/schemas/KfwProgramm152'
+          KFW_PROGRAMM_153: '#/components/schemas/KfwProgramm153'
+          KFW_PROGRAMM_159: '#/components/schemas/KfwProgramm159'
+          KFW_PROGRAMM_167: '#/components/schemas/KfwProgramm167'
+    KfwProgramm124:
+      required:
+      - laufzeitInJahren
+      - tilgungsfreieAnlaufjahre
+      - zinsbindungInJahren
+      type: object
+      description: "Wohneigentum Schaffen: Selbstgenutztes Eigentum (Programm-Nr.:\
+        \ 124)"
+      allOf:
+      - $ref: '#/components/schemas/KfwProgramm'
+      - type: object
+        properties:
+          laufzeitInJahren:
+            maximum: 25
+            minimum: 1
+            type: integer
+            format: int32
+          zinsbindungInJahren:
+            type: integer
+            description: 5 oder 10 Jahre
+            format: int32
+          tilgungsfreieAnlaufjahre:
+            maximum: 3
+            minimum: 1
+            type: integer
+            format: int32
+    KfwProgramm151:
+      type: object
+      description: "Energieeffizient Sanieren: Kauf oder Komplettsanierung (Programm-Nr.:\
+        \ 151). Die Zinsbindung beträgt immer 10 Jahre."
+      allOf:
+      - $ref: '#/components/schemas/KfwProgramm'
+      - type: object
+        properties:
+          laufzeitInJahren:
+            maximum: 30
+            minimum: 4
+            type: integer
+            format: int32
+          tilgungsfreieAnlaufjahre:
+            maximum: 5
+            minimum: 1
+            type: integer
+            format: int32
+    KfwProgramm152:
+      required:
+      - laufzeitInJahren
+      - tilgungsfreieAnlaufjahre
+      type: object
+      description: "Energieeffizient Sanieren: Einzelmaßnahmen (Programm-Nr.: 152).\
+        \ Die Zinsbindung beträgt immer 10 Jahre."
+      allOf:
+      - $ref: '#/components/schemas/KfwProgramm'
+      - type: object
+        properties:
+          laufzeitInJahren:
+            maximum: 30
+            minimum: 4
+            type: integer
+            format: int32
+          tilgungsfreieAnlaufjahre:
+            maximum: 5
+            minimum: 1
+            type: integer
+            format: int32
+    KfwProgramm153:
+      required:
+      - laufzeitInJahren
+      - tilgungsfreieAnlaufjahre
+      - zinsbindungInJahren
+      type: object
+      description: "Energieeffizient Bauen: Effizienzhaus (Programm-Nr.: 153)"
+      allOf:
+      - $ref: '#/components/schemas/KfwProgramm'
+      - type: object
+        properties:
+          kfwEnergieEffizienzStandard:
+            type: string
+            enum:
+            - STANDARD_40_PLUS
+            - STANDARD_40
+            - STANDARD_55
+          laufzeitInJahren:
+            maximum: 30
+            minimum: 4
+            type: integer
+            format: int32
+          zinsbindungInJahren:
+            type: integer
+            description: 5 oder 10 Jahre
+            format: int32
+          tilgungsfreieAnlaufjahre:
+            maximum: 5
+            minimum: 1
+            type: integer
+            format: int32
+    KfwProgramm159:
+      required:
+      - tilgungsfreieAnlaufjahre
+      type: object
+      description: "Wohnraum Modernisieren: Altersgerecht Umbauen (Programm-Nr.: 159)"
+      allOf:
+      - $ref: '#/components/schemas/KfwProgramm'
+      - type: object
+        properties:
+          laufzeitInJahren:
+            maximum: 30
+            minimum: 4
+            type: integer
+            format: int32
+          zinsbindungInJahren:
+            type: integer
+            description: 5 oder 10 Jahre
+            format: int32
+          tilgungsfreieAnlaufjahre:
+            maximum: 5
+            minimum: 1
+            type: integer
+            format: int32
+    KfwProgramm167:
+      required:
+      - laufzeitUndZinsbindungInJahren
+      - tilgungsfreieAnlaufjahre
+      type: object
+      description: "Energieeffizient Sanieren: Heizungsanlagen Erneuerbare Energien\
+        \ (Programm-Nr.: 167). Die Laufzeit und Zinsbindung sind bei diesem Programmm\
+        \ identisch."
+      allOf:
+      - $ref: '#/components/schemas/KfwProgramm'
+      - type: object
+        properties:
+          laufzeitUndZinsbindungInJahren:
+            maximum: 10
+            minimum: 4
+            type: integer
+            format: int32
+          tilgungsfreieAnlaufjahre:
+            maximum: 2
+            minimum: 1
+            type: integer
+            format: int32
     Kind:
       type: object
       properties:
@@ -2097,8 +2260,6 @@ components:
           $ref: '#/components/schemas/Finanzierungsbedarf'
         bankverbindung:
           $ref: '#/components/schemas/Bankverbindung'
-        metadaten:
-          $ref: '#/components/schemas/Metadaten'
       description: In anderen APIs als 'Erfasste Daten' bezeichnet.
     LangeZinssicherheit:
       type: object
@@ -2220,34 +2381,6 @@ components:
           anzahlDerGewerbeeinheiten:
             type: integer
             format: int32
-    Metadaten:
-      type: object
-      properties:
-        externeVorgangsId:
-          type: string
-          description: "Externe VorgangsId, mit welcher sich z.B. die importierten\
-            \ Daten suchen lassen."
-        importquelle:
-          type: string
-          description: "Quelle, aus der die Kundenangaben importiert werden. Kann\
-            \ im Reporting zur Gruppierung verwendet werden."
-        leadtracking:
-          $ref: '#/components/schemas/Leadtracking'
-        zusaetzlicherEreignistext:
-          type: string
-          description: Bei erfolgreichem Import der Kundenangaben wird ein 'Vorgang
-            angelegt' Ereignis erzeugt. Hier kann ein ergänzender Text hinzugefügt
-            werden.
-        prioritaet:
-          type: string
-          description: Die Priorität dient der Sortierung und Filterung von Vorgängen
-            im Vorgangsmanagement.
-          enum:
-          - NIEDRIG
-          - NEUTRAL
-          - HOCH
-        tippgeber:
-          $ref: '#/components/schemas/Tippgeber'
     Mietausgaben:
       type: object
       properties:
@@ -3617,36 +3750,6 @@ components:
           format: double
         beschreibung:
           type: string
-    RegionaleFoerderbankDarlehen:
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/Finanzierungsbaustein'
-      - type: object
-        properties:
-          referenzId:
-            type: string
-            description: "Eindeutige Referenz-ID für diesen Finanzierungsbaustein.\
-              \ Sie gilt nur innerhalb dieses Aufrufs, ist freiwählbar und wird nicht\
-              \ abgespeichert. Auf sie wird beim (optionalen) Ablösen der bestehenden\
-              \ Darlehen bei Anschlussfinanzierung verwiesen."
-          darlehensbetrag:
-            type: number
-            format: double
-          laufzeitInJahren:
-            type: integer
-            format: int32
-          tilgungsfreieAnlaufjahre:
-            type: integer
-            format: int32
-          zinsbindungInJahren:
-            type: integer
-            format: int32
-          programm:
-            type: string
-            enum:
-            - L_BANK_KOMBI_DARLEHEN_WOHNEN
-            - L_BANK_WOHNEN_MIT_KIND
-            - L_BANK_WOHNEN_MIT_ZUKUNFT
     Reihenhaus:
       type: object
       allOf:
@@ -3888,8 +3991,6 @@ components:
           - DOPPEL_GARAGE
           - KELLER_GARAGE
           - TIEFGARAGEN_STELLPLATZ
-        vermietet:
-          type: boolean
         mieteMonatlich:
           type: number
           format: double
@@ -4307,7 +4408,7 @@ components:
           type: string
           description: "Eine absolute URI, die den Problemtyp eindeutig identifiziert."
           format: uri
-          example: https://api.europace.de/problem/constraint-violation
+          example: https://api.europace.de/kundenangaben/problem/constraint-violation
         title:
           type: string
           description: Eine kurze Zusammenfassung des Problemtyps.
