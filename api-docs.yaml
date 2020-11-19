@@ -8,7 +8,7 @@ info:
     name: Europace AG
     url: http://developer.europace.de
     email: devsupport@europace2.de
-  version: 1.0-alpha.10; 92f3ab0c7f97f46e52c279f821b01af3677968ca
+  version: 1.0-alpha.11; 9d58eb8d97140c4e8df2343a45ea18ba762235cb
 externalDocs:
   url: https://developer.europace.de/api/kundenangaben-api
 servers:
@@ -57,10 +57,10 @@ paths:
             application/json; version=1.0:
               schema:
                 $ref: '#/components/schemas/KundenangabenImportResponse'
-        "401":
-          description: Die Authentifizierung ist fehlgeschlagen
         "503":
           $ref: '#/components/responses/ServiceNotAvailable'
+        "401":
+          description: Die Authentifizierung ist fehlgeschlagen
         "400":
           $ref: '#/components/responses/BadRequest'
         "403":
@@ -184,6 +184,9 @@ components:
           marktwertFinanzierungsobjekt:
             type: number
             format: double
+          baujahrFinanzierungsobjekt:
+            type: integer
+            format: int32
           abloesungDarlehenDesFinanzierungsobjektes:
             type: array
             description: Ablösung der bestehenden Darlehen des Finanzierungsobjektes.
@@ -892,16 +895,6 @@ components:
         jahresentgelt:
           type: number
           format: double
-        details:
-          $ref: '#/components/schemas/Bausparvertragsdetails'
-        verwendung:
-          oneOf:
-          - $ref: '#/components/schemas/AbtretenAlsVerwendung'
-          - $ref: '#/components/schemas/AufloesungAlsVerwendung'
-      description: In anderen APIs als 'bestehenderBausparvertrag' bezeichnet.
-    Bausparvertragsdetails:
-      type: object
-      properties:
         sparbeitragMonatlich:
           type: number
           format: double
@@ -911,6 +904,11 @@ components:
         zuteilungsdatum:
           type: string
           format: date
+        verwendung:
+          oneOf:
+          - $ref: '#/components/schemas/AbtretenAlsVerwendung'
+          - $ref: '#/components/schemas/AufloesungAlsVerwendung'
+      description: In anderen APIs als 'bestehenderBausparvertrag' bezeichnet.
     Beamter:
       type: object
       allOf:
@@ -994,6 +992,9 @@ components:
           type: string
         immobilie:
           $ref: '#/components/schemas/Immobilie'
+        baujahr:
+          type: integer
+          format: int32
         darlehensliste:
           type: array
           items:
@@ -1577,9 +1578,6 @@ components:
     Gebaeude:
       type: object
       properties:
-        baujahr:
-          type: integer
-          format: int32
         bauweise:
           type: string
           enum:
@@ -1905,6 +1903,9 @@ components:
           marktwertFinanzierungsobjekt:
             type: number
             format: double
+          baujahrFinanzierungsobjekt:
+            type: integer
+            format: int32
     Kauf:
       type: object
       allOf:
@@ -1920,6 +1921,9 @@ components:
             format: double
           modernisierung:
             $ref: '#/components/schemas/Modernisierungskosten'
+          baujahrFinanzierungsobjekt:
+            type: integer
+            format: int32
     KaufNeubauVomBautraeger:
       type: object
       allOf:
@@ -2439,6 +2443,9 @@ components:
           marktwertFinanzierungsobjekt:
             type: number
             format: double
+          baujahrFinanzierungsobjekt:
+            type: integer
+            format: int32
     Modernisierungskosten:
       type: object
       properties:
@@ -4056,6 +4063,7 @@ components:
       properties:
         '@type':
           type: string
+      description: Darf nicht den Tillgungswunsch Volltiger enthalten.
       discriminator:
         propertyName: '@type'
         mapping:
@@ -4259,6 +4267,8 @@ components:
           enum:
           - EURO
           - PROZENT
+      description: "Falls leer, wird der Prozentwert für das entsprechende Bundesland,\
+        \ falls aus Adresse bestimmbar, automatisch gesetzt."
     Wohnsituation:
       type: object
       properties:
