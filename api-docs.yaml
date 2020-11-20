@@ -8,7 +8,7 @@ info:
     name: Europace AG
     url: http://developer.europace.de
     email: devsupport@europace2.de
-  version: 1.0-alpha.11; 9d58eb8d97140c4e8df2343a45ea18ba762235cb
+  version: 1.0-alpha.11; c5d166fe626b59edd0d63b5c2e13b40189aec83c
 externalDocs:
   url: https://developer.europace.de/api/kundenangaben-api
 servers:
@@ -184,9 +184,6 @@ components:
           marktwertFinanzierungsobjekt:
             type: number
             format: double
-          baujahrFinanzierungsobjekt:
-            type: integer
-            format: int32
           abloesungDarlehenDesFinanzierungsobjektes:
             type: array
             description: Ablösung der bestehenden Darlehen des Finanzierungsobjektes.
@@ -992,9 +989,6 @@ components:
           type: string
         immobilie:
           $ref: '#/components/schemas/Immobilie'
-        baujahr:
-          type: integer
-          format: int32
         darlehensliste:
           type: array
           items:
@@ -1034,19 +1028,6 @@ components:
       - '@type'
       type: object
       properties:
-        darlehensgeber:
-          oneOf:
-          - $ref: '#/components/schemas/ProduktanbieterDarlehensgeber'
-          - $ref: '#/components/schemas/SonstigerDarlehensgeber'
-        grundschuld:
-          type: number
-          format: double
-        darlehensbetrag:
-          type: number
-          format: double
-        rateMonatlich:
-          type: number
-          format: double
         sollzins:
           type: number
           format: double
@@ -1061,6 +1042,19 @@ components:
         darlehenskontonummer:
           type: string
           description: IBAN des Darlehenskontos
+        darlehensgeber:
+          oneOf:
+          - $ref: '#/components/schemas/ProduktanbieterDarlehensgeber'
+          - $ref: '#/components/schemas/SonstigerDarlehensgeber'
+        grundschuld:
+          type: number
+          format: double
+        darlehensbetrag:
+          type: number
+          format: double
+        rateMonatlich:
+          type: number
+          format: double
         '@type':
           type: string
       discriminator:
@@ -1578,6 +1572,9 @@ components:
     Gebaeude:
       type: object
       properties:
+        baujahr:
+          type: integer
+          format: int32
         bauweise:
           type: string
           enum:
@@ -1903,9 +1900,6 @@ components:
           marktwertFinanzierungsobjekt:
             type: number
             format: double
-          baujahrFinanzierungsobjekt:
-            type: integer
-            format: int32
     Kauf:
       type: object
       allOf:
@@ -1921,9 +1915,6 @@ components:
             format: double
           modernisierung:
             $ref: '#/components/schemas/Modernisierungskosten'
-          baujahrFinanzierungsobjekt:
-            type: integer
-            format: int32
     KaufNeubauVomBautraeger:
       type: object
       allOf:
@@ -2443,9 +2434,6 @@ components:
           marktwertFinanzierungsobjekt:
             type: number
             format: double
-          baujahrFinanzierungsobjekt:
-            type: integer
-            format: int32
     Modernisierungskosten:
       type: object
       properties:
