@@ -8,7 +8,7 @@ info:
     name: Europace AG
     url: http://developer.europace.de
     email: devsupport@europace2.de
-  version: 1.0-alpha.11; c5d166fe626b59edd0d63b5c2e13b40189aec83c
+  version: 1.0-beta.1; 6cd0ecec51eca065bb97f7cd068dea9afea0e6ac
 externalDocs:
   url: https://developer.europace.de/api/kundenangaben-api
 servers:
@@ -59,10 +59,10 @@ paths:
                 $ref: '#/components/schemas/KundenangabenImportResponse'
         "503":
           $ref: '#/components/responses/ServiceNotAvailable'
-        "401":
-          description: Die Authentifizierung ist fehlgeschlagen
         "400":
           $ref: '#/components/responses/BadRequest'
+        "401":
+          description: Die Authentifizierung ist fehlgeschlagen
         "403":
           $ref: '#/components/responses/Forbidden'
       security:
@@ -1028,6 +1028,19 @@ components:
       - '@type'
       type: object
       properties:
+        darlehensgeber:
+          oneOf:
+          - $ref: '#/components/schemas/ProduktanbieterDarlehensgeber'
+          - $ref: '#/components/schemas/SonstigerDarlehensgeber'
+        grundschuld:
+          type: number
+          format: double
+        darlehensbetrag:
+          type: number
+          format: double
+        rateMonatlich:
+          type: number
+          format: double
         sollzins:
           type: number
           format: double
@@ -1042,19 +1055,6 @@ components:
         darlehenskontonummer:
           type: string
           description: IBAN des Darlehenskontos
-        darlehensgeber:
-          oneOf:
-          - $ref: '#/components/schemas/ProduktanbieterDarlehensgeber'
-          - $ref: '#/components/schemas/SonstigerDarlehensgeber'
-        grundschuld:
-          type: number
-          format: double
-        darlehensbetrag:
-          type: number
-          format: double
-        rateMonatlich:
-          type: number
-          format: double
         '@type':
           type: string
       discriminator:
