@@ -8,7 +8,7 @@ info:
     name: Europace AG
     url: http://developer.europace.de
     email: devsupport@europace2.de
-  version: 1.0-beta.1; 6cd0ecec51eca065bb97f7cd068dea9afea0e6ac
+  version: 1.0-beta.2; 7cd0b5f0ca3dc148ee880690cbfde28f30512f39
 externalDocs:
   url: https://developer.europace.de/api/kundenangaben-api
 servers:
@@ -34,11 +34,8 @@ paths:
         required: true
         schema:
           type: string
-      - name: TraceId
-        in: header
-        description: Eine eindeutige technische Id zur Identifikation des Requests
-        schema:
-          type: string
+      - name: X-TraceId
+        $ref: '#/components/parameters/tracingIdParam'
       - name: X-Feature
         in: header
         required: false
@@ -51,20 +48,24 @@ paths:
               $ref: '#/components/schemas/ImportKundenangabenRequest'
         required: true
       responses:
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "503":
+          $ref: '#/components/responses/ServiceNotAvailable'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
         "201":
           description: Kundenangaben in neuen Vorgang importiert
+          headers:
+            X-TraceId:
+              $ref: '#/components/headers/tracingIdHeader'
+              style: simple
           content:
             application/json; version=1.0:
               schema:
                 $ref: '#/components/schemas/KundenangabenImportResponse'
-        "503":
-          $ref: '#/components/responses/ServiceNotAvailable'
         "400":
           $ref: '#/components/responses/BadRequest'
-        "401":
-          description: Die Authentifizierung ist fehlgeschlagen
-        "403":
-          $ref: '#/components/responses/Forbidden'
       security:
       - oAuth2:
         - baufinanzierung:vorgang:schreiben
@@ -1028,6 +1029,12 @@ components:
       - '@type'
       type: object
       properties:
+        rateMonatlich:
+          type: number
+          format: double
+        sollzins:
+          type: number
+          format: double
         darlehensgeber:
           oneOf:
           - $ref: '#/components/schemas/ProduktanbieterDarlehensgeber'
@@ -1036,12 +1043,6 @@ components:
           type: number
           format: double
         darlehensbetrag:
-          type: number
-          format: double
-        rateMonatlich:
-          type: number
-          format: double
-        sollzins:
           type: number
           format: double
         zinsbindungBis:
@@ -1746,8 +1747,6 @@ components:
         sonstigeVerbindlichkeit:
           $ref: '#/components/schemas/Verbindlichkeit'
     Haushaltsvermoegen:
-      required:
-      - summeSonstigesVermoegen
       type: object
       properties:
         summeBankUndSparguthaben:
@@ -4093,8 +4092,6 @@ components:
         dr:
           type: boolean
     UnbesichertesExternesDarlehen:
-      required:
-      - rateMonatlich
       type: object
       properties:
         typ:
@@ -4449,22 +4446,45 @@ components:
     BadRequest:
       description: Der Request hat ein fehlerhaftes Format oder der Datentyp eines
         Felds weicht von der Spezifikation ab.
+      headers:
+        X-TraceId:
+          description: Eine eindeutige technische Id zur Identifikation des Requests
       content:
         application/problem+json:
           schema:
             $ref: '#/components/schemas/BadRequestProblem'
     Forbidden:
       description: "Es fehlt die Berechtigung, um die Anfrage auszuführen"
+      headers:
+        X-TraceId:
+          description: Eine eindeutige technische Id zur Identifikation des Requests
       content:
         application/problem+json:
           schema:
             $ref: '#/components/schemas/Problem'
+    Unauthorized:
+      description: Die Authentifizierung ist fehlgeschlagen
+      headers:
+        WWW-Authenticate:
+          description: "Weitere Informationen über die fehlgeschlagene Authentifizierung,\
+            \ sofern vorhanden"
     ServiceNotAvailable:
       description: Der Service kann den Request momentan nicht verarbeiten
+      headers:
+        X-TraceId:
+          description: Eine eindeutige technische Id zur Identifikation des Requests
       content:
         application/problem+json:
           schema:
             $ref: '#/components/schemas/Problem'
+  parameters:
+    tracingIdParam:
+      name: X-TraceId
+      in: header
+      description: Eine eindeutige technische Id zur Identifikation des Requests
+  headers:
+    tracingIdHeader:
+      description: Eine eindeutige technische Id zur Identifikation des Requests
   securitySchemes:
     oAuth2:
       type: oauth2
