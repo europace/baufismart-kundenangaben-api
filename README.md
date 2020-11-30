@@ -1,6 +1,6 @@
 # Importieren von Kundenangaben in einen neuen Vorgang
 
-Version: 1.0-beta.1
+Version: 1.0-beta.2
 
 :information_source: Die Metadaten für den Import wurden aus den Kundenangaben auf die oberste Ebene des API-Schemas gezogen. 
 
