@@ -8,7 +8,7 @@ info:
     name: Europace AG
     url: http://developer.europace.de
     email: devsupport@europace2.de
-  version: 1.0-beta.2; 7cd0b5f0ca3dc148ee880690cbfde28f30512f39
+  version: 1.0.0-beta.3; 4cfd02fb782346b321bb6c9f89bfafe85857f3c7
 externalDocs:
   url: https://developer.europace.de/api/kundenangaben-api
 servers:
@@ -52,8 +52,6 @@ paths:
           $ref: '#/components/responses/Forbidden'
         "503":
           $ref: '#/components/responses/ServiceNotAvailable'
-        "401":
-          $ref: '#/components/responses/Unauthorized'
         "201":
           description: Kundenangaben in neuen Vorgang importiert
           headers:
@@ -64,6 +62,8 @@ paths:
             application/json; version=1.0:
               schema:
                 $ref: '#/components/schemas/KundenangabenImportResponse'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
         "400":
           $ref: '#/components/responses/BadRequest'
       security:
@@ -1029,12 +1029,6 @@ components:
       - '@type'
       type: object
       properties:
-        rateMonatlich:
-          type: number
-          format: double
-        sollzins:
-          type: number
-          format: double
         darlehensgeber:
           oneOf:
           - $ref: '#/components/schemas/ProduktanbieterDarlehensgeber'
@@ -1043,6 +1037,12 @@ components:
           type: number
           format: double
         darlehensbetrag:
+          type: number
+          format: double
+        rateMonatlich:
+          type: number
+          format: double
+        sollzins:
           type: number
           format: double
         zinsbindungBis:
@@ -4449,6 +4449,8 @@ components:
       headers:
         X-TraceId:
           description: Eine eindeutige technische Id zur Identifikation des Requests
+          schema:
+            type: string
       content:
         application/problem+json:
           schema:
@@ -4458,6 +4460,8 @@ components:
       headers:
         X-TraceId:
           description: Eine eindeutige technische Id zur Identifikation des Requests
+          schema:
+            type: string
       content:
         application/problem+json:
           schema:
@@ -4468,11 +4472,15 @@ components:
         WWW-Authenticate:
           description: "Weitere Informationen über die fehlgeschlagene Authentifizierung,\
             \ sofern vorhanden"
+          schema:
+            type: string
     ServiceNotAvailable:
       description: Der Service kann den Request momentan nicht verarbeiten
       headers:
         X-TraceId:
           description: Eine eindeutige technische Id zur Identifikation des Requests
+          schema:
+            type: string
       content:
         application/problem+json:
           schema:
@@ -4482,9 +4490,13 @@ components:
       name: X-TraceId
       in: header
       description: Eine eindeutige technische Id zur Identifikation des Requests
+      schema:
+        type: string
   headers:
     tracingIdHeader:
       description: Eine eindeutige technische Id zur Identifikation des Requests
+      schema:
+        type: string
   securitySchemes:
     oAuth2:
       type: oauth2
