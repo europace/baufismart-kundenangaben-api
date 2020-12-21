@@ -8,7 +8,7 @@ info:
     name: Europace AG
     url: http://developer.europace.de
     email: devsupport@europace2.de
-  version: 1.0.0-beta.3; 4cfd02fb782346b321bb6c9f89bfafe85857f3c7
+  version: 1.0.0-beta.4; b5916c1960ccff06f0a7ef4e2d4e3ee20b8111dc
 externalDocs:
   url: https://developer.europace.de/api/kundenangaben-api
 servers:
@@ -52,6 +52,10 @@ paths:
           $ref: '#/components/responses/Forbidden'
         "503":
           $ref: '#/components/responses/ServiceNotAvailable'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "400":
+          $ref: '#/components/responses/BadRequest'
         "201":
           description: Kundenangaben in neuen Vorgang importiert
           headers:
@@ -62,10 +66,6 @@ paths:
             application/json; version=1.0:
               schema:
                 $ref: '#/components/schemas/KundenangabenImportResponse'
-        "401":
-          $ref: '#/components/responses/Unauthorized'
-        "400":
-          $ref: '#/components/responses/BadRequest'
       security:
       - oAuth2:
         - baufinanzierung:vorgang:schreiben
@@ -400,6 +400,13 @@ components:
               - LBS_BAYERN_W9
               - LBS_BAYERN_WF
               - LBS_BAYERN_WU
+              - LBS_BAYERN_Z35
+              - LBS_BAYERN_Z5
+              - LBS_BAYERN_Z8
+              - LBS_BAYERN_ZF
+              - LBS_BAYERN_ZF_X45
+              - LBS_BAYERN_ZF_X40
+              - LBS_BAYERN_ZF_X35
               - LBS_HT_CLASSIC_S_2015
               - LBS_HT_CLASSIC_F_2015
               - LBS_HT_CLASSIC_L_2015
@@ -487,6 +494,8 @@ components:
               - LBS_WEST_RIESTER_ZUHAUSE_SPEZIAL
               - LBS_SUEDWEST_KLASSIK_PLUS_2018
               - LBS_SUEDWEST_LANGZEIT_PLUS_2019
+              - LBS_SUEDWEST_KLASSIK_PLUS_2020
+              - LBS_SUEDWEST_STANDARD_PLUS_2018
               - LBS_SAAR_PREMIUM_FLEX_18
               - LBS_SAAR_PREMIUM_SICHER_18
               - LBS_SAAR_PREMIUM_TOP_18
@@ -586,6 +595,18 @@ components:
               - WUESTENROT_01073_04_5000
               - WUESTENROT_01073_05_9000
               - WUESTENROT_01073_08_0000
+              - WUESTENROT_01076_05_8633
+              - WUESTENROT_01076_07_9872
+              - WUESTENROT_01076_08_0000
+              - WUESTENROT_01077_04_0000
+              - WUESTENROT_01077_04_7000
+              - WUESTENROT_01077_06_3000
+              - WUESTENROT_01077_07_5000
+              - WUESTENROT_01077_06_2500
+              - WUESTENROT_01077_07_9648
+              - WUESTENROT_01077_08_0000
+              - WUESTENROT_01074_10_0000
+              - WUESTENROT_01075_03_5000
               - DEUTSCHE_BANK_BAUSPAR_TARIF_FI1
               - DEUTSCHE_BANK_BAUSPAR_TARIF_FI2
               - DEUTSCHE_BANK_BAUSPAR_TARIF_FI3
@@ -695,6 +716,13 @@ components:
           - LBS_BAYERN_W9
           - LBS_BAYERN_WF
           - LBS_BAYERN_WU
+          - LBS_BAYERN_Z35
+          - LBS_BAYERN_Z5
+          - LBS_BAYERN_Z8
+          - LBS_BAYERN_ZF
+          - LBS_BAYERN_ZF_X45
+          - LBS_BAYERN_ZF_X40
+          - LBS_BAYERN_ZF_X35
           - LBS_HT_CLASSIC_S_2015
           - LBS_HT_CLASSIC_F_2015
           - LBS_HT_CLASSIC_L_2015
@@ -782,6 +810,8 @@ components:
           - LBS_WEST_RIESTER_ZUHAUSE_SPEZIAL
           - LBS_SUEDWEST_KLASSIK_PLUS_2018
           - LBS_SUEDWEST_LANGZEIT_PLUS_2019
+          - LBS_SUEDWEST_KLASSIK_PLUS_2020
+          - LBS_SUEDWEST_STANDARD_PLUS_2018
           - LBS_SAAR_PREMIUM_FLEX_18
           - LBS_SAAR_PREMIUM_SICHER_18
           - LBS_SAAR_PREMIUM_TOP_18
@@ -881,6 +911,18 @@ components:
           - WUESTENROT_01073_04_5000
           - WUESTENROT_01073_05_9000
           - WUESTENROT_01073_08_0000
+          - WUESTENROT_01076_05_8633
+          - WUESTENROT_01076_07_9872
+          - WUESTENROT_01076_08_0000
+          - WUESTENROT_01077_04_0000
+          - WUESTENROT_01077_04_7000
+          - WUESTENROT_01077_06_3000
+          - WUESTENROT_01077_07_5000
+          - WUESTENROT_01077_06_2500
+          - WUESTENROT_01077_07_9648
+          - WUESTENROT_01077_08_0000
+          - WUESTENROT_01074_10_0000
+          - WUESTENROT_01075_03_5000
           - DEUTSCHE_BANK_BAUSPAR_TARIF_FI1
           - DEUTSCHE_BANK_BAUSPAR_TARIF_FI2
           - DEUTSCHE_BANK_BAUSPAR_TARIF_FI3
@@ -1029,10 +1071,6 @@ components:
       - '@type'
       type: object
       properties:
-        darlehensgeber:
-          oneOf:
-          - $ref: '#/components/schemas/ProduktanbieterDarlehensgeber'
-          - $ref: '#/components/schemas/SonstigerDarlehensgeber'
         grundschuld:
           type: number
           format: double
@@ -1056,6 +1094,10 @@ components:
         darlehenskontonummer:
           type: string
           description: IBAN des Darlehenskontos
+        darlehensgeber:
+          oneOf:
+          - $ref: '#/components/schemas/ProduktanbieterDarlehensgeber'
+          - $ref: '#/components/schemas/SonstigerDarlehensgeber'
         '@type':
           type: string
       discriminator:
@@ -1128,6 +1170,19 @@ components:
           betrag:
             type: number
             format: double
+    Betreuung:
+      required:
+      - kundenbetreuer
+      type: object
+      properties:
+        kundenbetreuer:
+          type: string
+          description: Hier wird eine gültige PartnerId erwartet. Empfänger des Vorgangs.
+            Übernahmerechte müssen gegeben sein.
+        bearbeiter:
+          type: string
+          description: Hier wird eine gültige PartnerId erwartet. Diese kann identisch
+            zum Kundenbetreuer sein. Übernahmerechte müssen gegeben sein.
     BisZumJahr:
       type: object
       allOf:
@@ -1841,6 +1896,8 @@ components:
           - TEST_MODUS
           - ECHT_GESCHAEFT
           default: ECHT_GESCHAEFT
+        betreuung:
+          $ref: '#/components/schemas/Betreuung'
         externeVorgangsId:
           type: string
           description: "Externe VorgangsId, mit welcher sich z.B. die importierten\
@@ -2828,6 +2885,7 @@ components:
             - KSK_ESSLINGEN
             - KSK_EUSKIRCHEN
             - KSK_FREUDENSTADT
+            - KSK_GELNHAUSEN
             - KSK_GOEPPINGEN
             - KSK_GROSS_GERAU
             - KSK_HALLE_WEST
@@ -2837,6 +2895,7 @@ components:
             - KSK_KAISERSLAUTERN
             - KSK_KOELN
             - KSK_KELHEIM
+            - KSK_KUSEL
             - KSK_LIMBURG
             - KSK_LUDWIGSBURG
             - KSK_MAYEN
@@ -2960,6 +3019,8 @@ components:
             - PSD_TESTBANK
             - PSD_WESTFALEN_LIPPE
             - PSD_WESTFALEN_LIPPE_RATENKREDIT
+            - QLICK
+            - QLICK_RATENKREDIT
             - R_UND_V_ALLGEMEINE_VERSICHERUNG
             - R_UND_V_LEBENSVERSICHERUNG
             - R_UND_V_VERSICHERUNG
@@ -2984,6 +3045,7 @@ components:
             - RAIBA_KOCHER_JAGST
             - RAIBA_KRAICHGAU
             - RAIBA_LAUENBURG
+            - RAIBA_LEEZEN
             - RAIBA_LOISACHTAL
             - RAIBA_MUENCHEN_SUED
             - RAIBA_MUTLANGEN
@@ -3002,6 +3064,7 @@ components:
             - RAIBA_TANNHAUSEN
             - RAIBA_WEISSENBURG
             - RAIBA_WESERMARSCH
+            - RAIBA_WESTKREIS_FUER
             - RAIBA_ZORNEDING
             - RAIFFEISEN_MEINEBANK
             - RB_ALTDORF_FEUCHT
@@ -3069,11 +3132,13 @@ components:
             - SPK_ALTENBURGERLAND
             - SPK_ALTMARK_WEST
             - SPK_AM_NIEDERRHEIN
+            - SPK_AM_NIEDERRHEIN_RATENKREDIT
             - SPK_AMBERG_SULZBACH
             - SPK_AN_DER_LIPPE
-            - SPK_ARNSBERG_SUND
             - SPK_ANSBACH
+            - SPK_ARNSBERG_SUND
             - SPK_ARNSTADT_ILMENAU
+            - SPK_ASCHAFFENB_ALZ
             - SPK_AURICH_NORDEN
             - SPK_BAD_KISSINGEN
             - SPK_BAD_TOELZ
@@ -3084,6 +3149,7 @@ components:
             - SPK_BARNIM_RATENKREDIT
             - SPK_BAYREUTH
             - SPK_BECKUM_WADERSLOH
+            - SPK_BENSHEIM
             - SPK_BIELEFELD
             - SPK_BOCHUM
             - SPK_BODENSEE
@@ -3094,9 +3160,9 @@ components:
             - SPK_BUEHL
             - SPK_BURBACH_NEUN
             - SPK_BURGENLANDKREIS
-            - SPK_CELLE
             - SPK_CHEMNITZ
             - SPK_CHEMNITZ_RATENKREDIT
+            - SPK_DARMSTADT
             - SPK_DEGGENDORF
             - SPK_DILLENBURG
             - SPK_DILLINGEN
@@ -3182,6 +3248,7 @@ components:
             - SPK_MAERK_SAUERLAND
             - SPK_MAERKISCH_ODERLAND
             - SPK_MAIN_WUERZ
+            - SPK_MAINZ
             - SPK_MANSFELD_SUEDHARZ
             - SPK_MANSFELD_SUEDHARZ_RATENKREDIT
             - SPK_MARKGRAEFL
@@ -3195,8 +3262,10 @@ components:
             - SPK_MITTELBRB_ST
             - SPK_MITTELBRB_TEST
             - SPK_MITTELHOLSTEIN
+            - SPK_MITTELMOSEL
             - SPK_MITTELSACHSEN
             - SPK_MITTELTHUERINGEN
+            - SPK_MITTEN_IM_SAUERL
             - SPK_MUELHEIM
             - SPK_MUENSTERLAND_OST
             - SPK_MUERITZ
@@ -3227,6 +3296,7 @@ components:
             - SPK_PADERBORN_DET
             - SPK_PARCHIM
             - SPK_PASSAU
+            - SPK_PFAFFENHOFEN
             - SPK_PFORZHEIM_CALW
             - SPK_PRIGNITZ
             - SPK_RADEVORMWALD
@@ -3237,6 +3307,7 @@ components:
             - SPK_ROTTAL_INN
             - SPK_RUEGEN
             - SPK_SAARBRUECKEN
+            - SPK_SAARBRUECKEN_RATENKREDIT
             - SPK_SALEM_HEILIGENB
             - SPK_SALZLAND
             - SPK_SALZLAND_EV
@@ -3272,6 +3343,7 @@ components:
             - SPK_WALDECK_FRANKENB
             - SPK_WALDECK_FRANKENBERG
             - SPK_WALSRODE
+            - SPK_WALSRODE_RATENKREDIT
             - SPK_WERL
             - SPK_WERRA_MEISSNER
             - SPK_WESEL
@@ -3279,6 +3351,7 @@ components:
             - SPK_WESTHOLSTEIN
             - SPK_WESTMUENSTERLAND
             - SPK_WIEHL
+            - SPK_WILHELMSHAVEN
             - SPK_WITTEN
             - SPK_WITTENBERG
             - SPK_WITTENBERG_RATENKREDIT
@@ -3286,6 +3359,7 @@ components:
             - SPK_WORMS_ALZEY_RIED
             - SPK_ZWICKAU
             - SPREEWALDBANK
+            - SSK_AUGSBURG
             - SSK_BLOMBERG
             - SSK_BOCHOLT
             - SSK_BURGDORF
@@ -3345,6 +3419,7 @@ components:
             - VOBA_ALZEY_WORMS
             - VOBA_AM_WUERTTEMBERG
             - VOBA_AMMERBUCH
+            - VOBA_AN_DER_NIERS
             - VOBA_APOBANK
             - VOBA_BACKNANG
             - VOBA_BAD_OEYNHAUSEN
@@ -3417,6 +3492,7 @@ components:
             - VOBA_HILTER_MELLE
             - VOBA_HOCHRHEIN
             - VOBA_HOHENLOHE
+            - VOBA_HOHENZOLLERN_BA
             - VOBA_HUNSRUECK_NAHE
             - VOBA_IM_HARZ
             - VOBA_IM_UNTERLAND
@@ -3469,6 +3545,7 @@ components:
             - VOBA_NAGOLDTAL
             - VOBA_NECKARTAL
             - VOBA_NIEBUELL
+            - VOBA_NIEDERRHEIN
             - VOBA_NIEDERSCHLESIEN
             - VOBA_NIENBURG
             - VOBA_NORDOBERPFALZ
@@ -3502,6 +3579,7 @@ components:
             - VOBA_SELM_BORK
             - VOBA_SIEGERLAND
             - VOBA_SPARDA_MUENCHEN
+            - VOBA_SPREE_NEISSE
             - VOBA_STADE_CUXHAVEN
             - VOBA_STARNBERG
             - VOBA_STENDAL
@@ -3523,6 +3601,7 @@ components:
             - VOBA_WESCHNITZTAL_RE
             - VOBA_WESTMUENSTERLAND
             - VOBA_WESTRHAUDERFEHN
+            - SPK_CELLE
             - VOBA_WESTTHUERINGEN
             - VOBA_WHV
             - VOBA_WIESBADEN
@@ -3533,10 +3612,14 @@ components:
             - VON_ESSEN_BANK_RATENKREDIT
             - VON_ESSEN_BANKGH
             - VR_BAD_HERSFELD
+            - VR_BAD_KISSINGEN
             - VR_BAMBERG
+            - VR_BANK_DINKLAGE_STE
             - VR_BANK_IN_MITTELBAD
+            - VR_BANK_MITTLERE_OBE
             - VR_BANK_MONHEIM
             - VR_BANK_OSTALB
+            - VR_BANK_WUERSELEN
             - VR_BAYERN_MITTE
             - VR_BERNHAUSER_BANK
             - VR_CHATTENGAU
@@ -3565,6 +3648,7 @@ components:
             - VR_MAIN_KINZIG_VER
             - VR_MECKLENBURG
             - VR_MEINE_BANK
+            - VR_MERKUR_PRIVATBANK
             - VR_MITTELFRANKEN
             - VR_MITTELHAARDT
             - VR_MITTELSACHSEN
@@ -3581,6 +3665,7 @@ components:
             - VR_OBERFRANKEN_MITTE
             - VR_ODER_SPREE
             - VR_OSTHOLSTEIN
+            - VR_REGENSBURG_SCHWAN
             - VR_RHEIN_ERFT
             - VR_RHEIN_NECKAR
             - VR_RHEIN_SIEG
@@ -3613,6 +3698,7 @@ components:
             - VRB_BAYREUTH_HOF
             - VRB_SUEDWESTPFALZ
             - VSK_GOCH
+            - VSPK_ESCHENB_NEUST
             - VVAG_TABLEAU
             - VVB_BRAKEL
             - VVB_DORSTEN
