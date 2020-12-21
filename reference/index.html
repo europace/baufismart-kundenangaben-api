@@ -2592,7 +2592,7 @@
           <div class="sect2">
             <h3 id="_aktuelle_version">Aktuelle Version</h3>
             <div class="paragraph">
-              <p><em>Version</em> : 1.0.0-beta.4; b5916c1960ccff06f0a7ef4e2d4e3ee20b8111dc</p>
+              <p><em>Version</em> : 1.0.0-beta.4; 7db0d57ada293d58034ade69e09050bedc79f1b0</p>
             </div>
           </div>
         <div class="sect2">
@@ -2908,6 +2908,52 @@
                           <td class="tableblock halign-left valign-middle">
                             <div class="content">
                               <div class="paragraph">
+                                <p><strong>201</strong></p>
+                              </div>
+                            </div>
+                          </td>
+                          <td class="tableblock halign-left valign-middle">
+                            <div class="content">
+                              <div class="paragraph">
+                                <p>Kundenangaben in neuen Vorgang importiert</p>
+                              </div>
+                            </div>
+                          </td>
+                          <td class="tableblock halign-left valign-middle">
+                            <div class="content">
+                              <div class="paragraph">
+                                <p><a href="_#KundenangabenImportResponse">KundenangabenImportResponse</a></p>
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="tableblock halign-left valign-middle">
+                            <div class="content">
+                              <div class="paragraph">
+                                <p><strong>409</strong></p>
+                              </div>
+                            </div>
+                          </td>
+                          <td class="tableblock halign-left valign-middle">
+                            <div class="content">
+                              <div class="paragraph">
+                                <p>Kundenbetreuer oder Bearbeiter können nicht festgelegt werden. Die Ursache sind entweder fehlende Übernahmerechte oder eine nicht vorhandene Plakette</p>
+                              </div>
+                            </div>
+                          </td>
+                          <td class="tableblock halign-left valign-middle">
+                            <div class="content">
+                              <div class="paragraph">
+                                <p><a href="_#Problem">Problem</a></p>
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="tableblock halign-left valign-middle">
+                            <div class="content">
+                              <div class="paragraph">
                                 <p><strong>503</strong></p>
                               </div>
                             </div>
@@ -2969,29 +3015,6 @@
                             <div class="content">
                               <div class="paragraph">
                                 <p><a href="_#BadRequestProblem">BadRequestProblem</a></p>
-                              </div>
-                            </div>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td class="tableblock halign-left valign-middle">
-                            <div class="content">
-                              <div class="paragraph">
-                                <p><strong>201</strong></p>
-                              </div>
-                            </div>
-                          </td>
-                          <td class="tableblock halign-left valign-middle">
-                            <div class="content">
-                              <div class="paragraph">
-                                <p>Kundenangaben in neuen Vorgang importiert</p>
-                              </div>
-                            </div>
-                          </td>
-                          <td class="tableblock halign-left valign-middle">
-                            <div class="content">
-                              <div class="paragraph">
-                                <p><a href="_#KundenangabenImportResponse">KundenangabenImportResponse</a></p>
                               </div>
                             </div>
                           </td>
@@ -9588,7 +9611,7 @@
                   <td class="tableblock halign-left valign-middle">
                     <div class="content">
                       <div class="paragraph">
-                        <p>Hier wird eine gültige PartnerId erwartet. Empfänger des Vorgangs. Übernahmerechte müssen gegeben sein.</p>
+                        <p>Hier wird eine gültige PartnerId erwartet. Empfänger des Vorgangs. Übernahmerechte müssen gegeben sein. Wird kein Kundenbetreuer angegeben, wird die PartnerId des aufrufenden Clients verwendet.</p>
                       </div>
                     </div>
                   </td>
@@ -9618,7 +9641,7 @@
                   <td class="tableblock halign-left valign-middle">
                     <div class="content">
                       <div class="paragraph">
-                        <p>Hier wird eine gültige PartnerId erwartet. Diese kann identisch zum Kundenbetreuer sein. Übernahmerechte müssen gegeben sein.</p>
+                        <p>Hier wird eine gültige PartnerId einer Person erwartet. Falls dieser nicht gesetzt ist, ist dieser gleich dem Kundenbetreuer. Übernahmerechte müssen gegeben sein.</p>
                       </div>
                     </div>
                   </td>

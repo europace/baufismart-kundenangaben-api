@@ -2,13 +2,6 @@
 
 Version: 1.0.0-beta.4
 
-:information_source: Die Metadaten für den Import wurden aus den Kundenangaben auf die oberste Ebene des API-Schemas gezogen. 
-
-:warning: Kundenbetreuer und Bearbeiter wurden vorerst aus der Import-Anfrage entfernt. Stattdessen
-wird der angemeldete Benutzer als Kundenbetreuer eingetragen. Nähere Informationen sind im Abschnitt
-[Authentifizieren verschiedener Benutzer mit einem Client](#authentifizieren-verschiedener-benutzer-mit-einem-client)
-zu finden.
-
 :warning: Momentan befindet sich die API noch in der Entwicklung. Der Endpunkt ist öffentlich noch nicht ansprechbar.
 Die Alpha-Version der API-Spezifikation steht als OpenAPI Spezifikation im [JSON](./api-docs.json) und [YAML](./api-docs.yaml)
 Format zur Verfügung.
@@ -16,7 +9,6 @@ Format zur Verfügung.
 Feedback und Fragen zum Modell sind als [GitHub Issue](https://github.com/europace/kundenangaben-api/issues/new) willkommen.
 
 [API-Referenz](https://htmlpreview.github.io/?https://raw.githubusercontent.com/europace/kundenangaben-api/master/reference/index.html)
-
 
 > :warning: Diese Schnittstelle wird kontinuierlich weiterentwickelt. Daher erwarten wir
 > von allen Nutzern dieser Schnittstelle, dass sie das "[Tolerant Reader Pattern](https://martinfowler.com/bliki/TolerantReader.html)" nutzen, d.h.
@@ -87,8 +79,8 @@ Hat der Client nicht die benötigte Berechtigung, um die Resource abzurufen, erh
 
 ### Authentifizieren verschiedener Benutzer mit einem Client
 
-Beim Importieren der Kundenangaben, wird der aktuelle Benutzer als Kundenbetreuer in den Vorgang eingetragen. Mit Hilfe der 
-sog. "Impersonierung" ist es möglich, den Import im Namen eines anderen Benutzers durchzuführen.
+Sofern beim Import kein Kundenbetreuer angegeben ist, wird im erzeugten Vorgang der Benutzer des API-Clients als Kundenbetreuer eingetragen.
+Mit Hilfe der sog. "Impersonierung" ist es möglich, den Import im Namen eines anderen Benutzers durchzuführen.
 Es reicht aus, einen Client für die Organisation als "Generalsschlüssel" zu registrieren und den Benutzer, der als Kundenbetreuer
 eingetragen werden soll, bei der Authentifizierung anzugeben.
 
