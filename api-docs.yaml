@@ -8,7 +8,7 @@ info:
     name: Europace AG
     url: http://developer.europace.de
     email: devsupport@europace2.de
-  version: 1.0.0-beta.4; b5916c1960ccff06f0a7ef4e2d4e3ee20b8111dc
+  version: 1.0.0-beta.4; 7db0d57ada293d58034ade69e09050bedc79f1b0
 externalDocs:
   url: https://developer.europace.de/api/kundenangaben-api
 servers:
@@ -50,12 +50,6 @@ paths:
       responses:
         "403":
           $ref: '#/components/responses/Forbidden'
-        "503":
-          $ref: '#/components/responses/ServiceNotAvailable'
-        "401":
-          $ref: '#/components/responses/Unauthorized'
-        "400":
-          $ref: '#/components/responses/BadRequest'
         "201":
           description: Kundenangaben in neuen Vorgang importiert
           headers:
@@ -66,6 +60,14 @@ paths:
             application/json; version=1.0:
               schema:
                 $ref: '#/components/schemas/KundenangabenImportResponse'
+        "409":
+          $ref: '#/components/responses/Conflict'
+        "503":
+          $ref: '#/components/responses/ServiceNotAvailable'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "400":
+          $ref: '#/components/responses/BadRequest'
       security:
       - oAuth2:
         - baufinanzierung:vorgang:schreiben
@@ -1177,12 +1179,14 @@ components:
       properties:
         kundenbetreuer:
           type: string
-          description: Hier wird eine gültige PartnerId erwartet. Empfänger des Vorgangs.
-            Übernahmerechte müssen gegeben sein.
+          description: "Hier wird eine gültige PartnerId erwartet. Empfänger des Vorgangs.\
+            \ Übernahmerechte müssen gegeben sein. Wird kein Kundenbetreuer angegeben,\
+            \ wird die PartnerId des aufrufenden Clients verwendet."
         bearbeiter:
           type: string
-          description: Hier wird eine gültige PartnerId erwartet. Diese kann identisch
-            zum Kundenbetreuer sein. Übernahmerechte müssen gegeben sein.
+          description: "Hier wird eine gültige PartnerId einer Person erwartet. Falls\
+            \ dieser nicht gesetzt ist, ist dieser gleich dem Kundenbetreuer. Übernahmerechte\
+            \ müssen gegeben sein."
     BisZumJahr:
       type: object
       allOf:
@@ -4541,6 +4545,19 @@ components:
         application/problem+json:
           schema:
             $ref: '#/components/schemas/BadRequestProblem'
+    Conflict:
+      description: Kundenbetreuer oder Bearbeiter können nicht festgelegt werden.
+        Die Ursache sind entweder fehlende Übernahmerechte oder eine nicht vorhandene
+        Plakette
+      headers:
+        X-TraceId:
+          description: Eine eindeutige technische Id zur Identifikation des Requests
+          schema:
+            type: string
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
     Forbidden:
       description: "Es fehlt die Berechtigung, um die Anfrage auszuführen"
       headers:
