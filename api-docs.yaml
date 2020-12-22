@@ -8,7 +8,7 @@ info:
     name: Europace AG
     url: http://developer.europace.de
     email: devsupport@europace2.de
-  version: 1.0.0-beta.4; 7db0d57ada293d58034ade69e09050bedc79f1b0
+  version: 1.0.0-beta.4; b382e409ad704ab64bf3d70cac070ba60f562b07
 externalDocs:
   url: https://developer.europace.de/api/kundenangaben-api
 servers:
@@ -50,6 +50,12 @@ paths:
       responses:
         "403":
           $ref: '#/components/responses/Forbidden'
+        "409":
+          $ref: '#/components/responses/Conflict'
+        "503":
+          $ref: '#/components/responses/ServiceNotAvailable'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
         "201":
           description: Kundenangaben in neuen Vorgang importiert
           headers:
@@ -60,12 +66,6 @@ paths:
             application/json; version=1.0:
               schema:
                 $ref: '#/components/schemas/KundenangabenImportResponse'
-        "409":
-          $ref: '#/components/responses/Conflict'
-        "503":
-          $ref: '#/components/responses/ServiceNotAvailable'
-        "401":
-          $ref: '#/components/responses/Unauthorized'
         "400":
           $ref: '#/components/responses/BadRequest'
       security:
@@ -1179,14 +1179,15 @@ components:
       properties:
         kundenbetreuer:
           type: string
-          description: "Hier wird eine gültige PartnerId erwartet. Empfänger des Vorgangs.\
-            \ Übernahmerechte müssen gegeben sein. Wird kein Kundenbetreuer angegeben,\
-            \ wird die PartnerId des aufrufenden Clients verwendet."
+          description: "Die PartnerId des Empfängers (Organisation) oder Kundenbetreuers\
+            \ (Person) für den neuen Vorgang. Wird keine Betreuung angegeben, wird\
+            \ die PartnerId des aufrufenden Clients verwendet. Übernahmerechte mü\
+            ssen vorhanden sein."
         bearbeiter:
           type: string
-          description: "Hier wird eine gültige PartnerId einer Person erwartet. Falls\
-            \ dieser nicht gesetzt ist, ist dieser gleich dem Kundenbetreuer. Übernahmerechte\
-            \ müssen gegeben sein."
+          description: "Die PartnerId einer Person, die als Bearbeiter des neuen Vorgangs\
+            \ eingetragen wird. Übernahmerechte müssen für die PartnerId vorhanden\
+            \ sein."
     BisZumJahr:
       type: object
       allOf:
