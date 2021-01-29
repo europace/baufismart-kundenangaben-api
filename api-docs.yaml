@@ -8,7 +8,7 @@ info:
     name: Europace AG
     url: http://developer.europace.de
     email: devsupport@europace2.de
-  version: 1.0.0-beta.4; b382e409ad704ab64bf3d70cac070ba60f562b07
+  version: 1.0.0; f879a951f65723fd79e8512ac4cca4a0ceb35c06
 externalDocs:
   url: https://developer.europace.de/api/kundenangaben-api
 servers:
@@ -36,11 +36,6 @@ paths:
           type: string
       - name: X-TraceId
         $ref: '#/components/parameters/tracingIdParam'
-      - name: X-Feature
-        in: header
-        required: false
-        schema:
-          type: string
       requestBody:
         content:
           application/json; version=1.0:
@@ -48,14 +43,6 @@ paths:
               $ref: '#/components/schemas/ImportKundenangabenRequest'
         required: true
       responses:
-        "403":
-          $ref: '#/components/responses/Forbidden'
-        "409":
-          $ref: '#/components/responses/Conflict'
-        "503":
-          $ref: '#/components/responses/ServiceNotAvailable'
-        "401":
-          $ref: '#/components/responses/Unauthorized'
         "201":
           description: Kundenangaben in neuen Vorgang importiert
           headers:
@@ -66,6 +53,16 @@ paths:
             application/json; version=1.0:
               schema:
                 $ref: '#/components/schemas/KundenangabenImportResponse'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "409":
+          $ref: '#/components/responses/Conflict'
+        "503":
+          $ref: '#/components/responses/ServiceNotAvailable'
+        "429":
+          $ref: '#/components/responses/TooManyRequests'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
         "400":
           $ref: '#/components/responses/BadRequest'
       security:
@@ -111,6 +108,47 @@ components:
       - type: object
         properties:
           kommentar:
+            type: string
+    AbzugZurWerteanpassung:
+      type: object
+      properties:
+        betrag:
+          type: number
+          format: double
+        grund:
+          type: string
+    AllgemeineWertermittlungGenopace:
+      type: object
+      properties:
+        restnutzungsdauerInJahren:
+          type: integer
+          format: int32
+        abzugZurWerteanpassung:
+          $ref: '#/components/schemas/AbzugZurWerteanpassung'
+        sicherheitsabschlag:
+          type: number
+          format: double
+        eigennutzungsfaehigkeit:
+          type: boolean
+        stellplatz:
+          type: number
+          format: double
+        carport:
+          type: number
+          format: double
+        garage:
+          type: number
+          format: double
+        tiefgarage:
+          type: number
+          format: double
+    AndereAusweisart:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/Ausweisart'
+      - type: object
+        properties:
+          typ:
             type: string
     Angestellter:
       type: object
@@ -171,6 +209,17 @@ components:
         auszahlungszeitpunkt:
           type: string
           format: date
+    AnpassungenNachBelWertV:
+      type: object
+      properties:
+        beleihungswertangaben:
+          $ref: '#/components/schemas/BeleihungswertangabenGenopace'
+        sachwertErmittlung:
+          $ref: '#/components/schemas/SachwertErmittlungGenopace'
+        ertragswertErmittlung:
+          $ref: '#/components/schemas/ErtragswertErmittlungGenopace'
+        begruendungFuerAenderungen:
+          type: string
     Anschlussfinanzierung:
       type: object
       allOf:
@@ -309,6 +358,19 @@ components:
             format: double
           kommentar:
             type: string
+    Ausweisart:
+      required:
+      - '@type'
+      type: object
+      properties:
+        '@type':
+          type: string
+      discriminator:
+        propertyName: '@type'
+        mapping:
+          PERSONALAUSWEIS: '#/components/schemas/Personalausweis'
+          REISEPASS: '#/components/schemas/Reisepass'
+          ANDERE_AUSWEISART: '#/components/schemas/AndereAusweisart'
     BankUndSparguthaben:
       type: object
       properties:
@@ -504,15 +566,10 @@ components:
               - LBS_SAAR_EXTRA_GUENSTIG_18
               - LBS_SAAR_EXTRA_SICHER_18
               - LBS_SAAR_EXTRA_SPEZIAL_18
-              - SIGNAL_IDUNA_FREIRAUM_F_30
-              - SIGNAL_IDUNA_FREIRAUM_F_30_16
               - SIGNAL_IDUNA_FREIRAUM_F_35
               - SIGNAL_IDUNA_FREIRAUM_F_35_16
-              - SIGNAL_IDUNA_FREIRAUM_F_40
-              - SIGNAL_IDUNA_FREIRAUM_F_40_16
               - SIGNAL_IDUNA_FREIRAUM_F_45
               - SIGNAL_IDUNA_FREIRAUM_F_45_16
-              - SIGNAL_IDUNA_FREIRAUM_F_50
               - SIGNAL_IDUNA_FREIRAUM_F_60
               - SIGNAL_IDUNA_FREIRAUM_F_30_MZ
               - SIGNAL_IDUNA_FREIRAUM_F_30_MZ_16
@@ -524,6 +581,12 @@ components:
               - SIGNAL_IDUNA_FREIRAUM_F_45_MZ_16
               - SIGNAL_IDUNA_FREIRAUM_F_50_MZ
               - SIGNAL_IDUNA_FREIRAUM_F_60_MZ
+              - SIGNAL_IDUNA_FREIRAUM_F_30
+              - SIGNAL_IDUNA_FREIRAUM_F_30_16
+              - SIGNAL_IDUNA_FREIRAUM_F_40
+              - SIGNAL_IDUNA_FREIRAUM_F_40_16
+              - SIGNAL_IDUNA_FREIRAUM_F_50
+              - SIGNAL_IDUNA_FREIRAUM_F_50_16
               - BHW_TARIF_FI1
               - BHW_TARIF_FI2
               - BHW_TARIF_FI3
@@ -542,6 +605,30 @@ components:
               - DT_RING_TARIF_XT_1
               - DT_RING_TARIF_XT_0
               - DT_RING_TARIF_F_1
+              - ALTE_LEIPZIGER_1502
+              - ALTE_LEIPZIGER_1602
+              - ALTE_LEIPZIGER_1702
+              - ALTE_LEIPZIGER_1802
+              - ALTE_LEIPZIGER_1902
+              - ALTE_LEIPZIGER_2002
+              - ALTE_LEIPZIGER_1502_MZ
+              - ALTE_LEIPZIGER_1602_MZ
+              - ALTE_LEIPZIGER_1702_MZ
+              - ALTE_LEIPZIGER_1802_MZ
+              - ALTE_LEIPZIGER_1902_MZ
+              - ALTE_LEIPZIGER_2002_MZ
+              - ALTE_LEIPZIGER_1503
+              - ALTE_LEIPZIGER_1603
+              - ALTE_LEIPZIGER_1703
+              - ALTE_LEIPZIGER_1803
+              - ALTE_LEIPZIGER_1903
+              - ALTE_LEIPZIGER_2003
+              - ALTE_LEIPZIGER_1503_MZ
+              - ALTE_LEIPZIGER_1603_MZ
+              - ALTE_LEIPZIGER_1703_MZ
+              - ALTE_LEIPZIGER_1803_MZ
+              - ALTE_LEIPZIGER_1903_MZ
+              - ALTE_LEIPZIGER_2003_MZ
               - ALTE_LEIPZIGER_150X
               - ALTE_LEIPZIGER_160X
               - ALTE_LEIPZIGER_170X
@@ -820,15 +907,10 @@ components:
           - LBS_SAAR_EXTRA_GUENSTIG_18
           - LBS_SAAR_EXTRA_SICHER_18
           - LBS_SAAR_EXTRA_SPEZIAL_18
-          - SIGNAL_IDUNA_FREIRAUM_F_30
-          - SIGNAL_IDUNA_FREIRAUM_F_30_16
           - SIGNAL_IDUNA_FREIRAUM_F_35
           - SIGNAL_IDUNA_FREIRAUM_F_35_16
-          - SIGNAL_IDUNA_FREIRAUM_F_40
-          - SIGNAL_IDUNA_FREIRAUM_F_40_16
           - SIGNAL_IDUNA_FREIRAUM_F_45
           - SIGNAL_IDUNA_FREIRAUM_F_45_16
-          - SIGNAL_IDUNA_FREIRAUM_F_50
           - SIGNAL_IDUNA_FREIRAUM_F_60
           - SIGNAL_IDUNA_FREIRAUM_F_30_MZ
           - SIGNAL_IDUNA_FREIRAUM_F_30_MZ_16
@@ -840,6 +922,12 @@ components:
           - SIGNAL_IDUNA_FREIRAUM_F_45_MZ_16
           - SIGNAL_IDUNA_FREIRAUM_F_50_MZ
           - SIGNAL_IDUNA_FREIRAUM_F_60_MZ
+          - SIGNAL_IDUNA_FREIRAUM_F_30
+          - SIGNAL_IDUNA_FREIRAUM_F_30_16
+          - SIGNAL_IDUNA_FREIRAUM_F_40
+          - SIGNAL_IDUNA_FREIRAUM_F_40_16
+          - SIGNAL_IDUNA_FREIRAUM_F_50
+          - SIGNAL_IDUNA_FREIRAUM_F_50_16
           - BHW_TARIF_FI1
           - BHW_TARIF_FI2
           - BHW_TARIF_FI3
@@ -858,6 +946,30 @@ components:
           - DT_RING_TARIF_XT_1
           - DT_RING_TARIF_XT_0
           - DT_RING_TARIF_F_1
+          - ALTE_LEIPZIGER_1502
+          - ALTE_LEIPZIGER_1602
+          - ALTE_LEIPZIGER_1702
+          - ALTE_LEIPZIGER_1802
+          - ALTE_LEIPZIGER_1902
+          - ALTE_LEIPZIGER_2002
+          - ALTE_LEIPZIGER_1502_MZ
+          - ALTE_LEIPZIGER_1602_MZ
+          - ALTE_LEIPZIGER_1702_MZ
+          - ALTE_LEIPZIGER_1802_MZ
+          - ALTE_LEIPZIGER_1902_MZ
+          - ALTE_LEIPZIGER_2002_MZ
+          - ALTE_LEIPZIGER_1503
+          - ALTE_LEIPZIGER_1603
+          - ALTE_LEIPZIGER_1703
+          - ALTE_LEIPZIGER_1803
+          - ALTE_LEIPZIGER_1903
+          - ALTE_LEIPZIGER_2003
+          - ALTE_LEIPZIGER_1503_MZ
+          - ALTE_LEIPZIGER_1603_MZ
+          - ALTE_LEIPZIGER_1703_MZ
+          - ALTE_LEIPZIGER_1803_MZ
+          - ALTE_LEIPZIGER_1903_MZ
+          - ALTE_LEIPZIGER_2003_MZ
           - ALTE_LEIPZIGER_150X
           - ALTE_LEIPZIGER_160X
           - ALTE_LEIPZIGER_170X
@@ -963,6 +1075,42 @@ components:
             $ref: '#/components/schemas/SituationNachRenteneintritt'
           beschaeftigungsverhaeltnis:
             $ref: '#/components/schemas/Beschaeftigungsverhaeltnis'
+    Beleihungswertangaben:
+      type: object
+      properties:
+        marktueblicherKaufpreisProQm:
+          type: number
+          format: double
+        keinBaulandFlaeche:
+          minimum: 0
+          type: number
+          format: double
+        bodenrichtwert:
+          type: number
+          format: double
+        wohnlage:
+          type: string
+          enum:
+          - GEHOBEN
+          - MITTEL
+          - EINFACH
+        kubatur:
+          minimum: 0
+          type: number
+          format: double
+        vergleichsmieteFuerWohnflaecheProQm:
+          type: number
+          format: double
+        vergleichsmieteFuerGewerbeflaecheProQm:
+          type: number
+          format: double
+    BeleihungswertangabenGenopace:
+      type: object
+      properties:
+        allgemeineWertermittlung:
+          $ref: '#/components/schemas/AllgemeineWertermittlungGenopace'
+        erbbaurecht:
+          $ref: '#/components/schemas/ErbbaurechtGenopace'
     BereitstellungszinsfreieZeitPraeferenz:
       required:
       - '@type'
@@ -1073,6 +1221,10 @@ components:
       - '@type'
       type: object
       properties:
+        darlehensgeber:
+          oneOf:
+          - $ref: '#/components/schemas/ProduktanbieterDarlehensgeber'
+          - $ref: '#/components/schemas/SonstigerDarlehensgeber'
         grundschuld:
           type: number
           format: double
@@ -1096,10 +1248,6 @@ components:
         darlehenskontonummer:
           type: string
           description: IBAN des Darlehenskontos
-        darlehensgeber:
-          oneOf:
-          - $ref: '#/components/schemas/ProduktanbieterDarlehensgeber'
-          - $ref: '#/components/schemas/SonstigerDarlehensgeber'
         '@type':
           type: string
       discriminator:
@@ -1279,6 +1427,18 @@ components:
             $ref: '#/components/schemas/Nutzflaechen'
           fertighaus:
             type: boolean
+    EffektivzinsErhoehendeKosten:
+      type: object
+      properties:
+        wohngebaeudeversicherungskostenJaehrlich:
+          type: number
+          format: double
+        grundbucheintragungskostenEinmalig:
+          type: number
+          format: double
+        sonstigeKosten:
+          $ref: '#/components/schemas/SonstigeEffektivzinsErhoehendeKosten'
+      description: Anpassungen nach PAngV
     Eigengenutzt:
       type: object
       allOf:
@@ -1357,6 +1517,57 @@ components:
         laufzeitBis:
           type: integer
           format: int32
+    ErbbaurechtGenopace:
+      type: object
+      properties:
+        liegenschaftszins:
+          type: number
+          format: double
+        gebaeudeEntschaedigungBeiAblauf:
+          type: number
+          format: double
+    ErtragswertErmittlungGenopace:
+      type: object
+      properties:
+        wohnwirtschaftlich:
+          $ref: '#/components/schemas/ErtragswertErmittlungWohnwirtschaftlich'
+        gewerblich:
+          $ref: '#/components/schemas/ErtragswertErmittlungsangaben'
+    ErtragswertErmittlungWohnwirtschaftlich:
+      type: object
+      properties:
+        angaben:
+          $ref: '#/components/schemas/ErtragswertErmittlungsangaben'
+        bewirtschaftungskostenGarage:
+          type: number
+          format: double
+        bewirtschaftungskostenStellplaetze:
+          type: number
+          format: double
+    ErtragswertErmittlungsangaben:
+      type: object
+      properties:
+        liegenschaftszins:
+          type: number
+          format: double
+        kapitalisierungszins:
+          type: number
+          format: double
+        verwaltungskosten:
+          type: number
+          format: double
+        instandhaltungskosten:
+          type: number
+          format: double
+        mietausfallwagnis:
+          type: number
+          format: double
+        nichtUmlagefaehigeBetriebskosten:
+          type: number
+          format: double
+        modernisierungsrisiko:
+          type: number
+          format: double
     EuroEinmalig:
       type: object
       allOf:
@@ -1635,6 +1846,9 @@ components:
       properties:
         baujahr:
           type: integer
+          description: |-
+            Beim Finanzierungsobjekt mit Finanzierungszweck NEUBAU
+            oder KAUF_NEUBAU_VOM_BAUTRAEGER leer. Wird ggf gelöscht.
           format: int32
         bauweise:
           type: string
@@ -1739,6 +1953,8 @@ components:
             $ref: '#/components/schemas/Kind'
         finanzielleSituation:
           $ref: '#/components/schemas/FinanzielleSituation'
+        zusatzangaben:
+          $ref: '#/components/schemas/ZusatzangabenHaushalt'
     HaushaltendePerson:
       type: object
       description: "Ein allgemeiner Begriff, der die Beschäftigungen 'Hausfrau' und\
@@ -1848,6 +2064,8 @@ components:
           $ref: '#/components/schemas/Erbbaurecht'
         grundbuchangabe:
           $ref: '#/components/schemas/Grundbuchangabe'
+        zusatzangaben:
+          $ref: '#/components/schemas/ZusatzangabenImmobilie'
     ImmobilieOhneTyp:
       type: object
       allOf:
@@ -1950,6 +2168,107 @@ components:
             format: int32
           kommentar:
             type: string
+    IngBeleihungsobjekt:
+      required:
+      - '@type'
+      type: object
+      properties:
+        '@type':
+          type: string
+      description: "Typ muss dem Finanzierungsobjekt entsprechen, sonst wird es ignoriert."
+      discriminator:
+        propertyName: '@type'
+        mapping:
+          ING_EIGENTUMSWOHNUNG: '#/components/schemas/IngEigentumswohnung'
+          ING_HAUS: '#/components/schemas/IngHaus'
+          ING_GRUNDSTUECK: '#/components/schemas/IngGrundstueck'
+    IngEigentumswohnung:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/IngBeleihungsobjekt'
+      - type: object
+        properties:
+          geschosslage:
+            type: string
+            enum:
+            - UNTERGESCHOSS
+            - ERDGESCHOSS
+            - ERSTES_OBERGESCHOSS
+            - ZWEITES_OBERGESCHOSS
+            - DRITTES_BIS_FUENFTES_OBERGESCHOSS
+            - AB_SECHSTES_OBERGESCHOSS
+            - UNBEKANNT
+          gebaude:
+            $ref: '#/components/schemas/IngGebaeude'
+    IngGebaeude:
+      type: object
+      properties:
+        ausstattung:
+          type: string
+          enum:
+          - STANDARD
+          - GEHOBEN
+          - UEBERDURCHSCHNITT
+        kellerausbau:
+          type: string
+          enum:
+          - AUSGEBAUT
+          - TEILWEISE_AUSGEBAUT
+          - VORHANDEN
+        aufzugVorhanden:
+          type: boolean
+        modernisierungsangaben:
+          $ref: '#/components/schemas/IngModernisierungsangaben'
+        aufbaufinanzierung:
+          type: boolean
+          description: "Nur bei Neubau. Ja, falls das Grundstück bereits von ING finanziert\
+            \ wurde und jetzt die Errichtung des Gebäudes finanziert werden soll.\
+            \ Nein, falls Nachfinanzierung, oder das Grundstück hiermit mitfinanziert\
+            \ wird, oder das Grundstück von einer anderen Bank finanziert wurde."
+        kuerzlicheProlongation:
+          type: boolean
+          description: Nur bei Kapitalbeschaffung und einem bestehenden Darlehen bei
+            ING
+    IngGrundstueck:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/IngBeleihungsobjekt'
+    IngHaus:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/IngBeleihungsobjekt'
+      - type: object
+        properties:
+          gebaude:
+            $ref: '#/components/schemas/IngGebaeude'
+    IngModernisierungsangaben:
+      type: object
+      properties:
+        bodenWandTreppe:
+          type: boolean
+          description: "Bodenbeläge, Wandbekleidung oder Treppenhaus"
+        heizungZentral:
+          type: boolean
+          description: "Brenner, ggf. Kessel"
+        fenster:
+          type: boolean
+          description: Rahmen oder Isolierung
+        dach:
+          type: boolean
+          description: Eindeckung oder Wärmedämmung
+        badWc:
+          type: boolean
+          description: "Bäder und WCs, Fliesen oder Sanitärobjekte"
+        stromAbwasserHeizkoerper:
+          type: boolean
+          description: "Strom, (Ab-) Wasser, Heizungsleitung oder Heizkörper"
+        waermedaemmung:
+          type: boolean
+        raumaufteilung:
+          type: boolean
+          description: "Grundriss, Zimmergrößen"
+      description: "Alle Modernisierungen der letzten 15 Jahre, inklusive der neu\
+        \ zu finanzierenden."
     Kapitalbeschaffung:
       type: object
       allOf:
@@ -2300,6 +2619,8 @@ components:
           $ref: '#/components/schemas/Finanzielles'
         kontakt:
           $ref: '#/components/schemas/Kontakt'
+        zusatzangaben:
+          $ref: '#/components/schemas/ZusatzangabenKunde'
       description: In anderen APIs als 'Antragsteller' bezeichnet.
     Kundenangaben:
       type: object
@@ -2411,6 +2732,21 @@ components:
       type: object
       allOf:
       - $ref: '#/components/schemas/Familienstand'
+    Legitimationsdaten:
+      type: object
+      properties:
+        ausweisart:
+          oneOf:
+          - $ref: '#/components/schemas/AndereAusweisart'
+          - $ref: '#/components/schemas/Personalausweis'
+          - $ref: '#/components/schemas/Reisepass'
+        ausstellungsdatum:
+          type: string
+          format: date
+        ausstellendeBehoerde:
+          type: string
+        ausweisnummer:
+          type: string
     Mehrfamilienhaus:
       type: object
       allOf:
@@ -2495,6 +2831,19 @@ components:
           marktwertFinanzierungsobjekt:
             type: number
             format: double
+    Modernisierungsangaben:
+      type: object
+      properties:
+        jahr:
+          type: integer
+          format: int32
+        grad:
+          type: string
+          enum:
+          - EINFACH
+          - MITTEL
+          - UEBERWIEGEND
+          - UMFASSEND
     Modernisierungskosten:
       type: object
       properties:
@@ -2512,6 +2861,27 @@ components:
           type: number
           description: Persönlich erbrachte Arbeitsleistung als Eigenleistung
           format: double
+    Modernisierungszusatzangaben:
+      type: object
+      properties:
+        kernsanierung:
+          $ref: '#/components/schemas/Modernisierungsangaben'
+        dacherneuerung:
+          $ref: '#/components/schemas/Modernisierungsangaben'
+        fenster:
+          $ref: '#/components/schemas/Modernisierungsangaben'
+        rohrleitungen:
+          $ref: '#/components/schemas/Modernisierungsangaben'
+        heizung:
+          $ref: '#/components/schemas/Modernisierungsangaben'
+        waermedaemmung:
+          $ref: '#/components/schemas/Modernisierungsangaben'
+        baeder:
+          $ref: '#/components/schemas/Modernisierungsangaben'
+        innenausbau:
+          $ref: '#/components/schemas/Modernisierungsangaben'
+        raumaufteilung:
+          $ref: '#/components/schemas/Modernisierungsangaben'
     MoeglichstNiedrigeRate:
       type: object
       allOf:
@@ -2649,6 +3019,10 @@ components:
           type: string
         nachname:
           type: string
+    Personalausweis:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/Ausweisart'
     Personendaten:
       type: object
       properties:
@@ -3207,6 +3581,7 @@ components:
             - SPK_HAMELNWESERBERG
             - SPK_HAMM
             - SPK_HANAU
+            - SPK_HANAUERLAND
             - SPK_HANNOVER
             - SPK_HARBURG_BUXTEHUDE
             - SPK_HASLACH_ZELL
@@ -3271,6 +3646,7 @@ components:
             - SPK_MITTELSACHSEN
             - SPK_MITTELTHUERINGEN
             - SPK_MITTEN_IM_SAUERL
+            - SPK_MOOSBURG
             - SPK_MUELHEIM
             - SPK_MUENSTERLAND_OST
             - SPK_MUERITZ
@@ -3289,6 +3665,7 @@ components:
             - SPK_NIENBURG
             - SPK_NUERNBERG
             - SPK_OBERHESSEN
+            - SPK_OBERLAND
             - SPK_OBERLAUSITZ_N
             - SPK_OBERPFALZ_NORD
             - SPK_ODER_SPREE
@@ -3306,6 +3683,8 @@ components:
             - SPK_PRIGNITZ
             - SPK_RADEVORMWALD
             - SPK_REGENSBURG
+            - SPK_RHEIN_HAARDT
+            - SPK_RHEIN_NAHE
             - SPK_RHEIN_NECKAR_N
             - SPK_ROSENHEIM_BAD
             - SPK_ROTENBURG_BRV
@@ -3648,6 +4027,7 @@ components:
             - VR_KAUFBEUREN_OSTALL
             - VR_KITZINGEN
             - VR_LAUSITZ
+            - VR_LEVO_BANK
             - VR_LICHTENFELS
             - VR_MAIN_KINZIG
             - VR_MAIN_KINZIG_VER
@@ -3856,6 +4236,10 @@ components:
             - MITTELHAUS
           nutzflaechen:
             $ref: '#/components/schemas/Nutzflaechen'
+    Reisepass:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/Ausweisart'
     Rentner:
       type: object
       allOf:
@@ -3895,6 +4279,76 @@ components:
         versicherteRate:
           type: number
           format: double
+    SachwertErmittlungGenopace:
+      type: object
+      properties:
+        aussenanlagen:
+          type: number
+          format: double
+        baunebenkosten:
+          type: number
+          format: double
+        regionalfaktor:
+          type: number
+          format: double
+        sachwertfaktorNachhaltigkeitsfaktor:
+          type: number
+          format: double
+    SantanderVerbindlichkeit:
+      type: object
+      properties:
+        hoehe:
+          type: number
+          format: double
+        kontonummer:
+          type: string
+        anrechnungFuerBlankoanteil:
+          type: number
+          format: double
+    SantanderVerbindlichkeiten:
+      type: object
+      properties:
+        konsumentenkredit:
+          $ref: '#/components/schemas/SantanderVerbindlichkeit'
+        dispokredit:
+          $ref: '#/components/schemas/SantanderVerbindlichkeit'
+        kreditkarte:
+          $ref: '#/components/schemas/SantanderVerbindlichkeit'
+        kkKredit:
+          $ref: '#/components/schemas/SantanderVerbindlichkeit'
+        immobilienkredit:
+          $ref: '#/components/schemas/SantanderVerbindlichkeit'
+        buergschaft:
+          $ref: '#/components/schemas/SantanderVerbindlichkeit'
+        kfwHausbankenwechsel:
+          $ref: '#/components/schemas/SantanderVerbindlichkeit'
+    SantanderVermoegen:
+      type: object
+      properties:
+        guthaben:
+          type: number
+          format: double
+        kontonummer:
+          type: string
+    SantanderVermoegenswerte:
+      type: object
+      properties:
+        bankUndSparguthaben:
+          $ref: '#/components/schemas/SantanderVermoegen'
+        wertpapiereAktien:
+          $ref: '#/components/schemas/SantanderVermoegen'
+        bausparvertrag:
+          $ref: '#/components/schemas/SantanderVermoegen'
+        sonstigesVermoegen:
+          $ref: '#/components/schemas/SantanderVermoegen'
+        lebensversicherungKapitalgebunden:
+          $ref: '#/components/schemas/SantanderVermoegen'
+        rentenversicherungKapitalgebunden:
+          $ref: '#/components/schemas/SantanderVermoegen'
+        lebensversicherungFondsgebunden:
+          $ref: '#/components/schemas/SantanderVermoegen'
+        rentenversicherungFondsgebunden:
+          $ref: '#/components/schemas/SantanderVermoegen'
     SelbststaendigeTaetigkeit:
       type: object
       properties:
@@ -4026,6 +4480,14 @@ components:
         anzahl:
           type: integer
           format: int32
+    SonstigeEffektivzinsErhoehendeKosten:
+      type: object
+      properties:
+        bezeichnung:
+          type: string
+        betragEinmalig:
+          type: number
+          format: double
     SonstigerDarlehensgeber:
       type: object
       allOf:
@@ -4409,6 +4871,264 @@ components:
             format: int32
           kommentar:
             type: string
+    ZusatzangabenHaushalt:
+      type: object
+      properties:
+        kfzAnzahl:
+          type: integer
+          description: In anderen APIs unter 'speed' zu finden.
+          format: int32
+        zusatzangabenProProduzent:
+          type: array
+          items:
+            oneOf:
+            - $ref: '#/components/schemas/ZusatzangabenHaushaltDsl'
+            - $ref: '#/components/schemas/ZusatzangabenHaushaltIng'
+            - $ref: '#/components/schemas/ZusatzangabenHaushaltSantander'
+    ZusatzangabenHaushaltDsl:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/ZusatzangabenHaushaltFuerProduzent'
+      - type: object
+        properties:
+          lebenshaltungskostenMonatlich:
+            type: number
+            format: double
+    ZusatzangabenHaushaltFuerProduzent:
+      required:
+      - '@type'
+      type: object
+      properties:
+        '@type':
+          type: string
+      discriminator:
+        propertyName: '@type'
+        mapping:
+          ZUSATZANGABEN_HAUSHALT_ING: '#/components/schemas/ZusatzangabenHaushaltIng'
+          ZUSATZANGABEN_HAUSHALT_SANTANDER: '#/components/schemas/ZusatzangabenHaushaltSantander'
+          ZUSATZANGABEN_HAUSHALT_DSL: '#/components/schemas/ZusatzangabenHaushaltDsl'
+    ZusatzangabenHaushaltIng:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/ZusatzangabenHaushaltFuerProduzent'
+      - type: object
+        properties:
+          anzahlErwachseneImHaushalt:
+            type: integer
+            format: int32
+          anzahlKinderNichtImHaushalt:
+            type: integer
+            format: int32
+    ZusatzangabenHaushaltSantander:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/ZusatzangabenHaushaltFuerProduzent'
+      - type: object
+        properties:
+          vermoegen:
+            $ref: '#/components/schemas/SantanderVermoegenswerte'
+          verbindlichkeiten:
+            $ref: '#/components/schemas/SantanderVerbindlichkeiten'
+          bemerkungen:
+            type: string
+    ZusatzangabenImmobilie:
+      type: object
+      properties:
+        beleihungswertangaben:
+          $ref: '#/components/schemas/Beleihungswertangaben'
+        effektivzinsErhoehendeKosten:
+          $ref: '#/components/schemas/EffektivzinsErhoehendeKosten'
+        modernisierung:
+          $ref: '#/components/schemas/Modernisierungszusatzangaben'
+        zusatzangabenProProduzent:
+          type: array
+          items:
+            oneOf:
+            - $ref: '#/components/schemas/ZusatzangabenImmobilieDsl'
+            - $ref: '#/components/schemas/ZusatzangabenImmobilieGenopace'
+            - $ref: '#/components/schemas/ZusatzangabenImmobilieIng'
+            - $ref: '#/components/schemas/ZusatzangabenImmobilieSantander'
+    ZusatzangabenImmobilieDsl:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/ZusatzangabenImmobilieFuerProduzent'
+      - type: object
+        properties:
+          bewirtschaftungskostenJaehrlich:
+            type: number
+            format: double
+          nachfinanzierung:
+            type: boolean
+            description: Nur bei bestehenden Darlehen bei der DSL
+    ZusatzangabenImmobilieFuerProduzent:
+      required:
+      - '@type'
+      type: object
+      properties:
+        '@type':
+          type: string
+      discriminator:
+        propertyName: '@type'
+        mapping:
+          ZUSATZANGABEN_IMMOBILIE_ING: '#/components/schemas/ZusatzangabenImmobilieIng'
+          ZUSATZANGABEN_IMMOBILIE_SANTANDER: '#/components/schemas/ZusatzangabenImmobilieSantander'
+          ZUSATZANGABEN_IMMOBILIE_GENOPACE: '#/components/schemas/ZusatzangabenImmobilieGenopace'
+          ZUSATZANGABEN_IMMOBILIE_DSL: '#/components/schemas/ZusatzangabenImmobilieDsl'
+    ZusatzangabenImmobilieGenopace:
+      type: object
+      description: Volksbanken und Raiffeisenbanken
+      allOf:
+      - $ref: '#/components/schemas/ZusatzangabenImmobilieFuerProduzent'
+      - type: object
+        properties:
+          anpassungenNachBelWertV:
+            $ref: '#/components/schemas/AnpassungenNachBelWertV'
+    ZusatzangabenImmobilieIng:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/ZusatzangabenImmobilieFuerProduzent'
+      - type: object
+        properties:
+          beleihungsobjekt:
+            $ref: '#/components/schemas/IngBeleihungsobjekt'
+    ZusatzangabenImmobilieSantander:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/ZusatzangabenImmobilieFuerProduzent'
+      - type: object
+        properties:
+          vorlaeufigerVerkehrswert:
+            type: number
+            format: double
+    ZusatzangabenKunde:
+      type: object
+      properties:
+        branche:
+          type: string
+          description: In anderen APIs unter 'sRating' zu finden.
+          enum:
+          - BAUGEWERBE
+          - DIENSTLEISTUNGEN
+          - ENERGIE_UND_WASSERVERSORGUNG_BERGBAU
+          - GEBIETSKOERPERSCHAFTEN_UND_SOZIALVERSICHERUNGEN
+          - GESUNDHEITSWESEN
+          - HANDEL
+          - HOTEL_UND_GASTRONOMIE
+          - KREDITINSTITUTE
+          - LAND_UND_FORSTWIRTSCHAFT_FISCHEREI
+          - OEFFENTLICHER_DIENST
+          - ORGANISATIONEN_OHNE_ERWERBSZWECK_PRIVATE_HAUSHALTE
+          - VERARBEITENDES_GEWERBE
+          - VERKEHR_UND_NACHRICHTENUEBERMITTLUNG
+          - VERSICHERUNGEN
+          - SONSTIGE
+        legitimationsdaten:
+          $ref: '#/components/schemas/Legitimationsdaten'
+        zusatzangabenProProduzent:
+          type: array
+          items:
+            oneOf:
+            - $ref: '#/components/schemas/ZusatzangabenKundeDsl'
+            - $ref: '#/components/schemas/ZusatzangabenKundeIng'
+            - $ref: '#/components/schemas/ZusatzangabenKundeMhb'
+    ZusatzangabenKundeDsl:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/ZusatzangabenKundeFuerProduzent'
+      - type: object
+        properties:
+          bruttoVorjahresEinkommen:
+            type: number
+            format: double
+          beschaeftigungImOeffentlichenDienst:
+            type: boolean
+            description: "Nur für Angestellte, wird anderenfalls ignoriert."
+    ZusatzangabenKundeFuerProduzent:
+      required:
+      - '@type'
+      type: object
+      properties:
+        '@type':
+          type: string
+      discriminator:
+        propertyName: '@type'
+        mapping:
+          ZUSATZANGABEN_KUNDE_ING: '#/components/schemas/ZusatzangabenKundeIng'
+          ZUSATZANGABEN_KUNDE_MHB: '#/components/schemas/ZusatzangabenKundeMhb'
+          ZUSATZANGABEN_KUNDE_DSL: '#/components/schemas/ZusatzangabenKundeDsl'
+    ZusatzangabenKundeIng:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/ZusatzangabenKundeFuerProduzent'
+      - type: object
+        properties:
+          berufsgruppe:
+            type: string
+            enum:
+            - ANGESTELLTER
+            - ARBEITER
+            - BEAMTER
+            - FREIBERUFLER
+            - SELBSTSTAENDIG
+            - RENTNER
+            - HAUSMANN
+            - PRIVATIER
+            - SOLDAT
+            - SCHUELER
+            - AZUBI
+            - STUDENT
+            - OHNE
+          branche:
+            type: string
+            description: "Nur für Beschäftigte, wird anderenfalls ignoriert."
+            enum:
+            - BANKEN_VERSICHERUNGEN
+            - BAUGEWERBE
+            - DIENSTLEISTUNGEN_SONSTIGE
+            - EDV_BERATUNG
+            - ENERGIE
+            - ERZIEHUNG_UNTERRICHT
+            - GESUNDHEITSWESEN
+            - HANDEL
+            - HANDWERK
+            - HOTEL_GASTRONOMIE
+            - LANDWIRTSCHAFT
+            - OEFFENTLICHER_DIENST
+            - PRODUKTION_INDUSTRIE
+            - VERKEHR
+          privateKrankenversicherungMonatlicheAusgaben:
+            type: number
+            description: Der Anteil dieses Kunden an der im Haushalt angegebenen Beitragssumme.
+            format: double
+          geburtsland:
+            type: string
+            description: ISO 3166-1 alpha-2 code
+          weitereStaatsangehoerigkeiten:
+            maxItems: 2
+            minItems: 0
+            type: array
+            description: Liste von max. 2 Staatsangehörigkeiten als ISO 3166-1 alpha-2
+              code
+            items:
+              type: string
+              description: Liste von max. 2 Staatsangehörigkeiten als ISO 3166-1 alpha-2
+                code
+    ZusatzangabenKundeMhb:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/ZusatzangabenKundeFuerProduzent'
+      - type: object
+        properties:
+          branche:
+            type: string
+            description: "Nur für Beschäftigte, wird anderenfalls ignoriert."
+            enum:
+            - VERARBEITENDES_GEWERBE
+            - BAU
+            - HANDEL
+            - VERKEHR_INFORMATION
+            - DIENSTLEISTUNG
+            - SONSTIGES
     Zuteilungszeitpunkt:
       required:
       - zeitpunkt
@@ -4580,6 +5300,17 @@ components:
             type: string
     ServiceNotAvailable:
       description: Der Service kann den Request momentan nicht verarbeiten
+      headers:
+        X-TraceId:
+          description: Eine eindeutige technische Id zur Identifikation des Requests
+          schema:
+            type: string
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+    TooManyRequests:
+      description: Der Service wurde zu häufig hintereinander aufgerufen.
       headers:
         X-TraceId:
           description: Eine eindeutige technische Id zur Identifikation des Requests
