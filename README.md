@@ -1,14 +1,10 @@
 # Importieren von Kundenangaben in einen neuen Vorgang
 
-Version: 1.0.0-beta.4
-
-:warning: Momentan befindet sich die API noch in der Entwicklung. Der Endpunkt ist öffentlich noch nicht ansprechbar.
-Die Alpha-Version der API-Spezifikation steht als OpenAPI Spezifikation im [JSON](./api-docs.json) und [YAML](./api-docs.yaml)
-Format zur Verfügung.
+Version: 1.0.0
 
 Feedback und Fragen zum Modell sind als [GitHub Issue](https://github.com/europace/kundenangaben-api/issues/new) willkommen.
 
-[API-Referenz](https://htmlpreview.github.io/?https://raw.githubusercontent.com/europace/kundenangaben-api/master/reference/index.html)
+[API-Referenz](https://refined-github-html-preview.kidonng.workers.dev/europace/kundenangaben-api/raw/publish/release_1_0_0/reference/index.html)
 
 > :warning: Diese Schnittstelle wird kontinuierlich weiterentwickelt. Daher erwarten wir
 > von allen Nutzern dieser Schnittstelle, dass sie das "[Tolerant Reader Pattern](https://martinfowler.com/bliki/TolerantReader.html)" nutzen, d.h.
