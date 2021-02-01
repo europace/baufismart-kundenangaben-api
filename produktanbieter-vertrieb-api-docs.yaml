@@ -8,7 +8,7 @@ info:
     name: Europace AG
     url: http://developer.europace.de
     email: devsupport@europace2.de
-  version: 1.0.0; f879a951f65723fd79e8512ac4cca4a0ceb35c06
+  version: 1.0.1; b8c48dcee969116e6f25fd56cbdd576b22bc2ae3
 servers:
 - url: https://baufinanzierung.api.europace.de
   description: Produktionsserver

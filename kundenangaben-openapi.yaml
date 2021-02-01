@@ -8,7 +8,7 @@ info:
     name: Europace AG
     url: http://developer.europace.de
     email: devsupport@europace2.de
-  version: 1.0.0; f879a951f65723fd79e8512ac4cca4a0ceb35c06
+  version: 1.0.1; b8c48dcee969116e6f25fd56cbdd576b22bc2ae3
 externalDocs:
   url: https://developer.europace.de/api/kundenangaben-api
 servers:
@@ -43,6 +43,12 @@ paths:
               $ref: '#/components/schemas/ImportKundenangabenRequest'
         required: true
       responses:
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "409":
+          $ref: '#/components/responses/Conflict'
+        "503":
+          $ref: '#/components/responses/ServiceNotAvailable'
         "201":
           description: Kundenangaben in neuen Vorgang importiert
           headers:
@@ -53,18 +59,47 @@ paths:
             application/json; version=1.0:
               schema:
                 $ref: '#/components/schemas/KundenangabenImportResponse'
-        "403":
-          $ref: '#/components/responses/Forbidden'
-        "409":
-          $ref: '#/components/responses/Conflict'
-        "503":
-          $ref: '#/components/responses/ServiceNotAvailable'
         "429":
           $ref: '#/components/responses/TooManyRequests'
         "401":
           $ref: '#/components/responses/Unauthorized'
         "400":
           $ref: '#/components/responses/BadRequest'
+      security:
+      - oAuth2:
+        - baufinanzierung:vorgang:schreiben
+        - baufinanzierung:echtgeschaeft
+  /kundenangaben/body-validation:
+    post:
+      tags:
+      - Kundenangaben
+      summary: "Kundenangaben validieren, jedoch NICHT in einen neuen Vorgang importieren"
+      description: "Kundenangaben werden empfangen und validiert. Es wird jedoch KEIN\
+        \ Vorgang in BaufiSmart erzeugt. Der Scope `baufinanzierung:echtgeschaeft`wird\
+        \ benötigt, wenn der Datenkontext `ECHT_GESCHAEFT` gewählt wird."
+      operationId: importKundenangabenBodyValidation
+      parameters:
+      - name: Authorization
+        in: header
+        description: Authorization Bearer Token
+        required: true
+        schema:
+          type: string
+      - name: X-TraceId
+        $ref: '#/components/parameters/tracingIdParam'
+      requestBody:
+        content:
+          application/json; version=1.0:
+            schema:
+              $ref: '#/components/schemas/ImportKundenangabenRequest'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json; version=1.0:
+              schema:
+                $ref: '#/components/schemas/KundenangabenImportResponse'
       security:
       - oAuth2:
         - baufinanzierung:vorgang:schreiben
