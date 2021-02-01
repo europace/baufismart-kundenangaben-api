@@ -1,10 +1,10 @@
 # Importieren von Kundenangaben in einen neuen Vorgang
 
-Version: 1.0.1
+Version: 1.0.2
 
-Feedback und Fragen zum Modell sind als [GitHub Issue](https://github.com/europace/kundenangaben-api/issues/new) willkommen.
+Feedback und Fragen zum Modell sind als [GitHub Issue](https://github.com/europace/baufismart-kundenangaben-api/issues/new) willkommen.
 
-[API-Referenz](https://refined-github-html-preview.kidonng.workers.dev/europace/kundenangaben-api/raw/publish/release_1_0_0/reference/index.html)
+[API-Referenz](https://refined-github-html-preview.kidonng.workers.dev/europace/baufismart-kundenangaben-api/raw/master/reference/index.html)
 
 > :warning: Diese Schnittstelle wird kontinuierlich weiterentwickelt. Daher erwarten wir
 > von allen Nutzern dieser Schnittstelle, dass sie das "[Tolerant Reader Pattern](https://martinfowler.com/bliki/TolerantReader.html)" nutzen, d.h.
@@ -137,7 +137,7 @@ Alternativ steht eine JSON-Version [kundenangaben-openapi.json](./kundenangaben-
 Diese Dateien können verwendet werden, um ein Modell zu generieren.
 
 ## API Referenz
-Die API-Referenz ist [reference/index.html](https://htmlpreview.github.io/?https://raw.githubusercontent.com/europace/kundenangaben-api/master/reference/index.html) zu finden.
+Die API-Referenz ist [reference/index.html](https://refined-github-html-preview.kidonng.workers.dev/europace/baufismart-kundenangaben-api/raw/master/reference/index.html) zu finden.
 
 ## Beispiel
 
