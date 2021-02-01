@@ -1,6 +1,6 @@
 # Importieren von Kundenangaben in einen neuen Vorgang
 
-Version: 1.0.0
+Version: 1.0.1
 
 Feedback und Fragen zum Modell sind als [GitHub Issue](https://github.com/europace/kundenangaben-api/issues/new) willkommen.
 
@@ -131,8 +131,10 @@ das Feld leer.
 
 ## API Spezifikation
 
-Die OpenAPI-Spezifikation ist in der Datei [api-docs.yaml](./api-docs.yaml)
-zu finden. Alternativ steht eine JSON-Version [api-docs.json](./api-docs.json) zur Verfügung.
+Die OpenAPI-Spezifikation ist in der Datei [kundenangaben-openapi.yaml](./kundenangaben-openapi.yaml) zu finden.
+Alternativ steht eine JSON-Version [kundenangaben-openapi.json](./kundenangaben-openapi.json) zur Verfügung.
+
+Diese Dateien können verwendet werden, um ein Modell zu generieren.
 
 ## API Referenz
 Die API-Referenz ist [reference/index.html](https://htmlpreview.github.io/?https://raw.githubusercontent.com/europace/kundenangaben-api/master/reference/index.html) zu finden.
