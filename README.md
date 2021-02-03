@@ -1,174 +1,293 @@
-# Importieren von Kundenangaben in einen neuen Vorgang
+# Neuen Vorgang mit Kundenangaben anlegen
+Die API erzeugt einen neuen Vorgang mit Hilfe von Kundenangaben. Als Ergebnis wird eine Referenz des neuen Vorgangs geliefert. 
 
-Version: 1.0.2
+Die neue Kundenangaben-API ersetzt die alte BEX-API, die hier dokumentiert https://github.com/europace/baufismart-vorgang-anlegen-api ist.
+Kundenangaben sind in anderen APIs von BaufiSmart (Vorgaenge-API oder Antraege-API) auch als _Erfasste Daten_ bekannt.
+
+
+![Vertrieb](https://img.shields.io/badge/-Vertrieb-lightblue)
+![Baufinanzierung](https://img.shields.io/badge/-Baufinanzierung-lightblue)
+
+[![Authentication](https://img.shields.io/badge/Auth-OAuth2-green)](https://docs.api.europace.de/baufinanzierung/authentifizierung/)
+[![GitHub release](https://img.shields.io/github/v/release/europace/baufismart-kundenangaben-api)](https://github.com/europace/baufismart-kundenangaben-api/releases)
+
+[![Pattern](https://img.shields.io/badge/Pattern-Tolerant%20Reader-yellowgreen)](https://martinfowler.com/bliki/TolerantReader.html)
+
+## Dokumentation
+[![YAML](https://img.shields.io/badge/OAS-HTML_Doc-lightblue)](https://refined-github-html-preview.kidonng.workers.dev/europace/baufismart-kundenangaben-api/raw/master/reference/index.html)
+[![YAML](https://img.shields.io/badge/OAS-YAML-lightgrey)](https://github.com/europace/baufismart-kundenangaben-api/blob/master/kundenangaben-openapi.yaml)
+[![JSON](https://img.shields.io/badge/OAS-JSON-lightgrey)](https://github.com/europace/baufismart-kundenangaben-api/blob/master/kundenangaben-openapi.json)
 
 Feedback und Fragen zum Modell sind als [GitHub Issue](https://github.com/europace/baufismart-kundenangaben-api/issues/new) willkommen.
 
-[API-Referenz](https://refined-github-html-preview.kidonng.workers.dev/europace/baufismart-kundenangaben-api/raw/master/reference/index.html)
+## Anwendungsfälle der API
+- Vorgang mit Kundenangaben aus Leadantragstrecken oder CRM-System anlegen
 
-> :warning: Diese Schnittstelle wird kontinuierlich weiterentwickelt. Daher erwarten wir
-> von allen Nutzern dieser Schnittstelle, dass sie das "[Tolerant Reader Pattern](https://martinfowler.com/bliki/TolerantReader.html)" nutzen, d.h.
-> tolerant gegenüber kompatiblen API-Änderungen beim Lesen und Prozessieren der Daten sind:
->
-> 1. unbekannte Felder dürfen keine Fehler verursachen
->
-> 2. Strings mit eingeschränktem Wertebereich (Enums) müssen mit neuen, unbekannten Werten umgehen können
->
-> 3. sinnvoller Umgang mit HTTP-Statuscodes, die nicht explizit dokumentiert sind
->
+## Schnellstart
+Damit du unsere APIs und deinen Anwendungsfall schnellstmöglich testen kannst, haben wir eine [Postman-Collection](https://docs.api.europace.de/baufinanzierung/schnellstart/) für dich zusammengestellt. 
 
-# Inhaltsverzeichnis
+In der Postman-Collection im Ordner "BaufiSmart Kundenangaben-API" findest du zwei Beispiele. Da das Datenmodells in der Kundenangaben-API sehr umfangreich ist, stellen wir mit dem Request "Kundenangaben validieren" eine Möglichkeit zur Verfügung, mit der Anfragen getestet/validiert werden können, ohne dass Daten gespeichert werden. Dieser Endpunkt dient der schnelleren Anbindung, ist aber für die Funktionsweise nicht erforderlich.
 
-* [Allgemeines](#allgemeines)
-* [Authentifizierung](#authentifizierung)
-   * [Authentifizieren verschiedener Benutzer mit einem Client](#authentifizieren-verschiedener-benutzer-mit-einem-client)
-* [TraceId zur Nachverfolgbarkeit von Requests](#traceid-zur-nachverfolgbarkeit-von-requests)
-* [Content-Type](#content-type)
-* [Fehlercodes](#fehlercodes)
-   * [HTTP-Status Errors](#http-status-errors)
-   * [weitere Fehler](#weitere-fehler)
-* [API-Spezifikation](#api-spezifikation)
-* [API-Referenz](#api-referenz)
-* [Beispiel](#beispiel)
-* [FAQs](#faqs)
-* [Tools](#tools)
-* [Kontakt](#kontakt)
-* [Nutzungsbedingungen](#nutzungsbedingungen)
+### Authentifizierung
+Bitte benutze [![Authentication](https://img.shields.io/badge/Auth-OAuth2-green)](https://docs.api.europace.de/baufinanzierung/authentifizierung/), um Zugang zur API bekommen. Um die API verwenden zu können, benötigt der OAuth2-Client folgende Scopes:
 
-# Dokumentation
-
-## Allgemeines
-
-Die Schnittstelle ermöglicht es, Kundenangaben[^1] in einen BaufiSmart Vorgang zu importieren. Der Vorgang wird dabei im Rahmen
-des Imports automatisch erzeugt. Informationen über den erzeugten Vorgang, wie beispielsweise die Vorgangsnummer sind der
-Response zu entnehmen.
-
-Die neue Kundenangaben-API wird die alte BEX-API ersetzen. Die alte API ist hier dokumentiert: https://github.com/europace/baufismart-vorgang-anlegen-api
-
-Für einen Schnelleinstieg in die neue Kundeneingaben-API, siehe [Tools](#tools)
-
-[^1]: Kundenangaben sind in anderen APIs von BaufiSmart auch als _Erfasste Daten_ bekannt
-
-<a name="OAuth2"></a>
-## Authentifizierung
-
-Für jeden Request ist eine Authentifizierung erforderlich. Die Authentifizierung erfolgt über den OAuth 2.0 Client-Credentials Flow.
-
-| Request Header Name | Beschreibung           |
-|---------------------|------------------------|
-| Authorization       | OAuth 2.0 Bearer Token |
-
-
-Das Bearer Token kann über die [Authorization-API](https://github.com/europace/authorization-api) angefordert werden.
-Dazu wird ein Client benötigt, der vorher von einer berechtigten Person über das Partnermanagement angelegt wurde,
-eine Anleitung dafür befindet sich im [Help Center](https://europace2.zendesk.com/hc/de/articles/360012514780).
-
-Damit der Client für diese API genutzt werden kann, müssen im Partnermanagement die folgenden Berechtigungen aktiviert werden
-
-| Name                                     | Beschreibung                        |
-| ---------------------------------------- | ----------------------------------- |
-| **baufinanzierung:vorgang:schreiben**    | Baufinanzierungsvorgänge schreiben  |
-
-Schlägt die Authentifizierung fehl, erhält der Aufrufer eine HTTP Response mit Statuscode **401 UNAUTHORIZED**.
-
-Hat der Client nicht die benötigte Berechtigung, um die Resource abzurufen, erhält der Aufrufer eine HTTP Response mit Statuscode **403 FORBIDDEN**.
-
-### Authentifizieren verschiedener Benutzer mit einem Client
-
-Sofern beim Import kein Kundenbetreuer angegeben ist, wird im erzeugten Vorgang der Benutzer des API-Clients als Kundenbetreuer eingetragen.
-Mit Hilfe der sog. "Impersonierung" ist es möglich, den Import im Namen eines anderen Benutzers durchzuführen.
-Es reicht aus, einen Client für die Organisation als "Generalsschlüssel" zu registrieren und den Benutzer, der als Kundenbetreuer
-eingetragen werden soll, bei der Authentifizierung anzugeben.
-
-Eine nähere Beschreibung ist in der Dokumentation der [Authorization-API](https://github.com/europace/authorization-api#wie-authentifiziere-ich-verschiedene-benutzer-mit-einem-client-impersionieren)
-zu finden.
-
-## TraceId zur Nachverfolgbarkeit von Requests
-
-Für jeden Request soll eine eindeutige ID generiert werden, die den Request im EUROPACE 2 System nachverfolgbar macht und so bei
-etwaigen Problemen oder Fehlern die systemübergreifende Analyse erleichtert.
-Die Übermittlung der X-TraceId erfolgt über einen HTTP-Header. Dieser Header ist optional,
-wenn er nicht gesetzt ist, wird eine ID vom System generiert.
-
-| Request Header Name | Beschreibung                    | Beispiel    |
-|---------------------|---------------------------------|-------------|
-| X-TraceId           | eindeutige Id für jeden Request | sys12345678 |
-
-## Content-Type
-
-Die Schnittstelle akzeptiert Daten mit Content-Type `application/json`.
-Entsprechend muss im Request der Content-Type Header gesetzt werden. Zusätzlich das Encoding, wenn es nicht UTF-8 ist.
-
-Zusätzlich kann die Version der Schnittstelle im Rahmen der _Content Negotiation_ angegeben werden. Fehlt die Angabe wird
-die neuste Version der API verwendet.
-
-| Request Header Name |   Header Value                    |
-|---------------------|-----------------------------------|
-| Content-Type        | application/json;version=@apiVersion@ |
-
-## Strategie für das _Tolerant Reader Pattern_
-
-Einige Felder der Kundenangaben verfügen über einen eingeschränkten Wertebereich.
-Beispielsweise sind im Typ `Bauspardarlehen.abschlussgebuehrmodus` nur die Werte
-`SOFORTZAHLUNG` und `VERRECHNUNG` erlaubt.
-Andere Werte werden von der Schnittstelle ignoriert und so verarbeitet, als wäre
-das Feld leer.
-
-## Fehlercodes
-
-### HTTP-Status Errors
-
-| Fehlercode | Nachricht       | weitere Attribute          | Erklärung                            |
-|------------|-----------------|----------------------------|--------------------------------------|
-| 401        | Unauthorized    | -                          | Authentifizierung ist fehlgeschlagen |
-| 400        | Bad Request     | -                          | Der Request hat ein fehlerhaftes Format oder der Datentyp eines Felds weicht von der Spezifikation ab. |
-
-### Weitere Fehler
-
-| Fehlercode | Nachricht                  | Erklärung                                                                                       |
-|------------|----------------------------|-------------------------------------------------------------------------------------------------|
-| 403        | Insufficient access rights | Es wird versucht auf eine Ressource zuzugreifen, für die keine ausreichende Berechtigung besteht |
-
-## API Spezifikation
-
-Die OpenAPI-Spezifikation ist in der Datei [kundenangaben-openapi.yaml](./kundenangaben-openapi.yaml) zu finden.
-Alternativ steht eine JSON-Version [kundenangaben-openapi.json](./kundenangaben-openapi.json) zur Verfügung.
-
-Diese Dateien können verwendet werden, um ein Modell zu generieren.
-
-## API Referenz
-Die API-Referenz ist [reference/index.html](https://refined-github-html-preview.kidonng.workers.dev/europace/baufismart-kundenangaben-api/raw/master/reference/index.html) zu finden.
+| Scope                                  | API-Usecase                                                      |
+| -------------------------------------- | ---------------------------------------------------------------- |
+| `baufinanzierung:vorgang:schreiben`    | Baufinanzierungsvorgänge anlegen                                 |
+| `baufinanzierung:echtgeschaeft`        | Vorgänge in Produktion anlegen, ansonsten nur Testmodus möglich  |
 
 ## Beispiel
 
-Folgt
+Ein Kunde möchte ein Einfamilienhauses für sich selbst in Berlin kaufen. Er hat bereits Eigenkapital angepart und schon Angaben zu einigen Präferenzen bei der Finanzierung gemacht. Die Rate soll in Höhe seiner jetzigen Miete sein. Er wurde durch seinen Arbeitgeber die Trisalis AG auf den Finanzierungsvermittler aufmerksam, der eine Kooperationsvereinbarung mit ihm hat und für jeden abgeschlossenen Vertrag 50€ Leadgebühr als Aufwandentschädigung für die interne Vermarktung erhält.
+
+Beispiel-Request: 
+``` json
+{
+    "importMetadaten": {
+        "datenkontext": "ECHT_GESCHAEFT",
+        "externeVorgangsId": "Lead 7c78de13-da02-4bdd-b4b2-c37855abfccc",
+        "importquelle": "Landinpage Trisalis AG 2021",
+        "leadtracking": {
+            "kampagne": "Trisalis AG",
+            "keyword": "Altersvorsorge - stark wie Beton",
+            "trackingId": "be8d40b0-25af-48ae-8c57-a1b72527f903"
+        },
+        "zusaetzlicherEreignistext": "Premium-Kunde",
+        "prioritaet": "HOCH",
+        "tippgeber": {
+            "tippgeberPartnerId": "{{PARTNER_ID}}", <-- PartnerID der Trisalis AG
+            "tippgeberprovisionswunsch": {
+                "@type": "BETRAG",
+                "betrag": 50
+            }
+        }
+    },
+    "kundenangaben": {
+        "haushalte": [
+            {
+                "kunden": [
+                    {
+                        "externeKundenId": "extKunde1",
+                        "referenzId": "jsonRef1",
+                        "personendaten": {
+                            "person": {
+                                "titel": {
+                                    "prof": false,
+                                    "dr": false
+                                },
+                                "anrede": "HERR",
+                                "vorname": "Max",
+                                "nachname": "Mustermann"
+                            }
+                        },
+                        "wohnsituation": {
+                            "anschrift": {
+                                "strasse": "Teststr.",
+                                "hausnummer": "55",
+                                "plz": "10179",
+                                "ort": "Berlin"
+                            }
+                        },
+                       "finanzielles": {
+                            "beschaeftigung": {
+                                "@type": "ANGESTELLTER",
+                                "beschaeftigungsverhaeltnis": {
+                                    "arbeitgeber": {
+                                        "name": "Trisalis AG",
+                                        "inDeutschland": true
+                                    }
+                                }
+                            },
+                            "einkommenNetto": 4825
+                        },
+                        "kontakt": {
+                            "telefonnummer": {
+                                "vorwahl": "030",
+                                "nummer": "420860"
+                            },
+                            "email": "max.mustermann@europace.de",
+                            "weitereKontaktmoeglichkeiten": "beste Erreichbarkeit von 18-20Uhr"
+                        }
+                    }
+                ],
+                "finanzielleSituation": {
+                    "vermoegen": {
+                        "summeBankUndSparguthaben": {
+                            "guthaben": 154000,
+                            "verwendung": {
+                                "@type": "AUFLOESUNG_ALS_VERWENDUNG",
+                                "maximalEinzusetzenderBetrag": 78000,
+                                "kommentar": "einzusetzendes Eigenkapital"
+                            }
+                        }
+                    },
+                    "ausgaben": {
+                        "summeMietausgaben": {
+                            "betragMonatlich": 1150,
+                            "entfaelltMitFinanzierung": true
+                        }
+                    }
+                }
+            }
+        ],
+        "finanzierungsobjekt": {
+            "immobilie": {
+                "adresse": {
+                    "strasse": "Immobilienstraße",
+                    "hausnummer": "16",
+                    "plz": "82784",
+                    "ort": "Spandau"
+                },
+                "typ": {
+                    "@type": "EINFAMILIENHAUS",
+                    "gebaeude": {
+                        "baujahr": 2018,
+                        "nutzung": {
+                            "wohnen": {
+                                "gesamtflaeche": 150,
+                                "nutzungsart": {
+                                    "@type": "EIGENGENUTZT"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "finanzierungsbedarf": {
+            "finanzierungszweck": {
+                "@type": "KAUF",
+                "kaufpreis": 358000,
+                "nebenkosten": {
+                    "maklergebuehr": {
+                        "wert": 3.75,
+                        "einheit": "PROZENT"
+                    },
+                    "notargebuehr": {
+                        "wert": 1.25,
+                        "einheit": "PROZENT"
+                    },
+                    "grunderwerbsteuer": {
+                        "wert": 6,
+                        "einheit": "PROZENT"
+                    }
+                }
+            },
+            "praeferenzen": {
+                "finanzierungsdetailspraeferenzen": {
+                    "zinsbindung": {
+                        "@type": "ZINSBINDUNGSSPANNE",
+                        "vonJahre": 10,
+                        "bisJahre": 15,
+                        "kommentar": "Einstellung in Leadstrecke: normal"
+                    },
+                    "ratenhoehe": {
+                        "@type": "WARMMIETE_VON_HEUTE"
+                    },
+                    "tilgungssatzwechsel": {
+                        "@type": "NICHT_EINGEPLANT_ODER_ABSEHBAR"
+                    }
+                },
+                "bestandteileDerFinanzierung": {
+                    "praeferenz": "UNKOMPLIZIERTE_FINANZIERUNG"
+                },
+                "absicherungUndVorsorge": {
+                    "praeferenz": "KEINE_PRAEFERENZ"
+                },
+                "zeitlicherRahmen": {
+                    "@type": "SO_SCHNELL_WIE_MOEGLICH",
+                    "kommentar": "Es gibt noch weitere Interessenten"
+                }
+            },
+            "finanzierungsbausteine": [
+                {
+                    "@type": "ANNUITAETENDARLEHEN",
+                    "darlehensbetrag": 319380,
+                    "annuitaetendetails": {
+                        "zinsbindungInJahren": 10,
+                        "tilgungswunsch": {
+                            "@type": "RATE",
+                            "rate": 1150,
+                            "tilgungsbeginn": "2020-09-20"
+                        },
+                        "sondertilgungJaehrlich": 0,
+                        "auszahlungszeitpunkt": "2021-07-19"
+                    },
+                    "bereitstellungszinsfreieZeitInMonaten": 2,
+                    "provision": 1.5
+                }
+            ]
+        }
+    }
+}
+```
+
+Beispiel-Response:
+``` json
+{
+    "vorgangsnummer": "YX4MDU"
+}
+```
+
+## Wo wird der Vorgang angelegt?
+
+Besitzer eines Vorgangs ist immer der Kundenbetreuer. Die für ihn geltenden Einstellungen werden auf den Vorgang angewendet und er erhält i.d.R. auch die Vertriebsprovision. Der Bearbeiter des Vorgangs kann abweichen, wenn zum Beispiel die Vervollständigung der Antragsdaten durch eine Teamassistenz erfolgt oder ein Clearing stattfindet.
+
+Ist der Kundenbetreuer nicht unter `betreuung` angegeben, wird im erzeugten Vorgang der Benutzer des API-Clients als Kundenbetreuer eingetragen. Ist kein Bearbeiter angegeben, wird bei der ersten Bearbeitung der Benutzer gefragt, ob er die Bearbeitung übernehmen möchte. 
+
+Soll der Vorgang bei einem anderen Kundenbetreuer angelegt werden als dem API-Benutzer, dann empfehlen wir die Rollen des Vorgangs im Object `betreuung` einzustellen.
+
+``` json
+"importMetadaten": {
+        "betreuung": {
+            "kundenbetreuer": "{{PARTNER_ID}}",
+            "bearbeiter": "{{PARTNER_ID}}"
+        },
+        ...
+```
+
+Mit Hilfe der sog. "Impersonierung" ist es auch möglich, den Vorgang im Namen eines anderen Benutzers anzulegen. Wie das genau geht, wird in der [Autorization-API](https://docs.api.europace.de/baufinanzierung/authentifizierung/#wie-authentifiziere-ich-verschiedene-benutzer-mit-einem-client-impersionieren) erklärt.
+
+## Wie finde ich meinen Kunden wieder?
+
+Sowohl für den Vorgang als auch die Kunden lassen sich externe Referenzen mitgeben, die über die [Vorgaenge-API](https://docs.api.europace.de/baufinanzierung/vorgaenge/vorgang-auslesen-api/) und [Antraege-API](https://docs.api.europace.de/baufinanzierung/antraege/antraege-api/) wieder ausgelesen werden können. Damit wird ermöglicht, dass Datensätze in CRM- oder Banksystemen beim Auslesen wiedererkannt werden können. 
+
+Folgende Referenzen sind möglich:
+* Vorgang: `externeVorgangsId`
+* Kunden: `externeKundenId`
+
+## Was passiert mit falschen Datenfeldern? 
+
+Wir haben versucht, eine möglichst fehlertolerante API zu bauen. Im Zweifel ist es wichtiger einzelne Datenfelder nicht zu haben als gar keine Daten. Fehler würden zu Unterbrechungen in Leadantragstrecken führen und so ggf. zu  frustrierten Kunden.
+Um die Fehlertoleranz der API zu erhöhen, wendet die API das Tolerant Reader Pattern an. Das heisst, Felder oder Enum-Werte, die der API unbekannt sind, werden ignoriert. Beispielsweise sind im Typ `Bauspardarlehen.abschlussgebuehrmodus` nur die Werte `SOFORTZAHLUNG` und `VERRECHNUNG` erlaubt. Andere Werte werden von der API ignoriert und so verarbeitet, als wäre das Feld leer. 
+
+
 
 ## FAQs
 
-Q: Wird die alte BEX-Schnittstelle durch die neue Kundenangaben-API ersetzt werden? Wird die alte BEX-Schnittstelle noch weiterentwickelt?
+Q: Wird die alte BEX-Schnittstelle durch die neue Kundenangaben-API ersetzt werden? 
 
-A: Die neue Kundenangaben-API wird die alte BEX-Schnittstelle ersetzen.
-   Die alte BEX-Schnittstelle wird nicht mehr weiterentwickelt und Mitte 2021 abgeschaltet.
-   
+A: Ja, die neue Kundenangaben-API wird die alte BEX-Schnittstelle ersetzen.
+
+---
+
+Q: Wird die alte BEX-Schnittstelle noch weiterentwickelt?
+
+A: Nein, die alte BEX-Schnittstelle wird nicht mehr weiterentwickelt und Mitte 2021 abgeschaltet.
+
+---
+
 Q: Wie kommt es, das die Kundenangaben-API eine neue Struktur hat?
 
 A: Die Kundenangaben-API ermöglicht zum ersten Mal den Übertrag fast aller in BaufiSmart erfassbaren Daten. Die passende Struktur dazu soll übersichtlicher und besser verständlich sein. Wir haben die Struktur in mehreren Feedbackrunden geschärft. 
  
-Die alte Struktur der BEX-Schnittstelle und die Struktur der Vorgänge-API weichen historisch bedingt voneinander ab. Das Datenmodell der Kundenangaben-API setzt basierend auf Feedback den neuen Standard. Wir planen künftig neue APIs in Absprache mit unseren Partnern an die Struktur der Kundenangaben-API anzulehnen.
+Die alte Struktur der BEX-Schnittstelle und die Struktur der Vorgänge-API weichen historisch bedingt voneinander ab. Das Datenmodell der Kundenangaben-API setzt basierend auf Feedback den neuen Standard. Wir planen zukünftige APIs in Absprache mit unseren Partnern auf die Struktur der Kundenangaben-API aufzubauen.
+
+---
 
 Q: Wann ist es sinnvoll mit der Anbindung der Kundenangaben-API zu beginnen?
-A: Momentan befindet sich die Kundenangaben-API noch in der Entwicklung.
 
-Wir haben das Datenmodell bereits aufgestellt. Die API werden wir, wie in GitHub dokumentiert, umsetzen.
-
-Während der Umsetzung kann es zu kleinen Änderungen am Modell kommen. Diese werden jedoch nicht tiefgreifend sein.
-Unsere Partner können daher bereits mit dem Mapping des eigenen Modells auf das Kundenangaben-Modell beginnen.
-
-
-## Tools
-
-Für [Postman](https://www.getpostman.com/) stellen wir zukünftig im [Schnellstarter-Projekt](https://github.com/europace/api-schnellstart/)
-auch eine Collection mit einem Beispiel für die Kundenangaben-API zur Verfügung.
+A: Mit Release 1.0.0 ist die API produktiv einsetzbar. Lediglich die individuellen Zusatzangaben der Produktanbieter sind als Schema definiert, werden aber noch nicht gespeichert. Dieser Schritt wird in den nächsten Monaten folgen.
 
 ## Kontakt
 Kontakt für Support: [devsupport@europace2.de](mailto:devsupport@europace2.de)
