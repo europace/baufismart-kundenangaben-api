@@ -8,7 +8,7 @@ info:
     name: Europace AG
     url: http://developer.europace.de
     email: devsupport@europace2.de
-  version: 1.0.3; 3b0ba94cf2137bc1fcbb272bec6cf846d1081f15
+  version: 1.0.4; 2ff367f7461f4e5a90ac089a311e3a9c68bdfa83
 servers:
 - url: https://baufinanzierung.api.europace.de
   description: Produktionsserver
@@ -51,12 +51,12 @@ paths:
               $ref: '#/components/schemas/UpdateRequest'
         required: true
       responses:
-        "401":
-          description: Die Authentifizierung ist fehlgeschlagen
         "503":
           $ref: '#/components/responses/ServiceNotAvailable'
         "403":
           $ref: '#/components/responses/Forbidden'
+        "401":
+          description: Die Authentifizierung ist fehlgeschlagen
         "404":
           description: Der Vorgang existiert nicht
         "200":
@@ -69,6 +69,25 @@ paths:
         - baufinanzierung:echtgeschaeft
 components:
   schemas:
+    KonditionsAngaben:
+      type: object
+      properties:
+        olb:
+          $ref: '#/components/schemas/OlbKonditionsAngaben'
+      description: Produktanbietervertriebsspezifische Konditionsangaben zu einem
+        Vorgang
+    OlbKonditionsAngaben:
+      type: object
+      properties:
+        abschlaege:
+          type: array
+          items:
+            type: string
+            description: Für den Kunden anzuwendende Konditionsabschläge.
+            enum:
+            - NEUKUNDE
+            - MITARBEITER
+      description: OLB-spezifische Konditionsangaben
     OlbScoring:
       type: object
       properties:
@@ -107,6 +126,8 @@ components:
       properties:
         scoring:
           $ref: '#/components/schemas/ScoringAngaben'
+        kondition:
+          $ref: '#/components/schemas/KonditionsAngaben'
     Problem:
       required:
       - type

@@ -8,7 +8,7 @@ info:
     name: Europace AG
     url: http://developer.europace.de
     email: devsupport@europace2.de
-  version: 1.0.3; 3b0ba94cf2137bc1fcbb272bec6cf846d1081f15
+  version: 1.0.4; 2ff367f7461f4e5a90ac089a311e3a9c68bdfa83
 externalDocs:
   url: https://developer.europace.de/api/baufismart-kundenangaben-api
 servers:
@@ -49,12 +49,6 @@ paths:
           $ref: '#/components/responses/Conflict'
         "503":
           $ref: '#/components/responses/ServiceNotAvailable'
-        "429":
-          $ref: '#/components/responses/TooManyRequests'
-        "401":
-          $ref: '#/components/responses/Unauthorized'
-        "400":
-          $ref: '#/components/responses/BadRequest'
         "201":
           description: Kundenangaben in neuen Vorgang importiert
           headers:
@@ -65,6 +59,12 @@ paths:
             application/json; version=1.0:
               schema:
                 $ref: '#/components/schemas/KundenangabenImportResponse'
+        "429":
+          $ref: '#/components/responses/TooManyRequests'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "400":
+          $ref: '#/components/responses/BadRequest'
       security:
       - oAuth2:
         - baufinanzierung:vorgang:schreiben
@@ -1256,6 +1256,17 @@ components:
       - '@type'
       type: object
       properties:
+        zinsbindungBis:
+          type: string
+          format: date
+        laufzeitende:
+          type: string
+          format: date
+        restschuld:
+          $ref: '#/components/schemas/Restschuld'
+        darlehenskontonummer:
+          type: string
+          description: IBAN des Darlehenskontos
         darlehensgeber:
           oneOf:
           - $ref: '#/components/schemas/ProduktanbieterDarlehensgeber'
@@ -1272,17 +1283,6 @@ components:
         sollzins:
           type: number
           format: double
-        zinsbindungBis:
-          type: string
-          format: date
-        laufzeitende:
-          type: string
-          format: date
-        restschuld:
-          $ref: '#/components/schemas/Restschuld'
-        darlehenskontonummer:
-          type: string
-          description: IBAN des Darlehenskontos
         '@type':
           type: string
       discriminator:
