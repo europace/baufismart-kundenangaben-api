@@ -8,7 +8,7 @@ info:
     name: Europace AG
     url: http://developer.europace.de
     email: devsupport@europace2.de
-  version: 1.0.4; 2ff367f7461f4e5a90ac089a311e3a9c68bdfa83
+  version: 1.0.5; e36c4209088e15552718d1f3a89931332bdce2aa
 externalDocs:
   url: https://developer.europace.de/api/baufismart-kundenangaben-api
 servers:
@@ -43,12 +43,6 @@ paths:
               $ref: '#/components/schemas/ImportKundenangabenRequest'
         required: true
       responses:
-        "403":
-          $ref: '#/components/responses/Forbidden'
-        "409":
-          $ref: '#/components/responses/Conflict'
-        "503":
-          $ref: '#/components/responses/ServiceNotAvailable'
         "201":
           description: Kundenangaben in neuen Vorgang importiert
           headers:
@@ -59,6 +53,12 @@ paths:
             application/json; version=1.0:
               schema:
                 $ref: '#/components/schemas/KundenangabenImportResponse'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "409":
+          $ref: '#/components/responses/Conflict'
+        "503":
+          $ref: '#/components/responses/ServiceNotAvailable'
         "429":
           $ref: '#/components/responses/TooManyRequests'
         "401":
@@ -1256,17 +1256,6 @@ components:
       - '@type'
       type: object
       properties:
-        zinsbindungBis:
-          type: string
-          format: date
-        laufzeitende:
-          type: string
-          format: date
-        restschuld:
-          $ref: '#/components/schemas/Restschuld'
-        darlehenskontonummer:
-          type: string
-          description: IBAN des Darlehenskontos
         darlehensgeber:
           oneOf:
           - $ref: '#/components/schemas/ProduktanbieterDarlehensgeber'
@@ -1283,6 +1272,17 @@ components:
         sollzins:
           type: number
           format: double
+        zinsbindungBis:
+          type: string
+          format: date
+        laufzeitende:
+          type: string
+          format: date
+        restschuld:
+          $ref: '#/components/schemas/Restschuld'
+        darlehenskontonummer:
+          type: string
+          description: IBAN des Darlehenskontos
         '@type':
           type: string
       discriminator:
@@ -5229,15 +5229,9 @@ components:
             format: double
     KundenangabenImportResponse:
       required:
-      - teilvorgangId
       - vorgangsnummer
       type: object
       properties:
-        teilvorgangId:
-          type: string
-          description: Dieses Feld bitte nicht mehr benutzen. Es wird in Kürze aus
-            der API entfernt.
-          deprecated: true
         vorgangsnummer:
           type: string
       description: Ergebnis des Imports der Kundenangaben.

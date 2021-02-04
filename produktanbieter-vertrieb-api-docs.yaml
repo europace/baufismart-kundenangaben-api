@@ -8,7 +8,7 @@ info:
     name: Europace AG
     url: http://developer.europace.de
     email: devsupport@europace2.de
-  version: 1.0.4; 2ff367f7461f4e5a90ac089a311e3a9c68bdfa83
+  version: 1.0.5; e36c4209088e15552718d1f3a89931332bdce2aa
 servers:
 - url: https://baufinanzierung.api.europace.de
   description: Produktionsserver
@@ -55,12 +55,12 @@ paths:
           $ref: '#/components/responses/ServiceNotAvailable'
         "403":
           $ref: '#/components/responses/Forbidden'
-        "401":
-          description: Die Authentifizierung ist fehlgeschlagen
         "404":
           description: Der Vorgang existiert nicht
         "200":
           description: Produktanbietervertriebsangaben in existierenden Vorgang importiert
+        "401":
+          description: Die Authentifizierung ist fehlgeschlagen
         "400":
           $ref: '#/components/responses/BadRequest'
       security:
