@@ -4,7 +4,6 @@ Die API erzeugt einen neuen Vorgang mit Hilfe von Kundenangaben. Als Ergebnis wi
 Die neue Kundenangaben-API ersetzt die alte BEX-API, die hier dokumentiert https://github.com/europace/baufismart-vorgang-anlegen-api ist.
 Kundenangaben sind in anderen APIs von BaufiSmart (Vorgaenge-API oder Antraege-API) auch als _Erfasste Daten_ bekannt.
 
-
 ![Vertrieb](https://img.shields.io/badge/-Vertrieb-lightblue)
 ![Baufinanzierung](https://img.shields.io/badge/-Baufinanzierung-lightblue)
 
@@ -258,9 +257,9 @@ Folgende Referenzen sind möglich:
 
 ## Was passiert mit falschen Datenfeldern? 
 
-Wir haben versucht, eine möglichst fehlertolerante API zu bauen. Im Zweifel ist es wichtiger einzelne Datenfelder nicht zu haben als gar keine Daten. Fehler würden zu Unterbrechungen in Leadantragstrecken führen und so ggf. zu  frustrierten Kunden.
-Um die Fehlertoleranz der API zu erhöhen, wendet die API das Tolerant Reader Pattern an. Das heisst, Felder oder Enum-Werte, die der API unbekannt sind, werden ignoriert. Beispielsweise sind im Typ `Bauspardarlehen.abschlussgebuehrmodus` nur die Werte `SOFORTZAHLUNG` und `VERRECHNUNG` erlaubt. Andere Werte werden von der API ignoriert und so verarbeitet, als wäre das Feld leer. 
+Mit der Kundenangaben-API bieten wir eine möglichst fehlertolerante API an. Fehler würden zu Unterbrechungen in Lead-Pozessen führen und so ggf. zu  frustrierten Kunden. Im Zweifel ist es wichtiger einzelne Datenfelder nicht zu haben als gar keine Daten. 
 
+Um die Fehlertoleranz der API zu erhöhen, wendet die API das Tolerant Reader Pattern an. Das heisst, Felder oder Enum-Werte, die der API unbekannt sind, werden ignoriert. Beispielsweise sind im Typ `Bauspardarlehen.abschlussgebuehrmodus` nur die Werte `SOFORTZAHLUNG` und `VERRECHNUNG` erlaubt. Andere Werte werden von der API ignoriert und so verarbeitet, als wäre das Feld leer. 
 
 
 ## FAQs
@@ -279,15 +278,15 @@ A: Nein, die alte BEX-Schnittstelle wird nicht mehr weiterentwickelt und Mitte 2
 
 Q: Wie kommt es, das die Kundenangaben-API eine neue Struktur hat?
 
-A: Die Kundenangaben-API ermöglicht zum ersten Mal den Übertrag fast aller in BaufiSmart erfassbaren Daten. Die passende Struktur dazu soll übersichtlicher und besser verständlich sein. Wir haben die Struktur in mehreren Feedbackrunden geschärft. 
+A: Die Kundenangaben-API ermöglicht zum ersten Mal den Übertrag aller in BaufiSmart erfassbaren Daten und ist dennoch übersichtlicher und besser verständlich. Die Struktur wurde in mehreren Feedbackrunden geschärft.
  
-Die alte Struktur der BEX-Schnittstelle und die Struktur der Vorgänge-API weichen historisch bedingt voneinander ab. Das Datenmodell der Kundenangaben-API setzt basierend auf Feedback den neuen Standard. Wir planen zukünftige APIs in Absprache mit unseren Partnern auf die Struktur der Kundenangaben-API aufzubauen.
+Die alte Struktur der BEX-Schnittstelle und die Struktur der Vorgänge-API weichen historisch bedingt voneinander ab. Das Datenmodell der Kundenangaben-API definiert den neuen Standard. Wir planen zukünftige APIs in Absprache mit unseren Partnern auf die Struktur der Kundenangaben-API aufzubauen.
 
 ---
 
 Q: Wann ist es sinnvoll mit der Anbindung der Kundenangaben-API zu beginnen?
 
-A: Mit Release 1.0.0 ist die API produktiv einsetzbar. Lediglich die individuellen Zusatzangaben der Produktanbieter sind als Schema definiert, werden aber noch nicht gespeichert. Dieser Schritt wird in den nächsten Monaten folgen.
+A: Sofort, jetzt, now! Doit! Mit Release 1.0.0 ist die API produktiv einsetzbar. Lediglich die individuellen Zusatzangaben der Produktanbieter sind als Schema definiert, werden aber noch nicht gespeichert. Dieser Schritt wird in den nächsten Monaten folgen.
 
 ## Kontakt
 Kontakt für Support: [devsupport@europace2.de](mailto:devsupport@europace2.de)

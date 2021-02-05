@@ -8,7 +8,7 @@ info:
     name: Europace AG
     url: http://developer.europace.de
     email: devsupport@europace2.de
-  version: 1.0.5; e36c4209088e15552718d1f3a89931332bdce2aa
+  version: 1.1.0; c2a2503db05c257fa0c4b64ed3fe22f4c9bb2793
 externalDocs:
   url: https://developer.europace.de/api/baufismart-kundenangaben-api
 servers:
@@ -43,16 +43,6 @@ paths:
               $ref: '#/components/schemas/ImportKundenangabenRequest'
         required: true
       responses:
-        "201":
-          description: Kundenangaben in neuen Vorgang importiert
-          headers:
-            X-TraceId:
-              $ref: '#/components/headers/tracingIdHeader'
-              style: simple
-          content:
-            application/json; version=1.0:
-              schema:
-                $ref: '#/components/schemas/KundenangabenImportResponse'
         "403":
           $ref: '#/components/responses/Forbidden'
         "409":
@@ -63,6 +53,16 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
         "401":
           $ref: '#/components/responses/Unauthorized'
+        "201":
+          description: Kundenangaben in neuen Vorgang importiert
+          headers:
+            X-TraceId:
+              $ref: '#/components/headers/tracingIdHeader'
+              style: simple
+          content:
+            application/json; version=1.0:
+              schema:
+                $ref: '#/components/schemas/KundenangabenImportResponse'
         "400":
           $ref: '#/components/responses/BadRequest'
       security:
@@ -4913,7 +4913,7 @@ components:
           type: integer
           description: In anderen APIs unter 'speed' zu finden.
           format: int32
-        zusatzangabenProProduzent:
+        zusatzangabenProProduktanbieter:
           type: array
           items:
             oneOf:
@@ -4923,13 +4923,13 @@ components:
     ZusatzangabenHaushaltDsl:
       type: object
       allOf:
-      - $ref: '#/components/schemas/ZusatzangabenHaushaltFuerProduzent'
+      - $ref: '#/components/schemas/ZusatzangabenHaushaltFuerProduktanbieter'
       - type: object
         properties:
           lebenshaltungskostenMonatlich:
             type: number
             format: double
-    ZusatzangabenHaushaltFuerProduzent:
+    ZusatzangabenHaushaltFuerProduktanbieter:
       required:
       - '@type'
       type: object
@@ -4945,7 +4945,7 @@ components:
     ZusatzangabenHaushaltIng:
       type: object
       allOf:
-      - $ref: '#/components/schemas/ZusatzangabenHaushaltFuerProduzent'
+      - $ref: '#/components/schemas/ZusatzangabenHaushaltFuerProduktanbieter'
       - type: object
         properties:
           anzahlErwachseneImHaushalt:
@@ -4957,7 +4957,7 @@ components:
     ZusatzangabenHaushaltSantander:
       type: object
       allOf:
-      - $ref: '#/components/schemas/ZusatzangabenHaushaltFuerProduzent'
+      - $ref: '#/components/schemas/ZusatzangabenHaushaltFuerProduktanbieter'
       - type: object
         properties:
           vermoegen:
@@ -4975,7 +4975,7 @@ components:
           $ref: '#/components/schemas/EffektivzinsErhoehendeKosten'
         modernisierung:
           $ref: '#/components/schemas/Modernisierungszusatzangaben'
-        zusatzangabenProProduzent:
+        zusatzangabenProProduktanbieter:
           type: array
           items:
             oneOf:
@@ -4986,7 +4986,7 @@ components:
     ZusatzangabenImmobilieDsl:
       type: object
       allOf:
-      - $ref: '#/components/schemas/ZusatzangabenImmobilieFuerProduzent'
+      - $ref: '#/components/schemas/ZusatzangabenImmobilieFuerProduktanbieter'
       - type: object
         properties:
           bewirtschaftungskostenJaehrlich:
@@ -4995,7 +4995,7 @@ components:
           nachfinanzierung:
             type: boolean
             description: Nur bei bestehenden Darlehen bei der DSL
-    ZusatzangabenImmobilieFuerProduzent:
+    ZusatzangabenImmobilieFuerProduktanbieter:
       required:
       - '@type'
       type: object
@@ -5013,7 +5013,7 @@ components:
       type: object
       description: Volksbanken und Raiffeisenbanken
       allOf:
-      - $ref: '#/components/schemas/ZusatzangabenImmobilieFuerProduzent'
+      - $ref: '#/components/schemas/ZusatzangabenImmobilieFuerProduktanbieter'
       - type: object
         properties:
           anpassungenNachBelWertV:
@@ -5021,7 +5021,7 @@ components:
     ZusatzangabenImmobilieIng:
       type: object
       allOf:
-      - $ref: '#/components/schemas/ZusatzangabenImmobilieFuerProduzent'
+      - $ref: '#/components/schemas/ZusatzangabenImmobilieFuerProduktanbieter'
       - type: object
         properties:
           beleihungsobjekt:
@@ -5029,7 +5029,7 @@ components:
     ZusatzangabenImmobilieSantander:
       type: object
       allOf:
-      - $ref: '#/components/schemas/ZusatzangabenImmobilieFuerProduzent'
+      - $ref: '#/components/schemas/ZusatzangabenImmobilieFuerProduktanbieter'
       - type: object
         properties:
           vorlaeufigerVerkehrswert:
@@ -5059,7 +5059,7 @@ components:
           - SONSTIGE
         legitimationsdaten:
           $ref: '#/components/schemas/Legitimationsdaten'
-        zusatzangabenProProduzent:
+        zusatzangabenProProduktanbieter:
           type: array
           items:
             oneOf:
@@ -5069,7 +5069,7 @@ components:
     ZusatzangabenKundeDsl:
       type: object
       allOf:
-      - $ref: '#/components/schemas/ZusatzangabenKundeFuerProduzent'
+      - $ref: '#/components/schemas/ZusatzangabenKundeFuerProduktanbieter'
       - type: object
         properties:
           bruttoVorjahresEinkommen:
@@ -5078,7 +5078,7 @@ components:
           beschaeftigungImOeffentlichenDienst:
             type: boolean
             description: "Nur für Angestellte, wird anderenfalls ignoriert."
-    ZusatzangabenKundeFuerProduzent:
+    ZusatzangabenKundeFuerProduktanbieter:
       required:
       - '@type'
       type: object
@@ -5094,7 +5094,7 @@ components:
     ZusatzangabenKundeIng:
       type: object
       allOf:
-      - $ref: '#/components/schemas/ZusatzangabenKundeFuerProduzent'
+      - $ref: '#/components/schemas/ZusatzangabenKundeFuerProduktanbieter'
       - type: object
         properties:
           berufsgruppe:
@@ -5151,7 +5151,7 @@ components:
     ZusatzangabenKundeMhb:
       type: object
       allOf:
-      - $ref: '#/components/schemas/ZusatzangabenKundeFuerProduzent'
+      - $ref: '#/components/schemas/ZusatzangabenKundeFuerProduktanbieter'
       - type: object
         properties:
           branche:
