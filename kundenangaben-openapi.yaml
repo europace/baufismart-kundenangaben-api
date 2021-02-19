@@ -8,7 +8,7 @@ info:
     name: Europace AG
     url: http://developer.europace.de
     email: devsupport@europace2.de
-  version: 1.1.0; c2a2503db05c257fa0c4b64ed3fe22f4c9bb2793
+  version: 1.1.1; ad53eefbf30046b3c8a7357e9b18878c45d6c7d6
 externalDocs:
   url: https://developer.europace.de/api/baufismart-kundenangaben-api
 servers:
@@ -49,10 +49,6 @@ paths:
           $ref: '#/components/responses/Conflict'
         "503":
           $ref: '#/components/responses/ServiceNotAvailable'
-        "429":
-          $ref: '#/components/responses/TooManyRequests'
-        "401":
-          $ref: '#/components/responses/Unauthorized'
         "201":
           description: Kundenangaben in neuen Vorgang importiert
           headers:
@@ -63,6 +59,10 @@ paths:
             application/json; version=1.0:
               schema:
                 $ref: '#/components/schemas/KundenangabenImportResponse'
+        "429":
+          $ref: '#/components/responses/TooManyRequests'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
         "400":
           $ref: '#/components/responses/BadRequest'
       security:
@@ -120,8 +120,8 @@ components:
           type: string
           description: "ReferenzId des Finanzierungsbausteins, welches das bestehende\
             \ Darlehen des Finanzierungsobjektes ablösen soll."
-      description: Ablösung der bestehenden Darlehen des Finanzierungsobjektes. (Nicht
-        von bestehenden Immobilien.)
+      description: Ablösung eines bestehenden Darlehens des Finanzierungsobjektes.
+        (Nicht von bestehenden Immobilien.)
     AbsicherungUndVorsorgePraeferenz:
       type: object
       properties:
@@ -321,6 +321,7 @@ components:
       properties:
         '@type':
           type: string
+      description: "Mögliche Typen: ArbeitserlaubnisVorhanden, KeineArbeitserlaubnis"
       discriminator:
         propertyName: '@type'
         mapping:
@@ -375,6 +376,8 @@ components:
       properties:
         '@type':
           type: string
+      description: "Mögliche Typen: Visum, Aufenthaltserlaubnis, Niederlassungserlaubnis,\
+        \ DaueraufenthaltEu"
       discriminator:
         propertyName: '@type'
         mapping:
@@ -400,6 +403,7 @@ components:
       properties:
         '@type':
           type: string
+      description: "Mögliche Typen: Personalausweis, Reisepass, AndereAusweisart"
       discriminator:
         propertyName: '@type'
         mapping:
@@ -761,8 +765,8 @@ components:
       properties:
         '@type':
           type: string
-      description: Pro Art des Wunschparameters darf maximal ein Eintrag vorhanden
-        sein.
+      description: " Mögliche Typen: Sparbeginn, Bausparsumme, MonatlicherSparbeitrag,\
+        \ Zuteilungszeitpunkt"
       discriminator:
         propertyName: '@type'
         mapping:
@@ -1153,6 +1157,8 @@ components:
       properties:
         '@type':
           type: string
+      description: "Mögliche Typen: DarlehensbetragBenoetigtKurzNachDarlehensvertrag,\
+        \ InMonaten, NochNichtFestgelegt, KeineBereitstellungszinsfreieZeitPraeferenz"
       discriminator:
         propertyName: '@type'
         mapping:
@@ -1167,6 +1173,8 @@ components:
       properties:
         '@type':
           type: string
+      description: "Mögliche Typen: Arbeitsloser, HaushaltendePerson, Angestellter,\
+        \ Arbeiter, Beamter, Selbststaendiger, Freiberufler, Rentner"
       discriminator:
         propertyName: '@type'
         mapping:
@@ -1285,6 +1293,8 @@ components:
           description: IBAN des Darlehenskontos
         '@type':
           type: string
+      description: "Mögliche Typen: BestehendesImmobiliendarlehen, BestehendesBauspardarlehen,\
+        \ BestehendesFoerderdarlehen, BestehendesPrivatdarlehen, BestehendesSonstigesDarlehen"
       discriminator:
         propertyName: '@type'
         mapping:
@@ -1408,6 +1418,7 @@ components:
       properties:
         '@type':
           type: string
+      description: "Mögliche Typen: SonstigerDarlehensgeber, ProduktanbieterDarlehensgeber"
       discriminator:
         propertyName: '@type'
         mapping:
@@ -1632,6 +1643,8 @@ components:
       properties:
         '@type':
           type: string
+      description: "Mögliche Typen: Ledig, Verheiratet, Verwitwet, Geschieden, GetrenntLebend,\
+        \ Lebenspartnerschaft"
       discriminator:
         propertyName: '@type'
         mapping:
@@ -1683,7 +1696,8 @@ components:
       properties:
         '@type':
           type: string
-      description: In anderen APIs im 'Finanzierungswunsch' zu finden.
+      description: "Mögliche Typen: Annuitaetendarlehen, Forwarddarlehen, Privatdarlehen,\
+        \ Zwischenfinanzierung, VariablesDarlehen, Bauspardarlehen, KfwDarlehen"
       discriminator:
         propertyName: '@type'
         mapping:
@@ -1803,7 +1817,9 @@ components:
         '@type':
           type: string
       description: "Der Finanzierungszweck zeigt an, wofür die gestellten Mittel verwendet\
-        \ werden und wie der Bedarf zusammen gesetzt ist."
+        \ werden und wie der Bedarf zusammen gesetzt ist. Mögliche Typen: Neubau,\
+        \ Kauf, KaufNeubauVomBautraeger, ModernisierungUmbauAnbau, Anschlussfinanzierung,\
+        \ Kapitalbeschaffung"
       discriminator:
         propertyName: '@type'
         mapping:
@@ -2120,6 +2136,8 @@ components:
       properties:
         '@type':
           type: string
+      description: "Mögliche Typen: Baugrundstueck, Eigentumswohnung, Doppelhaushaelfte,\
+        \ Einfamilienhaus, Zweifamilienhaus, Mehrfamilienhaus, Reihenhaus, ImmobilieOhneTyp"
       discriminator:
         propertyName: '@type'
         mapping:
@@ -2210,7 +2228,7 @@ components:
       properties:
         '@type':
           type: string
-      description: "Typ muss dem Finanzierungsobjekt entsprechen, sonst wird es ignoriert."
+      description: "Mögliche Typen: IngEigentumswohnung, IngHaus, IngGrundstueck"
       discriminator:
         propertyName: '@type'
         mapping:
@@ -2448,6 +2466,8 @@ components:
       properties:
         '@type':
           type: string
+      description: "Mögliche Typen: KfwProgramm124, KfwProgramm151, KfwProgramm152,\
+        \ KfwProgramm153, KfwProgramm159, KfwProgramm167"
       discriminator:
         propertyName: '@type'
         mapping:
@@ -2688,6 +2708,8 @@ components:
       properties:
         '@type':
           type: string
+      description: "Mögliche Typen: MoeglichstSchnell, InJahren, BisZumJahr, BisZurRenteImJahr,\
+        \ KeineLaufzeitPraeferenz"
       discriminator:
         propertyName: '@type'
         mapping:
@@ -2955,6 +2977,9 @@ components:
           $ref: '#/components/schemas/WertInEuroOderProzent'
         grunderwerbsteuer:
           $ref: '#/components/schemas/WertInEuroOderProzent'
+      description: "Fehlt die Notargebühr, wird automatisch ein Standardwert in %\
+        \ gesetzt. Fehlt die Grunderwerbssteuer, wird der Prozentwert für das entsprechende\
+        \ Bundesland, falls aus Adresse bestimmbar, automatisch gesetzt."
     Neubau:
       type: object
       allOf:
@@ -3034,6 +3059,7 @@ components:
       properties:
         '@type':
           type: string
+      description: "Mögliche Typen: Eigengenutzt, Vermietet, Teilvermietet"
       discriminator:
         propertyName: '@type'
         mapping:
@@ -3107,6 +3133,7 @@ components:
       properties:
         '@type':
           type: string
+      description: "Mögliche Typen: MonatlichePraemienzahlung, EinmaligePraemienzahlung"
       discriminator:
         propertyName: '@type'
         mapping:
@@ -4197,6 +4224,8 @@ components:
       properties:
         '@type':
           type: string
+      description: "Mögliche Typen: WarmmieteVonHeute, RateAlsBetrag, Ratenspanne,\
+        \ MoeglichstNiedrigeRate, VerfuegbaresEinkommenAusschoepfen, KeineRatePraeferenz"
       discriminator:
         propertyName: '@type'
         mapping:
@@ -4226,8 +4255,7 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Risikoabsicherungswunsch'
-      description: Absicherungswünsche in Form von Ratenschutzversicherungen. In anderen
-        APIs im 'absicherungsWunsch' zu finden. Maximal ein Baustein je Kunde.
+      description: Ratenschutzversicherung als Absicherungswunsch.
     Ratenspanne:
       type: object
       allOf:
@@ -4488,6 +4516,8 @@ components:
       properties:
         '@type':
           type: string
+      description: "Mögliche Typen: EuroJaehrlich, ProzentJaehrlich, EuroEinmalig,\
+        \ DerzeitNichtGeplant, KeineSondertilgungPraeferenz"
       discriminator:
         propertyName: '@type'
         mapping:
@@ -4625,6 +4655,7 @@ components:
       properties:
         '@type':
           type: string
+      description: "Mögliche Typen: Mindestens, NichtEingeplantOderAbsehbar, KeineTilgungssatzwechselPraeferenz"
       discriminator:
         propertyName: '@type'
         mapping:
@@ -4638,7 +4669,8 @@ components:
       properties:
         '@type':
           type: string
-      description: Darf nicht den Tillgungswunsch Volltiger enthalten.
+      description: "Mögliche Typen: TilgungInProzent, Volltilger, Rate, TilgungAusgesetzt.\
+        \ Bei Verwendung in VariablesDarlehen ist Volltilger nicht erlaubt."
       discriminator:
         propertyName: '@type'
         mapping:
@@ -4666,6 +4698,7 @@ components:
       properties:
         '@type':
           type: string
+      description: "Mögliche Typen: Betrag, ProzentDerDarlehenssumme, ProzentDerProvision"
       discriminator:
         propertyName: '@type'
         mapping:
@@ -4778,6 +4811,7 @@ components:
       properties:
         '@type':
           type: string
+      description: "Mögliche Typen: AufloesungAlsVerwendung, AbtretenAlsVerwendung"
       discriminator:
         propertyName: '@type'
         mapping:
@@ -4840,8 +4874,6 @@ components:
           enum:
           - EURO
           - PROZENT
-      description: "Falls leer, wird der Prozentwert für das entsprechende Bundesland,\
-        \ falls aus Adresse bestimmbar, automatisch gesetzt."
     Wohnsituation:
       type: object
       properties:
@@ -4859,6 +4891,8 @@ components:
       properties:
         '@type':
           type: string
+      description: "Mögliche Typen: KeinZeitdruck, Deadline, SoSchnellWieMoeglich,\
+        \ KeineZeitlicherRahmenPraeferenz"
       discriminator:
         propertyName: '@type'
         mapping:
@@ -4884,6 +4918,8 @@ components:
       properties:
         '@type':
           type: string
+      description: "Mögliche Typen: ZinsbindungInJahren, Zinsbindungsspanne, FlexibelKurzfristigHandlungsfaehig,\
+        \ LangeZinssicherheit, KeineZinsbindungPraeferenz"
       discriminator:
         propertyName: '@type'
         mapping:
@@ -4936,6 +4972,8 @@ components:
       properties:
         '@type':
           type: string
+      description: "Mögliche Typen: ZusatzangabenHaushaltIng, ZusatzangabenHaushaltSantander,\
+        \ ZusatzangabenHaushaltDsl"
       discriminator:
         propertyName: '@type'
         mapping:
@@ -5002,6 +5040,8 @@ components:
       properties:
         '@type':
           type: string
+      description: "Mögliche Typen: ZusatzangabenImmobilieIng, ZusatzangabenImmobilieSantander,\
+        \ ZusatzangabenImmobilieGenopace, ZusatzangabenImmobilieDsl"
       discriminator:
         propertyName: '@type'
         mapping:
@@ -5085,6 +5125,8 @@ components:
       properties:
         '@type':
           type: string
+      description: "Mögliche Typen: ZusatzangabenKundeIng, ZusatzangabenKundeMhb,\
+        \ ZusatzangabenKundeDsl"
       discriminator:
         propertyName: '@type'
         mapping:
@@ -5133,7 +5175,10 @@ components:
             - VERKEHR
           privateKrankenversicherungMonatlicheAusgaben:
             type: number
-            description: Der Anteil dieses Kunden an der im Haushalt angegebenen Beitragssumme.
+            description: "Anteil des Kunden an der Beitragssumme, die im Haushalt\
+              \ angegeben ist. Der Wert dieses Feldes wird ignoriert, wenn die Summe\
+              \ der Felder aller Kunden von der summePrivaterKrankenversicherungenMonatlich\
+              \ in den Haushaltsausgaben abweicht."
             format: double
           geburtsland:
             type: string
