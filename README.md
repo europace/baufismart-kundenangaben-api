@@ -1,7 +1,7 @@
 # Neuen Vorgang mit Kundenangaben anlegen
 Die API erzeugt einen neuen Vorgang mit Hilfe von Kundenangaben. Als Ergebnis wird eine Referenz des neuen Vorgangs geliefert. 
 
-Die neue Kundenangaben-API ersetzt die alte BEX-API, die hier dokumentiert https://github.com/europace/baufismart-vorgang-anlegen-api ist.
+Die neue Kundenangaben-API ersetzt die alte BEX-API, die unter https://github.com/europace/baufismart-vorgang-anlegen-api dokumentiert ist.
 Kundenangaben sind in anderen APIs von BaufiSmart (Vorgaenge-API oder Antraege-API) auch als _Erfasste Daten_ bekannt.
 
 ![Vertrieb](https://img.shields.io/badge/-Vertrieb-lightblue)
@@ -25,7 +25,7 @@ Feedback und Fragen zum Modell sind als [GitHub Issue](https://github.com/europa
 ## Schnellstart
 Damit du unsere APIs und deinen Anwendungsfall schnellstmöglich testen kannst, haben wir eine [Postman-Collection](https://docs.api.europace.de/baufinanzierung/schnellstart/) für dich zusammengestellt. 
 
-In der Postman-Collection im Ordner "BaufiSmart Kundenangaben-API" findest du zwei Beispiele. Da das Datenmodells in der Kundenangaben-API sehr umfangreich ist, stellen wir mit dem Request "Kundenangaben validieren" eine Möglichkeit zur Verfügung, mit der Anfragen getestet/validiert werden können, ohne dass Daten gespeichert werden. Dieser Endpunkt dient der schnelleren Anbindung, ist aber für die Funktionsweise nicht erforderlich.
+In der Postman-Collection im Ordner "BaufiSmart Kundenangaben-API" findest du zwei Beispiele. Da das Datenmodell in der Kundenangaben-API sehr umfangreich ist, stellen wir mit dem Request "Kundenangaben validieren" eine Möglichkeit zur Verfügung, mit der Anfragen getestet/validiert werden können, ohne dass Daten gespeichert werden. Dieser Endpunkt dient der schnelleren Anbindung, ist aber für die Funktionsweise nicht erforderlich.
 
 ### Authentifizierung
 Bitte benutze [![Authentication](https://img.shields.io/badge/Auth-OAuth2-green)](https://docs.api.europace.de/baufinanzierung/authentifizierung/), um Zugang zur API bekommen. Um die API verwenden zu können, benötigt der OAuth2-Client folgende Scopes:
@@ -37,7 +37,7 @@ Bitte benutze [![Authentication](https://img.shields.io/badge/Auth-OAuth2-green)
 
 ## Beispiel
 
-Ein Kunde möchte ein Einfamilienhauses für sich selbst in Berlin kaufen. Er hat bereits Eigenkapital angepart und schon Angaben zu einigen Präferenzen bei der Finanzierung gemacht. Die Rate soll in Höhe seiner jetzigen Miete sein. Er wurde durch seinen Arbeitgeber die Trisalis AG auf den Finanzierungsvermittler aufmerksam, der eine Kooperationsvereinbarung mit ihm hat und für jeden abgeschlossenen Vertrag 50€ Leadgebühr als Aufwandentschädigung für die interne Vermarktung erhält.
+Ein Kunde möchte ein Einfamilienhaus für sich selbst in Berlin kaufen. Er hat bereits Eigenkapital angepart und schon Angaben zu einigen Präferenzen bei der Finanzierung gemacht. Die Rate soll in Höhe seiner jetzigen Miete sein. Er wurde durch seinen Arbeitgeber die Trisalis AG auf den Finanzierungsvermittler aufmerksam, der eine Kooperationsvereinbarung mit ihm hat und für jeden abgeschlossenen Vertrag 50 € Leadgebühr als Aufwandentschädigung für die interne Vermarktung erhält.
 
 Beispiel-Request: 
 ``` json
@@ -230,7 +230,7 @@ Beispiel-Response:
 
 ## Wo wird der Vorgang angelegt?
 
-Besitzer eines Vorgangs ist immer der Kundenbetreuer. Die für ihn geltenden Einstellungen werden auf den Vorgang angewendet und er erhält i.d.R. auch die Vertriebsprovision. Der Bearbeiter des Vorgangs kann abweichen, wenn zum Beispiel die Vervollständigung der Antragsdaten durch eine Teamassistenz erfolgt oder ein Clearing stattfindet.
+Besitzer eines Vorgangs ist immer der Kundenbetreuer. Die für ihn geltenden Einstellungen werden auf den Vorgang angewendet und er erhält i. d. R. auch die Vertriebsprovision. Der Bearbeiter des Vorgangs kann abweichen, wenn zum Beispiel die Vervollständigung der Antragsdaten durch eine Teamassistenz erfolgt oder ein Clearing stattfindet.
 
 Ist der Kundenbetreuer nicht unter `betreuung` angegeben, wird im erzeugten Vorgang der Benutzer des API-Clients als Kundenbetreuer eingetragen. Ist kein Bearbeiter angegeben, wird bei der ersten Bearbeitung der Benutzer gefragt, ob er die Bearbeitung übernehmen möchte. 
 
@@ -257,7 +257,7 @@ Folgende Referenzen sind möglich:
 
 ## Was passiert mit falschen Datenfeldern? 
 
-Mit der Kundenangaben-API bieten wir eine möglichst fehlertolerante API an. Fehler würden zu Unterbrechungen in Lead-Pozessen führen und so ggf. zu  frustrierten Kunden. Im Zweifel ist es wichtiger einzelne Datenfelder nicht zu haben als gar keine Daten. 
+Mit der Kundenangaben-API bieten wir eine möglichst fehlertolerante API an. Fehler würden zu Unterbrechungen in Lead-Pozessen führen und so ggf. zu frustrierten Kunden. Im Zweifel ist es wichtiger einzelne Datenfelder nicht zu haben als gar keine Daten. 
 
 Um die Fehlertoleranz der API zu erhöhen, wendet die API das Tolerant Reader Pattern an. Das heisst, Felder oder Enum-Werte, die der API unbekannt sind, werden ignoriert. Beispielsweise sind im Typ `Bauspardarlehen.abschlussgebuehrmodus` nur die Werte `SOFORTZAHLUNG` und `VERRECHNUNG` erlaubt. Andere Werte werden von der API ignoriert und so verarbeitet, als wäre das Feld leer. 
 
@@ -286,7 +286,7 @@ Die alte Struktur der BEX-Schnittstelle und die Struktur der Vorgänge-API weich
 
 Q: Wann ist es sinnvoll mit der Anbindung der Kundenangaben-API zu beginnen?
 
-A: Sofort, jetzt, now! Doit! Mit Release 1.0.0 ist die API produktiv einsetzbar. Lediglich die individuellen Zusatzangaben der Produktanbieter sind als Schema definiert, werden aber noch nicht gespeichert. Dieser Schritt wird in den nächsten Monaten folgen.
+A: Sofort, jetzt, now! Do it! Seit Release 1.0.0 ist die API produktiv einsetzbar.
 
 ## Kontakt
 Kontakt für Support: [devsupport@europace2.de](mailto:devsupport@europace2.de)

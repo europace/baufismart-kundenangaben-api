@@ -8,7 +8,7 @@ info:
     name: Europace AG
     url: http://developer.europace.de
     email: devsupport@europace2.de
-  version: 1.1.1; 8426a7c58d74928c5f8a416c07f818ca03f55a0c
+  version: 1.1.2; 924750f2f41f397b98f8b3de872b01dcc356182a
 externalDocs:
   url: https://developer.europace.de/api/baufismart-kundenangaben-api
 servers:
@@ -49,12 +49,6 @@ paths:
           $ref: '#/components/responses/Conflict'
         "503":
           $ref: '#/components/responses/ServiceNotAvailable'
-        "429":
-          $ref: '#/components/responses/TooManyRequests'
-        "401":
-          $ref: '#/components/responses/Unauthorized'
-        "400":
-          $ref: '#/components/responses/BadRequest'
         "201":
           description: Kundenangaben in neuen Vorgang importiert
           headers:
@@ -65,6 +59,12 @@ paths:
             application/json; version=1.0:
               schema:
                 $ref: '#/components/schemas/KundenangabenImportResponse'
+        "429":
+          $ref: '#/components/responses/TooManyRequests'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "400":
+          $ref: '#/components/responses/BadRequest'
       security:
       - oAuth2:
         - baufinanzierung:vorgang:schreiben
@@ -139,7 +139,7 @@ components:
     AbtretenAlsVerwendung:
       type: object
       allOf:
-      - $ref: '#/components/schemas/Verwendung'
+      - $ref: '#/components/schemas/LiquidierbareZusatzsicherheitVerwendung'
       - type: object
         properties:
           kommentar:
@@ -388,7 +388,7 @@ components:
     AufloesungAlsVerwendung:
       type: object
       allOf:
-      - $ref: '#/components/schemas/Verwendung'
+      - $ref: '#/components/schemas/LiquidierbareVerwendung'
       - type: object
         properties:
           maximalEinzusetzenderBetrag:
@@ -396,6 +396,7 @@ components:
             format: double
           kommentar:
             type: string
+      - $ref: '#/components/schemas/LiquidierbareZusatzsicherheitVerwendung'
     Ausweisart:
       required:
       - '@type'
@@ -420,7 +421,9 @@ components:
           type: number
           format: double
         verwendung:
-          $ref: '#/components/schemas/AufloesungAlsVerwendung'
+          oneOf:
+          - $ref: '#/components/schemas/AufloesungAlsVerwendung'
+          - $ref: '#/components/schemas/KeineVerwendung'
     Bankverbindung:
       type: object
       properties:
@@ -1101,6 +1104,7 @@ components:
           oneOf:
           - $ref: '#/components/schemas/AbtretenAlsVerwendung'
           - $ref: '#/components/schemas/AufloesungAlsVerwendung'
+          - $ref: '#/components/schemas/KeineVerwendung'
       description: In anderen APIs als 'bestehenderBausparvertrag' bezeichnet.
     Beamter:
       type: object
@@ -1446,7 +1450,9 @@ components:
           type: number
           format: double
         verwendung:
-          $ref: '#/components/schemas/AufloesungAlsVerwendung'
+          oneOf:
+          - $ref: '#/components/schemas/AufloesungAlsVerwendung'
+          - $ref: '#/components/schemas/KeineVerwendung'
     DerzeitNichtGeplant:
       type: object
       allOf:
@@ -2264,6 +2270,8 @@ components:
           - UEBERDURCHSCHNITT
         kellerausbau:
           type: string
+          description: "Wird ignoriert, wenn die Immobilie nicht unterkellert ist\
+            \ (`Immobilie.typ.nutzflaechen`)"
           enum:
           - AUSGEBAUT
           - TEILWEISE_AUSGEBAUT
@@ -2281,7 +2289,7 @@ components:
         kuerzlicheProlongation:
           type: boolean
           description: Nur bei Kapitalbeschaffung und einem bestehenden Darlehen bei
-            ING
+            ING. Wird andernfalls ignoriert.
     IngGrundstueck:
       type: object
       allOf:
@@ -2420,6 +2428,15 @@ components:
         properties:
           kommentar:
             type: string
+    KeineVerwendung:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/LiquidierbareVerwendung'
+      - type: object
+        properties:
+          kommentar:
+            type: string
+      - $ref: '#/components/schemas/LiquidierbareZusatzsicherheitVerwendung'
     KeineZeitlicherRahmenPraeferenz:
       type: object
       allOf:
@@ -2745,6 +2762,7 @@ components:
           oneOf:
           - $ref: '#/components/schemas/AbtretenAlsVerwendung'
           - $ref: '#/components/schemas/AufloesungAlsVerwendung'
+          - $ref: '#/components/schemas/KeineVerwendung'
         detailsWennZusatzsicherheit:
           $ref: '#/components/schemas/LebensOderRentenversicherungsdetails'
     LebensOderRentenversicherungsdetails:
@@ -2804,6 +2822,34 @@ components:
           type: string
         ausweisnummer:
           type: string
+    LiquidierbareVerwendung:
+      required:
+      - '@type'
+      type: object
+      properties:
+        '@type':
+          type: string
+      description: "Mögliche Typen: AufloesungAlsVerwendung, KeineVerwendung"
+      discriminator:
+        propertyName: '@type'
+        mapping:
+          AUFLOESUNG_ALS_VERWENDUNG: '#/components/schemas/AufloesungAlsVerwendung'
+          KEINE_VERWENDUNG: '#/components/schemas/KeineVerwendung'
+    LiquidierbareZusatzsicherheitVerwendung:
+      required:
+      - '@type'
+      type: object
+      properties:
+        '@type':
+          type: string
+      description: "Mögliche Typen: AufloesungAlsVerwendung, AbtretenAlsVerwendung,\
+        \ KeineVerwendung"
+      discriminator:
+        propertyName: '@type'
+        mapping:
+          AUFLOESUNG_ALS_VERWENDUNG: '#/components/schemas/AufloesungAlsVerwendung'
+          ABTRETEN_ALS_VERWENDUNG: '#/components/schemas/AbtretenAlsVerwendung'
+          KEINE_VERWENDUNG: '#/components/schemas/KeineVerwendung'
     Mehrfamilienhaus:
       type: object
       allOf:
@@ -4568,7 +4614,9 @@ components:
           type: number
           format: double
         verwendung:
-          $ref: '#/components/schemas/AufloesungAlsVerwendung'
+          oneOf:
+          - $ref: '#/components/schemas/AufloesungAlsVerwendung'
+          - $ref: '#/components/schemas/KeineVerwendung'
     Sparbeginn:
       type: object
       allOf:
@@ -4588,7 +4636,9 @@ components:
           type: number
           format: double
         verwendung:
-          $ref: '#/components/schemas/AufloesungAlsVerwendung'
+          oneOf:
+          - $ref: '#/components/schemas/AufloesungAlsVerwendung'
+          - $ref: '#/components/schemas/KeineVerwendung'
     Stellplatz:
       required:
       - typ
@@ -4804,19 +4854,6 @@ components:
           mieteinnahmenNettoKaltMonatlich:
             type: number
             format: double
-    Verwendung:
-      required:
-      - '@type'
-      type: object
-      properties:
-        '@type':
-          type: string
-      description: "Mögliche Typen: AufloesungAlsVerwendung, AbtretenAlsVerwendung"
-      discriminator:
-        propertyName: '@type'
-        mapping:
-          AUFLOESUNG_ALS_VERWENDUNG: '#/components/schemas/AufloesungAlsVerwendung'
-          ABTRETEN_ALS_VERWENDUNG: '#/components/schemas/AbtretenAlsVerwendung'
     Verwitwet:
       type: object
       allOf:
@@ -5032,7 +5069,8 @@ components:
             format: double
           nachfinanzierung:
             type: boolean
-            description: Nur bei bestehenden Darlehen bei der DSL
+            description: Nur bei bestehendem Darlehen bei der DSL im Finanzierungsobjekt.
+              Wird andernfalls ignoriert.
     ZusatzangabenImmobilieFuerProduktanbieter:
       required:
       - '@type'
