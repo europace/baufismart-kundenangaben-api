@@ -2399,6 +2399,8 @@
               <!--<li><a href="#_absicherung">Absicherung</a></li>-->
               <li><a href="#_KeineTilgungssatzwechselPraeferenz">KeineTilgungssatzwechselPraeferenz</a></li>
               <!--<li><a href="#_absicherung">Absicherung</a></li>-->
+              <li><a href="#_KeineVerwendung">KeineVerwendung</a></li>
+              <!--<li><a href="#_absicherung">Absicherung</a></li>-->
               <li><a href="#_KeineZeitlicherRahmenPraeferenz">KeineZeitlicherRahmenPraeferenz</a></li>
               <!--<li><a href="#_absicherung">Absicherung</a></li>-->
               <li><a href="#_KeineZinsbindungPraeferenz">KeineZinsbindungPraeferenz</a></li>
@@ -2446,6 +2448,10 @@
               <li><a href="#_Ledig">Ledig</a></li>
               <!--<li><a href="#_absicherung">Absicherung</a></li>-->
               <li><a href="#_Legitimationsdaten">Legitimationsdaten</a></li>
+              <!--<li><a href="#_absicherung">Absicherung</a></li>-->
+              <li><a href="#_LiquidierbareVerwendung">LiquidierbareVerwendung</a></li>
+              <!--<li><a href="#_absicherung">Absicherung</a></li>-->
+              <li><a href="#_LiquidierbareZusatzsicherheitVerwendung">LiquidierbareZusatzsicherheitVerwendung</a></li>
               <!--<li><a href="#_absicherung">Absicherung</a></li>-->
               <li><a href="#_Mehrfamilienhaus">Mehrfamilienhaus</a></li>
               <!--<li><a href="#_absicherung">Absicherung</a></li>-->
@@ -2599,8 +2605,6 @@
               <!--<li><a href="#_absicherung">Absicherung</a></li>-->
               <li><a href="#_Vermietet">Vermietet</a></li>
               <!--<li><a href="#_absicherung">Absicherung</a></li>-->
-              <li><a href="#_Verwendung">Verwendung</a></li>
-              <!--<li><a href="#_absicherung">Absicherung</a></li>-->
               <li><a href="#_Verwitwet">Verwitwet</a></li>
               <!--<li><a href="#_absicherung">Absicherung</a></li>-->
               <li><a href="#_Visum">Visum</a></li>
@@ -2683,7 +2687,7 @@
           <div class="sect2">
             <h3 id="_aktuelle_version">Aktuelle Version</h3>
             <div class="paragraph">
-              <p><em>Version</em> : 1.1.1; 8426a7c58d74928c5f8a416c07f818ca03f55a0c</p>
+              <p><em>Version</em> : 1.1.2; 924750f2f41f397b98f8b3de872b01dcc356182a</p>
             </div>
           </div>
         <div class="sect2">
@@ -3009,6 +3013,29 @@
                           <td class="tableblock halign-left valign-middle">
                             <div class="content">
                               <div class="paragraph">
+                                <p><strong>201</strong></p>
+                              </div>
+                            </div>
+                          </td>
+                          <td class="tableblock halign-left valign-middle">
+                            <div class="content">
+                              <div class="paragraph">
+                                <p>Kundenangaben in neuen Vorgang importiert</p>
+                              </div>
+                            </div>
+                          </td>
+                          <td class="tableblock halign-left valign-middle">
+                            <div class="content">
+                              <div class="paragraph">
+                                <p><a href="#_KundenangabenImportResponse">KundenangabenImportResponse</a></p>
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="tableblock halign-left valign-middle">
+                            <div class="content">
+                              <div class="paragraph">
                                 <p><strong>429</strong></p>
                               </div>
                             </div>
@@ -3070,29 +3097,6 @@
                             <div class="content">
                               <div class="paragraph">
                                 <p><a href="#_BadRequestProblem">BadRequestProblem</a></p>
-                              </div>
-                            </div>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td class="tableblock halign-left valign-middle">
-                            <div class="content">
-                              <div class="paragraph">
-                                <p><strong>201</strong></p>
-                              </div>
-                            </div>
-                          </td>
-                          <td class="tableblock halign-left valign-middle">
-                            <div class="content">
-                              <div class="paragraph">
-                                <p>Kundenangaben in neuen Vorgang importiert</p>
-                              </div>
-                            </div>
-                          </td>
-                          <td class="tableblock halign-left valign-middle">
-                            <div class="content">
-                              <div class="paragraph">
-                                <p><a href="#_KundenangabenImportResponse">KundenangabenImportResponse</a></p>
                               </div>
                             </div>
                           </td>
@@ -6499,9 +6503,16 @@
                     <div class="content">
                       <div class="paragraph">
                       <p>
+                          verwendung
   
-                          <a href="#_AufloesungAlsVerwendung">AufloesungAlsVerwendung</a>
+                          <a href="#_"></a>
   
+                          <div class="param-desc"><span class="param-type">Ein Modell vom Typ:</span>
+                            <ul>
+                                <li><a href="#_AufloesungAlsVerwendung">AufloesungAlsVerwendung</a></li>
+                                <li><a href="#_KeineVerwendung">KeineVerwendung</a></li>
+                            </ul>
+                          </div>
   
                         </p>
                       </div>
@@ -7521,6 +7532,7 @@
                             <ul>
                                 <li><a href="#_AbtretenAlsVerwendung">AbtretenAlsVerwendung</a></li>
                                 <li><a href="#_AufloesungAlsVerwendung">AufloesungAlsVerwendung</a></li>
+                                <li><a href="#_KeineVerwendung">KeineVerwendung</a></li>
                             </ul>
                           </div>
   
@@ -11517,9 +11529,16 @@
                     <div class="content">
                       <div class="paragraph">
                       <p>
+                          verwendung
   
-                          <a href="#_AufloesungAlsVerwendung">AufloesungAlsVerwendung</a>
+                          <a href="#_"></a>
   
+                          <div class="param-desc"><span class="param-type">Ein Modell vom Typ:</span>
+                            <ul>
+                                <li><a href="#_AufloesungAlsVerwendung">AufloesungAlsVerwendung</a></li>
+                                <li><a href="#_KeineVerwendung">KeineVerwendung</a></li>
+                            </ul>
+                          </div>
   
                         </p>
                       </div>
@@ -18020,7 +18039,7 @@ oder KAUF_NEUBAU_VOM_BAUTRAEGER leer. Wird ggf gelöscht.</p>
                   <td class="tableblock halign-left valign-middle">
                     <div class="content">
                       <div class="paragraph">
-                        <p></p>
+                        <p>Wird ignoriert, wenn die Immobilie nicht unterkellert ist (&lt;code&gt;Immobilie.typ.nutzflaechen&lt;/code&gt;)</p>
                       </div>
                     </div>
                   </td>
@@ -18146,7 +18165,7 @@ oder KAUF_NEUBAU_VOM_BAUTRAEGER leer. Wird ggf gelöscht.</p>
                   <td class="tableblock halign-left valign-middle">
                     <div class="content">
                       <div class="paragraph">
-                        <p>Nur bei Kapitalbeschaffung und einem bestehenden Darlehen bei ING</p>
+                        <p>Nur bei Kapitalbeschaffung und einem bestehenden Darlehen bei ING. Wird andernfalls ignoriert.</p>
                       </div>
                     </div>
                   </td>
@@ -19512,6 +19531,88 @@ oder KAUF_NEUBAU_VOM_BAUTRAEGER leer. Wird ggf gelöscht.</p>
           </div>
           <div class="sect2">
             <h3 id="_KeineTilgungssatzwechselPraeferenz">KeineTilgungssatzwechselPraeferenz</h3>
+            <div class="paragraph">
+              <p></p>
+            </div>
+            <table class="tableblock frame-all grid-all stretch">
+              <colgroup>
+                <col style="width: 16.6666%;">
+                <col style="width: 61.1111%;">
+                <col style="width: 22.2223%;">
+              </colgroup>
+              <thead>
+              <tr>
+                <th class="tableblock halign-left valign-middle">Name</th>
+                <th class="tableblock halign-left valign-middle">Beschreibung</th>
+                <th class="tableblock halign-left valign-middle">Typ</th>
+              </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p><strong>@type</strong>
+                          
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p></p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                      <p>
+  
+                          <a href="#_string">String</a>
+  
+  
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p><strong>kommentar</strong>
+                          <br><em>optional</em>
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p></p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                      <p>
+  
+                          <a href="#_string">String</a>
+  
+  
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="sect2">
+            <h3 id="_KeineVerwendung">KeineVerwendung</h3>
             <div class="paragraph">
               <p></p>
             </div>
@@ -21930,6 +22031,7 @@ oder KAUF_NEUBAU_VOM_BAUTRAEGER leer. Wird ggf gelöscht.</p>
                             <ul>
                                 <li><a href="#_AbtretenAlsVerwendung">AbtretenAlsVerwendung</a></li>
                                 <li><a href="#_AufloesungAlsVerwendung">AufloesungAlsVerwendung</a></li>
+                                <li><a href="#_KeineVerwendung">KeineVerwendung</a></li>
                             </ul>
                           </div>
   
@@ -22496,6 +22598,110 @@ oder KAUF_NEUBAU_VOM_BAUTRAEGER leer. Wird ggf gelöscht.</p>
                       <div class="paragraph">
                         <p><strong>ausweisnummer</strong>
                           <br><em>optional</em>
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p></p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                      <p>
+  
+                          <a href="#_string">String</a>
+  
+  
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="sect2">
+            <h3 id="_LiquidierbareVerwendung">LiquidierbareVerwendung</h3>
+            <div class="paragraph">
+              <p>Mögliche Typen: AufloesungAlsVerwendung, KeineVerwendung</p>
+            </div>
+            <table class="tableblock frame-all grid-all stretch">
+              <colgroup>
+                <col style="width: 16.6666%;">
+                <col style="width: 61.1111%;">
+                <col style="width: 22.2223%;">
+              </colgroup>
+              <thead>
+              <tr>
+                <th class="tableblock halign-left valign-middle">Name</th>
+                <th class="tableblock halign-left valign-middle">Beschreibung</th>
+                <th class="tableblock halign-left valign-middle">Typ</th>
+              </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p><strong>@type</strong>
+                          
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p></p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                      <p>
+  
+                          <a href="#_string">String</a>
+  
+  
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="sect2">
+            <h3 id="_LiquidierbareZusatzsicherheitVerwendung">LiquidierbareZusatzsicherheitVerwendung</h3>
+            <div class="paragraph">
+              <p>Mögliche Typen: AufloesungAlsVerwendung, AbtretenAlsVerwendung, KeineVerwendung</p>
+            </div>
+            <table class="tableblock frame-all grid-all stretch">
+              <colgroup>
+                <col style="width: 16.6666%;">
+                <col style="width: 61.1111%;">
+                <col style="width: 22.2223%;">
+              </colgroup>
+              <thead>
+              <tr>
+                <th class="tableblock halign-left valign-middle">Name</th>
+                <th class="tableblock halign-left valign-middle">Beschreibung</th>
+                <th class="tableblock halign-left valign-middle">Typ</th>
+              </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p><strong>@type</strong>
+                          
                         </p>
                       </div>
                     </div>
@@ -29400,9 +29606,16 @@ oder KAUF_NEUBAU_VOM_BAUTRAEGER leer. Wird ggf gelöscht.</p>
                     <div class="content">
                       <div class="paragraph">
                       <p>
+                          verwendung
   
-                          <a href="#_AufloesungAlsVerwendung">AufloesungAlsVerwendung</a>
+                          <a href="#_"></a>
   
+                          <div class="param-desc"><span class="param-type">Ein Modell vom Typ:</span>
+                            <ul>
+                                <li><a href="#_AufloesungAlsVerwendung">AufloesungAlsVerwendung</a></li>
+                                <li><a href="#_KeineVerwendung">KeineVerwendung</a></li>
+                            </ul>
+                          </div>
   
                         </p>
                       </div>
@@ -29594,9 +29807,16 @@ oder KAUF_NEUBAU_VOM_BAUTRAEGER leer. Wird ggf gelöscht.</p>
                     <div class="content">
                       <div class="paragraph">
                       <p>
+                          verwendung
   
-                          <a href="#_AufloesungAlsVerwendung">AufloesungAlsVerwendung</a>
+                          <a href="#_"></a>
   
+                          <div class="param-desc"><span class="param-type">Ein Modell vom Typ:</span>
+                            <ul>
+                                <li><a href="#_AufloesungAlsVerwendung">AufloesungAlsVerwendung</a></li>
+                                <li><a href="#_KeineVerwendung">KeineVerwendung</a></li>
+                            </ul>
+                          </div>
   
                         </p>
                       </div>
@@ -31258,58 +31478,6 @@ oder KAUF_NEUBAU_VOM_BAUTRAEGER leer. Wird ggf gelöscht.</p>
                       <p>
   
                           <a href="#_double">Double</a>
-  
-  
-                        </p>
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <div class="sect2">
-            <h3 id="_Verwendung">Verwendung</h3>
-            <div class="paragraph">
-              <p>Mögliche Typen: AufloesungAlsVerwendung, AbtretenAlsVerwendung</p>
-            </div>
-            <table class="tableblock frame-all grid-all stretch">
-              <colgroup>
-                <col style="width: 16.6666%;">
-                <col style="width: 61.1111%;">
-                <col style="width: 22.2223%;">
-              </colgroup>
-              <thead>
-              <tr>
-                <th class="tableblock halign-left valign-middle">Name</th>
-                <th class="tableblock halign-left valign-middle">Beschreibung</th>
-                <th class="tableblock halign-left valign-middle">Typ</th>
-              </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                        <p><strong>@type</strong>
-                          
-                        </p>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                        <p></p>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="tableblock halign-left valign-middle">
-                    <div class="content">
-                      <div class="paragraph">
-                      <p>
-  
-                          <a href="#_string">String</a>
   
   
                         </p>
@@ -33037,7 +33205,7 @@ oder KAUF_NEUBAU_VOM_BAUTRAEGER leer. Wird ggf gelöscht.</p>
                   <td class="tableblock halign-left valign-middle">
                     <div class="content">
                       <div class="paragraph">
-                        <p>Nur bei bestehenden Darlehen bei der DSL</p>
+                        <p>Nur bei bestehendem Darlehen bei der DSL im Finanzierungsobjekt. Wird andernfalls ignoriert.</p>
                       </div>
                     </div>
                   </td>
