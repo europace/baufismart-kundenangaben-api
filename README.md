@@ -261,6 +261,11 @@ Mit der Kundenangaben-API bieten wir eine möglichst fehlertolerante API an. Feh
 
 Um die Fehlertoleranz der API zu erhöhen, wendet die API das Tolerant Reader Pattern an. Das heisst, Felder oder Enum-Werte, die der API unbekannt sind, werden ignoriert. Beispielsweise sind im Typ `Bauspardarlehen.abschlussgebuehrmodus` nur die Werte `SOFORTZAHLUNG` und `VERRECHNUNG` erlaubt. Andere Werte werden von der API ignoriert und so verarbeitet, als wäre das Feld leer. 
 
+## Wie springe ich direkt in einen Vorgang?
+Springe über https://www.europace2.de/vorgang/oeffne/XXXXXX direkt in den angelegten Vorgang. 
+XXXXXX steht für die Vorgangsnummer. Die Kundenangaben-API liefert eine Vorgangsnummer zurück.
+
+
 
 ## FAQs
 
