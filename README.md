@@ -255,6 +255,11 @@ Folgende Referenzen sind möglich:
 * Vorgang: `externeVorgangsId`
 * Kunden: `externeKundenId`
 
+## Wie gelange ich direkt in den angelegten Vorgang?
+
+Springe über https://www.europace2.de/vorgang/oeffne/XXXXXX direkt in den angelegten Vorgang.
+Die Kundenangaben-API liefert eine Vorgangsnummer zurück. XXXXXX steht für die Vorgangsnummer.
+
 ## Was passiert mit falschen Datenfeldern? 
 
 Mit der Kundenangaben-API bieten wir eine möglichst fehlertolerante API an. Fehler würden zu Unterbrechungen in Lead-Pozessen führen und so ggf. zu frustrierten Kunden. Im Zweifel ist es wichtiger einzelne Datenfelder nicht zu haben als gar keine Daten. 
