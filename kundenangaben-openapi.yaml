@@ -8,7 +8,7 @@ info:
     name: Europace AG
     url: http://developer.europace.de
     email: devsupport@europace2.de
-  version: 1.1.4; a9e087d5b2cd5d9ad2c068f44a7acdb1cfdf4c6c
+  version: 1.2.0; b7d2620e089ecae28da96f785797c1409e7b1852
 externalDocs:
   url: https://developer.europace.de/api/baufismart-kundenangaben-api
 servers:
@@ -43,6 +43,8 @@ paths:
               $ref: '#/components/schemas/ImportKundenangabenRequest'
         required: true
       responses:
+        "403":
+          $ref: '#/components/responses/Forbidden'
         "201":
           description: Kundenangaben in neuen Vorgang importiert
           headers:
@@ -53,12 +55,12 @@ paths:
             application/json; version=1.0:
               schema:
                 $ref: '#/components/schemas/KundenangabenImportResponse'
-        "403":
-          $ref: '#/components/responses/Forbidden'
         "409":
           $ref: '#/components/responses/Conflict'
         "503":
           $ref: '#/components/responses/ServiceNotAvailable'
+        "422":
+          $ref: '#/components/responses/UnprocessableEntity'
         "429":
           $ref: '#/components/responses/TooManyRequests'
         "401":
@@ -257,6 +259,10 @@ components:
           type: string
     Anschlussfinanzierung:
       type: object
+      description: "Bitte Felder 'zuBeschaffendesKapital' und  'modernisierung' nicht\
+        \ mehr verwenden. Falls mitgeschickt, werden die Angaben in die Felder 'zuBeschaffendesKapitalErfassung'\
+        \ und 'modernisierungskostenErfassung' kopiert, falls 'zuBeschaffendesKapitalErfassung'\
+        \ und 'modernisierungskostenErfassung' leer sind."
       allOf:
       - $ref: '#/components/schemas/Finanzierungszweck'
       - type: object
@@ -266,8 +272,12 @@ components:
             format: double
           modernisierung:
             $ref: '#/components/schemas/Modernisierungskosten'
+          modernisierungskostenErfassung:
+            $ref: '#/components/schemas/ModernisierungskostenErfassung'
           zuBeschaffendesKapital:
             $ref: '#/components/schemas/KommentierterBetrag'
+          zuBeschaffendesKapitalErfassung:
+            $ref: '#/components/schemas/ZuBeschaffendesKapitalErfassung'
           marktwertFinanzierungsobjekt:
             type: number
             format: double
@@ -285,7 +295,11 @@ components:
         hausnummer:
           type: string
         plz:
+          pattern: "\\d{5}"
           type: string
+          description: "Postleitzahlen, die nicht aus fünf Ziffern bestehen werden\
+            \ ignoriert."
+          example: "10557"
         ort:
           type: string
     Arbeiter:
@@ -972,6 +986,33 @@ components:
           - KEINE_PRAEFERENZ
         kommentar:
           type: string
+    BestehendeDarlehenDesFinanzierungsobjektesErfassung:
+      required:
+      - '@type'
+      type: object
+      properties:
+        '@type':
+          type: string
+      description: "Mögliche Typen: VorhandeneBestehendeDarlehenDesFinanzierungsobjektes,\
+        \ KeineBestehendeDarlehenDesFinanzierungsobjektes"
+      discriminator:
+        propertyName: '@type'
+        mapping:
+          VORHANDENE_BESTEHENDE_DARLEHEN_DES_FINANZIERUNGSOBJEKTES: '#/components/schemas/VorhandeneBestehendeDarlehenDesFinanzierungsobjektes'
+          KEINE_BESTEHENDE_DARLEHEN_DES_FINANZIERUNGSOBJEKTES: '#/components/schemas/KeineBestehendeDarlehenDesFinanzierungsobjektes'
+    BestehendeDarlehenErfassung:
+      required:
+      - '@type'
+      type: object
+      properties:
+        '@type':
+          type: string
+      description: "Mögliche Typen: VorhandeneBestehendeDarlehen, KeineBestehendenDarlehen"
+      discriminator:
+        propertyName: '@type'
+        mapping:
+          VORHANDENE_BESTEHENDE_DARLEHEN: '#/components/schemas/VorhandeneBestehendeDarlehen'
+          KEINE_BESTEHENDEN_DARLEHEN: '#/components/schemas/KeineBestehendenDarlehen'
     BestehendeImmobilie:
       type: object
       properties:
@@ -988,6 +1029,10 @@ components:
             - $ref: '#/components/schemas/BestehendesImmobiliendarlehen'
             - $ref: '#/components/schemas/BestehendesPrivatdarlehen'
             - $ref: '#/components/schemas/BestehendesSonstigesDarlehen'
+        darlehenslisteErfassung:
+          oneOf:
+          - $ref: '#/components/schemas/KeineBestehendenDarlehen'
+          - $ref: '#/components/schemas/VorhandeneBestehendeDarlehen'
         marktwert:
           type: number
           format: double
@@ -1002,6 +1047,22 @@ components:
         maximalEinzusetzenderBetragBeiVerkauf:
           type: number
           format: double
+      description: "Bitte Feld 'darlehensliste' nicht mehr verwenden. Falls mitgeschickt,\
+        \ werden die Angaben ins Feld 'darlehenslisteErfassung' kopiert, falls 'darlehenslisteErfassung'\
+        \ leer ist."
+    BestehendeImmobilienErfassung:
+      required:
+      - '@type'
+      type: object
+      properties:
+        '@type':
+          type: string
+      description: "Mögliche Typen: VorhandeneBestehendeImmobilien, KeineBestehendenImmobilien"
+      discriminator:
+        propertyName: '@type'
+        mapping:
+          VORHANDENE_BESTEHENDE_IMMOBILIEN: '#/components/schemas/VorhandeneBestehendeImmobilien'
+          KEINE_BESTEHENDEN_IMMOBILIEN: '#/components/schemas/KeineBestehendenImmobilien'
     BestehendesBauspardarlehen:
       type: object
       allOf:
@@ -1247,6 +1308,19 @@ components:
       type: object
       allOf:
       - $ref: '#/components/schemas/Nutzungsart'
+    EigenleistungErfassung:
+      required:
+      - '@type'
+      type: object
+      properties:
+        '@type':
+          type: string
+      description: "Mögliche Typen: VorhandeneEigenleistung, KeineEigenleistung"
+      discriminator:
+        propertyName: '@type'
+        mapping:
+          VORHANDENE_EIGENLEISTUNG: '#/components/schemas/VorhandeneEigenleistung'
+          KEINE_EIGENLEISTUNG: '#/components/schemas/KeineEigenleistung'
     Eigentumswohnung:
       type: object
       allOf:
@@ -1321,6 +1395,21 @@ components:
         laufzeitBis:
           type: integer
           format: int32
+      description: Bitte 'Erbbaurecht' nicht mehr verwenden. Ersetzt durch 'ErbbaurechtErfassung'
+      deprecated: true
+    ErbbaurechtErfassung:
+      required:
+      - '@type'
+      type: object
+      properties:
+        '@type':
+          type: string
+      description: "Mögliche Typen: VorhandenesErbbaurecht, KeinErbbaurecht"
+      discriminator:
+        propertyName: '@type'
+        mapping:
+          VORHANDENES_ERBBAURECHT: '#/components/schemas/VorhandenesErbbaurecht'
+          KEIN_ERBBAURECHT: '#/components/schemas/KeinErbbaurecht'
     ErbbaurechtGenopace:
       type: object
       properties:
@@ -1419,6 +1508,10 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/BestehendeImmobilie'
+        bestehendeImmobilienErfassung:
+          oneOf:
+          - $ref: '#/components/schemas/KeineBestehendenImmobilien'
+          - $ref: '#/components/schemas/VorhandeneBestehendeImmobilien'
         vermoegen:
           $ref: '#/components/schemas/Haushaltsvermoegen'
         einnahmen:
@@ -1427,6 +1520,9 @@ components:
           $ref: '#/components/schemas/Haushaltsausgaben'
         verbindlichkeiten:
           $ref: '#/components/schemas/Haushaltsverbindlichkeiten'
+      description: "Bitte Feld 'bestehendeImmobilien' nicht mehr verwenden. Falls\
+        \ mitgeschickt, werden die Angaben ins Feld 'bestehendeImmobilienErfassung'\
+        \ kopiert, falls 'bestehendeImmobilienErfassung' leer ist."
     Finanzielles:
       type: object
       properties:
@@ -1567,6 +1663,13 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/BestehendesDarlehenDesFinanzierungsobjektes'
+        darlehenslisteErfassung:
+          oneOf:
+          - $ref: '#/components/schemas/KeineBestehendeDarlehenDesFinanzierungsobjektes'
+          - $ref: '#/components/schemas/VorhandeneBestehendeDarlehenDesFinanzierungsobjektes'
+      description: "Bitte Feld 'darlehensliste' nicht mehr verwenden. Falls mitgeschickt,\
+        \ werden die Angaben ins Feld 'darlehenslisteErfassung' kopiert, falls 'darlehenslisteErfassung'\
+        \ leer ist."
     Finanzierungszweck:
       required:
       - '@type'
@@ -1655,9 +1758,8 @@ components:
       properties:
         baujahr:
           type: integer
-          description: |-
-            Beim Finanzierungsobjekt mit Finanzierungszweck NEUBAU
-            oder KAUF_NEUBAU_VOM_BAUTRAEGER leer. Wird ggf gelöscht.
+          description: Beim Finanzierungsobjekt mit Finanzierungszweck NEUBAU oder
+            KAUF_NEUBAU_VOM_BAUTRAEGER leer. Wird ggf gelöscht.
           format: int32
         bauweise:
           type: string
@@ -1689,6 +1791,11 @@ components:
           $ref: '#/components/schemas/Nutzung'
         modernisierung:
           $ref: '#/components/schemas/Modernisierung'
+        modernisierungErfassung:
+          $ref: '#/components/schemas/ModernisierungErfassung'
+      description: "Bitte Feld 'modernisierung' nicht mehr verwenden. Falls mitgeschickt,\
+        \ werden die Angaben ins Feld 'modernisierungErfassung' kopiert, falls 'modernisierungErfassung'\
+        \ leer ist."
     Geschieden:
       type: object
       allOf:
@@ -1702,6 +1809,19 @@ components:
           guetertrennungVereinbart:
             type: boolean
             description: Wurde zwischen den Partnern Gütertrennung vereinbart
+    GewerbeErfassung:
+      required:
+      - '@type'
+      type: object
+      properties:
+        '@type':
+          type: string
+      description: "Mögliche Typen: VorhandenesGewerbe, KeinGewerbe"
+      discriminator:
+        propertyName: '@type'
+        mapping:
+          VORHANDENES_GEWERBE: '#/components/schemas/VorhandenesGewerbe'
+          KEIN_GEWERBE: '#/components/schemas/KeinGewerbe'
     GirokontoPraeferenz:
       type: object
       properties:
@@ -1735,6 +1855,21 @@ components:
           $ref: '#/components/schemas/RechteAbteilung2'
         anmerkungen:
           type: string
+      description: Bitte 'Grundbuchangabe' nicht mehr verwenden. Ersetzt durch 'GrundbuchangabeErfassung'
+      deprecated: true
+    GrundbuchangabeErfassung:
+      required:
+      - '@type'
+      type: object
+      properties:
+        '@type':
+          type: string
+      description: "Mögliche Typen: VorhandeneGrundbuchangabe, KeineGrundbuchangabe"
+      discriminator:
+        propertyName: '@type'
+        mapping:
+          VORHANDENE_GRUNDBUCHANGABE: '#/components/schemas/VorhandeneGrundbuchangabe'
+          KEINE_GRUNDBUCHANGABE: '#/components/schemas/KeineGrundbuchangabe'
     Grundstueckskosten:
       type: object
       properties:
@@ -1760,10 +1895,17 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Kind'
+        kinderErfassung:
+          oneOf:
+          - $ref: '#/components/schemas/KeineKinder'
+          - $ref: '#/components/schemas/VorhandeneKinder'
         finanzielleSituation:
           $ref: '#/components/schemas/FinanzielleSituation'
         zusatzangaben:
           $ref: '#/components/schemas/ZusatzangabenHaushalt'
+      description: "Bitte Feld 'kinder' nicht mehr verwenden. Falls mitgeschickt,\
+        \ werden die Angaben ins Feld 'kinderErfassung' kopiert, falls 'kinderErfassung'\
+        \ leer ist."
     HaushaltendePerson:
       type: object
       description: "Ein allgemeiner Begriff, der die Beschäftigungen 'Hausfrau' und\
@@ -1869,12 +2011,27 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Stellplatz'
+        stellplaetzeErfassung:
+          oneOf:
+          - $ref: '#/components/schemas/KeineStellplaetze'
+          - $ref: '#/components/schemas/VorhandeneStellplaetze'
         erbbaurecht:
           $ref: '#/components/schemas/Erbbaurecht'
+        erbbaurechtErfassung:
+          oneOf:
+          - $ref: '#/components/schemas/KeinErbbaurecht'
+          - $ref: '#/components/schemas/VorhandenesErbbaurecht'
         grundbuchangabe:
           $ref: '#/components/schemas/Grundbuchangabe'
+        grundbuchangabeErfassung:
+          oneOf:
+          - $ref: '#/components/schemas/KeineGrundbuchangabe'
+          - $ref: '#/components/schemas/VorhandeneGrundbuchangabe'
         zusatzangaben:
           $ref: '#/components/schemas/ZusatzangabenImmobilie'
+      description: "Bitte Felder 'erbbaurecht', 'stellplaetze' und 'grundbuchangabe'\
+        \ nicht mehr verwenden. Falls mitgeschickt, werden die Angaben in die Felder\
+        \ '...Erfassung' kopiert, falls '...Erfassung' leer sind."
     ImmobilieOhneTyp:
       type: object
       allOf:
@@ -2095,6 +2252,9 @@ components:
             format: double
     Kauf:
       type: object
+      description: "Bitte Feld 'modernisierung' nicht mehr verwenden. Falls mitgeschickt,\
+        \ werden die Angaben ins Feld 'modernisierungskostenErfassung' kopiert, falls\
+        \ 'modernisierungskostenErfassung' leer ist."
       allOf:
       - $ref: '#/components/schemas/Finanzierungszweck'
       - type: object
@@ -2108,8 +2268,13 @@ components:
             format: double
           modernisierung:
             $ref: '#/components/schemas/Modernisierungskosten'
+          modernisierungskostenErfassung:
+            $ref: '#/components/schemas/ModernisierungskostenErfassung'
     KaufNeubauVomBautraeger:
       type: object
+      description: "Bitte Feld 'eigenleistung' nicht mehr verwenden. Falls mitgeschickt,\
+        \ werden die Angaben ins Feld 'eigenleistungErfassung' kopiert, falls 'eigenleistungErfassung'\
+        \ leer ist."
       allOf:
       - $ref: '#/components/schemas/Finanzierungszweck'
       - type: object
@@ -2126,8 +2291,17 @@ components:
             format: int32
           eigenleistung:
             type: number
-            description: Persönlich erbrachte Arbeitsleistung als Eigenleistung
             format: double
+          eigenleistungErfassung:
+            $ref: '#/components/schemas/EigenleistungErfassung'
+    KeinErbbaurecht:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/ErbbaurechtErfassung'
+    KeinGewerbe:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/GewerbeErfassung'
     KeinZeitdruck:
       type: object
       allOf:
@@ -2136,6 +2310,10 @@ components:
         properties:
           kommentar:
             type: string
+    KeinZuBeschaffendesKapital:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/ZuBeschaffendesKapitalErfassung'
     KeineArbeitserlaubnis:
       type: object
       allOf:
@@ -2148,6 +2326,30 @@ components:
         properties:
           kommentar:
             type: string
+    KeineBestehendeDarlehenDesFinanzierungsobjektes:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/BestehendeDarlehenDesFinanzierungsobjektesErfassung'
+    KeineBestehendenDarlehen:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/BestehendeDarlehenErfassung'
+    KeineBestehendenImmobilien:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/BestehendeImmobilienErfassung'
+    KeineEigenleistung:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/EigenleistungErfassung'
+    KeineGrundbuchangabe:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/GrundbuchangabeErfassung'
+    KeineKinder:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/KinderErfassung'
     KeineLaufzeitPraeferenz:
       type: object
       allOf:
@@ -2156,6 +2358,14 @@ components:
         properties:
           kommentar:
             type: string
+    KeineModernisierung:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/ModernisierungErfassung'
+    KeineModernisierungskosten:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/ModernisierungskostenErfassung'
     KeineRatePraeferenz:
       type: object
       allOf:
@@ -2164,6 +2374,10 @@ components:
         properties:
           kommentar:
             type: string
+    KeineRechteAbteilung2:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/RechteAbteilung2Erfassung'
     KeineSondertilgungPraeferenz:
       type: object
       allOf:
@@ -2172,6 +2386,10 @@ components:
         properties:
           kommentar:
             type: string
+    KeineStellplaetze:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/StellplaetzeErfassung'
     KeineTilgungssatzwechselPraeferenz:
       type: object
       allOf:
@@ -2189,6 +2407,10 @@ components:
           kommentar:
             type: string
       - $ref: '#/components/schemas/LiquidierbareZusatzsicherheitVerwendung'
+    KeineWeitereStaatsangehoerigkeiten:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/WeitereStaatsangehoerigkeitenErfassung'
     KeineZeitlicherRahmenPraeferenz:
       type: object
       allOf:
@@ -2403,6 +2625,19 @@ components:
         kundenreferenzIdRiesterzuordnung:
           type: string
           description: ReferenzId eines Kunden bei Riesterbezug. Sonst leer.
+    KinderErfassung:
+      required:
+      - '@type'
+      type: object
+      properties:
+        '@type':
+          type: string
+      description: "Mögliche Typen: VorhandeneKinder, KeineKinder"
+      discriminator:
+        propertyName: '@type'
+        mapping:
+          VORHANDENE_KINDER: '#/components/schemas/VorhandeneKinder'
+          KEINE_KINDER: '#/components/schemas/KeineKinder'
     KommentierterBetrag:
       type: object
       properties:
@@ -2668,8 +2903,26 @@ components:
           - HOCH
           - MITTEL
           - GERING
+      description: Bitte 'Modernisierung' nicht mehr verwenden. Ersetzt durch 'ModernisierungErfassung'
+      deprecated: true
+    ModernisierungErfassung:
+      required:
+      - '@type'
+      type: object
+      properties:
+        '@type':
+          type: string
+      description: "Mögliche Typen: VorhandeneModernisierung, KeineModernisierung"
+      discriminator:
+        propertyName: '@type'
+        mapping:
+          VORHANDENE_MODERNISIERUNG: '#/components/schemas/VorhandeneModernisierung'
+          KEINE_MODERNISIERUNG: '#/components/schemas/KeineModernisierung'
     ModernisierungUmbauAnbau:
       type: object
+      description: "Bitte Feld 'zuBeschaffendesKapital' nicht mehr verwenden. Falls\
+        \ mitgeschickt, werden die Angaben ins Feld 'zuBeschaffendesKapitalErfassung'\
+        \ kopiert, falls 'zuBeschaffendesKapitalErfassung' leer ist."
       allOf:
       - $ref: '#/components/schemas/Finanzierungszweck'
       - type: object
@@ -2680,6 +2933,8 @@ components:
             $ref: '#/components/schemas/Modernisierungskosten'
           zuBeschaffendesKapital:
             $ref: '#/components/schemas/KommentierterBetrag'
+          zuBeschaffendesKapitalErfassung:
+            $ref: '#/components/schemas/ZuBeschaffendesKapitalErfassung'
           anzahlTeilzahlungen:
             type: integer
             format: int32
@@ -2716,6 +2971,24 @@ components:
           type: number
           description: Persönlich erbrachte Arbeitsleistung als Eigenleistung
           format: double
+        eigenleistungErfassung:
+          $ref: '#/components/schemas/EigenleistungErfassung'
+      description: "Bitte Feld 'eigenleistung' nicht mehr verwenden. Falls mitgeschickt,\
+        \ werden die Angaben ins Feld 'eigenleistungErfassung' kopiert, falls 'eigenleistungErfassung'\
+        \ leer ist."
+    ModernisierungskostenErfassung:
+      required:
+      - '@type'
+      type: object
+      properties:
+        '@type':
+          type: string
+      description: "Mögliche Typen: VorhandeneModernisierungskosten, KeineModernisierungskosten"
+      discriminator:
+        propertyName: '@type'
+        mapping:
+          VORHANDENE_MODERNISIERUNGSKOSTEN: '#/components/schemas/VorhandeneModernisierungskosten'
+          KEINE_MODERNISIERUNGSKOSTEN: '#/components/schemas/KeineModernisierungskosten'
     Modernisierungszusatzangaben:
       type: object
       properties:
@@ -2780,6 +3053,9 @@ components:
         \ Bundesland, falls aus Adresse bestimmbar, automatisch gesetzt."
     Neubau:
       type: object
+      description: "Bitte Feld 'eigenleistung' nicht mehr verwenden. Falls mitgeschickt,\
+        \ werden die Angaben ins Feld 'eigenleistungErfassung' kopiert, falls 'eigenleistungErfassung'\
+        \ leer ist."
       allOf:
       - $ref: '#/components/schemas/Finanzierungszweck'
       - type: object
@@ -2804,8 +3080,9 @@ components:
             format: int32
           eigenleistung:
             type: number
-            description: Persönlich erbrachte Arbeitsleistung als Eigenleistung
             format: double
+          eigenleistungErfassung:
+            $ref: '#/components/schemas/EigenleistungErfassung'
     NichtEingeplantOderAbsehbar:
       type: object
       allOf:
@@ -2850,6 +3127,11 @@ components:
           $ref: '#/components/schemas/Flaechennutzung'
         gewerbe:
           $ref: '#/components/schemas/Flaechennutzung'
+        gewerbeErfassung:
+          $ref: '#/components/schemas/GewerbeErfassung'
+      description: "Bitte Feld 'gewerbe' nicht mehr verwenden. Falls mitgeschickt,\
+        \ werden die Angaben ins Feld 'gewerbeErfassung' kopiert, falls 'gewerbeErfassung'\
+        \ leer ist."
     Nutzungsart:
       required:
       - '@type'
@@ -4076,6 +4358,21 @@ components:
           format: double
         beschreibung:
           type: string
+      description: Bitte 'RechteAbteilung2' nicht mehr verwenden. Ersetzt durch 'RechteAbteilung2Erfassung'
+      deprecated: true
+    RechteAbteilung2Erfassung:
+      required:
+      - '@type'
+      type: object
+      properties:
+        '@type':
+          type: string
+      description: "Mögliche Typen: VorhandeneRechteAbteilung2, KeineRechteAbteilung2"
+      discriminator:
+        propertyName: '@type'
+        mapping:
+          VORHANDENE_RECHTE_ABTEILUNG_2: '#/components/schemas/VorhandeneRechteAbteilung2'
+          KEINE_RECHTE_ABTEILUNG_2: '#/components/schemas/KeineRechteAbteilung2'
     Reihenhaus:
       type: object
       allOf:
@@ -4391,6 +4688,19 @@ components:
           oneOf:
           - $ref: '#/components/schemas/AufloesungAlsVerwendung'
           - $ref: '#/components/schemas/KeineVerwendung'
+    StellplaetzeErfassung:
+      required:
+      - '@type'
+      type: object
+      properties:
+        '@type':
+          type: string
+      description: "Mögliche Typen: VorhandeneStellplaetze, KeineStellplaetze"
+      discriminator:
+        propertyName: '@type'
+        mapping:
+          VORHANDENE_STELLPLAETZE: '#/components/schemas/VorhandeneStellplaetze'
+          KEINE_STELLPLAETZE: '#/components/schemas/KeineStellplaetze'
     Stellplatz:
       required:
       - typ
@@ -4630,6 +4940,184 @@ components:
           tilgungsbeginn:
             type: string
             format: date
+    VorhandeneBestehendeDarlehen:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/BestehendeDarlehenErfassung'
+      - type: object
+        properties:
+          darlehensliste:
+            type: array
+            items:
+              oneOf:
+              - $ref: '#/components/schemas/BestehendesBauspardarlehen'
+              - $ref: '#/components/schemas/BestehendesFoerderdarlehen'
+              - $ref: '#/components/schemas/BestehendesImmobiliendarlehen'
+              - $ref: '#/components/schemas/BestehendesPrivatdarlehen'
+              - $ref: '#/components/schemas/BestehendesSonstigesDarlehen'
+    VorhandeneBestehendeDarlehenDesFinanzierungsobjektes:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/BestehendeDarlehenDesFinanzierungsobjektesErfassung'
+      - type: object
+        properties:
+          darlehensliste:
+            type: array
+            items:
+              $ref: '#/components/schemas/BestehendesDarlehenDesFinanzierungsobjektes'
+    VorhandeneBestehendeImmobilien:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/BestehendeImmobilienErfassung'
+      - type: object
+        properties:
+          bestehendeImmobilien:
+            type: array
+            items:
+              $ref: '#/components/schemas/BestehendeImmobilie'
+    VorhandeneEigenleistung:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/EigenleistungErfassung'
+      - type: object
+        properties:
+          eigenleistung:
+            type: number
+            description: Persönlich erbrachte Arbeitsleistung als Eigenleistung
+            format: double
+    VorhandeneGrundbuchangabe:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/GrundbuchangabeErfassung'
+      - type: object
+        properties:
+          ort:
+            type: string
+          blatt:
+            type: string
+          amtsgericht:
+            type: string
+          flurstuecke:
+            type: array
+            items:
+              $ref: '#/components/schemas/Flurstueck'
+          rechteInAbteilung2:
+            $ref: '#/components/schemas/RechteAbteilung2Erfassung'
+          anmerkungen:
+            type: string
+    VorhandeneKinder:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/KinderErfassung'
+      - type: object
+        properties:
+          kinder:
+            type: array
+            items:
+              $ref: '#/components/schemas/Kind'
+    VorhandeneModernisierung:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/ModernisierungErfassung'
+      - type: object
+        properties:
+          jahr:
+            type: integer
+            format: int32
+          grad:
+            type: string
+            enum:
+            - HOCH
+            - MITTEL
+            - GERING
+    VorhandeneModernisierungskosten:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/ModernisierungskostenErfassung'
+      - type: object
+        properties:
+          modernisierungskostenInklEigenleistungen:
+            type: number
+            description: "Werterhöhende Maßnahmen wie Fenster, Heizung, Dach, Dämmung\
+              \ etc."
+            format: double
+          renovierungskosten:
+            type: number
+            description: "Nicht werterhöhende Maßnahmen wie Malerarbeiten, kleine\
+              \ Reparaturen etc."
+            format: double
+          eigenleistungErfassung:
+            $ref: '#/components/schemas/EigenleistungErfassung'
+    VorhandeneRechteAbteilung2:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/RechteAbteilung2Erfassung'
+      - type: object
+        properties:
+          betrag:
+            type: number
+            format: double
+          beschreibung:
+            type: string
+    VorhandeneStellplaetze:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/StellplaetzeErfassung'
+      - type: object
+        properties:
+          stellplaetze:
+            type: array
+            items:
+              $ref: '#/components/schemas/Stellplatz'
+    VorhandeneWeitereStaatsangehoerigkeiten:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/WeitereStaatsangehoerigkeitenErfassung'
+      - type: object
+        properties:
+          weitereStaatsangehoerigkeiten:
+            maxItems: 2
+            minItems: 0
+            type: array
+            description: Liste von max. 2 Staatsangehörigkeiten als ISO 3166-1 alpha-2
+              code
+            items:
+              type: string
+              description: Liste von max. 2 Staatsangehörigkeiten als ISO 3166-1 alpha-2
+                code
+    VorhandenesErbbaurecht:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/ErbbaurechtErfassung'
+      - type: object
+        properties:
+          erbbauzinsJaehrlich:
+            type: number
+            format: double
+          grundstueckseigentuemer:
+            type: string
+            enum:
+            - OEFFENTLICH_KIRCHLICH
+            - ANDERE
+          laufzeitBis:
+            type: integer
+            format: int32
+    VorhandenesGewerbe:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/GewerbeErfassung'
+      - type: object
+        properties:
+          gewerbe:
+            $ref: '#/components/schemas/Flaechennutzung'
+    VorhandenesZuBeschaffendesKapital:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/ZuBeschaffendesKapitalErfassung'
+      - type: object
+        properties:
+          zuBeschaffendesKapital:
+            $ref: '#/components/schemas/KommentierterBetrag'
     WarmmieteVonHeute:
       type: object
       allOf:
@@ -4649,6 +5137,19 @@ components:
         beglicheneKosten:
           type: number
           format: double
+    WeitereStaatsangehoerigkeitenErfassung:
+      required:
+      - '@type'
+      type: object
+      properties:
+        '@type':
+          type: string
+      description: "Mögliche Typen: VorhandeneWeitereStaatsangehoerigkeiten, KeineWeitereStaatsangehoerigkeiten"
+      discriminator:
+        propertyName: '@type'
+        mapping:
+          VORHANDENE_WEITERE_STAATSANGEHOERIGKEITEN: '#/components/schemas/VorhandeneWeitereStaatsangehoerigkeiten'
+          KEINE_WEITERE_STAATSANGEHOERIGKEITEN: '#/components/schemas/KeineWeitereStaatsangehoerigkeiten'
     WertInEuroOderProzent:
       required:
       - einheit
@@ -4731,6 +5232,19 @@ components:
             format: int32
           kommentar:
             type: string
+    ZuBeschaffendesKapitalErfassung:
+      required:
+      - '@type'
+      type: object
+      properties:
+        '@type':
+          type: string
+      description: "Mögliche Typen: VorhandenesZuBeschaffendesKapital, KeinZuBeschaffendesKapital"
+      discriminator:
+        propertyName: '@type'
+        mapping:
+          VORHANDENES_ZU_BESCHAFFENDES_KAPITAL: '#/components/schemas/VorhandenesZuBeschaffendesKapital'
+          KEIN_ZU_BESCHAFFENDES_KAPITAL: '#/components/schemas/KeinZuBeschaffendesKapital'
     ZusatzangabenHaushalt:
       type: object
       properties:
@@ -4927,6 +5441,9 @@ components:
           ZUSATZANGABEN_KUNDE_DSL: '#/components/schemas/ZusatzangabenKundeDsl'
     ZusatzangabenKundeIng:
       type: object
+      description: "Bitte Feld 'weitereStaatsangehoerigkeiten' nicht mehr verwenden.\
+        \ Falls mitgeschickt, werden die Angaben ins Feld 'weitereStaatsangehoerigkeitenErfassung'\
+        \ kopiert, falls 'weitereStaatsangehoerigkeitenErfassung' leer ist."
       allOf:
       - $ref: '#/components/schemas/ZusatzangabenKundeFuerProduktanbieter'
       - type: object
@@ -4979,12 +5496,10 @@ components:
             maxItems: 2
             minItems: 0
             type: array
-            description: Liste von max. 2 Staatsangehörigkeiten als ISO 3166-1 alpha-2
-              code
             items:
               type: string
-              description: Liste von max. 2 Staatsangehörigkeiten als ISO 3166-1 alpha-2
-                code
+          weitereStaatsangehoerigkeitenErfassung:
+            $ref: '#/components/schemas/WeitereStaatsangehoerigkeitenErfassung'
     ZusatzangabenKundeMhb:
       type: object
       allOf:
@@ -5103,9 +5618,14 @@ components:
             werden.
         instance:
           type: string
-          description: "Eine relative URI, die das Problem verursacht hat. "
+          description: "Eine relative URI, die das Problem verursacht hat."
           format: uri
           example: /kundenangaben
+        traceId:
+          type: string
+          description: Eine eindeutige technische Id zur Identifikation des Requests.
+            Der Inhalt ist identisch mit dem Wert des Headers X-TraceId
+          example: kundenangaben-1abc
     BadRequestProblem:
       allOf:
       - $ref: '#/components/schemas/Problem'
@@ -5167,6 +5687,18 @@ components:
             \ sofern vorhanden"
           schema:
             type: string
+    UnprocessableEntity:
+      description: "Die Anfrage ist syntaktisch korrekt, allerdings können die enthaltenen\
+        \ Daten nicht verarbeitet werden."
+      headers:
+        X-TraceId:
+          description: Eine eindeutige technische Id zur Identifikation des Requests
+          schema:
+            type: string
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
     ServiceNotAvailable:
       description: Der Service kann den Request momentan nicht verarbeiten
       headers:
