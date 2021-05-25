@@ -2437,6 +2437,8 @@
               <!--<li><a href="#_absicherung">Absicherung</a></li>-->
               <li><a href="#_KeineStellplaetze">KeineStellplaetze</a></li>
               <!--<li><a href="#_absicherung">Absicherung</a></li>-->
+              <li><a href="#_KeineStellplatzVermietung">KeineStellplatzVermietung</a></li>
+              <!--<li><a href="#_absicherung">Absicherung</a></li>-->
               <li><a href="#_KeineTilgungssatzwechselPraeferenz">KeineTilgungssatzwechselPraeferenz</a></li>
               <!--<li><a href="#_absicherung">Absicherung</a></li>-->
               <li><a href="#_KeineVerwendung">KeineVerwendung</a></li>
@@ -2627,6 +2629,8 @@
               <!--<li><a href="#_absicherung">Absicherung</a></li>-->
               <li><a href="#_Stellplatz">Stellplatz</a></li>
               <!--<li><a href="#_absicherung">Absicherung</a></li>-->
+              <li><a href="#_StellplatzVermietungErfassung">StellplatzVermietungErfassung</a></li>
+              <!--<li><a href="#_absicherung">Absicherung</a></li>-->
               <li><a href="#_Teilvermietet">Teilvermietet</a></li>
               <!--<li><a href="#_absicherung">Absicherung</a></li>-->
               <li><a href="#_Telefonnummer">Telefonnummer</a></li>
@@ -2682,6 +2686,8 @@
               <li><a href="#_VorhandeneRechteAbteilung2">VorhandeneRechteAbteilung2</a></li>
               <!--<li><a href="#_absicherung">Absicherung</a></li>-->
               <li><a href="#_VorhandeneStellplaetze">VorhandeneStellplaetze</a></li>
+              <!--<li><a href="#_absicherung">Absicherung</a></li>-->
+              <li><a href="#_VorhandeneStellplatzVermietung">VorhandeneStellplatzVermietung</a></li>
               <!--<li><a href="#_absicherung">Absicherung</a></li>-->
               <li><a href="#_VorhandeneWeitereStaatsangehoerigkeiten">VorhandeneWeitereStaatsangehoerigkeiten</a></li>
               <!--<li><a href="#_absicherung">Absicherung</a></li>-->
@@ -2771,7 +2777,7 @@
           <div class="sect2">
             <h3 id="_aktuelle_version">Aktuelle Version</h3>
             <div class="paragraph">
-              <p><em>Version</em> : 1.2.0; b7d2620e089ecae28da96f785797c1409e7b1852</p>
+              <p><em>Version</em> : 1.2.1; 4eaf0a62d8815099e0d7ebcd9923e04796daf1c7</p>
             </div>
           </div>
         <div class="sect2">
@@ -3028,29 +3034,6 @@
                           <td class="tableblock halign-left valign-middle">
                             <div class="content">
                               <div class="paragraph">
-                                <p><strong>403</strong></p>
-                              </div>
-                            </div>
-                          </td>
-                          <td class="tableblock halign-left valign-middle">
-                            <div class="content">
-                              <div class="paragraph">
-                                <p>Es fehlt die Berechtigung, um die Anfrage auszuführen</p>
-                              </div>
-                            </div>
-                          </td>
-                          <td class="tableblock halign-left valign-middle">
-                            <div class="content">
-                              <div class="paragraph">
-                                <p><a href="#_Problem">Problem</a></p>
-                              </div>
-                            </div>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td class="tableblock halign-left valign-middle">
-                            <div class="content">
-                              <div class="paragraph">
                                 <p><strong>201</strong></p>
                               </div>
                             </div>
@@ -3066,6 +3049,29 @@
                             <div class="content">
                               <div class="paragraph">
                                 <p><a href="#_KundenangabenImportResponse">KundenangabenImportResponse</a></p>
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="tableblock halign-left valign-middle">
+                            <div class="content">
+                              <div class="paragraph">
+                                <p><strong>403</strong></p>
+                              </div>
+                            </div>
+                          </td>
+                          <td class="tableblock halign-left valign-middle">
+                            <div class="content">
+                              <div class="paragraph">
+                                <p>Es fehlt die Berechtigung, um die Anfrage auszuführen</p>
+                              </div>
+                            </div>
+                          </td>
+                          <td class="tableblock halign-left valign-middle">
+                            <div class="content">
+                              <div class="paragraph">
+                                <p><a href="#_Problem">Problem</a></p>
                               </div>
                             </div>
                           </td>
@@ -3223,8 +3229,8 @@
                       <h5 id="_erzeugt">Erzeugt</h5>
                       <div class="ulist">
                         <ul>
-                            <li><code>application/problem+json</code></li>
                             <li><code>application/json; version=1.0</code></li>
+                            <li><code>application/problem+json</code></li>
                         </ul>
                       </div>
                     </div>
@@ -21121,6 +21127,58 @@
             </table>
           </div>
           <div class="sect2">
+            <h3 id="_KeineStellplatzVermietung">KeineStellplatzVermietung</h3>
+            <div class="paragraph">
+              <p></p>
+            </div>
+            <table class="tableblock frame-all grid-all stretch">
+              <colgroup>
+                <col style="width: 16.6666%;">
+                <col style="width: 61.1111%;">
+                <col style="width: 22.2223%;">
+              </colgroup>
+              <thead>
+              <tr>
+                <th class="tableblock halign-left valign-middle">Name</th>
+                <th class="tableblock halign-left valign-middle">Beschreibung</th>
+                <th class="tableblock halign-left valign-middle">Typ</th>
+              </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p><strong>@type</strong>
+                          
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p></p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                      <p>
+  
+                          <a href="#_string">String</a>
+  
+  
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="sect2">
             <h3 id="_KeineTilgungssatzwechselPraeferenz">KeineTilgungssatzwechselPraeferenz</h3>
             <div class="paragraph">
               <p></p>
@@ -31947,7 +32005,7 @@
                   <td class="tableblock halign-left valign-middle">
                     <div class="content">
                       <div class="paragraph">
-                        <p></p>
+                        <p>Bitte Feld &#x27;mieteMonatlich&#x27; nicht mehr verwenden. Falls mitgeschickt, werden die Angaben ins Feld &#x27;vermietungErfassung&#x27; kopiert, falls &#x27;vermietungErfassung&#x27; leer ist.</p>
                       </div>
                     </div>
                   </td>
@@ -31957,6 +32015,95 @@
                       <p>
   
                           <a href="#_double">Double</a>
+  
+  
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p><strong>vermietungErfassung</strong>
+                          <br><em>optional</em>
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p></p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                      <p>
+                          vermietungErfassung
+  
+                          <a href="#_"></a>
+  
+                          <div class="param-desc"><span class="param-type">Ein Modell vom Typ:</span>
+                            <ul>
+                                <li><a href="#_KeineStellplatzVermietung">KeineStellplatzVermietung</a></li>
+                                <li><a href="#_VorhandeneStellplatzVermietung">VorhandeneStellplatzVermietung</a></li>
+                            </ul>
+                          </div>
+  
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="sect2">
+            <h3 id="_StellplatzVermietungErfassung">StellplatzVermietungErfassung</h3>
+            <div class="paragraph">
+              <p>Mögliche Typen: VorhandeneStellplatzVermietung, KeineStellplatzVermietung</p>
+            </div>
+            <table class="tableblock frame-all grid-all stretch">
+              <colgroup>
+                <col style="width: 16.6666%;">
+                <col style="width: 61.1111%;">
+                <col style="width: 22.2223%;">
+              </colgroup>
+              <thead>
+              <tr>
+                <th class="tableblock halign-left valign-middle">Name</th>
+                <th class="tableblock halign-left valign-middle">Beschreibung</th>
+                <th class="tableblock halign-left valign-middle">Typ</th>
+              </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p><strong>@type</strong>
+                          
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p></p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                      <p>
+  
+                          <a href="#_string">String</a>
   
   
                         </p>
@@ -34882,6 +35029,88 @@
                       <p>
   
                           <a href="#_Stellplatz">array[Stellplatz]</a>
+  
+  
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="sect2">
+            <h3 id="_VorhandeneStellplatzVermietung">VorhandeneStellplatzVermietung</h3>
+            <div class="paragraph">
+              <p></p>
+            </div>
+            <table class="tableblock frame-all grid-all stretch">
+              <colgroup>
+                <col style="width: 16.6666%;">
+                <col style="width: 61.1111%;">
+                <col style="width: 22.2223%;">
+              </colgroup>
+              <thead>
+              <tr>
+                <th class="tableblock halign-left valign-middle">Name</th>
+                <th class="tableblock halign-left valign-middle">Beschreibung</th>
+                <th class="tableblock halign-left valign-middle">Typ</th>
+              </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p><strong>@type</strong>
+                          
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p></p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                      <p>
+  
+                          <a href="#_string">String</a>
+  
+  
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p><strong>mieteMonatlich</strong>
+                          <br><em>optional</em>
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p></p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                      <p>
+  
+                          <a href="#_double">Double</a>
   
   
                         </p>

@@ -8,7 +8,7 @@ info:
     name: Europace AG
     url: http://developer.europace.de
     email: devsupport@europace2.de
-  version: 1.2.0; b7d2620e089ecae28da96f785797c1409e7b1852
+  version: 1.2.1; 4eaf0a62d8815099e0d7ebcd9923e04796daf1c7
 externalDocs:
   url: https://developer.europace.de/api/baufismart-kundenangaben-api
 servers:
@@ -43,8 +43,6 @@ paths:
               $ref: '#/components/schemas/ImportKundenangabenRequest'
         required: true
       responses:
-        "403":
-          $ref: '#/components/responses/Forbidden'
         "201":
           description: Kundenangaben in neuen Vorgang importiert
           headers:
@@ -55,6 +53,8 @@ paths:
             application/json; version=1.0:
               schema:
                 $ref: '#/components/schemas/KundenangabenImportResponse'
+        "403":
+          $ref: '#/components/responses/Forbidden'
         "409":
           $ref: '#/components/responses/Conflict'
         "503":
@@ -2390,6 +2390,10 @@ components:
       type: object
       allOf:
       - $ref: '#/components/schemas/StellplaetzeErfassung'
+    KeineStellplatzVermietung:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/StellplatzVermietungErfassung'
     KeineTilgungssatzwechselPraeferenz:
       type: object
       allOf:
@@ -4717,7 +4721,27 @@ components:
           - TIEFGARAGEN_STELLPLATZ
         mieteMonatlich:
           type: number
+          description: "Bitte Feld 'mieteMonatlich' nicht mehr verwenden. Falls mitgeschickt,\
+            \ werden die Angaben ins Feld 'vermietungErfassung' kopiert, falls 'vermietungErfassung'\
+            \ leer ist."
           format: double
+        vermietungErfassung:
+          oneOf:
+          - $ref: '#/components/schemas/KeineStellplatzVermietung'
+          - $ref: '#/components/schemas/VorhandeneStellplatzVermietung'
+    StellplatzVermietungErfassung:
+      required:
+      - '@type'
+      type: object
+      properties:
+        '@type':
+          type: string
+      description: "Mögliche Typen: VorhandeneStellplatzVermietung, KeineStellplatzVermietung"
+      discriminator:
+        propertyName: '@type'
+        mapping:
+          VORHANDENE_STELLPLATZ_VERMIETUNG: '#/components/schemas/VorhandeneStellplatzVermietung'
+          KEINE_STELLPLATZ_VERMIETUNG: '#/components/schemas/KeineStellplatzVermietung'
     Teilvermietet:
       type: object
       allOf:
@@ -5069,6 +5093,15 @@ components:
             type: array
             items:
               $ref: '#/components/schemas/Stellplatz'
+    VorhandeneStellplatzVermietung:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/StellplatzVermietungErfassung'
+      - type: object
+        properties:
+          mieteMonatlich:
+            type: number
+            format: double
     VorhandeneWeitereStaatsangehoerigkeiten:
       type: object
       allOf:
