@@ -21,6 +21,7 @@ Feedback und Fragen zum Modell sind als [GitHub Issue](https://github.com/europa
 
 ## Anwendungsfälle der API
 - Vorgang mit Kundenangaben aus Leadantragstrecken oder CRM-System anlegen
+- vorhandenen Vorgang mit Kundenangaben überschreiben
 
 ## Schnellstart
 Damit du unsere APIs und deinen Anwendungsfall schnellstmöglich testen kannst, haben wir eine [Postman-Collection](https://docs.api.europace.de/baufinanzierung/schnellstart/) für dich zusammengestellt. 
@@ -35,11 +36,21 @@ Bitte benutze [![Authentication](https://img.shields.io/badge/Auth-OAuth2-green)
 | `baufinanzierung:vorgang:schreiben`    | Baufinanzierungsvorgänge anlegen                                 |
 | `baufinanzierung:echtgeschaeft`        | Vorgänge in Produktion anlegen, ansonsten nur Testmodus möglich  |
 
-## Beispiel
+## Beispiel: Vorgang anlegen
 
 Ein Kunde möchte ein Einfamilienhaus für sich selbst in Berlin kaufen. Er hat bereits Eigenkapital angepart und schon Angaben zu einigen Präferenzen bei der Finanzierung gemacht. Die Rate soll in Höhe seiner jetzigen Miete sein. Er wurde durch seinen Arbeitgeber die Trisalis AG auf den Finanzierungsvermittler aufmerksam, der eine Kooperationsvereinbarung mit ihm hat und für jeden abgeschlossenen Vertrag 50 € Leadgebühr als Aufwandentschädigung für die interne Vermarktung erhält.
 
+Voraussetzung:
+* OAuth Token hat den Scope `baufinanzierung:vorgang:schreiben`
+* Aufrufer ist Bearbeiter des Vorgangs
+
 Beispiel-Request: 
+``` http
+POST /kundenangaben HTTP/1.1
+Host: baufinanzierung.api.europace.de
+Content-Type: application/json
+Authorization: Bearer eyJraWQiOiJZUUZ...
+```
 ``` json
 {
     "importMetadaten": {
@@ -53,6 +64,10 @@ Beispiel-Request:
         },
         "zusaetzlicherEreignistext": "Premium-Kunde",
         "prioritaet": "HOCH",
+        "betreuung": {
+            "kundenbetreuer": "ABC12",
+            "bearbeiter": "ABC12"
+        },
         "tippgeber": {
             "tippgeberPartnerId": "{{PARTNER_ID}}", <-- PartnerID der Trisalis AG
             "tippgeberprovisionswunsch": {
@@ -223,6 +238,7 @@ Beispiel-Request:
 
 Beispiel-Response:
 ``` json
+201 - created
 {
     "vorgangsnummer": "YX4MDU"
 }
@@ -266,6 +282,28 @@ Mit der Kundenangaben-API bieten wir eine möglichst fehlertolerante API an. Feh
 
 Um die Fehlertoleranz der API zu erhöhen, wendet die API das Tolerant Reader Pattern an. Das heisst, Felder oder Enum-Werte, die der API unbekannt sind, werden ignoriert. Beispielsweise sind im Typ `Bauspardarlehen.abschlussgebuehrmodus` nur die Werte `SOFORTZAHLUNG` und `VERRECHNUNG` erlaubt. Andere Werte werden von der API ignoriert und so verarbeitet, als wäre das Feld leer. 
 
+## Beispiel: Vorgang überschreiben
+Die erfassten Kundenangaben des Vorgangs A65JS6 sollen überschrieben werden.
+> Achtung: Die Daten werden vollständig durch die angegeben Werte ersetzt. Werden Datenfelder nicht übertragen, werden die Daten im Vorgang durch `null` ersetzt und damit gelöscht.
+
+Voraussetzung:
+* OAuth Token hat den Scope `baufinanzierung:vorgang:schreiben`
+* Aufrufer ist Bearbeiter des Vorgangs und hat somit auch Zugriff
+
+Beispiel-Request:
+``` http
+PUT /kundenangaben/A65JS6 HTTP/1.1
+Host: baufinanzierung.api.europace.de
+Content-Type: application/json
+Authorization: Bearer eyJraWQiOiJZUUZYT...
+
+[Body wie beim Vorgang anlegen (POST)]
+```
+
+Beispiel-Response:
+``` http
+204 - no content
+```
 
 ## FAQs
 
