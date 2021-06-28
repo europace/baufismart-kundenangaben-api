@@ -8,20 +8,76 @@ info:
     name: Europace AG
     url: http://developer.europace.de
     email: devsupport@europace2.de
-  version: 1.2.1; 4eaf0a62d8815099e0d7ebcd9923e04796daf1c7
+  version: 1.3.0; 2fda0a4e2336abf18ef060420a5d50a812f3cc44
 externalDocs:
   url: https://developer.europace.de/api/baufismart-kundenangaben-api
 servers:
 - url: https://baufinanzierung.api.europace.de
   description: Produktionsserver
 tags:
-- name: Kundenangaben
+- name: Import
   description: Kundenangaben in einen neuen Vorgang importieren
+- name: Update
+  description: Kundenangaben in einem bestehenden Vorgang überschreiben
 paths:
+  /kundenangaben/{vorgangsnummer}:
+    put:
+      tags:
+      - Update
+      summary: Kundenangaben in einem bestehenden Vorgang überschreiben
+      description: Kundenangaben werden in BaufiSmart in einem bestehenden Vorgang
+        überschrieben.
+      operationId: updateKundenangaben
+      parameters:
+      - name: Authorization
+        in: header
+        description: Authorization Bearer Token
+        required: true
+        schema:
+          type: string
+      - name: X-TraceId
+        $ref: '#/components/parameters/tracingIdParam'
+      - name: vorgangsnummer
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json; version=1.0:
+            schema:
+              $ref: '#/components/schemas/UpdateKundenangabenRequest'
+        required: true
+      responses:
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "409":
+          $ref: '#/components/responses/Conflict'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "503":
+          $ref: '#/components/responses/ServiceNotAvailable'
+        "422":
+          $ref: '#/components/responses/UnprocessableEntity'
+        "429":
+          $ref: '#/components/responses/TooManyRequests'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "204":
+          description: Kundenangaben in einem bestehenden Vorgang überschrieben
+          headers:
+            X-TraceId:
+              $ref: '#/components/headers/tracingIdHeader'
+              style: simple
+      security:
+      - oAuth2:
+        - baufinanzierung:vorgang:schreiben
   /kundenangaben:
     post:
       tags:
-      - Kundenangaben
+      - Import
       summary: Kundenangaben in einen neuen Vorgang importieren
       description: "Kundenangaben werden in BaufiSmart in einen neuen Vorgang importiert.\
         \ Der Scope `baufinanzierung:echtgeschaeft`wird benötigt, wenn der Datenkontext\
@@ -43,6 +99,10 @@ paths:
               $ref: '#/components/schemas/ImportKundenangabenRequest'
         required: true
       responses:
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "409":
+          $ref: '#/components/responses/Conflict'
         "201":
           description: Kundenangaben in neuen Vorgang importiert
           headers:
@@ -53,10 +113,6 @@ paths:
             application/json; version=1.0:
               schema:
                 $ref: '#/components/schemas/KundenangabenImportResponse'
-        "403":
-          $ref: '#/components/responses/Forbidden'
-        "409":
-          $ref: '#/components/responses/Conflict'
         "503":
           $ref: '#/components/responses/ServiceNotAvailable'
         "422":
@@ -74,7 +130,7 @@ paths:
   /kundenangaben/body-validation:
     post:
       tags:
-      - Kundenangaben
+      - Import
       summary: "Kundenangaben validieren, jedoch NICHT in einen neuen Vorgang importieren"
       description: "Kundenangaben werden empfangen und validiert. Es wird jedoch KEIN\
         \ Vorgang in BaufiSmart erzeugt. Der Scope `baufinanzierung:echtgeschaeft`wird\
@@ -1182,22 +1238,6 @@ components:
           betrag:
             type: number
             format: double
-    Betreuung:
-      required:
-      - kundenbetreuer
-      type: object
-      properties:
-        kundenbetreuer:
-          type: string
-          description: "Die PartnerId des Empfängers (Organisation) oder Kundenbetreuers\
-            \ (Person) für den neuen Vorgang. Wird keine Betreuung angegeben, wird\
-            \ die PartnerId des aufrufenden Clients verwendet. Übernahmerechte mü\
-            ssen vorhanden sein."
-        bearbeiter:
-          type: string
-          description: "Die PartnerId einer Person, die als Bearbeiter des neuen Vorgangs\
-            \ eingetragen wird. Übernahmerechte müssen für die PartnerId vorhanden\
-            \ sein."
     BisZumJahr:
       type: object
       allOf:
@@ -2064,56 +2104,6 @@ components:
           MEHRFAMILIENHAUS: '#/components/schemas/Mehrfamilienhaus'
           REIHENHAUS: '#/components/schemas/Reihenhaus'
           IMMOBILIE_OHNE_TYP: '#/components/schemas/ImmobilieOhneTyp'
-    ImportKundenangabenRequest:
-      required:
-      - importMetadaten
-      - kundenangaben
-      type: object
-      properties:
-        kundenangaben:
-          $ref: '#/components/schemas/Kundenangaben'
-        importMetadaten:
-          $ref: '#/components/schemas/ImportMetadaten'
-    ImportMetadaten:
-      required:
-      - datenkontext
-      type: object
-      properties:
-        datenkontext:
-          type: string
-          description: In welchem Kontext (Echtgeschäft oder Testmodus) wird der Request
-            verarbeitet.
-          enum:
-          - TEST_MODUS
-          - ECHT_GESCHAEFT
-          default: ECHT_GESCHAEFT
-        betreuung:
-          $ref: '#/components/schemas/Betreuung'
-        externeVorgangsId:
-          type: string
-          description: "Externe VorgangsId, mit welcher sich z.B. die importierten\
-            \ Daten suchen lassen."
-        importquelle:
-          type: string
-          description: "Quelle, aus der die Kundenangaben importiert werden. Kann\
-            \ im Reporting zur Gruppierung verwendet werden."
-        leadtracking:
-          $ref: '#/components/schemas/Leadtracking'
-        zusaetzlicherEreignistext:
-          type: string
-          description: Bei erfolgreichem Import der Kundenangaben wird ein 'Vorgang
-            angelegt' Ereignis erzeugt. Hier kann ein ergänzender Text hinzugefügt
-            werden.
-        prioritaet:
-          type: string
-          description: Die Priorität dient der Sortierung und Filterung von Vorgängen
-            im Vorgangsmanagement.
-          enum:
-          - NIEDRIG
-          - NEUTRAL
-          - HOCH
-        tippgeber:
-          $ref: '#/components/schemas/Tippgeber'
     InJahren:
       type: object
       allOf:
@@ -2726,20 +2716,6 @@ components:
           BIS_ZUM_JAHR: '#/components/schemas/BisZumJahr'
           BIS_ZUR_RENTE_IM_JAHR: '#/components/schemas/BisZurRenteImJahr'
           KEINE_LAUFZEIT_PRAEFERENZ: '#/components/schemas/KeineLaufzeitPraeferenz'
-    Leadtracking:
-      type: object
-      properties:
-        kampagne:
-          type: string
-          description: Frei wählbare Kampagne. Wird von BaufiSmart nicht verwendet.
-        keyword:
-          type: string
-          description: Frei wählbares Schlagwort. Wird von BaufiSmart nicht verwendet.
-        trackingId:
-          type: string
-          description: Frei wählbare TrackingId. Wird von BaufiSmart nicht verwendet.
-      description: Ermöglicht die Effizienz von Lead Kampagnen zu messen. Z.B. im
-        Reporting.
     LebensOderRentenversicherung:
       type: object
       properties:
@@ -4875,6 +4851,21 @@ components:
         kommentar:
           type: string
       description: In anderen APIs als 'nachrangigesExternesDarlehen' bezeichnet.
+    UpdateKundenangabenRequest:
+      required:
+      - kundenangaben
+      - updateMetadaten
+      type: object
+      properties:
+        kundenangaben:
+          $ref: '#/components/schemas/Kundenangaben'
+        updateMetadaten:
+          $ref: '#/components/schemas/UpdateMetadaten'
+    UpdateMetadaten:
+      type: object
+      properties:
+        tippgeber:
+          $ref: '#/components/schemas/Tippgeber'
     VariablesDarlehen:
       type: object
       allOf:
@@ -5612,6 +5603,86 @@ components:
             type: number
             description: Angabe in Prozent.
             format: double
+    Betreuung:
+      required:
+      - kundenbetreuer
+      type: object
+      properties:
+        kundenbetreuer:
+          type: string
+          description: "Die PartnerId des Empfängers (Organisation) oder Kundenbetreuers\
+            \ (Person) für den neuen Vorgang. Wird keine Betreuung angegeben, wird\
+            \ die PartnerId des aufrufenden Clients verwendet. Übernahmerechte mü\
+            ssen vorhanden sein."
+        bearbeiter:
+          type: string
+          description: "Die PartnerId einer Person, die als Bearbeiter des neuen Vorgangs\
+            \ eingetragen wird. Übernahmerechte müssen für die PartnerId vorhanden\
+            \ sein."
+    ImportKundenangabenRequest:
+      required:
+      - importMetadaten
+      - kundenangaben
+      type: object
+      properties:
+        kundenangaben:
+          $ref: '#/components/schemas/Kundenangaben'
+        importMetadaten:
+          $ref: '#/components/schemas/ImportMetadaten'
+    ImportMetadaten:
+      required:
+      - datenkontext
+      type: object
+      properties:
+        datenkontext:
+          type: string
+          description: In welchem Kontext (Echtgeschäft oder Testmodus) wird der Request
+            verarbeitet.
+          enum:
+          - TEST_MODUS
+          - ECHT_GESCHAEFT
+          default: ECHT_GESCHAEFT
+        betreuung:
+          $ref: '#/components/schemas/Betreuung'
+        externeVorgangsId:
+          type: string
+          description: "Externe VorgangsId, mit welcher sich z.B. die importierten\
+            \ Daten suchen lassen."
+        importquelle:
+          type: string
+          description: "Quelle, aus der die Kundenangaben importiert werden. Kann\
+            \ im Reporting zur Gruppierung verwendet werden."
+        leadtracking:
+          $ref: '#/components/schemas/Leadtracking'
+        zusaetzlicherEreignistext:
+          type: string
+          description: Bei erfolgreichem Import der Kundenangaben wird ein 'Vorgang
+            angelegt' Ereignis erzeugt. Hier kann ein ergänzender Text hinzugefügt
+            werden.
+        prioritaet:
+          type: string
+          description: Die Priorität dient der Sortierung und Filterung von Vorgängen
+            im Vorgangsmanagement.
+          enum:
+          - NIEDRIG
+          - NEUTRAL
+          - HOCH
+        tippgeber:
+          $ref: '#/components/schemas/Tippgeber'
+    Leadtracking:
+      type: object
+      properties:
+        kampagne:
+          type: string
+          description: Frei wählbare Kampagne. Wird von BaufiSmart nicht verwendet.
+        keyword:
+          type: string
+          description: Frei wählbares Schlagwort. Wird von BaufiSmart nicht verwendet.
+        trackingId:
+          type: string
+          description: Frei wählbare TrackingId. Wird von BaufiSmart nicht verwendet.
+      description: Ermöglicht die Effizienz von Lead Kampagnen zu messen. Z.B. im
+        Reporting.
     KundenangabenImportResponse:
       required:
       - vorgangsnummer

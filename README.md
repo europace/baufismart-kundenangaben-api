@@ -22,24 +22,32 @@ Feedback und Fragen zum Modell sind als [GitHub Issue](https://github.com/europa
 ## Anwendungsfälle der API
 - Vorgang mit Kundenangaben aus Leadantragstrecken oder CRM-System anlegen
 
+- vorhandenen Vorgang mit Kundenangaben überschreiben
+
 ## Schnellstart
 Damit du unsere APIs und deinen Anwendungsfall schnellstmöglich testen kannst, haben wir eine [Postman-Collection](https://docs.api.europace.de/baufinanzierung/schnellstart/) für dich zusammengestellt. 
 
-In der Postman-Collection im Ordner "BaufiSmart Kundenangaben-API" findest du zwei Beispiele. Da das Datenmodell in der Kundenangaben-API sehr umfangreich ist, stellen wir mit dem Request "Kundenangaben validieren" eine Möglichkeit zur Verfügung, mit der Anfragen getestet/validiert werden können, ohne dass Daten gespeichert werden. Dieser Endpunkt dient der schnelleren Anbindung, ist aber für die Funktionsweise nicht erforderlich.
+In der Postman-Collection im Ordner "BaufiSmart Kundenangaben-API" findest du drei Beispiele. Da das Datenmodell in der Kundenangaben-API sehr umfangreich ist, stellen wir mit dem Request "Kundenangaben validieren" eine Möglichkeit zur Verfügung, mit der Anfragen getestet/validiert werden können, ohne dass Daten gespeichert werden. Dieser Endpunkt dient der schnelleren Anbindung, ist aber für die Funktionsweise nicht erforderlich.
 
 ### Authentifizierung
 Bitte benutze [![Authentication](https://img.shields.io/badge/Auth-OAuth2-green)](https://docs.api.europace.de/baufinanzierung/authentifizierung/), um Zugang zur API bekommen. Um die API verwenden zu können, benötigt der OAuth2-Client folgende Scopes:
 
 | Scope                                  | API-Usecase                                                      |
 | -------------------------------------- | ---------------------------------------------------------------- |
-| `baufinanzierung:vorgang:schreiben`    | Baufinanzierungsvorgänge anlegen                                 |
+| `baufinanzierung:vorgang:schreiben`    | Baufinanzierungsvorgänge anlegen und aktualisieren                                |
 | `baufinanzierung:echtgeschaeft`        | Vorgänge in Produktion anlegen, ansonsten nur Testmodus möglich  |
 
-## Beispiel
+## Beispiel: Vorgang anlegen
 
 Ein Kunde möchte ein Einfamilienhaus für sich selbst in Berlin kaufen. Er hat bereits Eigenkapital angepart und schon Angaben zu einigen Präferenzen bei der Finanzierung gemacht. Die Rate soll in Höhe seiner jetzigen Miete sein. Er wurde durch seinen Arbeitgeber die Trisalis AG auf den Finanzierungsvermittler aufmerksam, der eine Kooperationsvereinbarung mit ihm hat und für jeden abgeschlossenen Vertrag 50 € Leadgebühr als Aufwandentschädigung für die interne Vermarktung erhält.
 
-Beispiel-Request: 
+Beispiel-Request:
+``` http
+POST /kundenangaben HTTP/1.1
+Host: baufinanzierung.api.europace.de
+Content-Type: application/json
+Authorization: Bearer eyJraWQiOiJZUUZ...
+```
 ``` json
 {
     "importMetadaten": {
@@ -222,6 +230,9 @@ Beispiel-Request:
 ```
 
 Beispiel-Response:
+``` http
+201 - created
+```
 ``` json
 {
     "vorgangsnummer": "YX4MDU"
@@ -266,6 +277,43 @@ Mit der Kundenangaben-API bieten wir eine möglichst fehlertolerante API an. Feh
 
 Um die Fehlertoleranz der API zu erhöhen, wendet die API das Tolerant Reader Pattern an. Das heisst, Felder oder Enum-Werte, die der API unbekannt sind, werden ignoriert. Beispielsweise sind im Typ `Bauspardarlehen.abschlussgebuehrmodus` nur die Werte `SOFORTZAHLUNG` und `VERRECHNUNG` erlaubt. Andere Werte werden von der API ignoriert und so verarbeitet, als wäre das Feld leer. 
 
+## Beispiel: Vorgang überschreiben
+Die erfassten Kundenangaben des Vorgangs A65JS6 sollen überschrieben werden.
+> Achtung: Die Daten werden vollständig durch die angegeben Werte ersetzt. Werden Datenfelder nicht übertragen, werden die Daten im Vorgang durch `null` ersetzt und damit gelöscht.
+
+Voraussetzung:
+* OAuth Token hat den Scope `baufinanzierung:vorgang:schreiben`
+* Aufrufer ist Bearbeiter des Vorgangs und hat somit auch Zugriff
+
+Beispiel-Request:
+``` http
+PUT /kundenangaben/A65JS6 HTTP/1.1
+Host: baufinanzierung.api.europace.de
+Content-Type: application/json
+Authorization: Bearer eyJraWQiOiJZUUZYT...
+```
+
+``` json
+{
+    "updateMetadaten": {
+        "tippgeber": {
+            "tippgeberPartnerId": "{{PARTNER_ID}}", 
+            "tippgeberprovisionswunsch": {
+                "@type": "BETRAG",
+                "betrag": 50
+            }
+        }
+    },
+    "kundenangaben": {
+        [Kundenangaben-Struktur wie beim Vorgang anlegen]
+    }
+}
+```
+
+Beispiel-Response:
+``` http
+204 - no content
+```
 
 ## FAQs
 
