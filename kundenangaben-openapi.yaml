@@ -8,7 +8,7 @@ info:
     name: Europace AG
     url: http://developer.europace.de
     email: devsupport@europace2.de
-  version: 1.3.0; 2fda0a4e2336abf18ef060420a5d50a812f3cc44
+  version: 1.3.1; a6b7e44e05b5126820945cadab2be38203827290
 externalDocs:
   url: https://developer.europace.de/api/baufismart-kundenangaben-api
 servers:
@@ -53,6 +53,12 @@ paths:
           $ref: '#/components/responses/Forbidden'
         "409":
           $ref: '#/components/responses/Conflict'
+        "204":
+          description: Kundenangaben in einem bestehenden Vorgang überschrieben
+          headers:
+            X-TraceId:
+              $ref: '#/components/headers/tracingIdHeader'
+              style: simple
         "404":
           $ref: '#/components/responses/NotFound'
         "503":
@@ -65,12 +71,6 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         "400":
           $ref: '#/components/responses/BadRequest'
-        "204":
-          description: Kundenangaben in einem bestehenden Vorgang überschrieben
-          headers:
-            X-TraceId:
-              $ref: '#/components/headers/tracingIdHeader'
-              style: simple
       security:
       - oAuth2:
         - baufinanzierung:vorgang:schreiben
@@ -99,10 +99,6 @@ paths:
               $ref: '#/components/schemas/ImportKundenangabenRequest'
         required: true
       responses:
-        "403":
-          $ref: '#/components/responses/Forbidden'
-        "409":
-          $ref: '#/components/responses/Conflict'
         "201":
           description: Kundenangaben in neuen Vorgang importiert
           headers:
@@ -113,6 +109,10 @@ paths:
             application/json; version=1.0:
               schema:
                 $ref: '#/components/schemas/KundenangabenImportResponse'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "409":
+          $ref: '#/components/responses/Conflict'
         "503":
           $ref: '#/components/responses/ServiceNotAvailable'
         "422":
@@ -2452,7 +2452,8 @@ components:
         '@type':
           type: string
       description: "Mögliche Typen: KfwProgramm124, KfwProgramm151, KfwProgramm152,\
-        \ KfwProgramm153, KfwProgramm159, KfwProgramm167"
+        \ KfwProgramm153, KfwProgramm159, KfwProgramm167, KfwProgramm261Neubau, KfwProgramm261Sanierung,\
+        \ KfwProgramm262"
       discriminator:
         propertyName: '@type'
         mapping:
@@ -2462,6 +2463,9 @@ components:
           KFW_PROGRAMM_153: '#/components/schemas/KfwProgramm153'
           KFW_PROGRAMM_159: '#/components/schemas/KfwProgramm159'
           KFW_PROGRAMM_167: '#/components/schemas/KfwProgramm167'
+          KFW_PROGRAMM_261_NEUBAU: '#/components/schemas/KfwProgramm261Neubau'
+          KFW_PROGRAMM_261_SANIERUNG: '#/components/schemas/KfwProgramm261Sanierung'
+          KFW_PROGRAMM_262: '#/components/schemas/KfwProgramm262'
     KfwProgramm124:
       required:
       - laufzeitInJahren
@@ -2491,7 +2495,8 @@ components:
     KfwProgramm151:
       type: object
       description: "Energieeffizient Sanieren: Kauf oder Komplettsanierung (Programm-Nr.:\
-        \ 151). Die Zinsbindung beträgt immer 10 Jahre."
+        \ 151). Die Zinsbindung beträgt immer 10 Jahre. Wird zum 1. Juli 2021 eingestellt."
+      deprecated: true
       allOf:
       - $ref: '#/components/schemas/KfwProgramm'
       - type: object
@@ -2512,7 +2517,8 @@ components:
       - tilgungsfreieAnlaufjahre
       type: object
       description: "Energieeffizient Sanieren: Einzelmaßnahmen (Programm-Nr.: 152).\
-        \ Die Zinsbindung beträgt immer 10 Jahre."
+        \ Die Zinsbindung beträgt immer 10 Jahre. Wird zum 1. Juli 2021 eingestellt."
+      deprecated: true
       allOf:
       - $ref: '#/components/schemas/KfwProgramm'
       - type: object
@@ -2533,7 +2539,9 @@ components:
       - tilgungsfreieAnlaufjahre
       - zinsbindungInJahren
       type: object
-      description: "Energieeffizient Bauen: Effizienzhaus (Programm-Nr.: 153)"
+      description: "Energieeffizient Bauen: Effizienzhaus (Programm-Nr.: 153). Wird\
+        \ zum 1. Juli 2021 eingestellt."
+      deprecated: true
       allOf:
       - $ref: '#/components/schemas/KfwProgramm'
       - type: object
@@ -2541,9 +2549,19 @@ components:
           kfwEnergieEffizienzStandard:
             type: string
             enum:
-            - STANDARD_40_PLUS
             - STANDARD_40
+            - STANDARD_40_PLUS
+            - STANDARD_40_EEK
             - STANDARD_55
+            - STANDARD_55_EEK
+            - STANDARD_70
+            - STANDARD_70_EEK
+            - STANDARD_85
+            - STANDARD_85_EEK
+            - STANDARD_100
+            - STANDARD_100_EEK
+            - STANDARD_DENKMAL
+            - STANDARD_DENKMAL_EEK
           laufzeitInJahren:
             maximum: 30
             minimum: 4
@@ -2588,7 +2606,8 @@ components:
       type: object
       description: "Energieeffizient Sanieren: Heizungsanlagen Erneuerbare Energien\
         \ (Programm-Nr.: 167). Die Laufzeit und Zinsbindung sind bei diesem Programmm\
-        \ identisch."
+        \ identisch. Wird zum 1. Juli 2021 eingestellt."
+      deprecated: true
       allOf:
       - $ref: '#/components/schemas/KfwProgramm'
       - type: object
@@ -2600,6 +2619,102 @@ components:
             format: int32
           tilgungsfreieAnlaufjahre:
             maximum: 2
+            minimum: 1
+            type: integer
+            format: int32
+    KfwProgramm261Neubau:
+      type: object
+      description: "Energieeffizient Bauen: bauen oder kaufen (Programm-Nr.: 261).\
+        \ Die Zinsbindung beträgt immer 10 Jahre."
+      allOf:
+      - $ref: '#/components/schemas/KfwProgramm'
+      - type: object
+        properties:
+          kfwEnergieEffizienzStandard:
+            type: string
+            description: "Erlaubte Werte sind: STANDARD_40_PLUS, ,STANDARD_40, ,STANDARD_40_EEK,\
+              \ ,STANDARD_55, ,STANDARD_55_EEK"
+            enum:
+            - STANDARD_40
+            - STANDARD_40_PLUS
+            - STANDARD_40_EEK
+            - STANDARD_55
+            - STANDARD_55_EEK
+            - STANDARD_70
+            - STANDARD_70_EEK
+            - STANDARD_85
+            - STANDARD_85_EEK
+            - STANDARD_100
+            - STANDARD_100_EEK
+            - STANDARD_DENKMAL
+            - STANDARD_DENKMAL_EEK
+          laufzeitInJahren:
+            maximum: 30
+            minimum: 4
+            type: integer
+            format: int32
+          tilgungsfreieAnlaufjahre:
+            maximum: 5
+            minimum: 1
+            type: integer
+            format: int32
+    KfwProgramm261Sanierung:
+      type: object
+      description: "Energieeffizient Sanieren: sanieren oder ein frisch saniertes\
+        \ Effizienzhaus kaufen (Programm-Nr.: 261). Die Zinsbindung beträgt immer\
+        \ 10 Jahre."
+      allOf:
+      - $ref: '#/components/schemas/KfwProgramm'
+      - type: object
+        properties:
+          kfwEnergieEffizienzStandard:
+            type: string
+            description: "Erlaubte Werte sind: STANDARD_40, STANDARD_40_EEK, STANDARD_55,\
+              \ STANDARD_55_EEK, STANDARD_70, STANDARD_70_EEK, STANDARD_85, STANDARD_85_EEK,\
+              \ STANDARD_100, STANDARD_100_EEK, STANDARD_DENKMAL, STANDARD_DENKMAL_EEK"
+            enum:
+            - STANDARD_40
+            - STANDARD_40_PLUS
+            - STANDARD_40_EEK
+            - STANDARD_55
+            - STANDARD_55_EEK
+            - STANDARD_70
+            - STANDARD_70_EEK
+            - STANDARD_85
+            - STANDARD_85_EEK
+            - STANDARD_100
+            - STANDARD_100_EEK
+            - STANDARD_DENKMAL
+            - STANDARD_DENKMAL_EEK
+          kfwSanierungsFahrplanLiegtVor:
+            type: boolean
+          laufzeitInJahren:
+            maximum: 30
+            minimum: 4
+            type: integer
+            format: int32
+          tilgungsfreieAnlaufjahre:
+            maximum: 5
+            minimum: 1
+            type: integer
+            format: int32
+    KfwProgramm262:
+      type: object
+      description: "Energieeffizient Bauen und Sanieren: Einzelmaßnahmen (Programm-Nr.:\
+        \ 262). Die Zinsbindung beträgt immer 10 Jahre."
+      allOf:
+      - $ref: '#/components/schemas/KfwProgramm'
+      - type: object
+        properties:
+          kfwSanierungsFahrplanLiegtVor:
+            type: boolean
+          laufzeitInJahren:
+            maximum: 30
+            minimum: 4
+            type: integer
+            format: int32
+          tilgungsfreieAnlaufjahre:
+            maximum: 5
             minimum: 1
             type: integer
             format: int32
