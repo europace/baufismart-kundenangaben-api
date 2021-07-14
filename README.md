@@ -48,6 +48,7 @@ Host: baufinanzierung.api.europace.de
 Content-Type: application/json
 Authorization: Bearer eyJraWQiOiJZUUZ...
 ```
+
 ``` json
 {
     "importMetadaten": {
@@ -57,7 +58,8 @@ Authorization: Bearer eyJraWQiOiJZUUZ...
         "leadtracking": {
             "kampagne": "Trisalis AG",
             "keyword": "Altersvorsorge - stark wie Beton",
-            "trackingId": "be8d40b0-25af-48ae-8c57-a1b72527f903"
+            "trackingId": "be8d40b0-25af-48ae-8c57-a1b72527f903",
+            "sendNotification": false
         },
         "zusaetzlicherEreignistext": "Premium-Kunde",
         "prioritaet": "HOCH",
