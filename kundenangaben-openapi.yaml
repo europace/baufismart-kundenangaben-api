@@ -8,7 +8,7 @@ info:
     name: Europace AG
     url: http://developer.europace.de
     email: devsupport@europace2.de
-  version: 1.3.2; ef393d4423c5c02799cbdde6230463c3199c9702
+  version: 1.3.3; 527413d2296a24666bb18f605ca71a507306a2a7
 externalDocs:
   url: https://developer.europace.de/api/baufismart-kundenangaben-api
 servers:
@@ -53,18 +53,18 @@ paths:
           $ref: '#/components/responses/Forbidden'
         "409":
           $ref: '#/components/responses/Conflict'
-        "404":
-          $ref: '#/components/responses/NotFound'
-        "503":
-          $ref: '#/components/responses/ServiceNotAvailable'
-        "422":
-          $ref: '#/components/responses/UnprocessableEntity'
         "204":
           description: Kundenangaben in einem bestehenden Vorgang überschrieben
           headers:
             X-TraceId:
               $ref: '#/components/headers/tracingIdHeader'
               style: simple
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "503":
+          $ref: '#/components/responses/ServiceNotAvailable'
+        "422":
+          $ref: '#/components/responses/UnprocessableEntity'
         "429":
           $ref: '#/components/responses/TooManyRequests'
         "401":
@@ -99,10 +99,6 @@ paths:
               $ref: '#/components/schemas/ImportKundenangabenRequest'
         required: true
       responses:
-        "403":
-          $ref: '#/components/responses/Forbidden'
-        "409":
-          $ref: '#/components/responses/Conflict'
         "201":
           description: Kundenangaben in neuen Vorgang importiert
           headers:
@@ -113,6 +109,10 @@ paths:
             application/json; version=1.0:
               schema:
                 $ref: '#/components/schemas/KundenangabenImportResponse'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "409":
+          $ref: '#/components/responses/Conflict'
         "503":
           $ref: '#/components/responses/ServiceNotAvailable'
         "422":
@@ -560,6 +560,10 @@ components:
               - BKM_MAX_PREMIUM_NIEDRIGE_SPARRATE
               - BKM_MAX_PREMIUM_NIEDRIGE_TILGUNG
               - BKM_MAX_PREMIUM_BESTER_ZINS
+              - BKM_HAUS_PLUS_OPTIMAL
+              - BKM_HAUS_PLUS_NIEDRIGE_SPARRATE
+              - BKM_HAUS_PLUS_NIEDRIGE_TILGUNG
+              - BKM_HAUS_PLUS_BESTER_ZINS
               - FUCHS_IMMO_1
               - FUCHS_IMMO_1_PLUS
               - FUCHS_IMMO_2
@@ -568,6 +572,15 @@ components:
               - FUCHS_IMMO_5
               - FUCHS_IMMO_6
               - FUCHS_IMMO_7
+              - FUCHS_ECO_XE
+              - FUCHS_ECO_XT
+              - FUCHS_IMMO_WP
+              - FUCHS_IMMO_WS
+              - FUCHS_IMMO_XL
+              - FUCHS_IMMO_XP
+              - FUCHS_IMMO_XS
+              - FUCHS_START_XX
+              - FUCHS_START_XY
               - LBS_BAYERN_W4
               - LBS_BAYERN_W4_X30
               - LBS_BAYERN_W4_X35
@@ -577,12 +590,17 @@ components:
               - LBS_BAYERN_WF
               - LBS_BAYERN_WU
               - LBS_BAYERN_Z35
+              - LBS_BAYERN_Z35_RIESTER
               - LBS_BAYERN_Z5
+              - LBS_BAYERN_Z5_RIESTER
               - LBS_BAYERN_Z8
               - LBS_BAYERN_ZF
               - LBS_BAYERN_ZF_X45
+              - LBS_BAYERN_ZF_X45_RIESTER
               - LBS_BAYERN_ZF_X40
+              - LBS_BAYERN_ZF_X40_RIESTER
               - LBS_BAYERN_ZF_X35
+              - LBS_BAYERN_ZF_X35_RIESTER
               - LBS_HT_CLASSIC_S_2015
               - LBS_HT_CLASSIC_F_2015
               - LBS_HT_CLASSIC_L_2015
@@ -602,6 +620,7 @@ components:
               - LBS_NORD_N_FINANZIERER_F5
               - LBS_NORD_N_FINANZIERER_F6
               - LBS_NORD_N_FINANZIERER_F7
+              - LBS_NORD_N_FINANZIERER_MEINZUHAUSE
               - LBS_NORD_N_MODERNISIERER_MINIZINS
               - LBS_NORD_N_MODERNISIERER_M8
               - LBS_NORD_N_MODERNISIERER_MX
@@ -683,12 +702,14 @@ components:
               - LBS_SUEDWEST_LANGZEIT_PLUS_2019
               - LBS_SUEDWEST_KLASSIK_PLUS_2020
               - LBS_SUEDWEST_STANDARD_PLUS_2018
+              - LBS_SUEDWEST_LANGZEIT_PLUS_SPEZIAL
               - LBS_SAAR_PREMIUM_FLEX_18
               - LBS_SAAR_PREMIUM_SICHER_18
               - LBS_SAAR_PREMIUM_TOP_18
               - LBS_SAAR_EXTRA_GUENSTIG_18
               - LBS_SAAR_EXTRA_SICHER_18
               - LBS_SAAR_EXTRA_SPEZIAL_18
+              - LBS_SAAR_CLASSIC_21_ZUHAUSE
               - SIGNAL_IDUNA_FREIRAUM_F_35
               - SIGNAL_IDUNA_FREIRAUM_F_35_16
               - SIGNAL_IDUNA_FREIRAUM_F_45
@@ -5893,6 +5914,17 @@ components:
             $ref: '#/components/schemas/Problem'
     Forbidden:
       description: "Es fehlt die Berechtigung, um die Anfrage auszuführen"
+      headers:
+        X-TraceId:
+          description: Eine eindeutige technische Id zur Identifikation des Requests
+          schema:
+            type: string
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+    NotFound:
+      description: Es wurde kein Vorgang mit der angegebenen Vorgangsnummer gefunden
       headers:
         X-TraceId:
           description: Eine eindeutige technische Id zur Identifikation des Requests
