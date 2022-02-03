@@ -8,7 +8,7 @@ info:
     name: Europace AG
     url: http://developer.europace.de
     email: devsupport@europace2.de
-  version: 1.3.5; 6a77d3fe3ffbe225f5dcb6936066c2e7d17eafb3
+  version: 1.3.6; bf5638d3c88fad9ff16f0b0cb58abbb13657ec93
 externalDocs:
   url: https://developer.europace.de/api/baufismart-kundenangaben-api
 servers:
@@ -49,12 +49,6 @@ paths:
               $ref: '#/components/schemas/UpdateKundenangabenRequest'
         required: true
       responses:
-        "204":
-          description: Kundenangaben in einem bestehenden Vorgang überschrieben
-          headers:
-            X-TraceId:
-              $ref: '#/components/headers/tracingIdHeader'
-              style: simple
         "403":
           $ref: '#/components/responses/Forbidden'
         "409":
@@ -71,6 +65,12 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         "400":
           $ref: '#/components/responses/BadRequest'
+        "204":
+          description: Kundenangaben in einem bestehenden Vorgang überschrieben
+          headers:
+            X-TraceId:
+              $ref: '#/components/headers/tracingIdHeader'
+              style: simple
       security:
       - oAuth2:
         - baufinanzierung:vorgang:schreiben
@@ -103,14 +103,6 @@ paths:
           $ref: '#/components/responses/Forbidden'
         "409":
           $ref: '#/components/responses/Conflict'
-        "503":
-          $ref: '#/components/responses/ServiceNotAvailable'
-        "422":
-          $ref: '#/components/responses/UnprocessableEntity'
-        "429":
-          $ref: '#/components/responses/TooManyRequests'
-        "401":
-          $ref: '#/components/responses/Unauthorized'
         "201":
           description: Kundenangaben in neuen Vorgang importiert
           headers:
@@ -121,6 +113,14 @@ paths:
             application/json; version=1.0:
               schema:
                 $ref: '#/components/schemas/KundenangabenImportResponse'
+        "503":
+          $ref: '#/components/responses/ServiceNotAvailable'
+        "422":
+          $ref: '#/components/responses/UnprocessableEntity'
+        "429":
+          $ref: '#/components/responses/TooManyRequests'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
         "400":
           $ref: '#/components/responses/BadRequest'
       security:
@@ -704,6 +704,12 @@ components:
               - LBS_WEST_KONSTANT_35
               - LBS_WEST_KONSTANT_40
               - LBS_WEST_KONSTANT_50
+              - LBS_WEST_RIESTER_KONSTANT_35_ANGEBOT
+              - LBS_WEST_RIESTER_KONSTANT_40_ANGEBOT
+              - LBS_WEST_RIESTER_KONSTANT_50_ANGEBOT
+              - LBS_WEST_KONSTANT_35_ANGEBOT
+              - LBS_WEST_KONSTANT_40_ANGEBOT
+              - LBS_WEST_KONSTANT_50_ANGEBOT
               - LBS_SUEDWEST_KLASSIK_PLUS_2018
               - LBS_SUEDWEST_LANGZEIT_PLUS_2019
               - LBS_SUEDWEST_KLASSIK_PLUS_2020
