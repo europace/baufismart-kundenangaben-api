@@ -1,54 +1,56 @@
-# Neuen Vorgang mit Kundenangaben anlegen
-Die API erzeugt einen neuen Vorgang mit Hilfe von Kundenangaben. Als Ergebnis wird eine Referenz des neuen Vorgangs geliefert. 
+# Kundenangaben API
+As advisor with Kundenangaben API you can create new cases or update cases with customer data from your crm system or lead applications for a seamless and fast start of advising.
 
-Die neue Kundenangaben-API ersetzt die alte BEX-API, die unter https://github.com/europace/baufismart-vorgang-anlegen-api dokumentiert ist.
-Kundenangaben sind in anderen APIs von BaufiSmart (Vorgaenge-API oder Antraege-API) auch als _Erfasste Daten_ bekannt.
+Kundenangaben are also named as `Erfasste Daten` in Mortage APIs (Vorgaenge-API or Antraege-API) .
 
-![Vertrieb](https://img.shields.io/badge/-Vertrieb-lightblue)
-![Baufinanzierung](https://img.shields.io/badge/-Baufinanzierung-lightblue)
+![advisor](https://img.shields.io/badge/-advisor-lightblue)
+![mortgageLoan](https://img.shields.io/badge/-mortgageLoan-lightblue)
 
-[![Authentication](https://img.shields.io/badge/Auth-OAuth2-green)](https://docs.api.europace.de/baufinanzierung/authentifizierung/)
+[![Authentication](https://img.shields.io/badge/Auth-OAuth2-green)](https://docs.api.europace.de/common/authentifizierung/authorization-api/)
+
 [![GitHub release](https://img.shields.io/github/v/release/europace/baufismart-kundenangaben-api)](https://github.com/europace/baufismart-kundenangaben-api/releases)
 
 [![Pattern](https://img.shields.io/badge/Pattern-Tolerant%20Reader-yellowgreen)](https://martinfowler.com/bliki/TolerantReader.html)
 
-## Dokumentation
+## Documentation
 [![YAML](https://img.shields.io/badge/OAS-HTML_Doc-lightblue)](https://refined-github-html-preview.kidonng.workers.dev/europace/baufismart-kundenangaben-api/raw/master/reference/index.html)
 [![YAML](https://img.shields.io/badge/OAS-YAML-lightgrey)](https://github.com/europace/baufismart-kundenangaben-api/blob/master/kundenangaben-openapi.yaml)
 [![JSON](https://img.shields.io/badge/OAS-JSON-lightgrey)](https://github.com/europace/baufismart-kundenangaben-api/blob/master/kundenangaben-openapi.json)
 
 Feedback und Fragen zum Modell sind als [GitHub Issue](https://github.com/europace/baufismart-kundenangaben-api/issues/new) willkommen.
 
-## Anwendungsfälle der API
-- Vorgang mit Kundenangaben aus Leadantragstrecken oder CRM-System anlegen
+## Usecases
+- Create case with customer data from CRM system or lead applications
+- overwrite existing case with customer data
 
-- vorhandenen Vorgang mit Kundenangaben überschreiben
+## Quick Start
+To test our APIs and your use cases as quickly as possible, we have created a [Postman Collection](https://github.com/europace/api-quickstart) for you.
 
-## Schnellstart
-Damit du unsere APIs und deinen Anwendungsfall schnellstmöglich testen kannst, haben wir eine [Postman-Collection](https://docs.api.europace.de/baufinanzierung/schnellstart/) für dich zusammengestellt. 
+In the Postman collection in the folder "BaufiSmart Kundenangaben-API" you will find two examples. Since the data model in the Kundengaben API is very extensive, we provide a way to test/validate requests without storing data in Europace with the „validate customer data" request. This endpoint is for faster connectivity, but is not required for functionality.
+### Authentication
+Please use [![Authentication](https://img.shields.io/badge/Auth-OAuth2-green)](https://docs.api.europace.de/common/authentifizierung/authorization-api/) to get access to the APIs. The OAuth2 client requires the following scopes:
 
-In der Postman-Collection im Ordner "BaufiSmart Kundenangaben-API" findest du drei Beispiele. Da das Datenmodell in der Kundenangaben-API sehr umfangreich ist, stellen wir mit dem Request "Kundenangaben validieren" eine Möglichkeit zur Verfügung, mit der Anfragen getestet/validiert werden können, ohne dass Daten gespeichert werden. Dieser Endpunkt dient der schnelleren Anbindung, ist aber für die Funktionsweise nicht erforderlich.
+| Scope                               | API Use case                      |
+|-------------------------------------|-----------------------------------|
+| `baufinanzierung:echtgeschaeft`     | to use api in production mode     |
+| `baufinanzierung:vorgang:schreiben` | create cases for mortage loans    |
 
-### Authentifizierung
-Bitte benutze [![Authentication](https://img.shields.io/badge/Auth-OAuth2-green)](https://docs.api.europace.de/baufinanzierung/authentifizierung/), um Zugang zur API bekommen. Um die API verwenden zu können, benötigt der OAuth2-Client folgende Scopes:
+## Create case
+As Advisor you can create a case with your customers data to start seamless and fast advising.
 
-| Scope                                  | API-Usecase                                                      |
-| -------------------------------------- | ---------------------------------------------------------------- |
-| `baufinanzierung:vorgang:schreiben`    | Baufinanzierungsvorgänge anlegen und aktualisieren                                |
-| `baufinanzierung:echtgeschaeft`        | Vorgänge in Produktion anlegen, ansonsten nur Testmodus möglich  |
+Requirements:
+* OAuth Token has the scope `baufinanzierung:vorgang:schreiben`
+* caller is advisor of the case
 
-## Beispiel: Vorgang anlegen
+A customer wants to buy a single-family home for himself in Berlin. He has already saved up equity and has already given details of some preferences for financing. The rate should be in the amount of his current rent. He became aware of the financing intermediary through his employer Trisalis AG, which has a cooperation agreement with him and receives € 50 lead fee for each contract concluded as compensation for internal marketing.
 
-Ein Kunde möchte ein Einfamilienhaus für sich selbst in Berlin kaufen. Er hat bereits Eigenkapital angepart und schon Angaben zu einigen Präferenzen bei der Finanzierung gemacht. Die Rate soll in Höhe seiner jetzigen Miete sein. Er wurde durch seinen Arbeitgeber die Trisalis AG auf den Finanzierungsvermittler aufmerksam, der eine Kooperationsvereinbarung mit ihm hat und für jeden abgeschlossenen Vertrag 50 € Leadgebühr als Aufwandentschädigung für die interne Vermarktung erhält.
-
-Beispiel-Request:
+example-request:
 ``` http
 POST /kundenangaben HTTP/1.1
 Host: baufinanzierung.api.europace.de
 Content-Type: application/json
 Authorization: Bearer eyJraWQiOiJZUUZ...
 ```
-
 ``` json
 {
     "importMetadaten": {
@@ -58,11 +60,14 @@ Authorization: Bearer eyJraWQiOiJZUUZ...
         "leadtracking": {
             "kampagne": "Trisalis AG",
             "keyword": "Altersvorsorge - stark wie Beton",
-            "trackingId": "be8d40b0-25af-48ae-8c57-a1b72527f903",
-            "sendNotification": false
+            "trackingId": "be8d40b0-25af-48ae-8c57-a1b72527f903"
         },
         "zusaetzlicherEreignistext": "Premium-Kunde",
         "prioritaet": "HOCH",
+        "betreuung": {
+            "kundenbetreuer": "ABC12",
+            "bearbeiter": "ABC12"
+        },
         "tippgeber": {
             "tippgeberPartnerId": "{{PARTNER_ID}}", <-- PartnerID der Trisalis AG
             "tippgeberprovisionswunsch": {
@@ -231,23 +236,63 @@ Authorization: Bearer eyJraWQiOiJZUUZ...
 }
 ```
 
-Beispiel-Response:
-``` http
-201 - created
-```
+example-response:
 ``` json
+201 - created
 {
     "vorgangsnummer": "YX4MDU"
 }
 ```
 
-## Wo wird der Vorgang angelegt?
+## Replace case
+As Advisor the input data of the case has to be replaced, to use the current customer data from a crm system or digital self-disclosure.
+> Attention: The data will be completely replaced by the specified values. If data fields are not transferred, the data in the case will be replaced by ’null' and thus deleted.
 
-Besitzer eines Vorgangs ist immer der Kundenbetreuer. Die für ihn geltenden Einstellungen werden auf den Vorgang angewendet und er erhält i. d. R. auch die Vertriebsprovision. Der Bearbeiter des Vorgangs kann abweichen, wenn zum Beispiel die Vervollständigung der Antragsdaten durch eine Teamassistenz erfolgt oder ein Clearing stattfindet.
+Requirement:
+* OAuth token has the scope `baufinanzierung:vorgang:schreiben`
+* caller is editor of the case
 
-Ist der Kundenbetreuer nicht unter `betreuung` angegeben, wird im erzeugten Vorgang der Benutzer des API-Clients als Kundenbetreuer eingetragen. Ist kein Bearbeiter angegeben, wird bei der ersten Bearbeitung der Benutzer gefragt, ob er die Bearbeitung übernehmen möchte. 
+In the example the entered customer data of case A65JS6 will be replaced.
 
-Soll der Vorgang bei einem anderen Kundenbetreuer angelegt werden als dem API-Benutzer, dann empfehlen wir die Rollen des Vorgangs im Object `betreuung` einzustellen.
+Example-request:
+``` http
+PUT /kundenangaben/A65JS6 HTTP/1.1
+Host: baufinanzierung.api.europace.de
+Content-Type: application/json
+Authorization: Bearer eyJraWQiOiJZUUZYT...
+```
+```json
+{
+  "updateMetadaten": {
+    "tippgeber": {
+      "tippgeberPartnerId": "AAV43",
+      "tippgeberprovisionswunsch": {
+        "@type": "BETRAG",
+        "betrag": 567.1
+      }
+    }
+  },
+  "kundenangaben": {
+    "haushalte": [
+      {
+        "kunden": [ ...
+```
+[Body as in create case (POST)]
+
+
+example-response:
+``` http
+204 - no content
+```
+
+## FAQ
+### Where is the case created?
+
+The owner of a case is always the advsior. His settings are applied to the case and teh advisor  usually also receives the sales commission. The editor of the case may differ, for example, if the completion of the customer data is done by a team assistant or a clearing takes place.
+
+If the advisor is not specified under ‚betreuung', the subject of the API client is entered as advisor in the generated case. If no editor is specified, the user will be asked if he/she wants to take over the editing during the first editing.
+
+If the case is to be created for a different advisor than the API user, then we recommend setting the roles of the case in the object ‚betreuung'.
 
 ``` json
 "importMetadaten": {
@@ -258,93 +303,29 @@ Soll der Vorgang bei einem anderen Kundenbetreuer angelegt werden als dem API-Be
         ...
 ```
 
-Mit Hilfe der sog. "Impersonierung" ist es auch möglich, den Vorgang im Namen eines anderen Benutzers anzulegen. Wie das genau geht, wird in der [Autorization-API](https://docs.api.europace.de/baufinanzierung/authentifizierung/#wie-authentifiziere-ich-verschiedene-benutzer-mit-einem-client-impersionieren) erklärt.
+With "impersonation" it is also possible to create the case in the name of another user. How to do this exactly is described in the [Autorization-API](https://docs.api.europace.de/baufinanzierung/authentifizierung/#wie-authentifiziere-ich-verschiedene-benutzer-mit-einem-client-impersionieren) erklärt.
 
-## Wie finde ich meinen Kunden wieder?
+### How do I find my customer again?
 
-Sowohl für den Vorgang als auch die Kunden lassen sich externe Referenzen mitgeben, die über die [Vorgaenge-API](https://docs.api.europace.de/baufinanzierung/vorgaenge/vorgang-auslesen-api/) und [Antraege-API](https://docs.api.europace.de/baufinanzierung/antraege/antraege-api/) wieder ausgelesen werden können. Damit wird ermöglicht, dass Datensätze in CRM- oder Banksystemen beim Auslesen wiedererkannt werden können. 
+External references can be specified for both the case and the customers, which can be read out again via the [Vorgaenge-API](https://docs.api.europace.de/baufinanzierung/vorgaenge/vorgang-auslesen-api/) and [Antraege-API](https://docs.api.europace.de/baufinanzierung/antraege/antraege-api/). This makes it possible to recognize data records in CRM or banking systems when they are read out.
 
-Folgende Referenzen sind möglich:
-* Vorgang: `externeVorgangsId`
-* Kunden: `externeKundenId`
+The following references are possible:
+* case: `externeVorgangsId`
+* customer: `externeKundenId`
 
-## Wie gelange ich direkt in den angelegten Vorgang?
+### How can I open the created case in the browser?
 
-Springe über https://www.europace2.de/vorgang/oeffne/XXXXXX direkt in den angelegten Vorgang.
-Die Kundenangaben-API liefert eine Vorgangsnummer zurück. XXXXXX steht für die Vorgangsnummer.
+Open the created case via: `https://www.europace2.de/vorgang/oeffne/XXXXXX` \
+The Kundenangaben-API  returns a case number. XXXXXX stands for the case number.
 
-## Was passiert mit falschen Datenfeldern? 
+### What happens to incorrect data fields?
 
-Mit der Kundenangaben-API bieten wir eine möglichst fehlertolerante API an. Fehler würden zu Unterbrechungen in Lead-Pozessen führen und so ggf. zu frustrierten Kunden. Im Zweifel ist es wichtiger einzelne Datenfelder nicht zu haben als gar keine Daten. 
+We offer the most error-tolerant API possible. Errors would lead to interruptions in lead processes and thus possibly to frustrated customers. In case of doubt, it is more important not to have individual data fields than no data at all.
 
-Um die Fehlertoleranz der API zu erhöhen, wendet die API das Tolerant Reader Pattern an. Das heisst, Felder oder Enum-Werte, die der API unbekannt sind, werden ignoriert. Beispielsweise sind im Typ `Bauspardarlehen.abschlussgebuehrmodus` nur die Werte `SOFORTZAHLUNG` und `VERRECHNUNG` erlaubt. Andere Werte werden von der API ignoriert und so verarbeitet, als wäre das Feld leer. 
+To increase the error tolerance of the API, the API applies the Tolerant Reader Pattern. That is, fields or enum values that are unknown to the API are ignored. For example, in the type `Bauspardarlehen.abschlussgebuehrmodus` only the values `SOFORTZAHLUNG` and `VERRECHNUNG ` are allowed. Other values are ignored by the API and processed as if the field was empty.
 
-## Beispiel: Vorgang überschreiben
-Die erfassten Kundenangaben des Vorgangs A65JS6 sollen überschrieben werden.
-> Achtung: Die Daten werden vollständig durch die angegeben Werte ersetzt. Werden Datenfelder nicht übertragen, werden die Daten im Vorgang durch `null` ersetzt und damit gelöscht.
+## Terms of use
+The APIs are provided under the following [Terms of Use](https://docs.api.europace.de/nutzungsbedingungen).
 
-Voraussetzung:
-* OAuth Token hat den Scope `baufinanzierung:vorgang:schreiben`
-* Aufrufer ist Bearbeiter des Vorgangs und hat somit auch Zugriff
-
-Beispiel-Request:
-``` http
-PUT /kundenangaben/A65JS6 HTTP/1.1
-Host: baufinanzierung.api.europace.de
-Content-Type: application/json
-Authorization: Bearer eyJraWQiOiJZUUZYT...
-```
-
-``` json
-{
-    "updateMetadaten": {
-        "tippgeber": {
-            "tippgeberPartnerId": "{{PARTNER_ID}}", 
-            "tippgeberprovisionswunsch": {
-                "@type": "BETRAG",
-                "betrag": 50
-            }
-        }
-    },
-    "kundenangaben": {
-        [Kundenangaben-Struktur wie beim Vorgang anlegen]
-    }
-}
-```
-
-Beispiel-Response:
-``` http
-204 - no content
-```
-
-## FAQs
-
-Q: Wird die alte BEX-Schnittstelle durch die neue Kundenangaben-API ersetzt werden? 
-
-A: Ja, die neue Kundenangaben-API wird die alte BEX-Schnittstelle ersetzen.
-
----
-
-Q: Wird die alte BEX-Schnittstelle noch weiterentwickelt?
-
-A: Nein, die alte BEX-Schnittstelle wird nicht mehr weiterentwickelt und Mitte 2021 abgeschaltet.
-
----
-
-Q: Wie kommt es, das die Kundenangaben-API eine neue Struktur hat?
-
-A: Die Kundenangaben-API ermöglicht zum ersten Mal den Übertrag aller in BaufiSmart erfassbaren Daten und ist dennoch übersichtlicher und besser verständlich. Die Struktur wurde in mehreren Feedbackrunden geschärft.
- 
-Die alte Struktur der BEX-Schnittstelle und die Struktur der Vorgänge-API weichen historisch bedingt voneinander ab. Das Datenmodell der Kundenangaben-API definiert den neuen Standard. Wir planen zukünftige APIs in Absprache mit unseren Partnern auf die Struktur der Kundenangaben-API aufzubauen.
-
----
-
-Q: Wann ist es sinnvoll mit der Anbindung der Kundenangaben-API zu beginnen?
-
-A: Sofort, jetzt, now! Do it! Seit Release 1.0.0 ist die API produktiv einsetzbar.
-
-## Kontakt
-Kontakt für Support: [devsupport@europace2.de](mailto:devsupport@europace2.de)
-
-## Nutzungsbedingungen
-Die APIs werden unter folgenden [Nutzungsbedingungen](https://docs.api.europace.de/nutzungsbedingungen/) zur Verfügung gestellt.
+## Support
+If you have any questions or problems, you can contact devsupport@europace2.de.
