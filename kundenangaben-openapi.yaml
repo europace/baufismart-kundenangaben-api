@@ -8,7 +8,7 @@ info:
     name: Europace AG
     url: http://developer.europace.de
     email: devsupport@europace2.de
-  version: 1.3.7; 986a12390ef1478e5988ff8c48079dca3f21edd2
+  version: 1.3.8; 89b2e1dc4ec59a6f1e5ce9f80167f03b7b433438
 externalDocs:
   url: https://developer.europace.de/api/baufismart-kundenangaben-api
 servers:
@@ -51,14 +51,14 @@ paths:
       responses:
         "403":
           $ref: '#/components/responses/Forbidden'
-        "409":
-          $ref: '#/components/responses/Conflict'
         "204":
           description: Kundenangaben in einem bestehenden Vorgang überschrieben
           headers:
             X-TraceId:
               $ref: '#/components/headers/tracingIdHeader'
               style: simple
+        "409":
+          $ref: '#/components/responses/Conflict'
         "404":
           $ref: '#/components/responses/NotFound'
         "503":
@@ -564,6 +564,8 @@ components:
               - BKM_HAUS_PLUS_NIEDRIGE_SPARRATE
               - BKM_HAUS_PLUS_NIEDRIGE_TILGUNG
               - BKM_HAUS_PLUS_BESTER_ZINS
+              - BKM_ZINS_PLUS_2_BONUS
+              - BKM_ZINS_PLUS_3_BONUS
               - FUCHS_IMMO_1
               - FUCHS_IMMO_1_PLUS
               - FUCHS_IMMO_2
