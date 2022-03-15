@@ -8,7 +8,7 @@ info:
     name: Europace AG
     url: http://developer.europace.de
     email: devsupport@europace2.de
-  version: 1.3.8; 89b2e1dc4ec59a6f1e5ce9f80167f03b7b433438
+  version: 1.4; 01ef61578d6c76ee3351237cfae35f08dd499a1a
 externalDocs:
   url: https://developer.europace.de/api/baufismart-kundenangaben-api
 servers:
@@ -17,10 +17,60 @@ servers:
 tags:
 - name: Import
   description: Kundenangaben in einen neuen Vorgang importieren
+- name: Get
+  description: Kundenangaben für einen bestehenden Vorgang laden
 - name: Update
   description: Kundenangaben in einem bestehenden Vorgang überschreiben
 paths:
   /kundenangaben/{vorgangsnummer}:
+    get:
+      tags:
+      - Get
+      summary: Kundenangaben für einen bestehenden Vorgang laden
+      description: Kundenangaben werden aus einem bestehenden Vorgang geladen.
+      operationId: getKundenangaben
+      parameters:
+      - name: Authorization
+        in: header
+        description: Authorization Bearer Token
+        required: true
+        schema:
+          type: string
+      - name: X-TraceId
+        $ref: '#/components/parameters/tracingIdParam'
+      - name: vorgangsnummer
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "200":
+          description: Kundenangaben für einen bestehenden Vorgang
+          headers:
+            X-TraceId:
+              $ref: '#/components/headers/tracingIdHeader'
+              style: simple
+          content:
+            application/json; version=1.0:
+              schema:
+                $ref: '#/components/schemas/Kundenangaben'
+        "409":
+          $ref: '#/components/responses/Conflict'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "503":
+          $ref: '#/components/responses/ServiceNotAvailable'
+        "429":
+          $ref: '#/components/responses/TooManyRequests'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "400":
+          $ref: '#/components/responses/BadRequest'
+      security:
+      - oAuth2:
+        - baufinanzierung:vorgang:lesen
     put:
       tags:
       - Update
@@ -49,14 +99,14 @@ paths:
               $ref: '#/components/schemas/UpdateKundenangabenRequest'
         required: true
       responses:
-        "403":
-          $ref: '#/components/responses/Forbidden'
         "204":
           description: Kundenangaben in einem bestehenden Vorgang überschrieben
           headers:
             X-TraceId:
               $ref: '#/components/headers/tracingIdHeader'
               style: simple
+        "403":
+          $ref: '#/components/responses/Forbidden'
         "409":
           $ref: '#/components/responses/Conflict'
         "404":
@@ -103,8 +153,6 @@ paths:
           $ref: '#/components/responses/Forbidden'
         "409":
           $ref: '#/components/responses/Conflict'
-        "503":
-          $ref: '#/components/responses/ServiceNotAvailable'
         "201":
           description: Kundenangaben in neuen Vorgang importiert
           headers:
@@ -115,6 +163,8 @@ paths:
             application/json; version=1.0:
               schema:
                 $ref: '#/components/schemas/KundenangabenImportResponse'
+        "503":
+          $ref: '#/components/responses/ServiceNotAvailable'
         "422":
           $ref: '#/components/responses/UnprocessableEntity'
         "429":
