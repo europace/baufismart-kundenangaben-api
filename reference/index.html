@@ -2152,6 +2152,12 @@
       </li>
       <li><a href="#_paths">Ressourcen</a>
       <ul class="sectlevel2">
+            <li><a href="#_api_Get">Get</a>
+              <ul class="sectlevel3">
+                    <li><a href="#_resource_getKundenangaben">Kundenangaben für einen bestehenden Vorgang laden</a></li>
+              </ul>
+            </li>
+          </ul>
             <li><a href="#_api_Import">Import</a>
               <ul class="sectlevel3">
                     <li><a href="#_resource_importKundenangaben">Kundenangaben in einen neuen Vorgang importieren</a></li>
@@ -2793,7 +2799,7 @@
           <div class="sect2">
             <h3 id="_aktuelle_version">Aktuelle Version</h3>
             <div class="paragraph">
-              <p><em>Version</em> : 1.3.8; 89b2e1dc4ec59a6f1e5ce9f80167f03b7b433438</p>
+              <p><em>Version</em> : 1.4; 01ef61578d6c76ee3351237cfae35f08dd499a1a</p>
             </div>
           </div>
         <div class="sect2">
@@ -2880,6 +2886,413 @@
   <div class="sect1">
     <h2 id="_paths">Ressourcen</h2>
     <div class="sectionbody">
+            <div class="sect2">
+              <h3 id="_api_Get">Get</h3>
+              <div class="paragraph">
+                <p></p>
+              </div>
+  
+                <div class="sect3">
+                  <h4 id="_resource_getKundenangaben">Kundenangaben für einen bestehenden Vorgang laden (<span class="nickname">getKundenangaben</span>)</h4>
+                  <div class="literalblock">
+                    <div class="content">
+                      <pre>get /kundenangaben/{vorgangsnummer}</pre>
+                    </div>
+                  </div>
+                  <div class="sect4">
+                    <h5 id="_beschreibung">Beschreibung</h5>
+                    <div class="paragraph">
+                      <p>Kundenangaben werden aus einem bestehenden Vorgang geladen.</p>
+                    </div>
+                  </div>
+                  <div class="sect4">
+                    <h5 id="_parameter">Parameter</h5>
+                    <table class="tableblock frame-all grid-all stretch">
+                      <colgroup>
+                        <col style="width: 10%;">
+                        <col style="width: 15%;">
+                        <col style="width: 45%;">
+                        <col style="width: 20%;">
+                        <col style="width: 10%;">
+                      </colgroup>
+                      <thead>
+                      <tr>
+                        <th class="tableblock halign-left valign-middle">Typ</th>
+                        <th class="tableblock halign-left valign-middle">Name</th>
+                        <th class="tableblock halign-left valign-middle">Beschreibung</th>
+                        <th class="tableblock halign-left valign-middle">Typ</th>
+                        <th class="tableblock halign-left valign-middle">Standard</th>
+                      </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td class="tableblock halign-left valign-middle">
+                            <div class="content">
+                              <div class="paragraph">
+                                <p>
+                                  <strong>Header</strong>
+                                  
+                                  
+                                  
+                                  
+                                </p>
+                              </div>
+                            </div>
+                          </td>
+                          <td class="tableblock halign-left valign-middle">
+                            <div class="content">
+                              <div class="paragraph">
+                                <p><strong>Authorization</strong><br>
+                                  <em>required</em></p>
+                              </div>
+                            </div>
+                          </td>
+                          <td class="tableblock halign-left valign-middle">
+                            <div class="content">Authorization Bearer Token</div>
+                          </td>
+                          <td class="tableblock halign-left valign-middle">
+                            <div class="content">
+                              <div class="paragraph">
+                                <p>String</p>
+                              </div>
+                            </div>
+                          </td>
+                          <td class="tableblock halign-left valign-middle">
+                            <div class="content"></div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="tableblock halign-left valign-middle">
+                            <div class="content">
+                              <div class="paragraph">
+                                <p>
+                                  
+                                  <strong>Path</strong>
+                                  
+                                  
+                                  
+                                </p>
+                              </div>
+                            </div>
+                          </td>
+                          <td class="tableblock halign-left valign-middle">
+                            <div class="content">
+                              <div class="paragraph">
+                                <p><strong>vorgangsnummer</strong><br>
+                                  <em>required</em></p>
+                              </div>
+                            </div>
+                          </td>
+                          <td class="tableblock halign-left valign-middle">
+                            <div class="content"></div>
+                          </td>
+                          <td class="tableblock halign-left valign-middle">
+                            <div class="content">
+                              <div class="paragraph">
+                                <p>String</p>
+                              </div>
+                            </div>
+                          </td>
+                          <td class="tableblock halign-left valign-middle">
+                            <div class="content"></div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="tableblock halign-left valign-middle">
+                            <div class="content">
+                              <div class="paragraph">
+                                <p>
+                                  <strong>Header</strong>
+                                  
+                                  
+                                  
+                                  
+                                </p>
+                              </div>
+                            </div>
+                          </td>
+                          <td class="tableblock halign-left valign-middle">
+                            <div class="content">
+                              <div class="paragraph">
+                                <p><strong>X-TraceId</strong><br>
+                                  <em>optional</em></p>
+                              </div>
+                            </div>
+                          </td>
+                          <td class="tableblock halign-left valign-middle">
+                            <div class="content">Eine eindeutige technische Id zur Identifikation des Requests</div>
+                          </td>
+                          <td class="tableblock halign-left valign-middle">
+                            <div class="content">
+                              <div class="paragraph">
+                                <p>String</p>
+                              </div>
+                            </div>
+                          </td>
+                          <td class="tableblock halign-left valign-middle">
+                            <div class="content"></div>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <div class="sect4">
+                    <h5 id="_antworten">Antworten</h5>
+                    <table class="tableblock frame-all grid-all stretch">
+                      <colgroup>
+                        <col style="width: 10%;">
+                        <col style="width: 70%;">
+                        <col style="width: 20%;">
+                      </colgroup>
+                      <thead>
+                      <tr>
+                        <th class="tableblock halign-left valign-middle">HTTP Code</th>
+                        <th class="tableblock halign-left valign-middle">Beschreibung</th>
+                        <th class="tableblock halign-left valign-middle">Typ</th>
+                      </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td class="tableblock halign-left valign-middle">
+                            <div class="content">
+                              <div class="paragraph">
+                                <p><strong>403</strong></p>
+                              </div>
+                            </div>
+                          </td>
+                          <td class="tableblock halign-left valign-middle">
+                            <div class="content">
+                              <div class="paragraph">
+                                <p>Es fehlt die Berechtigung, um die Anfrage auszuführen</p>
+                              </div>
+                            </div>
+                          </td>
+                          <td class="tableblock halign-left valign-middle">
+                            <div class="content">
+                              <div class="paragraph">
+                                <p><a href="#_Problem">Problem</a></p>
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="tableblock halign-left valign-middle">
+                            <div class="content">
+                              <div class="paragraph">
+                                <p><strong>200</strong></p>
+                              </div>
+                            </div>
+                          </td>
+                          <td class="tableblock halign-left valign-middle">
+                            <div class="content">
+                              <div class="paragraph">
+                                <p>Kundenangaben für einen bestehenden Vorgang</p>
+                              </div>
+                            </div>
+                          </td>
+                          <td class="tableblock halign-left valign-middle">
+                            <div class="content">
+                              <div class="paragraph">
+                                <p><a href="#_Kundenangaben">Kundenangaben</a></p>
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="tableblock halign-left valign-middle">
+                            <div class="content">
+                              <div class="paragraph">
+                                <p><strong>409</strong></p>
+                              </div>
+                            </div>
+                          </td>
+                          <td class="tableblock halign-left valign-middle">
+                            <div class="content">
+                              <div class="paragraph">
+                                <p>Kundenbetreuer oder Bearbeiter können nicht festgelegt werden. Die Ursache sind entweder fehlende Übernahmerechte oder eine nicht vorhandene Plakette</p>
+                              </div>
+                            </div>
+                          </td>
+                          <td class="tableblock halign-left valign-middle">
+                            <div class="content">
+                              <div class="paragraph">
+                                <p><a href="#_Problem">Problem</a></p>
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="tableblock halign-left valign-middle">
+                            <div class="content">
+                              <div class="paragraph">
+                                <p><strong>404</strong></p>
+                              </div>
+                            </div>
+                          </td>
+                          <td class="tableblock halign-left valign-middle">
+                            <div class="content">
+                              <div class="paragraph">
+                                <p>Es wurde kein Vorgang mit der angegebenen Vorgangsnummer gefunden</p>
+                              </div>
+                            </div>
+                          </td>
+                          <td class="tableblock halign-left valign-middle">
+                            <div class="content">
+                              <div class="paragraph">
+                                <p><a href="#_Problem">Problem</a></p>
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="tableblock halign-left valign-middle">
+                            <div class="content">
+                              <div class="paragraph">
+                                <p><strong>503</strong></p>
+                              </div>
+                            </div>
+                          </td>
+                          <td class="tableblock halign-left valign-middle">
+                            <div class="content">
+                              <div class="paragraph">
+                                <p>Der Service kann den Request momentan nicht verarbeiten</p>
+                              </div>
+                            </div>
+                          </td>
+                          <td class="tableblock halign-left valign-middle">
+                            <div class="content">
+                              <div class="paragraph">
+                                <p><a href="#_Problem">Problem</a></p>
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="tableblock halign-left valign-middle">
+                            <div class="content">
+                              <div class="paragraph">
+                                <p><strong>429</strong></p>
+                              </div>
+                            </div>
+                          </td>
+                          <td class="tableblock halign-left valign-middle">
+                            <div class="content">
+                              <div class="paragraph">
+                                <p>Der Service wurde zu häufig hintereinander aufgerufen.</p>
+                              </div>
+                            </div>
+                          </td>
+                          <td class="tableblock halign-left valign-middle">
+                            <div class="content">
+                              <div class="paragraph">
+                                <p><a href="#_Problem">Problem</a></p>
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="tableblock halign-left valign-middle">
+                            <div class="content">
+                              <div class="paragraph">
+                                <p><strong>401</strong></p>
+                              </div>
+                            </div>
+                          </td>
+                          <td class="tableblock halign-left valign-middle">
+                            <div class="content">
+                              <div class="paragraph">
+                                <p>Die Authentifizierung ist fehlgeschlagen</p>
+                              </div>
+                            </div>
+                          </td>
+                          <td class="tableblock halign-left valign-middle">
+                            <div class="content">
+                              <div class="paragraph">
+                                <p><a href="#_"></a></p>
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="tableblock halign-left valign-middle">
+                            <div class="content">
+                              <div class="paragraph">
+                                <p><strong>400</strong></p>
+                              </div>
+                            </div>
+                          </td>
+                          <td class="tableblock halign-left valign-middle">
+                            <div class="content">
+                              <div class="paragraph">
+                                <p>Der Request hat ein fehlerhaftes Format oder der Datentyp eines Felds weicht von der Spezifikation ab.</p>
+                              </div>
+                            </div>
+                          </td>
+                          <td class="tableblock halign-left valign-middle">
+                            <div class="content">
+                              <div class="paragraph">
+                                <p><a href="#_BadRequestProblem">BadRequestProblem</a></p>
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                    <div class="sect4">
+                      <h5 id="_erzeugt">Erzeugt</h5>
+                      <div class="ulist">
+                        <ul>
+                            <li><code>application/problem+json</code></li>
+                            <li><code>application/json; version=1.0</code></li>
+                        </ul>
+                      </div>
+                    </div>
+                  <div class="sect4">
+                    <h5 id="_sicherheit">Sicherheit</h5>
+                    <table class="tableblock frame-all grid-all stretch">
+                      <colgroup>
+                        <col style="width: 15%;">
+                        <col style="width: 20%;">
+                        <col style="width: 65%;">
+                      </colgroup>
+                      <thead>
+                      <tr>
+                        <th class="tableblock halign-left valign-middle">Typ</th>
+                        <th class="tableblock halign-left valign-middle">Name</th>
+                        <th class="tableblock halign-left valign-middle">Scopes</th>
+                      </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td class="tableblock halign-left valign-middle">
+                            <div class="content">
+                              <div class="paragraph">
+                                <p><strong>oauth2</strong></p>
+                              </div>
+                            </div>
+                          </td>
+                          <td class="tableblock halign-left valign-middle">
+                            <div class="content">
+                              <div class="paragraph">
+                                <p><strong><a href="#_oauth2">oAuth2</a></strong></p>
+                              </div>
+                            </div>
+                          </td>
+                          <td class="tableblock halign-left valign-middle">
+                            <div class="content">
+                              <div class="paragraph">
+                                  <p><code>baufinanzierung:vorgang:schreiben</code></p>
+                                  <p><code>baufinanzierung:echtgeschaeft</code></p>
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+            </div>
             <div class="sect2">
               <h3 id="_api_Import">Import</h3>
               <div class="paragraph">
@@ -3096,29 +3509,6 @@
                           <td class="tableblock halign-left valign-middle">
                             <div class="content">
                               <div class="paragraph">
-                                <p><strong>503</strong></p>
-                              </div>
-                            </div>
-                          </td>
-                          <td class="tableblock halign-left valign-middle">
-                            <div class="content">
-                              <div class="paragraph">
-                                <p>Der Service kann den Request momentan nicht verarbeiten</p>
-                              </div>
-                            </div>
-                          </td>
-                          <td class="tableblock halign-left valign-middle">
-                            <div class="content">
-                              <div class="paragraph">
-                                <p><a href="#_Problem">Problem</a></p>
-                              </div>
-                            </div>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td class="tableblock halign-left valign-middle">
-                            <div class="content">
-                              <div class="paragraph">
                                 <p><strong>201</strong></p>
                               </div>
                             </div>
@@ -3134,6 +3524,29 @@
                             <div class="content">
                               <div class="paragraph">
                                 <p><a href="#_KundenangabenImportResponse">KundenangabenImportResponse</a></p>
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="tableblock halign-left valign-middle">
+                            <div class="content">
+                              <div class="paragraph">
+                                <p><strong>503</strong></p>
+                              </div>
+                            </div>
+                          </td>
+                          <td class="tableblock halign-left valign-middle">
+                            <div class="content">
+                              <div class="paragraph">
+                                <p>Der Service kann den Request momentan nicht verarbeiten</p>
+                              </div>
+                            </div>
+                          </td>
+                          <td class="tableblock halign-left valign-middle">
+                            <div class="content">
+                              <div class="paragraph">
+                                <p><a href="#_Problem">Problem</a></p>
                               </div>
                             </div>
                           </td>
@@ -3747,29 +4160,6 @@
                           <td class="tableblock halign-left valign-middle">
                             <div class="content">
                               <div class="paragraph">
-                                <p><strong>403</strong></p>
-                              </div>
-                            </div>
-                          </td>
-                          <td class="tableblock halign-left valign-middle">
-                            <div class="content">
-                              <div class="paragraph">
-                                <p>Es fehlt die Berechtigung, um die Anfrage auszuführen</p>
-                              </div>
-                            </div>
-                          </td>
-                          <td class="tableblock halign-left valign-middle">
-                            <div class="content">
-                              <div class="paragraph">
-                                <p><a href="#_Problem">Problem</a></p>
-                              </div>
-                            </div>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td class="tableblock halign-left valign-middle">
-                            <div class="content">
-                              <div class="paragraph">
                                 <p><strong>204</strong></p>
                               </div>
                             </div>
@@ -3785,6 +4175,29 @@
                             <div class="content">
                               <div class="paragraph">
                                 <p><a href="#_"></a></p>
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="tableblock halign-left valign-middle">
+                            <div class="content">
+                              <div class="paragraph">
+                                <p><strong>403</strong></p>
+                              </div>
+                            </div>
+                          </td>
+                          <td class="tableblock halign-left valign-middle">
+                            <div class="content">
+                              <div class="paragraph">
+                                <p>Es fehlt die Berechtigung, um die Anfrage auszuführen</p>
+                              </div>
+                            </div>
+                          </td>
+                          <td class="tableblock halign-left valign-middle">
+                            <div class="content">
+                              <div class="paragraph">
+                                <p><a href="#_Problem">Problem</a></p>
                               </div>
                             </div>
                           </td>
