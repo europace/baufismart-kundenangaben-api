@@ -20,7 +20,10 @@ Kundenangaben are also named as `Erfasste Daten` in Mortage APIs (Vorgaenge-API 
 Feedback und Fragen zum Modell sind als [GitHub Issue](https://github.com/europace/baufismart-kundenangaben-api/issues/new) willkommen.
 
 ## Usecases
-- Create case with customer data from CRM system or lead applications
+- create case with customer data from CRM system or lead applications
+- get case with customer data 
+    - to update CRM system or lead applications or
+    - to create own financing proposals with your structure, story and design
 - overwrite existing case with customer data
 
 ## Quick Start
@@ -244,6 +247,70 @@ example-response:
 }
 ```
 
+## Get case 
+As advisor I can read out the data of the case, to create an individual financial proposal for a convincing sales story.
+
+Requirements:
+* authenticated as advisor, editor or sales organisation with access to the case
+* OAuth token has the scope `baufinanzierung:vorgang:lesen`
+
+In the example you'll get customer data of case YX4MDU.
+
+example-request:
+``` http
+GET /kundenangaben/YX4MDU HTTP/1.1
+Host: baufinanzierung.api.europace.de
+Content-Type: application/json
+Authorization: Bearer eyJraWQiOiJZUUZYT...
+```
+
+example-response:
+``` json
+{       
+    "haushalte": [
+        {
+            "kunden": [
+                {
+                    "externeKundenId": "extKunde1",
+                    "referenzId": "jsonRef1",
+                    "personendaten": {
+                        "person": {
+                            "titel": {
+                                "prof": false,
+                                "dr": false
+                            },
+                            "anrede": "HERR",
+                            "vorname": "Max",
+                            "nachname": "Mustermann"
+                        }
+                    },
+                    "wohnsituation": {
+                        "anschrift": {
+                            "strasse": "Teststr.",
+                            "hausnummer": "55",
+                            "plz": "10179",
+                            "ort": "Berlin"
+                        }
+                    },
+                    ...
+                    ...
+                    ...
+                }
+            ]
+        }
+    ],
+    "finanzierungsobjekt": {
+        ...
+    },
+    "finanzierungsbedarf": {
+        ...
+    },
+    "bankverbindung": {
+        ...
+    }
+}
+```
+
 ## Replace case
 As Advisor the input data of the case has to be replaced, to use the current customer data from a crm system or digital self-disclosure.
 > Attention: The data will be completely replaced by the specified values. If data fields are not transferred, the data in the case will be replaced by ’null' and thus deleted.
@@ -254,7 +321,7 @@ Requirement:
 
 In the example the entered customer data of case A65JS6 will be replaced.
 
-Example-request:
+example-request:
 ``` http
 PUT /kundenangaben/A65JS6 HTTP/1.1
 Host: baufinanzierung.api.europace.de

@@ -8,7 +8,7 @@ info:
     name: Europace AG
     url: http://developer.europace.de
     email: devsupport@europace2.de
-  version: 1.4; 01ef61578d6c76ee3351237cfae35f08dd499a1a
+  version: 1.4.1; 24cd7244bda13825de084f277e949bc559c7cb32
 externalDocs:
   url: https://developer.europace.de/api/baufismart-kundenangaben-api
 servers:
@@ -46,16 +46,6 @@ paths:
       responses:
         "403":
           $ref: '#/components/responses/Forbidden'
-        "200":
-          description: Kundenangaben für einen bestehenden Vorgang
-          headers:
-            X-TraceId:
-              $ref: '#/components/headers/tracingIdHeader'
-              style: simple
-          content:
-            application/json; version=1.0:
-              schema:
-                $ref: '#/components/schemas/Kundenangaben'
         "409":
           $ref: '#/components/responses/Conflict'
         "404":
@@ -66,6 +56,16 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
         "401":
           $ref: '#/components/responses/Unauthorized'
+        "200":
+          description: Kundenangaben für einen bestehenden Vorgang
+          headers:
+            X-TraceId:
+              $ref: '#/components/headers/tracingIdHeader'
+              style: simple
+          content:
+            application/json; version=1.0:
+              schema:
+                $ref: '#/components/schemas/Kundenangaben'
         "400":
           $ref: '#/components/responses/BadRequest'
       security:
@@ -99,12 +99,6 @@ paths:
               $ref: '#/components/schemas/UpdateKundenangabenRequest'
         required: true
       responses:
-        "204":
-          description: Kundenangaben in einem bestehenden Vorgang überschrieben
-          headers:
-            X-TraceId:
-              $ref: '#/components/headers/tracingIdHeader'
-              style: simple
         "403":
           $ref: '#/components/responses/Forbidden'
         "409":
@@ -115,6 +109,12 @@ paths:
           $ref: '#/components/responses/ServiceNotAvailable'
         "422":
           $ref: '#/components/responses/UnprocessableEntity'
+        "204":
+          description: Kundenangaben in einem bestehenden Vorgang überschrieben
+          headers:
+            X-TraceId:
+              $ref: '#/components/headers/tracingIdHeader'
+              style: simple
         "429":
           $ref: '#/components/responses/TooManyRequests'
         "401":
@@ -3465,6 +3465,7 @@ components:
             - AACHENER_BAUSPARKASSE
             - ABAKUS_BANK
             - ABRECHNUNGSBANK
+            - ABRNG_CHECK24
             - ABRECHNUNGSBANK_RATENKREDIT
             - ABRECHNUNGSBSK
             - ACADEMY
@@ -3538,6 +3539,7 @@ components:
             - DEUTSCHE_BANK_TOPBAUFI
             - DEUTSCHE_BANK_PFK
             - DEUTSCHE_BANK_PFK_RATENKREDIT
+            - DEUTSCHE_LEBENSVERSICHERUNG
             - DEUTSCHER_RING
             - DEUTSCHER_RING_BSV
             - DEUTSCHER_RING_EFI
@@ -3560,6 +3562,7 @@ components:
             - DTBANK_INDIVID_LUEB
             - DTBANK_INDIVID_MUC
             - DZ_HYP
+            - DZ_HYP_EP
             - DZ_HYP_TEST
             - ERFURTER_BANK
             - ERGO
@@ -3587,6 +3590,7 @@ components:
             - HDI
             - HEIDENHEIMER_VOBA
             - HERNER_SPK
+            - HUK
             - HYPOVEREINSBANK
             - IKANO_BANK
             - IKANO_BANK_RATENKREDIT
@@ -3614,6 +3618,7 @@ components:
             - KSK_DOEBELN_RATENKREDIT
             - KSK_DUESSELDORF
             - KSK_EICHSFELD
+            - KSK_ERDING_DORFEN
             - KSK_ESSLINGEN
             - KSK_EUSKIRCHEN
             - KSK_FREUDENSTADT
@@ -3623,7 +3628,6 @@ components:
             - KSK_HALLE_WEST
             - KSK_HEIDENHEIM
             - KSK_HEINSBERG
-            - KSK_RHEIN_HUNSRUECK
             - KSK_KAISERSLAUTERN
             - KSK_KOELN
             - KSK_KELHEIM
@@ -3632,12 +3636,16 @@ components:
             - KSK_LUDWIGSBURG
             - KSK_MAYEN
             - KSK_MELLE
+            - KSK_MIESBACH_TEGERN
             - KSK_MUENCHEN_STARNBERG_EBERSBERG
             - KSK_NORDHAUSEN
+            - KSK_NORDHORN
             - KSK_OSTERHOLZ
             - KSK_PEINE
             - KSK_RATZEBURG
             - KSK_RAVENSBURG
+            - KSK_REUTLINGEN
+            - KSK_RHEIN_HUNSRUECK
             - KSK_SAALE_ORLA
             - KSK_SAARLOUIS
             - KSK_SAARPFALZ
@@ -3661,6 +3669,7 @@ components:
             - LBS_BADEN_WUERTTEMBERG
             - LBS_BAYERN
             - LBS_BAYERN_ANNU
+            - LBS_BAYERN_HV_FAEH
             - LBS_BREMEN
             - LBS_HESSEN_THUERINGEN
             - LBS_NORD
@@ -3671,6 +3680,8 @@ components:
             - LBS_SHH
             - LBS_SUEDWEST
             - LBS_WEST
+            - LIFESTYLE_PROTECTION
+            - LIFESTYLE_PROTECTION_LEBENSVERSICHERUNG
             - LIGA_BANK
             - L_BANK
             - MAERKISCHE_BANK
@@ -3701,6 +3712,7 @@ components:
             - OAB
             - OAB_RATENKREDIT
             - OLB
+            - OLB_RATENKREDIT
             - ONE_CLICK_BAUFI
             - OSD_ONLINE
             - OSTFRIESISCHE_VOBA
@@ -3716,6 +3728,8 @@ components:
             - PROVINZIAL_NW
             - PROVINZIAL_RHEINLAND
             - PROVINZIAL_RHEINLAND_RATENSCHUTZ
+            - PROVINZIAL_VERBUNDKO
+            - PROTECT_RATENSCHUTZ
             - PSD_BANK_KIEL_EIGEN
             - PSD_KIEL_EIGEN
             - PSD_BERLIN
@@ -3766,14 +3780,18 @@ components:
             - RAIBA_BAUNATAL
             - RAIBA_BIBERACH
             - RAIBA_BIBERTGRUND
+            - RAIBA_ESTENFELD_BH
             - RAIBA_ESSENBACH
+            - RAIBA_FULDAER_LAND
             - RAIBA_GRAEFENBERG
             - RAIBA_GRIESSTAETT
             - RAIBA_HANDEWITT
             - RAIBA_HEILSBRONN_WIN
             - RAIBA_HESSENNORD
             - RAIBA_IM_OBERLAND
+            - RAIBA_KAISERSTUHL
             - RAIBA_KIRCHHEIM_WALHEIM
+            - RAIBA_KIRCHWEITHAL
             - RAIBA_KOCHER_JAGST
             - RAIBA_KRAICHGAU
             - RAIBA_LAUENBURG
@@ -3782,6 +3800,7 @@ components:
             - RAIBA_MUENCHEN_SUED
             - RAIBA_MUTLANGEN
             - RAIBA_NUEDLINGEN
+            - RAIBA_OBERMAINNORD
             - RAIBA_OLDENBURG
             - RAIBA_OLDENBURG_A
             - RAIBA_PLANKSTETTEN
@@ -3789,11 +3808,13 @@ components:
             - RAIBA_RAVENSBURG
             - RAIBA_RIED
             - RAIBA_ROSENSTEIN
+            - RAIBA_ROTTALER
             - RAIBA_SCHWABEN_MITTE
             - RAIBA_SIMMERATH
             - RAIBA_STRAUBING
             - RAIBA_SUEDSTORMARN
             - RAIBA_TANNHAUSEN
+            - RAIBA_VAREL_NORD
             - RAIBA_WEISSENBURG
             - RAIBA_WESERMARSCH
             - RAIBA_WESTKREIS_FUER
@@ -3805,6 +3826,7 @@ components:
             - RB_IM_KREIS_CALW
             - RB_KISSING_MERING
             - RB_NEUMARKT_I_D_OPF
+            - RB_OBERPFALZ_SUED
             - RB_WERRATAL_LANDECK
             - RBS
             - RDS_BANK
@@ -3858,11 +3880,15 @@ components:
             - SPARDA_WEST
             - SPARDA_WEST_FILIALE
             - SPARDA_WEST_EIGENVER
+            - SBERBANK
+            - SBERBANK_RATENKREDIT
             - SPIELBANK
             - SPK_AACHEN
             - SPK_AICHACH
+            - SPK_ALLGAEU
             - SPK_ALTENBURGERLAND
             - SPK_ALTMARK_WEST
+            - SPK_ALTOETTING_MUEHL
             - SPK_AM_NIEDERRHEIN
             - SPK_AM_NIEDERRHEIN_RATENKREDIT
             - SPK_AMBERG_SULZBACH
@@ -3877,11 +3903,13 @@ components:
             - SPK_BAD_OEYNHAUSEN
             - SPK_BADEN_BADEN
             - SPK_BADHERSFELD
+            - SPK_BAMBERG
             - SPK_BARNIM
             - SPK_BARNIM_RATENKREDIT
             - SPK_BAYREUTH
             - SPK_BECKUM_WADERSLOH
             - SPK_BENSHEIM
+            - SPK_BERGKAMEN
             - SPK_BIELEFELD
             - SPK_BOCHUM
             - SPK_BODENSEE
@@ -3896,6 +3924,7 @@ components:
             - SPK_CHEMNITZ_RATENKREDIT
             - SPK_DARMSTADT
             - SPK_DEGGENDORF
+            - SPK_DIEBURG
             - SPK_DILLENBURG
             - SPK_DILLINGEN
             - SPK_DIREKT
@@ -3903,17 +3932,20 @@ components:
             - SPK_DORTMUND
             - SPK_DUEREN
             - SPK_DUISBURG
+            - SPK_EINBECK
             - SPK_ELBE_ELSTER
             - SPK_ELMSHORN
             - SPK_EMSDETTEN
             - SPK_EMSLAND
             - SPK_ENNE_BRECKERFELD
             - SPK_ESSEN
-            - SPK_FINNENTROP
+            - SPK_ERLANGEN_H_H
             - SPK_FOERDE
             - SPK_FORCHHEIM
             - SPK_FRANKFURT
             - SPK_FREIBURG
+            - SPK_FREISING
+            - SPK_FREYUNG_GRAF
             - SPK_FUERSTENFELDBRUCK
             - SPK_FUERTH
             - SPK_FUERTH_RATENKREDIT
@@ -3927,6 +3959,7 @@ components:
             - SPK_GIFHORN
             - SPK_GLADBECK
             - SSK_GREBENSTEIN
+            - SPK_GUENZBURG_KRUM
             - SPK_GUETERSLOH
             - SPK_GUMMERSBACH
             - SPK_HAAN
@@ -3941,6 +3974,7 @@ components:
             - SPK_HEGAUBODENSEE
             - SPK_HEIDELBERG
             - SPK_HEILBRONN
+            - SPK_HEILBRONN_RATENKREDIT
             - SPK_HERFORD
             - SPK_HILDEN_RATINGEN
             - SPK_HILDESHEIM
@@ -3951,6 +3985,7 @@ components:
             - SPK_HOCHSCHWARZWALD_RATENKREDIT
             - SPK_HOEXTER
             - SPK_HOLSTEIN
+            - SPK_INGOLSTADT_EICHST
             - SPK_ISERLOHN
             - SPK_JENA_SAALE
             - SPK_JERICHOW
@@ -3967,6 +4002,7 @@ components:
             - SPK_LANDSBERGDIESSEN
             - SPK_LANDSHUT
             - SPK_LANGEN_SELIGENSTADT
+            - SPK_LAUBACH_HUNGEN
             - SPK_LEERWITTMUND
             - SPK_LEIPZIG
             - SPK_LEIPZIG_RATENKREDIT
@@ -3990,11 +4026,12 @@ components:
             - SPK_MECKLENBURG_SCHWERIN
             - SPK_MEISSEN
             - SPK_MEISSEN_RATENKREDIT
-            - SPK_MILTEN
+            - SPK_MILTEN_OBERN
             - SPK_MINDEN_LUEBBECKE
             - SPK_MITTELBRB_ST
             - SPK_MITTELBRB_TEST
             - SPK_MITTELHOLSTEIN
+            - SPK_MITTELFR_SUED
             - SPK_MITTELMOSEL
             - SPK_MITTELSACHSEN
             - SPK_MITTELTHUERINGEN
@@ -4006,6 +4043,8 @@ components:
             - SPK_MULDENTAL
             - SPK_MULDENTAL_RATENKREDIT
             - SPK_MUSTER_ZWEI
+            - SPK_MUSTER_DREI
+            - SPK_MUSTER_VIER
             - SPK_NASPA
             - SPK_NBRANDBG_D
             - SPK_NECKARTAL_ODENWA
@@ -4014,6 +4053,7 @@ components:
             - SPK_NEUMARKT
             - SPK_NEUSS
             - SPK_NEUWIED
+            - SPK_NIEDERBAYERN_MI
             - SPK_NIEDERLAUSITZ
             - SPK_NIENBURG
             - SPK_NUERNBERG
@@ -4035,6 +4075,7 @@ components:
             - SPK_PFORZHEIM_CALW
             - SPK_PRIGNITZ
             - SPK_RADEVORMWALD
+            - SPK_RASTATT_GERN
             - SPK_REGENSBURG
             - SPK_RHEIN_HAARDT
             - SPK_RHEIN_NAHE
@@ -4051,13 +4092,13 @@ components:
             - SPK_SCHAUMBURG
             - SPK_SCHEESSEL
             - SPK_SCHWARZWALD_BAAR
+            - SPK_SCHWEINFURT_HAS
             - SPK_SIEGEN
             - SPK_SOEST
             - SPK_SPREE_NEISSE
             - SPK_ST_BLASIEN
             - SPK_STADE
             - SPK_STARKENBURG
-            - SPK_SUED_WEINSTRASSE
             - SPK_SUEDHOLSTEIN
             - SPK_SUEDHOLSTEIN_EV
             - SPK_TAUBERFRANKEN
@@ -4097,16 +4138,15 @@ components:
             - SPK_ZWICKAU
             - SPREEWALDBANK
             - SSK_AUGSBURG
-            - SSK_BLOMBERG
             - SSK_BOCHOLT
             - SSK_BURGDORF
             - SSK_CUXHAVEN
             - SSK_DELBRUECK
             - SSK_DESSAU
             - SSK_HALTERN_AM_SEE
-            - SSK_KAISERSLAUTERN
             - SSK_LENGERICH
             - SSK_MAGDEBURG
+            - SSK_MOENCHENGLADBACH
             - SSK_OBERHAUSEN
             - SSK_RAHDEN
             - SSK_REMSCHEID
@@ -4128,9 +4168,11 @@ components:
             - SUEDWESTKREDITBANK_RATENKREDIT
             - SUPPORT
             - SV_SPARKASSENVERS
+            - SV_SPKVERS_STA
             - SWISS_LIFE
             - SYLTER_BANK
             - SZB
+            - TARGO_VERSICHERUNGEN
             - TARGOBANK
             - TARGOBANK_ES
             - TARGOBANK_RATENKREDIT
@@ -4162,8 +4204,11 @@ components:
             - VOBA_BAD_OEYNHAUSEN
             - VOBA_BAD_SAULGAU
             - VOBA_BADEN_BADEN_R
+            - VOBA_BAUMBERGE
             - VOBA_BAUTZEN
             - VOBA_BECKUM_EIGEN
+            - VOBA_BENSBERGER
+            - VOBA_BERG
             - VOBA_BERLIN
             - VOBA_BIGGE_LENNE
             - VOBA_BOCHOLT
@@ -4179,9 +4224,11 @@ components:
             - VOBA_BREMERHAVEN_CUX
             - VOBA_BRUCHSAL
             - VOBA_BRUHRAIN
+            - VOBA_BUTZBACH
             - VOBA_CHEMNITZ
             - VOBA_DAMMER_BERGE
             - VOBA_DARMSTADT_SUEDH
+            - VOBA_DELITZSCH
             - VOBA_DELMENHORST_SCH
             - VOBA_DILL
             - VOBA_DONAU_NECKAR
@@ -4208,6 +4255,7 @@ components:
             - VOBA_GERA
             - VOBA_GESCHER
             - VOBA_GOEPPINGEN
+            - VOBA_GRAFSCHAFTER
             - VOBA_GREIFSWALD
             - VOBA_GREVEN
             - VOBA_GRONAU_AHA_BEV
@@ -4229,6 +4277,7 @@ components:
             - VOBA_HILTER_MELLE
             - VOBA_HOCHRHEIN
             - VOBA_HOHENLOHE
+            - VOBA_HOHEN_MARK
             - VOBA_HOHENZOLLERN_BA
             - VOBA_HUNSRUECK_NAHE
             - VOBA_IM_HARZ
@@ -4240,6 +4289,8 @@ components:
             - VOBA_KD_BANK
             - VOBA_KIELER
             - VOBA_KIRCHHEIM
+            - VOBA_KLETTKAU_WUT
+            - VOBA_KLETTGAU_WUT
             - VOBA_KLEVERLAND
             - VOBA_KONSTANZ
             - VOBA_KRAICHGAU
@@ -4249,6 +4300,8 @@ components:
             - VOBA_LAUTERBACH_SCHL
             - VOBA_LIPPSTADT
             - VOBA_LIPPSTADT_UEBER
+            - VOBA_LOEBAU_ZITTAU
+            - VOBA_LOHNE_MUEHLEN
             - VOBA_LUEBECK
             - VOBA_LUENEBURGER_HEIDE
             - VOBA_MAERKISCHE_BANK
@@ -4275,6 +4328,7 @@ components:
             - VOBA_MUELLHEIM
             - VOBA_MUENCHEN_LAND
             - VOBA_MUENORD_EIGEN
+            - VOBA_MUENSINGEN
             - VOBA_MUENSTER
             - VOBA_MUENSTER_MHB
             - VOBA_MUENSTER_NAEV
@@ -4287,6 +4341,7 @@ components:
             - VOBA_NIENBURG
             - VOBA_NORDOBERPFALZ
             - VOBA_NORDSCHWARZW
+            - VOBA_NOTTULN
             - VOBA_OBERBERG
             - VOBA_OEYNHAUSEN_SPEZ
             - VOBA_OFFENBURG
@@ -4315,6 +4370,7 @@ components:
             - VOBA_SEESEN
             - VOBA_SELM_BORK
             - VOBA_SIEGERLAND
+            - VOBA_SOLLING
             - VOBA_SPARDA_MUENCHEN
             - VOBA_SPREE_NEISSE
             - VOBA_STADE_CUXHAVEN
@@ -4324,6 +4380,7 @@ components:
             - VOBA_STUTTGART
             - VOBA_SUEDHEIDE
             - VOBA_SUEDMUENSTERL
+            - VOBA_SYKE
             - VOBA_TEST
             - VOBA_TRIER
             - VOBA_UEBERLINGEN
@@ -4336,9 +4393,16 @@ components:
             - VOBA_WEINHEIM
             - VOBA_WESCHNITZTAL
             - VOBA_WESCHNITZTAL_RE
+            - VOBA_WESTERKAPPELN_S
             - VOBA_WESTMUENSTERLAND
             - VOBA_WESTRHAUDERFEHN
+            - SPK_MILTEN
+            - SPK_SUED_WEINSTRASSE
+            - SSK_BLOMBERG
+            - SSK_KAISERSLAUTERN
+            - SPK_FINNENTROP
             - SPK_CELLE
+            - SPK_COBURG_LICHTEN
             - VOBA_WESTTHUERINGEN
             - VOBA_WHV
             - VOBA_WIESBADEN
@@ -4348,6 +4412,7 @@ components:
             - VON_ESSEN_BANK
             - VON_ESSEN_BANK_RATENKREDIT
             - VON_ESSEN_BANKGH
+            - VR_AMBERG
             - VR_BAD_HERSFELD
             - VR_BAD_KISSINGEN
             - VR_BAMBERG
@@ -4364,6 +4429,8 @@ components:
             - VR_DEFAULT_GENOPACE
             - VR_DONAU_MINDEL
             - VR_DRESDEN
+            - VR_ELLWANGEN
+            - VR_ERDING
             - VR_ERLANGEN
             - VR_FEUCHTWANGEN
             - VR_FICHTELGEBIRGE
@@ -4372,6 +4439,8 @@ components:
             - VR_FRESENA
             - VR_FULDA
             - VR_GEISELHOERING
+            - VR_GENOBANK_DONAU
+            - VR_GLAUCHAU
             - VR_HESSENLAND
             - VR_HUNSRUECK_MOSEL
             - VR_IM_ENZKREIS
@@ -4405,6 +4474,7 @@ components:
             - VR_OSTHOLSTEIN
             - VR_REGENSBURG_SCHWAN
             - VR_RHEIN_ERFT
+            - VR_RHEIN_MOSEL
             - VR_RHEIN_NECKAR
             - VR_RHEIN_SIEG
             - VR_RHOEN_GRABFELD
@@ -4413,6 +4483,7 @@ components:
             - VR_ROTTAL
             - VR_SAALE_ORLA
             - VR_SAALE_ORLA_EIGEN
+            - VR_SAALE_UNSTRUT
             - VR_SCHLESWIG_MITTELH
             - VR_SCHWAEBHALLCRAIL
             - VR_SCHWEINFURT
@@ -4422,6 +4493,7 @@ components:
             - VR_SPARDA_HESSEN_BEV
             - VR_STEINLACH_W_H
             - VR_SUEDL_WEINSTRASSE
+            - VR_SUEDNIEDERSACHSEN
             - VR_SUEDPFALZ
             - VR_SUEDTHUERINGEN
             - VR_TORGAU
@@ -4429,6 +4501,7 @@ components:
             - VR_UNTERTAUNUS
             - VB_VIERSEN
             - VR_WALDECKER_BANK
+            - VR_WERDENFELS_GARM
             - VR_WERRA_MEISSNER
             - VR_WESTKUESTE
             - VR_WESTTHUERINGEN
@@ -4454,6 +4527,7 @@ components:
             - WL_BANK_HYPO_I
             - WUERTTEMBERGISCHE
             - WUESTENROT
+            - WUESTENROT_RATENKREDIT
             - ZEITGEWINNBANK
             - ZURICH
     ProzentDerDarlehenssumme:
