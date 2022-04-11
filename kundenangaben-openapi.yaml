@@ -8,7 +8,7 @@ info:
     name: Europace AG
     url: http://developer.europace.de
     email: devsupport@europace2.de
-  version: 1.4.1; 24cd7244bda13825de084f277e949bc559c7cb32
+  version: 1.4.2; f27e2a0c1ac0d75162dc4add32927c302ba2403d
 externalDocs:
   url: https://developer.europace.de/api/baufismart-kundenangaben-api
 servers:
@@ -50,12 +50,6 @@ paths:
           $ref: '#/components/responses/Conflict'
         "404":
           $ref: '#/components/responses/NotFound'
-        "503":
-          $ref: '#/components/responses/ServiceNotAvailable'
-        "429":
-          $ref: '#/components/responses/TooManyRequests'
-        "401":
-          $ref: '#/components/responses/Unauthorized'
         "200":
           description: Kundenangaben für einen bestehenden Vorgang
           headers:
@@ -66,6 +60,12 @@ paths:
             application/json; version=1.0:
               schema:
                 $ref: '#/components/schemas/Kundenangaben'
+        "503":
+          $ref: '#/components/responses/ServiceNotAvailable'
+        "429":
+          $ref: '#/components/responses/TooManyRequests'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
         "400":
           $ref: '#/components/responses/BadRequest'
       security:
@@ -103,18 +103,18 @@ paths:
           $ref: '#/components/responses/Forbidden'
         "409":
           $ref: '#/components/responses/Conflict'
-        "404":
-          $ref: '#/components/responses/NotFound'
-        "503":
-          $ref: '#/components/responses/ServiceNotAvailable'
-        "422":
-          $ref: '#/components/responses/UnprocessableEntity'
         "204":
           description: Kundenangaben in einem bestehenden Vorgang überschrieben
           headers:
             X-TraceId:
               $ref: '#/components/headers/tracingIdHeader'
               style: simple
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "503":
+          $ref: '#/components/responses/ServiceNotAvailable'
+        "422":
+          $ref: '#/components/responses/UnprocessableEntity'
         "429":
           $ref: '#/components/responses/TooManyRequests'
         "401":
@@ -149,10 +149,6 @@ paths:
               $ref: '#/components/schemas/ImportKundenangabenRequest'
         required: true
       responses:
-        "403":
-          $ref: '#/components/responses/Forbidden'
-        "409":
-          $ref: '#/components/responses/Conflict'
         "201":
           description: Kundenangaben in neuen Vorgang importiert
           headers:
@@ -163,6 +159,10 @@ paths:
             application/json; version=1.0:
               schema:
                 $ref: '#/components/schemas/KundenangabenImportResponse'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "409":
+          $ref: '#/components/responses/Conflict'
         "503":
           $ref: '#/components/responses/ServiceNotAvailable'
         "422":
@@ -880,12 +880,14 @@ components:
               - ALTE_LEIPZIGER_ZG_21XX_30
               - ALTE_LEIPZIGER_ZG_25XX_49
               - ALTE_LEIPZIGER_21XX_27
+              - ALTE_LEIPZIGER_21XX_20
               - ALTE_LEIPZIGER_21XX_33
               - ALTE_LEIPZIGER_21XX
               - ALTE_LEIPZIGER_25XX_30
               - ALTE_LEIPZIGER_25XX_45
               - ALTE_LEIPZIGER_22XX_33
               - ALTE_LEIPZIGER_22XX_27
+              - ALTE_LEIPZIGER_22XX_20
               - ALTE_LEIPZIGER_22XX
               - ALTE_LEIPZIGER_26XX_30
               - ALTE_LEIPZIGER_26XX_45
@@ -3564,6 +3566,7 @@ components:
             - DZ_HYP
             - DZ_HYP_EP
             - DZ_HYP_TEST
+            - DZ_PRIVATBANK
             - ERFURTER_BANK
             - ERGO
             - EVANGELISCHE_BANK
@@ -3788,8 +3791,10 @@ components:
             - RAIBA_HANDEWITT
             - RAIBA_HEILSBRONN_WIN
             - RAIBA_HESSENNORD
+            - RAIBA_IM_DONAUTAL
             - RAIBA_IM_OBERLAND
             - RAIBA_KAISERSTUHL
+            - RAIBA_KEMPTEN_OBERAL
             - RAIBA_KIRCHHEIM_WALHEIM
             - RAIBA_KIRCHWEITHAL
             - RAIBA_KOCHER_JAGST
@@ -4301,6 +4306,7 @@ components:
             - VOBA_LIPPSTADT
             - VOBA_LIPPSTADT_UEBER
             - VOBA_LOEBAU_ZITTAU
+            - VOBA_LOENINGEN
             - VOBA_LOHNE_MUEHLEN
             - VOBA_LUEBECK
             - VOBA_LUENEBURGER_HEIDE
