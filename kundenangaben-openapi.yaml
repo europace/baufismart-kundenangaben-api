@@ -8,7 +8,7 @@ info:
     name: Europace AG
     url: http://developer.europace.de
     email: devsupport@europace2.de
-  version: 1.4.2; f27e2a0c1ac0d75162dc4add32927c302ba2403d
+  version: 1.4.3; 170649a1c283311cdc7e50e0b8e4732cdede263d
 externalDocs:
   url: https://developer.europace.de/api/baufismart-kundenangaben-api
 servers:
@@ -44,12 +44,6 @@ paths:
         schema:
           type: string
       responses:
-        "403":
-          $ref: '#/components/responses/Forbidden'
-        "409":
-          $ref: '#/components/responses/Conflict'
-        "404":
-          $ref: '#/components/responses/NotFound'
         "200":
           description: Kundenangaben für einen bestehenden Vorgang
           headers:
@@ -60,6 +54,12 @@ paths:
             application/json; version=1.0:
               schema:
                 $ref: '#/components/schemas/Kundenangaben'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "409":
+          $ref: '#/components/responses/Conflict'
+        "404":
+          $ref: '#/components/responses/NotFound'
         "503":
           $ref: '#/components/responses/ServiceNotAvailable'
         "429":
@@ -103,12 +103,6 @@ paths:
           $ref: '#/components/responses/Forbidden'
         "409":
           $ref: '#/components/responses/Conflict'
-        "204":
-          description: Kundenangaben in einem bestehenden Vorgang überschrieben
-          headers:
-            X-TraceId:
-              $ref: '#/components/headers/tracingIdHeader'
-              style: simple
         "404":
           $ref: '#/components/responses/NotFound'
         "503":
@@ -121,6 +115,12 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         "400":
           $ref: '#/components/responses/BadRequest'
+        "204":
+          description: Kundenangaben in einem bestehenden Vorgang überschrieben
+          headers:
+            X-TraceId:
+              $ref: '#/components/headers/tracingIdHeader'
+              style: simple
       security:
       - oAuth2:
         - baufinanzierung:vorgang:schreiben
@@ -149,16 +149,6 @@ paths:
               $ref: '#/components/schemas/ImportKundenangabenRequest'
         required: true
       responses:
-        "201":
-          description: Kundenangaben in neuen Vorgang importiert
-          headers:
-            X-TraceId:
-              $ref: '#/components/headers/tracingIdHeader'
-              style: simple
-          content:
-            application/json; version=1.0:
-              schema:
-                $ref: '#/components/schemas/KundenangabenImportResponse'
         "403":
           $ref: '#/components/responses/Forbidden'
         "409":
@@ -169,6 +159,16 @@ paths:
           $ref: '#/components/responses/UnprocessableEntity'
         "429":
           $ref: '#/components/responses/TooManyRequests'
+        "201":
+          description: Kundenangaben in neuen Vorgang importiert
+          headers:
+            X-TraceId:
+              $ref: '#/components/headers/tracingIdHeader'
+              style: simple
+          content:
+            application/json; version=1.0:
+              schema:
+                $ref: '#/components/schemas/KundenangabenImportResponse'
         "401":
           $ref: '#/components/responses/Unauthorized'
         "400":
@@ -2670,6 +2670,8 @@ components:
             - STANDARD_40
             - STANDARD_40_PLUS
             - STANDARD_40_EEK
+            - STANDARD_40_EEK_ONLY
+            - STANDARD_40_NH
             - STANDARD_55
             - STANDARD_55_EEK
             - STANDARD_70
@@ -2750,12 +2752,14 @@ components:
         properties:
           kfwEnergieEffizienzStandard:
             type: string
-            description: "Erlaubte Werte sind: STANDARD_40_PLUS, ,STANDARD_40, ,STANDARD_40_EEK,\
-              \ ,STANDARD_55, ,STANDARD_55_EEK"
+            description: "Erlaubte Werte sind: STANDARD_40_PLUS, STANDARD_40_EEK_ONLY,\
+              \ STANDARD_40_NH, STANDARD_40, STANDARD_40_EEK, STANDARD_55, STANDARD_55_EEK"
             enum:
             - STANDARD_40
             - STANDARD_40_PLUS
             - STANDARD_40_EEK
+            - STANDARD_40_EEK_ONLY
+            - STANDARD_40_NH
             - STANDARD_55
             - STANDARD_55_EEK
             - STANDARD_70
@@ -2794,6 +2798,8 @@ components:
             - STANDARD_40
             - STANDARD_40_PLUS
             - STANDARD_40_EEK
+            - STANDARD_40_EEK_ONLY
+            - STANDARD_40_NH
             - STANDARD_55
             - STANDARD_55_EEK
             - STANDARD_70
