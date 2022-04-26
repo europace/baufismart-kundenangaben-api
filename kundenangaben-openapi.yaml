@@ -8,7 +8,7 @@ info:
     name: Europace AG
     url: http://developer.europace.de
     email: devsupport@europace2.de
-  version: 1.4.3; 170649a1c283311cdc7e50e0b8e4732cdede263d
+  version: 1.4.4; 5e00de8cdb781013bc8f967e3df35d80bcf0ec6d
 externalDocs:
   url: https://developer.europace.de/api/baufismart-kundenangaben-api
 servers:
@@ -44,6 +44,10 @@ paths:
         schema:
           type: string
       responses:
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "409":
+          $ref: '#/components/responses/Conflict'
         "200":
           description: Kundenangaben für einen bestehenden Vorgang
           headers:
@@ -54,10 +58,6 @@ paths:
             application/json; version=1.0:
               schema:
                 $ref: '#/components/schemas/Kundenangaben'
-        "403":
-          $ref: '#/components/responses/Forbidden'
-        "409":
-          $ref: '#/components/responses/Conflict'
         "404":
           $ref: '#/components/responses/NotFound'
         "503":
@@ -103,6 +103,12 @@ paths:
           $ref: '#/components/responses/Forbidden'
         "409":
           $ref: '#/components/responses/Conflict'
+        "204":
+          description: Kundenangaben in einem bestehenden Vorgang überschrieben
+          headers:
+            X-TraceId:
+              $ref: '#/components/headers/tracingIdHeader'
+              style: simple
         "404":
           $ref: '#/components/responses/NotFound'
         "503":
@@ -115,12 +121,6 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         "400":
           $ref: '#/components/responses/BadRequest'
-        "204":
-          description: Kundenangaben in einem bestehenden Vorgang überschrieben
-          headers:
-            X-TraceId:
-              $ref: '#/components/headers/tracingIdHeader'
-              style: simple
       security:
       - oAuth2:
         - baufinanzierung:vorgang:schreiben
@@ -155,10 +155,6 @@ paths:
           $ref: '#/components/responses/Conflict'
         "503":
           $ref: '#/components/responses/ServiceNotAvailable'
-        "422":
-          $ref: '#/components/responses/UnprocessableEntity'
-        "429":
-          $ref: '#/components/responses/TooManyRequests'
         "201":
           description: Kundenangaben in neuen Vorgang importiert
           headers:
@@ -169,6 +165,10 @@ paths:
             application/json; version=1.0:
               schema:
                 $ref: '#/components/schemas/KundenangabenImportResponse'
+        "422":
+          $ref: '#/components/responses/UnprocessableEntity'
+        "429":
+          $ref: '#/components/responses/TooManyRequests'
         "401":
           $ref: '#/components/responses/Unauthorized'
         "400":
@@ -801,6 +801,12 @@ components:
               - LBS_SAAR_EXTRA_SICHER_18
               - LBS_SAAR_EXTRA_SPEZIAL_18
               - LBS_SAAR_CLASSIC_21_ZUHAUSE
+              - LBS_SAAR_FINANZIERER_20_ZUHAUSE
+              - LBS_SAAR_FINANZIERER_25_ZUHAUSE
+              - LBS_SAAR_FINANZIERER_30_ZUHAUSE
+              - LBS_SAAR_FINANZIERER_KONSTANT_ZUHAUSE
+              - LBS_SAAR_MODERNISIERER_ZUHAUSE
+              - LBS_SAAR_KLIMAFIT_ZUHAUSE
               - SIGNAL_IDUNA_FREIRAUM_F_35
               - SIGNAL_IDUNA_FREIRAUM_F_35_16
               - SIGNAL_IDUNA_FREIRAUM_F_45
