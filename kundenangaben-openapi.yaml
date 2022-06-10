@@ -8,7 +8,7 @@ info:
     name: Europace AG
     url: http://developer.europace.de
     email: devsupport@europace2.de
-  version: 1.4.5; 367f9b77e1d3849088b01754a1069f33a8e8f62f
+  version: 1.4.6; c005f765ab8abd99c151cebfb99aa5f1902767e1
 externalDocs:
   url: https://developer.europace.de/api/baufismart-kundenangaben-api
 servers:
@@ -44,6 +44,10 @@ paths:
         schema:
           type: string
       responses:
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "409":
+          $ref: '#/components/responses/Conflict'
         "200":
           description: Kundenangaben für einen bestehenden Vorgang
           headers:
@@ -54,10 +58,6 @@ paths:
             application/json; version=1.0:
               schema:
                 $ref: '#/components/schemas/Kundenangaben'
-        "403":
-          $ref: '#/components/responses/Forbidden'
-        "409":
-          $ref: '#/components/responses/Conflict'
         "404":
           $ref: '#/components/responses/NotFound'
         "503":
@@ -99,6 +99,12 @@ paths:
               $ref: '#/components/schemas/UpdateKundenangabenRequest'
         required: true
       responses:
+        "204":
+          description: Kundenangaben in einem bestehenden Vorgang überschrieben
+          headers:
+            X-TraceId:
+              $ref: '#/components/headers/tracingIdHeader'
+              style: simple
         "403":
           $ref: '#/components/responses/Forbidden'
         "409":
@@ -115,12 +121,6 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         "400":
           $ref: '#/components/responses/BadRequest'
-        "204":
-          description: Kundenangaben in einem bestehenden Vorgang überschrieben
-          headers:
-            X-TraceId:
-              $ref: '#/components/headers/tracingIdHeader'
-              style: simple
       security:
       - oAuth2:
         - baufinanzierung:vorgang:schreiben
@@ -153,12 +153,6 @@ paths:
           $ref: '#/components/responses/Forbidden'
         "409":
           $ref: '#/components/responses/Conflict'
-        "503":
-          $ref: '#/components/responses/ServiceNotAvailable'
-        "422":
-          $ref: '#/components/responses/UnprocessableEntity'
-        "429":
-          $ref: '#/components/responses/TooManyRequests'
         "201":
           description: Kundenangaben in neuen Vorgang importiert
           headers:
@@ -169,6 +163,12 @@ paths:
             application/json; version=1.0:
               schema:
                 $ref: '#/components/schemas/KundenangabenImportResponse'
+        "503":
+          $ref: '#/components/responses/ServiceNotAvailable'
+        "422":
+          $ref: '#/components/responses/UnprocessableEntity'
+        "429":
+          $ref: '#/components/responses/TooManyRequests'
         "401":
           $ref: '#/components/responses/Unauthorized'
         "400":
@@ -794,6 +794,8 @@ components:
               - LBS_SUEDWEST_KLASSIK_PLUS_2020
               - LBS_SUEDWEST_STANDARD_PLUS_2018
               - LBS_SUEDWEST_LANGZEIT_PLUS_SPEZIAL
+              - LBS_SUEDWEST_NIEDRIGZINS
+              - LBS_SUEDWEST_ZUKUNFT_PLUS
               - LBS_SAAR_PREMIUM_FLEX_18
               - LBS_SAAR_PREMIUM_SICHER_18
               - LBS_SAAR_PREMIUM_TOP_18
@@ -3794,6 +3796,7 @@ components:
             - RAIBA_BAUNATAL
             - RAIBA_BIBERACH
             - RAIBA_BIBERTGRUND
+            - RAIBA_EMS_VECHTE
             - RAIBA_ESTENFELD_BH
             - RAIBA_ESSENBACH
             - RAIBA_FULDAER_LAND
@@ -3878,6 +3881,7 @@ components:
             - SPARDA_BERLIN
             - SPARDA_BERLIN_EIGEN
             - SPARDA_BW
+            - SPARDA_GP_TEST
             - SPARDA_HAMBURG
             - SPARDA_HANNOVER
             - SPARDA_HESSEN
@@ -4064,9 +4068,10 @@ components:
             - SPK_NASPA
             - SPK_NBRANDBG_D
             - SPK_NECKARTAL_ODENWA
-            - SPK_NEUBURGRAIN
             - SPK_NEU_ULM
+            - SPK_NEUBURGRAIN
             - SPK_NEUMARKT
+            - SPK_NEUNKIRCHEN
             - SPK_NEUSS
             - SPK_NEUWIED
             - SPK_NIEDERBAYERN_MI
@@ -4356,6 +4361,7 @@ components:
             - VOBA_NIEDERRHEIN
             - VOBA_NIEDERSCHLESIEN
             - VOBA_NIENBURG
+            - VOBA_NORDHARZ
             - VOBA_NORDOBERPFALZ
             - VOBA_NORDSCHWARZW
             - VOBA_NOTTULN
@@ -4390,6 +4396,7 @@ components:
             - VOBA_SOLLING
             - VOBA_SPARDA_MUENCHEN
             - VOBA_SPREE_NEISSE
+            - VOBA_SPROCKHOEVEL
             - VOBA_STADE_CUXHAVEN
             - VOBA_STARNBERG
             - VOBA_STENDAL
@@ -4420,6 +4427,7 @@ components:
             - SPK_FINNENTROP
             - SPK_CELLE
             - SPK_COBURG_LICHTEN
+            - VB_VIERSEN
             - VOBA_WESTTHUERINGEN
             - VOBA_WHV
             - VOBA_WIESBADEN
@@ -4446,6 +4454,7 @@ components:
             - VR_DEFAULT_GENOPACE
             - VR_DONAU_MINDEL
             - VR_DRESDEN
+            - VR_DZPB_TEST
             - VR_ELLWANGEN
             - VR_ERDING
             - VR_ERLANGEN
@@ -4516,7 +4525,7 @@ components:
             - VR_TORGAU
             - VR_UCKERMARK_RANDOW
             - VR_UNTERTAUNUS
-            - VB_VIERSEN
+            - VR_VILSHOFEN
             - VR_WALDECKER_BANK
             - VR_WERDENFELS_GARM
             - VR_WERRA_MEISSNER
