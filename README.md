@@ -1,7 +1,7 @@
 # Kundenangaben API
 As advisor with Kundenangaben API you can create new cases or update cases with customer data from your crm system or lead applications for a seamless and fast start of advising.
 
-Kundenangaben are also named as `Erfasste Daten` in Mortage APIs (Vorgaenge-API or Antraege-API) .
+Kundenangaben are also named as `Erfasste Daten` in Mortgage APIs (Vorgaenge-API or Antraege-API) .
 
 ![advisor](https://img.shields.io/badge/-advisor-lightblue)
 ![mortgageLoan](https://img.shields.io/badge/-mortgageLoan-lightblue)
@@ -33,10 +33,10 @@ In the Postman collection in the folder "BaufiSmart Kundenangaben-API" you will 
 ### Authentication
 Please use [![Authentication](https://img.shields.io/badge/Auth-OAuth2-green)](https://docs.api.europace.de/common/authentifizierung/authorization-api/) to get access to the APIs. The OAuth2 client requires the following scopes:
 
-| Scope                               | API Use case                      |
-|-------------------------------------|-----------------------------------|
-| `baufinanzierung:echtgeschaeft`     | to use api in production mode     |
-| `baufinanzierung:vorgang:schreiben` | create cases for mortage loans    |
+| Scope                               | API Use case                    |
+|-------------------------------------|---------------------------------|
+| `baufinanzierung:echtgeschaeft`     | to use api in production mode   |
+| `baufinanzierung:vorgang:schreiben` | create cases for mortgage loans |
 
 ## Create case
 As Advisor you can create a case with your customers data to start seamless and fast advising.
