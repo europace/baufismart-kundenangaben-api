@@ -8,7 +8,7 @@ info:
     name: Europace AG
     url: http://developer.europace.de
     email: devsupport@europace2.de
-  version: 1.4.6; c005f765ab8abd99c151cebfb99aa5f1902767e1
+  version: 1.4.7; 763bc6c0f4d23d80370ccf60181b3c39e7d8cd13
 externalDocs:
   url: https://developer.europace.de/api/baufismart-kundenangaben-api
 servers:
@@ -48,6 +48,10 @@ paths:
           $ref: '#/components/responses/Forbidden'
         "409":
           $ref: '#/components/responses/Conflict'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "503":
+          $ref: '#/components/responses/ServiceNotAvailable'
         "200":
           description: Kundenangaben für einen bestehenden Vorgang
           headers:
@@ -58,10 +62,6 @@ paths:
             application/json; version=1.0:
               schema:
                 $ref: '#/components/schemas/Kundenangaben'
-        "404":
-          $ref: '#/components/responses/NotFound'
-        "503":
-          $ref: '#/components/responses/ServiceNotAvailable'
         "429":
           $ref: '#/components/responses/TooManyRequests'
         "401":
@@ -99,12 +99,6 @@ paths:
               $ref: '#/components/schemas/UpdateKundenangabenRequest'
         required: true
       responses:
-        "204":
-          description: Kundenangaben in einem bestehenden Vorgang überschrieben
-          headers:
-            X-TraceId:
-              $ref: '#/components/headers/tracingIdHeader'
-              style: simple
         "403":
           $ref: '#/components/responses/Forbidden'
         "409":
@@ -119,6 +113,12 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
         "401":
           $ref: '#/components/responses/Unauthorized'
+        "204":
+          description: Kundenangaben in einem bestehenden Vorgang überschrieben
+          headers:
+            X-TraceId:
+              $ref: '#/components/headers/tracingIdHeader'
+              style: simple
         "400":
           $ref: '#/components/responses/BadRequest'
       security:
@@ -153,16 +153,6 @@ paths:
           $ref: '#/components/responses/Forbidden'
         "409":
           $ref: '#/components/responses/Conflict'
-        "201":
-          description: Kundenangaben in neuen Vorgang importiert
-          headers:
-            X-TraceId:
-              $ref: '#/components/headers/tracingIdHeader'
-              style: simple
-          content:
-            application/json; version=1.0:
-              schema:
-                $ref: '#/components/schemas/KundenangabenImportResponse'
         "503":
           $ref: '#/components/responses/ServiceNotAvailable'
         "422":
@@ -173,6 +163,16 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         "400":
           $ref: '#/components/responses/BadRequest'
+        "201":
+          description: Kundenangaben in neuen Vorgang importiert
+          headers:
+            X-TraceId:
+              $ref: '#/components/headers/tracingIdHeader'
+              style: simple
+          content:
+            application/json; version=1.0:
+              schema:
+                $ref: '#/components/schemas/KundenangabenImportResponse'
       security:
       - oAuth2:
         - baufinanzierung:vorgang:schreiben
@@ -2613,8 +2613,6 @@ components:
             description: 5 oder 10 Jahre
             format: int32
           tilgungsfreieAnlaufjahre:
-            maximum: 3
-            minimum: 1
             type: integer
             format: int32
     KfwProgramm151:
@@ -2632,8 +2630,6 @@ components:
             type: integer
             format: int32
           tilgungsfreieAnlaufjahre:
-            maximum: 5
-            minimum: 1
             type: integer
             format: int32
     KfwProgramm152:
@@ -2654,8 +2650,6 @@ components:
             type: integer
             format: int32
           tilgungsfreieAnlaufjahre:
-            maximum: 5
-            minimum: 1
             type: integer
             format: int32
     KfwProgramm153:
@@ -2699,8 +2693,6 @@ components:
             description: 5 oder 10 Jahre
             format: int32
           tilgungsfreieAnlaufjahre:
-            maximum: 5
-            minimum: 1
             type: integer
             format: int32
     KfwProgramm159:
@@ -2722,8 +2714,6 @@ components:
             description: 5 oder 10 Jahre
             format: int32
           tilgungsfreieAnlaufjahre:
-            maximum: 5
-            minimum: 1
             type: integer
             format: int32
     KfwProgramm167:
@@ -2745,8 +2735,6 @@ components:
             type: integer
             format: int32
           tilgungsfreieAnlaufjahre:
-            maximum: 2
-            minimum: 1
             type: integer
             format: int32
     KfwProgramm261Neubau:
@@ -2783,8 +2771,6 @@ components:
             type: integer
             format: int32
           tilgungsfreieAnlaufjahre:
-            maximum: 5
-            minimum: 1
             type: integer
             format: int32
     KfwProgramm261Sanierung:
@@ -2825,8 +2811,6 @@ components:
             type: integer
             format: int32
           tilgungsfreieAnlaufjahre:
-            maximum: 5
-            minimum: 1
             type: integer
             format: int32
     KfwProgramm262:
@@ -2845,8 +2829,6 @@ components:
             type: integer
             format: int32
           tilgungsfreieAnlaufjahre:
-            maximum: 5
-            minimum: 1
             type: integer
             format: int32
     Kind:
@@ -3579,6 +3561,7 @@ components:
             - DZ_HYP
             - DZ_HYP_EP
             - DZ_HYP_TEST
+            - DZ_HYP_VERTRIEB_EP
             - DZ_PRIVATBANK
             - ERFURTER_BANK
             - ERGO
@@ -3604,6 +3587,7 @@ components:
             - HAUSBANK_MUENCHEN
             - HAUSWOHNENBANK
             - HDI
+            - HDI_RATENSCHUTZ
             - HEIDENHEIMER_VOBA
             - HERNER_SPK
             - HUK
@@ -3747,6 +3731,7 @@ components:
             - PROVINZIAL_VERBUNDKO
             - PROTECT_RATENSCHUTZ
             - PSD_BANK_KIEL_EIGEN
+            - PSD_GP_TEST
             - PSD_KIEL_EIGEN
             - PSD_BERLIN
             - PSD_BERLIN_RATENKREDIT
@@ -4040,6 +4025,7 @@ components:
             - SPK_MAINZ
             - SPK_MANSFELD_SUEDHARZ
             - SPK_MANSFELD_SUEDHARZ_RATENKREDIT
+            - SPK_MARBURG_BIEDEN
             - SPK_MARKGRAEFL
             - SPK_MECKLBSTRELITZ
             - SPK_MECKLENBURG_NORDWEST
@@ -4088,6 +4074,7 @@ components:
             - SPK_OLDENBURG
             - SPK_OLPE
             - SPK_OSNABRUECK
+            - SPK_OSTERODE
             - SPK_OSTPRIGNITZ
             - SPK_PADERBORN_DET
             - SPK_PARCHIM
@@ -4287,6 +4274,7 @@ components:
             - VOBA_HALLE_SAALE
             - VOBA_HALLE_WESTF
             - VOBA_HASELUENNE
+            - VOBA_HASSBERGE
             - VOBA_HEIDELBERGER
             - VOBA_HEILBRONN
             - VOBA_HEINSBERG
@@ -4504,6 +4492,7 @@ components:
             - VR_RHEIN_NECKAR
             - VR_RHEIN_SIEG
             - VR_RHOEN_GRABFELD
+            - VR_RIEDLINGEN
             - VR_RIES
             - VR_ROSENHEIM
             - VR_ROTTAL

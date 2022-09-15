@@ -33,10 +33,10 @@ In the Postman collection in the folder "BaufiSmart Kundenangaben-API" you will 
 ### Authentication
 Please use [![Authentication](https://img.shields.io/badge/Auth-OAuth2-green)](https://docs.api.europace.de/common/authentifizierung/authorization-api/) to get access to the APIs. The OAuth2 client requires the following scopes:
 
-| Scope                               | API Use case                    |
-|-------------------------------------|---------------------------------|
-| `baufinanzierung:echtgeschaeft`     | to use api in production mode   |
-| `baufinanzierung:vorgang:schreiben` | create cases for mortgage loans |
+| Scope                               | API Use case                      |
+|-------------------------------------|-----------------------------------|
+| `baufinanzierung:echtgeschaeft`     | to use api in production mode     |
+| `baufinanzierung:vorgang:schreiben` | create cases for mortgage loans    |
 
 ## Create case
 As Advisor you can create a case with your customers data to start seamless and fast advising.
