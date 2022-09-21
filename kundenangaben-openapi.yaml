@@ -8,7 +8,7 @@ info:
     name: Europace AG
     url: http://developer.europace.de
     email: devsupport@europace2.de
-  version: 1.4.7; b710fee7704bc4b5cf5e31dfa302f32916dc0d51
+  version: 1.4.8; 89231dc95825a3cc236f6cb3f227e34e38bdb7c0
 externalDocs:
   url: https://developer.europace.de/api/baufismart-kundenangaben-api
 servers:
@@ -48,10 +48,6 @@ paths:
           $ref: '#/components/responses/Forbidden'
         "409":
           $ref: '#/components/responses/Conflict'
-        "404":
-          $ref: '#/components/responses/NotFound'
-        "503":
-          $ref: '#/components/responses/ServiceNotAvailable'
         "200":
           description: Kundenangaben für einen bestehenden Vorgang
           headers:
@@ -62,6 +58,10 @@ paths:
             application/json; version=1.0:
               schema:
                 $ref: '#/components/schemas/Kundenangaben'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "503":
+          $ref: '#/components/responses/ServiceNotAvailable'
         "429":
           $ref: '#/components/responses/TooManyRequests'
         "401":
@@ -107,16 +107,16 @@ paths:
           $ref: '#/components/responses/NotFound'
         "503":
           $ref: '#/components/responses/ServiceNotAvailable'
-        "422":
-          $ref: '#/components/responses/UnprocessableEntity'
-        "429":
-          $ref: '#/components/responses/TooManyRequests'
         "204":
           description: Kundenangaben in einem bestehenden Vorgang überschrieben
           headers:
             X-TraceId:
               $ref: '#/components/headers/tracingIdHeader'
               style: simple
+        "422":
+          $ref: '#/components/responses/UnprocessableEntity'
+        "429":
+          $ref: '#/components/responses/TooManyRequests'
         "401":
           $ref: '#/components/responses/Unauthorized'
         "400":
@@ -153,16 +153,6 @@ paths:
           $ref: '#/components/responses/Forbidden'
         "409":
           $ref: '#/components/responses/Conflict'
-        "503":
-          $ref: '#/components/responses/ServiceNotAvailable'
-        "422":
-          $ref: '#/components/responses/UnprocessableEntity'
-        "429":
-          $ref: '#/components/responses/TooManyRequests'
-        "401":
-          $ref: '#/components/responses/Unauthorized'
-        "400":
-          $ref: '#/components/responses/BadRequest'
         "201":
           description: Kundenangaben in neuen Vorgang importiert
           headers:
@@ -173,6 +163,16 @@ paths:
             application/json; version=1.0:
               schema:
                 $ref: '#/components/schemas/KundenangabenImportResponse'
+        "503":
+          $ref: '#/components/responses/ServiceNotAvailable'
+        "422":
+          $ref: '#/components/responses/UnprocessableEntity'
+        "429":
+          $ref: '#/components/responses/TooManyRequests'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "400":
+          $ref: '#/components/responses/BadRequest'
       security:
       - oAuth2:
         - baufinanzierung:vorgang:schreiben
@@ -4471,6 +4471,7 @@ components:
             - VR_ITZEHOE
             - VR_KAUFBEUREN_OSTALL
             - VR_KITZINGEN
+            - VR_LANDAU_MENGKOFEN
             - VR_LAUSITZ
             - VR_LEVO_BANK
             - VR_LICHTENFELS
