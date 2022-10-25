@@ -8,7 +8,7 @@ info:
     name: Europace AG
     url: http://developer.europace.de
     email: devsupport@europace2.de
-  version: 1.4.7; b710fee7704bc4b5cf5e31dfa302f32916dc0d51
+  version: 1.4.9; 10b901078b28d89ddb9dee20e5fbad8357190e7b
 externalDocs:
   url: https://developer.europace.de/api/baufismart-kundenangaben-api
 servers:
@@ -52,6 +52,12 @@ paths:
           $ref: '#/components/responses/NotFound'
         "503":
           $ref: '#/components/responses/ServiceNotAvailable'
+        "429":
+          $ref: '#/components/responses/TooManyRequests'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "400":
+          $ref: '#/components/responses/BadRequest'
         "200":
           description: Kundenangaben für einen bestehenden Vorgang
           headers:
@@ -62,12 +68,6 @@ paths:
             application/json; version=1.0:
               schema:
                 $ref: '#/components/schemas/Kundenangaben'
-        "429":
-          $ref: '#/components/responses/TooManyRequests'
-        "401":
-          $ref: '#/components/responses/Unauthorized'
-        "400":
-          $ref: '#/components/responses/BadRequest'
       security:
       - oAuth2:
         - baufinanzierung:vorgang:lesen
@@ -111,14 +111,14 @@ paths:
           $ref: '#/components/responses/UnprocessableEntity'
         "429":
           $ref: '#/components/responses/TooManyRequests'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
         "204":
           description: Kundenangaben in einem bestehenden Vorgang überschrieben
           headers:
             X-TraceId:
               $ref: '#/components/headers/tracingIdHeader'
               style: simple
-        "401":
-          $ref: '#/components/responses/Unauthorized'
         "400":
           $ref: '#/components/responses/BadRequest'
       security:
@@ -149,6 +149,16 @@ paths:
               $ref: '#/components/schemas/ImportKundenangabenRequest'
         required: true
       responses:
+        "201":
+          description: Kundenangaben in neuen Vorgang importiert
+          headers:
+            X-TraceId:
+              $ref: '#/components/headers/tracingIdHeader'
+              style: simple
+          content:
+            application/json; version=1.0:
+              schema:
+                $ref: '#/components/schemas/KundenangabenImportResponse'
         "403":
           $ref: '#/components/responses/Forbidden'
         "409":
@@ -163,16 +173,6 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         "400":
           $ref: '#/components/responses/BadRequest'
-        "201":
-          description: Kundenangaben in neuen Vorgang importiert
-          headers:
-            X-TraceId:
-              $ref: '#/components/headers/tracingIdHeader'
-              style: simple
-          content:
-            application/json; version=1.0:
-              schema:
-                $ref: '#/components/schemas/KundenangabenImportResponse'
       security:
       - oAuth2:
         - baufinanzierung:vorgang:schreiben
@@ -393,6 +393,12 @@ components:
               (Nicht von bestehenden Immobilien.)
             items:
               $ref: '#/components/schemas/AbloesungBestehendesDarlehen'
+          rangruecktrittDarlehenDesFinanzierungsobjektes:
+            type: array
+            description: Rangrücktritt nicht abzulösender bestehender Darlehen des
+              Finanzierungsobjektes. (Nicht von bestehenden Immobilien.)
+            items:
+              $ref: '#/components/schemas/RangruecktrittBestehendesDarlehen'
     Anschrift:
       type: object
       properties:
@@ -848,6 +854,7 @@ components:
               - DT_RING_TARIF_XT_1
               - DT_RING_TARIF_XT_0
               - DT_RING_TARIF_F_1
+              - DT_RING_TARIF_F_5
               - ALTE_LEIPZIGER_1502
               - ALTE_LEIPZIGER_1602
               - ALTE_LEIPZIGER_1702
@@ -2366,6 +2373,12 @@ components:
           marktwertFinanzierungsobjekt:
             type: number
             format: double
+          rangruecktrittDarlehenDesFinanzierungsobjektes:
+            type: array
+            description: Rangrücktritt nicht abzulösender bestehender Darlehen des
+              Finanzierungsobjektes. (Nicht von bestehenden Immobilien.)
+            items:
+              $ref: '#/components/schemas/RangruecktrittBestehendesDarlehen'
     Kauf:
       type: object
       description: "Bitte Feld 'modernisierung' nicht mehr verwenden. Falls mitgeschickt,\
@@ -2386,6 +2399,12 @@ components:
             $ref: '#/components/schemas/Modernisierungskosten'
           modernisierungskostenErfassung:
             $ref: '#/components/schemas/ModernisierungskostenErfassung'
+          rangruecktrittDarlehenDesFinanzierungsobjektes:
+            type: array
+            description: Rangrücktritt nicht abzulösender bestehender Darlehen des
+              Finanzierungsobjektes. (Nicht von bestehenden Immobilien.)
+            items:
+              $ref: '#/components/schemas/RangruecktrittBestehendesDarlehen'
     KaufNeubauVomBautraeger:
       type: object
       description: "Bitte Feld 'eigenleistung' nicht mehr verwenden. Falls mitgeschickt,\
@@ -2410,6 +2429,12 @@ components:
             format: double
           eigenleistungErfassung:
             $ref: '#/components/schemas/EigenleistungErfassung'
+          rangruecktrittDarlehenDesFinanzierungsobjektes:
+            type: array
+            description: Rangrücktritt nicht abzulösender bestehender Darlehen des
+              Finanzierungsobjektes. (Nicht von bestehenden Immobilien.)
+            items:
+              $ref: '#/components/schemas/RangruecktrittBestehendesDarlehen'
     KeinErbbaurecht:
       type: object
       allOf:
@@ -3158,6 +3183,12 @@ components:
           marktwertFinanzierungsobjekt:
             type: number
             format: double
+          rangruecktrittDarlehenDesFinanzierungsobjektes:
+            type: array
+            description: Rangrücktritt nicht abzulösender bestehender Darlehen des
+              Finanzierungsobjektes. (Nicht von bestehenden Immobilien.)
+            items:
+              $ref: '#/components/schemas/RangruecktrittBestehendesDarlehen'
     Modernisierungsangaben:
       type: object
       properties:
@@ -3300,6 +3331,12 @@ components:
             format: double
           eigenleistungErfassung:
             $ref: '#/components/schemas/EigenleistungErfassung'
+          rangruecktrittDarlehenDesFinanzierungsobjektes:
+            type: array
+            description: Rangrücktritt nicht abzulösender bestehender Darlehen des
+              Finanzierungsobjektes. (Nicht von bestehenden Immobilien.)
+            items:
+              $ref: '#/components/schemas/RangruecktrittBestehendesDarlehen'
     NichtEingeplantOderAbsehbar:
       type: object
       allOf:
@@ -4471,6 +4508,7 @@ components:
             - VR_ITZEHOE
             - VR_KAUFBEUREN_OSTALL
             - VR_KITZINGEN
+            - VR_LANDAU_MENGKOFEN
             - VR_LAUSITZ
             - VR_LEVO_BANK
             - VR_LICHTENFELS
@@ -4583,6 +4621,17 @@ components:
             format: double
           kommentar:
             type: string
+    RangruecktrittBestehendesDarlehen:
+      type: object
+      properties:
+        referenzIdBestehendesDarlehen:
+          type: string
+          description: ReferenzId des nicht abzulösenden bestehenden Darlehens des
+            Finanzierungsobjektes. (Nicht von bestehenden Immobilien.)
+        trittImRangZurueck:
+          type: boolean
+      description: Rangrücktritt eines nicht abzulösenden bestehenden Darlehens des
+        Finanzierungsobjektes. (Nicht von bestehenden Immobilien.)
     Rate:
       type: object
       allOf:
