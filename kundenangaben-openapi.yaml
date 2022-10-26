@@ -8,7 +8,7 @@ info:
     name: Europace AG
     url: http://developer.europace.de
     email: devsupport@europace2.de
-  version: 1.4.8; cf18775d724125fbff451b728932fb25d0f47efa
+  version: 1.4.9; 10b901078b28d89ddb9dee20e5fbad8357190e7b
 externalDocs:
   url: https://developer.europace.de/api/baufismart-kundenangaben-api
 servers:
@@ -44,6 +44,10 @@ paths:
         schema:
           type: string
       responses:
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "409":
+          $ref: '#/components/responses/Conflict'
         "200":
           description: Kundenangaben für einen bestehenden Vorgang
           headers:
@@ -54,10 +58,6 @@ paths:
             application/json; version=1.0:
               schema:
                 $ref: '#/components/schemas/Kundenangaben'
-        "403":
-          $ref: '#/components/responses/Forbidden'
-        "409":
-          $ref: '#/components/responses/Conflict'
         "404":
           $ref: '#/components/responses/NotFound'
         "503":
@@ -157,8 +157,6 @@ paths:
           $ref: '#/components/responses/ServiceNotAvailable'
         "422":
           $ref: '#/components/responses/UnprocessableEntity'
-        "429":
-          $ref: '#/components/responses/TooManyRequests'
         "201":
           description: Kundenangaben in neuen Vorgang importiert
           headers:
@@ -169,6 +167,8 @@ paths:
             application/json; version=1.0:
               schema:
                 $ref: '#/components/schemas/KundenangabenImportResponse'
+        "429":
+          $ref: '#/components/responses/TooManyRequests'
         "401":
           $ref: '#/components/responses/Unauthorized'
         "400":
@@ -854,6 +854,7 @@ components:
               - DT_RING_TARIF_XT_1
               - DT_RING_TARIF_XT_0
               - DT_RING_TARIF_F_1
+              - DT_RING_TARIF_F_5
               - ALTE_LEIPZIGER_1502
               - ALTE_LEIPZIGER_1602
               - ALTE_LEIPZIGER_1702
@@ -1267,9 +1268,6 @@ components:
       - '@type'
       type: object
       properties:
-        darlehenskontonummer:
-          type: string
-          description: IBAN des Darlehenskontos
         darlehensgeber:
           oneOf:
           - $ref: '#/components/schemas/ProduktanbieterDarlehensgeber'
@@ -1294,6 +1292,9 @@ components:
           format: date
         restschuld:
           $ref: '#/components/schemas/Restschuld'
+        darlehenskontonummer:
+          type: string
+          description: IBAN des Darlehenskontos
         '@type':
           type: string
       description: "Mögliche Typen: BestehendesImmobiliendarlehen, BestehendesBauspardarlehen,\
