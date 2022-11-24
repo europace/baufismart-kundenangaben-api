@@ -8,7 +8,7 @@ info:
     name: Europace AG
     url: http://developer.europace.de
     email: devsupport@europace2.de
-  version: 1.4.9; 10b901078b28d89ddb9dee20e5fbad8357190e7b
+  version: 1.4.10; 4984b9ec4b738b33c1cbac708cc94d72a81e9691
 externalDocs:
   url: https://developer.europace.de/api/baufismart-kundenangaben-api
 servers:
@@ -26,6 +26,7 @@ paths:
     get:
       tags:
       - Get
+      - Kundenangaben
       summary: Kundenangaben für einen bestehenden Vorgang laden
       description: Kundenangaben werden aus einem bestehenden Vorgang geladen.
       operationId: getKundenangaben
@@ -44,10 +45,6 @@ paths:
         schema:
           type: string
       responses:
-        "403":
-          $ref: '#/components/responses/Forbidden'
-        "409":
-          $ref: '#/components/responses/Conflict'
         "200":
           description: Kundenangaben für einen bestehenden Vorgang
           headers:
@@ -55,17 +52,21 @@ paths:
               $ref: '#/components/headers/tracingIdHeader'
               style: simple
           content:
-            application/json; version=1.0:
+            application/json;version=1.0:
               schema:
                 $ref: '#/components/schemas/Kundenangaben'
-        "404":
-          $ref: '#/components/responses/NotFound'
         "503":
           $ref: '#/components/responses/ServiceNotAvailable'
-        "429":
-          $ref: '#/components/responses/TooManyRequests'
+        "404":
+          $ref: '#/components/responses/NotFound'
         "401":
           $ref: '#/components/responses/Unauthorized'
+        "429":
+          $ref: '#/components/responses/TooManyRequests'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "409":
+          $ref: '#/components/responses/Conflict'
         "400":
           $ref: '#/components/responses/BadRequest'
       security:
@@ -74,6 +75,7 @@ paths:
     put:
       tags:
       - Update
+      - Kundenangaben
       summary: Kundenangaben in einem bestehenden Vorgang überschreiben
       description: Kundenangaben werden in BaufiSmart in einem bestehenden Vorgang
         überschrieben.
@@ -94,31 +96,31 @@ paths:
           type: string
       requestBody:
         content:
-          application/json; version=1.0:
+          application/json;version=1.0:
             schema:
               $ref: '#/components/schemas/UpdateKundenangabenRequest'
         required: true
       responses:
-        "403":
-          $ref: '#/components/responses/Forbidden'
-        "409":
-          $ref: '#/components/responses/Conflict'
+        "503":
+          $ref: '#/components/responses/ServiceNotAvailable'
         "404":
           $ref: '#/components/responses/NotFound'
+        "422":
+          $ref: '#/components/responses/UnprocessableEntity'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "429":
+          $ref: '#/components/responses/TooManyRequests'
+        "403":
+          $ref: '#/components/responses/Forbidden'
         "204":
           description: Kundenangaben in einem bestehenden Vorgang überschrieben
           headers:
             X-TraceId:
               $ref: '#/components/headers/tracingIdHeader'
               style: simple
-        "503":
-          $ref: '#/components/responses/ServiceNotAvailable'
-        "422":
-          $ref: '#/components/responses/UnprocessableEntity'
-        "429":
-          $ref: '#/components/responses/TooManyRequests'
-        "401":
-          $ref: '#/components/responses/Unauthorized'
+        "409":
+          $ref: '#/components/responses/Conflict'
         "400":
           $ref: '#/components/responses/BadRequest'
       security:
@@ -128,6 +130,7 @@ paths:
     post:
       tags:
       - Import
+      - Kundenangaben
       summary: Kundenangaben in einen neuen Vorgang importieren
       description: "Kundenangaben werden in BaufiSmart in einen neuen Vorgang importiert.\
         \ Der Scope `baufinanzierung:echtgeschaeft`wird benötigt, wenn der Datenkontext\
@@ -144,19 +147,19 @@ paths:
         $ref: '#/components/parameters/tracingIdParam'
       requestBody:
         content:
-          application/json; version=1.0:
+          application/json;version=1.0:
             schema:
               $ref: '#/components/schemas/ImportKundenangabenRequest'
         required: true
       responses:
-        "403":
-          $ref: '#/components/responses/Forbidden'
-        "409":
-          $ref: '#/components/responses/Conflict'
         "503":
           $ref: '#/components/responses/ServiceNotAvailable'
         "422":
           $ref: '#/components/responses/UnprocessableEntity'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "429":
+          $ref: '#/components/responses/TooManyRequests'
         "201":
           description: Kundenangaben in neuen Vorgang importiert
           headers:
@@ -164,13 +167,13 @@ paths:
               $ref: '#/components/headers/tracingIdHeader'
               style: simple
           content:
-            application/json; version=1.0:
+            application/json;version=1.0:
               schema:
                 $ref: '#/components/schemas/KundenangabenImportResponse'
-        "429":
-          $ref: '#/components/responses/TooManyRequests'
-        "401":
-          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "409":
+          $ref: '#/components/responses/Conflict'
         "400":
           $ref: '#/components/responses/BadRequest'
       security:
@@ -181,6 +184,7 @@ paths:
     post:
       tags:
       - Import
+      - Kundenangaben
       summary: "Kundenangaben validieren, jedoch NICHT in einen neuen Vorgang importieren"
       description: "Kundenangaben werden empfangen und validiert. Es wird jedoch KEIN\
         \ Vorgang in BaufiSmart erzeugt. Der Scope `baufinanzierung:echtgeschaeft`wird\
@@ -197,7 +201,7 @@ paths:
         $ref: '#/components/parameters/tracingIdParam'
       requestBody:
         content:
-          application/json; version=1.0:
+          application/json;version=1.0:
             schema:
               $ref: '#/components/schemas/ImportKundenangabenRequest'
         required: true
@@ -205,7 +209,7 @@ paths:
         "200":
           description: OK
           content:
-            application/json; version=1.0:
+            application/json;version=1.0:
               schema:
                 $ref: '#/components/schemas/KundenangabenImportResponse'
       security:
@@ -622,6 +626,7 @@ components:
               - BKM_HAUS_PLUS_BESTER_ZINS
               - BKM_ZINS_PLUS_2_BONUS
               - BKM_ZINS_PLUS_3_BONUS
+              - BKM_HAUS_PLUS_WAHLZUTEILUNG
               - FUCHS_IMMO_1
               - FUCHS_IMMO_1_PLUS
               - FUCHS_IMMO_2
@@ -3733,6 +3738,7 @@ components:
             - MAERKISCHE_BANK
             - MAINZ_VOBA
             - MHB
+            - MHB_GENO_KOMBI_EP
             - MHB_VERBUND_VV
             - MITTELBRANDENBURGISCHE_SPK_POTSDAM
             - MITTELBRANDENBURGISCHE_SPK_TEST
@@ -3853,6 +3859,7 @@ components:
             - RAIBA_OBERMAINNORD
             - RAIBA_OLDENBURG
             - RAIBA_OLDENBURG_A
+            - RAIBA_ORTENBURG
             - RAIBA_PLANKSTETTEN
             - RAIBA_RATZEBURG
             - RAIBA_RAVENSBURG
@@ -3948,6 +3955,7 @@ components:
             - SPK_ARNSBERG_SUND
             - SPK_ARNSTADT_ILMENAU
             - SPK_ASCHAFFENB_ALZ
+            - SPK_ATT_LENNE_KIRCH
             - SPK_AURICH_NORDEN
             - SPK_BAD_KISSINGEN
             - SPK_BAD_TOELZ
@@ -3979,6 +3987,7 @@ components:
             - SPK_DILLENBURG
             - SPK_DILLINGEN
             - SPK_DIREKT
+            - SPK_DONAUWOERTH
             - SPK_DONNERSBERG
             - SPK_DORTMUND
             - SPK_DUEREN
@@ -4336,6 +4345,7 @@ components:
             - VOBA_HOHENZOLLERN_BA
             - VOBA_HUNSRUECK_NAHE
             - VOBA_IM_HARZ
+            - VOBA_IM_HOCHSAUERLAN
             - VOBA_IM_UNTERLAND
             - VOBA_KAISERSL_UEBER
             - VOBA_KAISERSLAUTERN
@@ -4568,6 +4578,7 @@ components:
             - VR_WESTKUESTE
             - VR_WESTTHUERINGEN
             - VR_WUERZBURG
+            - VR_WYK_AUF_FOEHR
             - VRB_BAYREUTH_HOF
             - VRB_SUEDWESTPFALZ
             - VSK_GOCH
@@ -6016,10 +6027,10 @@ components:
           type: string
           description: In welchem Kontext (Echtgeschäft oder Testmodus) wird der Request
             verarbeitet.
+          default: ECHT_GESCHAEFT
           enum:
           - TEST_MODUS
           - ECHT_GESCHAEFT
-          default: ECHT_GESCHAEFT
         betreuung:
           $ref: '#/components/schemas/Betreuung'
         externeVorgangsId:
