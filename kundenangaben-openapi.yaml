@@ -8,7 +8,7 @@ info:
     name: Europace AG
     url: http://developer.europace.de
     email: devsupport@europace2.de
-  version: 1.4.10; 4984b9ec4b738b33c1cbac708cc94d72a81e9691
+  version: 1.4.11; 5b289aff9607f30b925a32777600b2534cb82b11
 externalDocs:
   url: https://developer.europace.de/api/baufismart-kundenangaben-api
 servers:
@@ -103,6 +103,12 @@ paths:
       responses:
         "503":
           $ref: '#/components/responses/ServiceNotAvailable'
+        "204":
+          description: Kundenangaben in einem bestehenden Vorgang überschrieben
+          headers:
+            X-TraceId:
+              $ref: '#/components/headers/tracingIdHeader'
+              style: simple
         "404":
           $ref: '#/components/responses/NotFound'
         "422":
@@ -113,12 +119,6 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
         "403":
           $ref: '#/components/responses/Forbidden'
-        "204":
-          description: Kundenangaben in einem bestehenden Vorgang überschrieben
-          headers:
-            X-TraceId:
-              $ref: '#/components/headers/tracingIdHeader'
-              style: simple
         "409":
           $ref: '#/components/responses/Conflict'
         "400":
@@ -158,8 +158,6 @@ paths:
           $ref: '#/components/responses/UnprocessableEntity'
         "401":
           $ref: '#/components/responses/Unauthorized'
-        "429":
-          $ref: '#/components/responses/TooManyRequests'
         "201":
           description: Kundenangaben in neuen Vorgang importiert
           headers:
@@ -170,6 +168,8 @@ paths:
             application/json;version=1.0:
               schema:
                 $ref: '#/components/schemas/KundenangabenImportResponse'
+        "429":
+          $ref: '#/components/responses/TooManyRequests'
         "403":
           $ref: '#/components/responses/Forbidden'
         "409":
@@ -1559,6 +1559,29 @@ components:
             enum:
             - DURCH_HAUPTDARLEHEN
             - INDIVIDUELL
+    EnergieEffizienzAusweis:
+      type: object
+      properties:
+        ausweistyp:
+          type: string
+          enum:
+          - ENDENERGIEBEDARF
+          - ENDENERGIEVERBRAUCH
+        endEnergie:
+          type: integer
+          format: int32
+        energieEffizienzklasse:
+          type: string
+          enum:
+          - A_PLUS
+          - A
+          - B
+          - C
+          - D
+          - E
+          - F
+          - G
+          - H
     Erbbaurecht:
       type: object
       properties:
@@ -1971,6 +1994,8 @@ components:
           $ref: '#/components/schemas/Modernisierung'
         modernisierungErfassung:
           $ref: '#/components/schemas/ModernisierungErfassung'
+        energieEffizienzAusweis:
+          $ref: '#/components/schemas/EnergieEffizienzAusweis'
       description: "Bitte Feld 'modernisierung' nicht mehr verwenden. Falls mitgeschickt,\
         \ werden die Angaben ins Feld 'modernisierungErfassung' kopiert, falls 'modernisierungErfassung'\
         \ leer ist."
@@ -2317,6 +2342,8 @@ components:
           type: boolean
         modernisierungsangaben:
           $ref: '#/components/schemas/IngModernisierungsangaben'
+        modernisierung:
+          $ref: '#/components/schemas/IngModernisierung'
         aufbaufinanzierung:
           type: boolean
           description: "Nur bei Neubau. Ja, falls das Grundstück bereits von ING finanziert\
@@ -2339,6 +2366,42 @@ components:
         properties:
           gebaude:
             $ref: '#/components/schemas/IngGebaeude'
+    IngModernisierung:
+      type: object
+      properties:
+        kernsanierung:
+          $ref: '#/components/schemas/Kernsanierung'
+        bodenWandTreppe:
+          $ref: '#/components/schemas/IngModernisierungElement'
+        heizungZentral:
+          $ref: '#/components/schemas/IngModernisierungElement'
+        fenster:
+          $ref: '#/components/schemas/IngModernisierungElement'
+        dach:
+          $ref: '#/components/schemas/IngModernisierungElement'
+        badWc:
+          $ref: '#/components/schemas/IngModernisierungElement'
+        stromAbwasserHeizkoerper:
+          $ref: '#/components/schemas/IngModernisierungElement'
+        waermedaemmung:
+          $ref: '#/components/schemas/IngModernisierungElement'
+        raumaufteilung:
+          $ref: '#/components/schemas/IngModernisierungElement'
+      description: "Alle Modernisierungen der letzten 15 Jahre, inklusive der neu\
+        \ zu finanzierenden."
+    IngModernisierungElement:
+      type: object
+      properties:
+        modernisierungGrad:
+          type: string
+          description: Grad der Modernisierung
+          enum:
+          - TEILWEISE
+          - KOMPLETT
+        modernisiert:
+          type: boolean
+          description: "Gibt an, ob das Element modernisiert wurde"
+      description: "Grundriss, Zimmergrößen"
     IngModernisierungsangaben:
       type: object
       properties:
@@ -2577,6 +2640,14 @@ components:
         properties:
           kommentar:
             type: string
+    Kernsanierung:
+      type: object
+      properties:
+        jahrDerModernisierung:
+          type: integer
+          format: int32
+        kernsaniert:
+          type: boolean
     KfwDarlehen:
       required:
       - darlehensbetrag
