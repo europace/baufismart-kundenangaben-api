@@ -8,7 +8,7 @@ info:
     name: Europace AG
     url: http://developer.europace.de
     email: devsupport@europace2.de
-  version: 1.4.11; 5b289aff9607f30b925a32777600b2534cb82b11
+  version: 1.4.12; 129d6d6fc8e0d5dcfa4745a29a8e1958cab887d7
 externalDocs:
   url: https://developer.europace.de/api/baufismart-kundenangaben-api
 servers:
@@ -753,6 +753,7 @@ components:
               - LBS_SHH_PRIMUS_TJ
               - LBS_SHH_PRIMUS_TD
               - LBS_SHH_TREND_TD
+              - LBS_SHH_CLASSIC_TRAUMHAUS
               - LBS_WEST_ZUHAUSE_DIREKT_10
               - LBS_WEST_ZUHAUSE_DIREKT_15
               - LBS_WEST_ZUHAUSE_PLUS
@@ -820,6 +821,7 @@ components:
               - LBS_SAAR_FINANZIERER_KONSTANT_ZUHAUSE
               - LBS_SAAR_MODERNISIERER_ZUHAUSE
               - LBS_SAAR_KLIMAFIT_ZUHAUSE
+              - LBS_SAAR_EINSTEIGER
               - SIGNAL_IDUNA_FREIRAUM_F_35
               - SIGNAL_IDUNA_FREIRAUM_F_35_16
               - SIGNAL_IDUNA_FREIRAUM_F_45
@@ -4384,6 +4386,7 @@ components:
             - VOBA_FRANKEN
             - VOBA_FREDENBECK_OLD
             - VOBA_FREIBURG
+            - VOBA_FREUDENSTADT
             - VOBA_FRIEDRICHSHAFEN
             - VOBA_FUERSTENFELDBRUCK
             - VOBA_GERA
