@@ -8,7 +8,7 @@ info:
     name: Europace AG
     url: http://developer.europace.de
     email: devsupport@europace2.de
-  version: 1.4.12; 129d6d6fc8e0d5dcfa4745a29a8e1958cab887d7
+  version: 1.4.13; dec7274f6c94435c4c030edaf3a56b13231abf48
 externalDocs:
   url: https://developer.europace.de/api/baufismart-kundenangaben-api
 servers:
@@ -45,16 +45,6 @@ paths:
         schema:
           type: string
       responses:
-        "200":
-          description: Kundenangaben für einen bestehenden Vorgang
-          headers:
-            X-TraceId:
-              $ref: '#/components/headers/tracingIdHeader'
-              style: simple
-          content:
-            application/json;version=1.0:
-              schema:
-                $ref: '#/components/schemas/Kundenangaben'
         "503":
           $ref: '#/components/responses/ServiceNotAvailable'
         "404":
@@ -65,6 +55,16 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
         "403":
           $ref: '#/components/responses/Forbidden'
+        "200":
+          description: Kundenangaben für einen bestehenden Vorgang
+          headers:
+            X-TraceId:
+              $ref: '#/components/headers/tracingIdHeader'
+              style: simple
+          content:
+            application/json;version=1.0:
+              schema:
+                $ref: '#/components/schemas/Kundenangaben'
         "409":
           $ref: '#/components/responses/Conflict'
         "400":
@@ -103,12 +103,6 @@ paths:
       responses:
         "503":
           $ref: '#/components/responses/ServiceNotAvailable'
-        "204":
-          description: Kundenangaben in einem bestehenden Vorgang überschrieben
-          headers:
-            X-TraceId:
-              $ref: '#/components/headers/tracingIdHeader'
-              style: simple
         "404":
           $ref: '#/components/responses/NotFound'
         "422":
@@ -121,6 +115,12 @@ paths:
           $ref: '#/components/responses/Forbidden'
         "409":
           $ref: '#/components/responses/Conflict'
+        "204":
+          description: Kundenangaben in einem bestehenden Vorgang überschrieben
+          headers:
+            X-TraceId:
+              $ref: '#/components/headers/tracingIdHeader'
+              style: simple
         "400":
           $ref: '#/components/responses/BadRequest'
       security:
@@ -158,6 +158,8 @@ paths:
           $ref: '#/components/responses/UnprocessableEntity'
         "401":
           $ref: '#/components/responses/Unauthorized'
+        "429":
+          $ref: '#/components/responses/TooManyRequests'
         "201":
           description: Kundenangaben in neuen Vorgang importiert
           headers:
@@ -168,8 +170,6 @@ paths:
             application/json;version=1.0:
               schema:
                 $ref: '#/components/schemas/KundenangabenImportResponse'
-        "429":
-          $ref: '#/components/responses/TooManyRequests'
         "403":
           $ref: '#/components/responses/Forbidden'
         "409":
@@ -862,6 +862,7 @@ components:
               - DT_RING_TARIF_XT_0
               - DT_RING_TARIF_F_1
               - DT_RING_TARIF_F_5
+              - DT_RING_TARIF_F_7
               - ALTE_LEIPZIGER_1502
               - ALTE_LEIPZIGER_1602
               - ALTE_LEIPZIGER_1702
@@ -3850,6 +3851,7 @@ components:
             - PENKA
             - PILOT
             - POSTBANK
+            - PROLOSMART
             - PROVINZIAL_NW
             - PROVINZIAL_RHEINLAND
             - PROVINZIAL_RHEINLAND_RATENSCHUTZ
