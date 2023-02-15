@@ -8,7 +8,7 @@ info:
     name: Europace AG
     url: http://developer.europace.de
     email: devsupport@europace2.de
-  version: 1.4.13; dec7274f6c94435c4c030edaf3a56b13231abf48
+  version: 1.4.14; 80e26f7a4660d08ee1342560616fb2077f680475
 externalDocs:
   url: https://developer.europace.de/api/baufismart-kundenangaben-api
 servers:
@@ -113,14 +113,14 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
         "403":
           $ref: '#/components/responses/Forbidden'
-        "409":
-          $ref: '#/components/responses/Conflict'
         "204":
           description: Kundenangaben in einem bestehenden Vorgang überschrieben
           headers:
             X-TraceId:
               $ref: '#/components/headers/tracingIdHeader'
               style: simple
+        "409":
+          $ref: '#/components/responses/Conflict'
         "400":
           $ref: '#/components/responses/BadRequest'
       security:
@@ -2097,6 +2097,8 @@ components:
           description: In anderen APIs als 'Antragsteller' bezeichnet.
           items:
             $ref: '#/components/schemas/Kunde'
+        erfahrungImmobilienFinanzierung:
+          type: boolean
         kinder:
           type: array
           items:
@@ -3925,6 +3927,7 @@ components:
             - RAIBA_KIRCHWEITHAL
             - RAIBA_KOCHER_JAGST
             - RAIBA_KRAICHGAU
+            - RAIBA_KREIS_KELHEIM
             - RAIBA_LAUENBURG
             - RAIBA_LEEZEN
             - RAIBA_LOISACHTAL
@@ -4380,6 +4383,7 @@ components:
             - VOBA_EDEKABANK
             - VOBA_ELSEN_WEWER
             - VOBA_ERFT
+            - VOBA_ERMSTAL_ALB
             - VOBA_ESSEN_CAPPELN
             - VOBA_ESSLINGEN
             - VOBA_ETTLINGEN
@@ -4508,8 +4512,10 @@ components:
             - VOBA_RUHR_MITTE
             - VOBA_SAUERLAND
             - VOBA_SCHAUMBURG
+            - VOBA_SCHLANGEN
             - VOBA_SCHNATHORST
             - VOBA_SCHWARZWA_BEV
+            - VOBA_SCHWARZW_DONAU
             - VOBA_SEESEN
             - VOBA_SELM_BORK
             - VOBA_SIEGERLAND

@@ -41,6 +41,9 @@ Please use [![Authentication](https://img.shields.io/badge/Auth-OAuth2-green)](h
 ## Create case
 As Advisor you can create a case with your customers data to start seamless and fast advising.
 
+> **IMPORTANT: Provide privacy statement** \
+> Before you transfer consumer data to Europace please note our [terms of use](https://docs.api.europace.de/terms/) and [provide the privacy statement of the advisor](https://docs.api.europace.de/common/privacystatement/) (MUST).
+
 Requirements:
 * OAuth Token has the scope `baufinanzierung:vorgang:schreiben`
 * caller is advisor of the case
