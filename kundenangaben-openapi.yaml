@@ -8,7 +8,7 @@ info:
     name: Europace AG
     url: http://developer.europace.de
     email: devsupport@europace2.de
-  version: 1.4.14; dc08be929df7171568b3dff216896d8c39e13043
+  version: 1.4.15; 93cbf5fa668db190410254c080822e842425cdab
 externalDocs:
   url: https://developer.europace.de/api/baufismart-kundenangaben-api
 servers:
@@ -45,6 +45,8 @@ paths:
         schema:
           type: string
       responses:
+        "503":
+          $ref: '#/components/responses/ServiceNotAvailable'
         "200":
           description: Kundenangaben für einen bestehenden Vorgang
           headers:
@@ -55,8 +57,6 @@ paths:
             application/json;version=1.0:
               schema:
                 $ref: '#/components/schemas/Kundenangaben'
-        "503":
-          $ref: '#/components/responses/ServiceNotAvailable'
         "404":
           $ref: '#/components/responses/NotFound'
         "401":
@@ -101,18 +101,18 @@ paths:
               $ref: '#/components/schemas/UpdateKundenangabenRequest'
         required: true
       responses:
-        "503":
-          $ref: '#/components/responses/ServiceNotAvailable'
-        "404":
-          $ref: '#/components/responses/NotFound'
-        "422":
-          $ref: '#/components/responses/UnprocessableEntity'
         "204":
           description: Kundenangaben in einem bestehenden Vorgang überschrieben
           headers:
             X-TraceId:
               $ref: '#/components/headers/tracingIdHeader'
               style: simple
+        "503":
+          $ref: '#/components/responses/ServiceNotAvailable'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "422":
+          $ref: '#/components/responses/UnprocessableEntity'
         "401":
           $ref: '#/components/responses/Unauthorized'
         "429":
@@ -160,6 +160,8 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         "429":
           $ref: '#/components/responses/TooManyRequests'
+        "403":
+          $ref: '#/components/responses/Forbidden'
         "201":
           description: Kundenangaben in neuen Vorgang importiert
           headers:
@@ -170,8 +172,6 @@ paths:
             application/json;version=1.0:
               schema:
                 $ref: '#/components/schemas/KundenangabenImportResponse'
-        "403":
-          $ref: '#/components/responses/Forbidden'
         "409":
           $ref: '#/components/responses/Conflict'
         "400":
@@ -3899,6 +3899,7 @@ components:
             - QLICK_RATENKREDIT
             - R_UND_V_ALLGEMEINE_VERSICHERUNG
             - R_UND_V_LEBENSVERSICHERUNG
+            - R_UND_V_LEBEN_TEST
             - R_UND_V_VERSICHERUNG
             - RAIBA_ALTDORF_ERG
             - RAIBA_ARNSTORF
@@ -5747,6 +5748,11 @@ components:
           type: integer
           description: In anderen APIs unter 'speed' zu finden.
           format: int32
+        lebenshaltungskostenMonatlich:
+          type: number
+          description: "Früher als Zusatzangabe für die DSL-Bank zu finden, heute\
+            \ für alle gültig"
+          format: double
         zusatzangabenProProduktanbieter:
           type: array
           items:
