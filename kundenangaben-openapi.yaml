@@ -8,7 +8,7 @@ info:
     name: Europace AG
     url: http://developer.europace.de
     email: devsupport@europace2.de
-  version: 1.4.16; c25401594405ae7c297b379973413b4d2002619c
+  version: 1.4.17; f04b76d232c2aa7818238ccb0a659fdb2934f990
 externalDocs:
   url: https://developer.europace.de/api/baufismart-kundenangaben-api
 servers:
@@ -47,6 +47,14 @@ paths:
       responses:
         "503":
           $ref: '#/components/responses/ServiceNotAvailable'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "429":
+          $ref: '#/components/responses/TooManyRequests'
+        "403":
+          $ref: '#/components/responses/Forbidden'
         "200":
           description: Kundenangaben für einen bestehenden Vorgang
           headers:
@@ -57,14 +65,6 @@ paths:
             application/json;version=1.0:
               schema:
                 $ref: '#/components/schemas/Kundenangaben'
-        "404":
-          $ref: '#/components/responses/NotFound'
-        "401":
-          $ref: '#/components/responses/Unauthorized'
-        "429":
-          $ref: '#/components/responses/TooManyRequests'
-        "403":
-          $ref: '#/components/responses/Forbidden'
         "409":
           $ref: '#/components/responses/Conflict'
         "400":
@@ -101,12 +101,6 @@ paths:
               $ref: '#/components/schemas/UpdateKundenangabenRequest'
         required: true
       responses:
-        "204":
-          description: Kundenangaben in einem bestehenden Vorgang überschrieben
-          headers:
-            X-TraceId:
-              $ref: '#/components/headers/tracingIdHeader'
-              style: simple
         "503":
           $ref: '#/components/responses/ServiceNotAvailable'
         "404":
@@ -119,6 +113,12 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
         "403":
           $ref: '#/components/responses/Forbidden'
+        "204":
+          description: Kundenangaben in einem bestehenden Vorgang überschrieben
+          headers:
+            X-TraceId:
+              $ref: '#/components/headers/tracingIdHeader'
+              style: simple
         "409":
           $ref: '#/components/responses/Conflict'
         "400":
@@ -154,6 +154,12 @@ paths:
       responses:
         "503":
           $ref: '#/components/responses/ServiceNotAvailable'
+        "422":
+          $ref: '#/components/responses/UnprocessableEntity'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "429":
+          $ref: '#/components/responses/TooManyRequests'
         "201":
           description: Kundenangaben in neuen Vorgang importiert
           headers:
@@ -164,12 +170,6 @@ paths:
             application/json;version=1.0:
               schema:
                 $ref: '#/components/schemas/KundenangabenImportResponse'
-        "422":
-          $ref: '#/components/responses/UnprocessableEntity'
-        "401":
-          $ref: '#/components/responses/Unauthorized'
-        "429":
-          $ref: '#/components/responses/TooManyRequests'
         "403":
           $ref: '#/components/responses/Forbidden'
         "409":
@@ -2684,7 +2684,7 @@ components:
           type: string
       description: "Mögliche Typen: KfwProgramm124, KfwProgramm151, KfwProgramm152,\
         \ KfwProgramm153, KfwProgramm159, KfwProgramm167, KfwProgramm261Neubau, KfwProgramm261Sanierung,\
-        \ KfwProgramm262"
+        \ KfwProgramm262, KfwProgramm297, KfwProgramm298"
       discriminator:
         propertyName: '@type'
         mapping:
@@ -2697,6 +2697,8 @@ components:
           KFW_PROGRAMM_261_NEUBAU: '#/components/schemas/KfwProgramm261Neubau'
           KFW_PROGRAMM_261_SANIERUNG: '#/components/schemas/KfwProgramm261Sanierung'
           KFW_PROGRAMM_262: '#/components/schemas/KfwProgramm262'
+          KFW_PROGRAMM_297: '#/components/schemas/KfwProgramm297'
+          KFW_PROGRAMM_298: '#/components/schemas/KfwProgramm298'
     KfwProgramm124:
       required:
       - laufzeitInJahren
@@ -2792,6 +2794,8 @@ components:
             - STANDARD_100_EEK
             - STANDARD_DENKMAL
             - STANDARD_DENKMAL_EEK
+            - KLIMAFREUNDLICH_STANDARD
+            - KLIMAFREUNDLICH_QNG
           laufzeitInJahren:
             maximum: 30
             minimum: 4
@@ -2877,6 +2881,8 @@ components:
             - STANDARD_100_EEK
             - STANDARD_DENKMAL
             - STANDARD_DENKMAL_EEK
+            - KLIMAFREUNDLICH_STANDARD
+            - KLIMAFREUNDLICH_QNG
           laufzeitInJahren:
             maximum: 30
             minimum: 4
@@ -2916,6 +2922,8 @@ components:
             - STANDARD_100_EEK
             - STANDARD_DENKMAL
             - STANDARD_DENKMAL_EEK
+            - KLIMAFREUNDLICH_STANDARD
+            - KLIMAFREUNDLICH_QNG
           kfwSanierungsFahrplanLiegtVor:
             type: boolean
           laufzeitInJahren:
@@ -2945,6 +2953,92 @@ components:
           tilgungsfreieAnlaufjahre:
             type: integer
             description: "1, 2, 3, 4, 5 oder 10 Jahre"
+            format: int32
+    KfwProgramm297:
+      required:
+      - tilgungsfreieAnlaufjahre
+      type: object
+      description: "Klimafreundliches Wohngebäude (Programm-Nr.: 297)"
+      allOf:
+      - $ref: '#/components/schemas/KfwProgramm'
+      - type: object
+        properties:
+          kfwEnergieEffizienzStandard:
+            type: string
+            description: "Erlaubte Werte sind: KLIMAFREUNDLICH_STANDARD, KLIMAFREUNDLICH_QNG"
+            enum:
+            - STANDARD_40
+            - STANDARD_40_PLUS
+            - STANDARD_40_EEK
+            - STANDARD_40_EEK_ONLY
+            - STANDARD_40_NH
+            - STANDARD_55
+            - STANDARD_55_EEK
+            - STANDARD_70
+            - STANDARD_70_EEK
+            - STANDARD_85
+            - STANDARD_85_EEK
+            - STANDARD_100
+            - STANDARD_100_EEK
+            - STANDARD_DENKMAL
+            - STANDARD_DENKMAL_EEK
+            - KLIMAFREUNDLICH_STANDARD
+            - KLIMAFREUNDLICH_QNG
+          laufzeitInJahren:
+            maximum: 35
+            minimum: 10
+            type: integer
+            format: int32
+          zinsbindungInJahren:
+            type: integer
+            description: 10 Jahre
+            format: int32
+          tilgungsfreieAnlaufjahre:
+            type: integer
+            description: "2, 3, 5 oder 10 Jahre"
+            format: int32
+    KfwProgramm298:
+      required:
+      - tilgungsfreieAnlaufjahre
+      type: object
+      description: "Klimafreundliches Wohngebäude (Programm-Nr.: 298)"
+      allOf:
+      - $ref: '#/components/schemas/KfwProgramm'
+      - type: object
+        properties:
+          kfwEnergieEffizienzStandard:
+            type: string
+            description: "Erlaubte Werte sind: KLIMAFREUNDLICH_STANDARD, KLIMAFREUNDLICH_QNG"
+            enum:
+            - STANDARD_40
+            - STANDARD_40_PLUS
+            - STANDARD_40_EEK
+            - STANDARD_40_EEK_ONLY
+            - STANDARD_40_NH
+            - STANDARD_55
+            - STANDARD_55_EEK
+            - STANDARD_70
+            - STANDARD_70_EEK
+            - STANDARD_85
+            - STANDARD_85_EEK
+            - STANDARD_100
+            - STANDARD_100_EEK
+            - STANDARD_DENKMAL
+            - STANDARD_DENKMAL_EEK
+            - KLIMAFREUNDLICH_STANDARD
+            - KLIMAFREUNDLICH_QNG
+          laufzeitInJahren:
+            maximum: 35
+            minimum: 10
+            type: integer
+            format: int32
+          zinsbindungInJahren:
+            type: integer
+            description: 10 Jahre
+            format: int32
+          tilgungsfreieAnlaufjahre:
+            type: integer
+            description: "2, 3, 5 oder 10 Jahre"
             format: int32
     Kind:
       type: object
