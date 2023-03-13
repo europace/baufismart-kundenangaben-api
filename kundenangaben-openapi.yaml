@@ -8,7 +8,7 @@ info:
     name: Europace AG
     url: http://developer.europace.de
     email: devsupport@europace2.de
-  version: 1.4.17; f04b76d232c2aa7818238ccb0a659fdb2934f990
+  version: 1.4.17; 7a9386dc1b58af2834a3ed381436ad8a1c039b2c
 externalDocs:
   url: https://developer.europace.de/api/baufismart-kundenangaben-api
 servers:
@@ -47,14 +47,6 @@ paths:
       responses:
         "503":
           $ref: '#/components/responses/ServiceNotAvailable'
-        "404":
-          $ref: '#/components/responses/NotFound'
-        "401":
-          $ref: '#/components/responses/Unauthorized'
-        "429":
-          $ref: '#/components/responses/TooManyRequests'
-        "403":
-          $ref: '#/components/responses/Forbidden'
         "200":
           description: Kundenangaben für einen bestehenden Vorgang
           headers:
@@ -65,6 +57,14 @@ paths:
             application/json;version=1.0:
               schema:
                 $ref: '#/components/schemas/Kundenangaben'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "429":
+          $ref: '#/components/responses/TooManyRequests'
+        "403":
+          $ref: '#/components/responses/Forbidden'
         "409":
           $ref: '#/components/responses/Conflict'
         "400":
@@ -105,6 +105,12 @@ paths:
           $ref: '#/components/responses/ServiceNotAvailable'
         "404":
           $ref: '#/components/responses/NotFound'
+        "204":
+          description: Kundenangaben in einem bestehenden Vorgang überschrieben
+          headers:
+            X-TraceId:
+              $ref: '#/components/headers/tracingIdHeader'
+              style: simple
         "422":
           $ref: '#/components/responses/UnprocessableEntity'
         "401":
@@ -113,12 +119,6 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
         "403":
           $ref: '#/components/responses/Forbidden'
-        "204":
-          description: Kundenangaben in einem bestehenden Vorgang überschrieben
-          headers:
-            X-TraceId:
-              $ref: '#/components/headers/tracingIdHeader'
-              style: simple
         "409":
           $ref: '#/components/responses/Conflict'
         "400":
@@ -152,14 +152,6 @@ paths:
               $ref: '#/components/schemas/ImportKundenangabenRequest'
         required: true
       responses:
-        "503":
-          $ref: '#/components/responses/ServiceNotAvailable'
-        "422":
-          $ref: '#/components/responses/UnprocessableEntity'
-        "401":
-          $ref: '#/components/responses/Unauthorized'
-        "429":
-          $ref: '#/components/responses/TooManyRequests'
         "201":
           description: Kundenangaben in neuen Vorgang importiert
           headers:
@@ -170,6 +162,14 @@ paths:
             application/json;version=1.0:
               schema:
                 $ref: '#/components/schemas/KundenangabenImportResponse'
+        "503":
+          $ref: '#/components/responses/ServiceNotAvailable'
+        "422":
+          $ref: '#/components/responses/UnprocessableEntity'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "429":
+          $ref: '#/components/responses/TooManyRequests'
         "403":
           $ref: '#/components/responses/Forbidden'
         "409":
@@ -1694,8 +1694,8 @@ components:
       properties:
         '@type':
           type: string
-      description: "Mögliche Typen: Ledig, Verheiratet, Verwitwet, Geschieden, GetrenntLebend,\
-        \ Lebenspartnerschaft"
+      description: "Mögliche Typen: LEDIG, VERHEIRATET, VERWITWET, GESCHIEDEN, GETRENNT_LEBEND,\
+        \ LEBENSPARTNERSCHAFT"
       discriminator:
         propertyName: '@type'
         mapping:
@@ -2702,8 +2702,6 @@ components:
     KfwProgramm124:
       required:
       - laufzeitInJahren
-      - tilgungsfreieAnlaufjahre
-      - zinsbindungInJahren
       type: object
       description: "Wohneigentum Schaffen: Selbstgenutztes Eigentum (Programm-Nr.:\
         \ 124)"
@@ -2745,7 +2743,6 @@ components:
     KfwProgramm152:
       required:
       - laufzeitInJahren
-      - tilgungsfreieAnlaufjahre
       type: object
       description: "Energieeffizient Sanieren: Einzelmaßnahmen (Programm-Nr.: 152).\
         \ Die Zinsbindung beträgt immer 10 Jahre. Wird zum 1. Juli 2021 eingestellt."
@@ -2766,8 +2763,6 @@ components:
     KfwProgramm153:
       required:
       - laufzeitInJahren
-      - tilgungsfreieAnlaufjahre
-      - zinsbindungInJahren
       type: object
       description: "Energieeffizient Bauen: Effizienzhaus (Programm-Nr.: 153). Wird\
         \ zum 1. Juli 2021 eingestellt."
@@ -2810,8 +2805,6 @@ components:
             description: "1, 2, 3, 4, 5 oder 10 Jahre"
             format: int32
     KfwProgramm159:
-      required:
-      - tilgungsfreieAnlaufjahre
       type: object
       description: "Wohnraum Modernisieren: Altersgerecht Umbauen (Programm-Nr.: 159)"
       allOf:
@@ -2834,7 +2827,6 @@ components:
     KfwProgramm167:
       required:
       - laufzeitUndZinsbindungInJahren
-      - tilgungsfreieAnlaufjahre
       type: object
       description: "Energieeffizient Sanieren: Heizungsanlagen Erneuerbare Energien\
         \ (Programm-Nr.: 167). Die Laufzeit und Zinsbindung sind bei diesem Programmm\
@@ -2955,8 +2947,6 @@ components:
             description: "1, 2, 3, 4, 5 oder 10 Jahre"
             format: int32
     KfwProgramm297:
-      required:
-      - tilgungsfreieAnlaufjahre
       type: object
       description: "Klimafreundliches Wohngebäude (Programm-Nr.: 297)"
       allOf:
@@ -2998,8 +2988,6 @@ components:
             description: "2, 3, 5 oder 10 Jahre"
             format: int32
     KfwProgramm298:
-      required:
-      - tilgungsfreieAnlaufjahre
       type: object
       description: "Klimafreundliches Wohngebäude (Programm-Nr.: 298)"
       allOf:
@@ -3853,6 +3841,7 @@ components:
             - KSK_KOELN
             - KSK_KELHEIM
             - KSK_KUSEL
+            - KSK_KUSEL_RATENKREDIT
             - KSK_LIMBURG
             - KSK_LUDWIGSBURG
             - KSK_MAYEN
@@ -5358,8 +5347,6 @@ components:
           RATE: '#/components/schemas/Rate'
           TILGUNG_AUSGESETZT: '#/components/schemas/TilgungAusgesetzt'
     Tippgeber:
-      required:
-      - tippgeberPartnerId
       type: object
       properties:
         tippgeberPartnerId:
@@ -6176,8 +6163,6 @@ components:
             description: Angabe in Prozent.
             format: double
     Betreuung:
-      required:
-      - kundenbetreuer
       type: object
       properties:
         kundenbetreuer:
@@ -6202,8 +6187,6 @@ components:
         importMetadaten:
           $ref: '#/components/schemas/ImportMetadaten'
     ImportMetadaten:
-      required:
-      - datenkontext
       type: object
       properties:
         datenkontext:
