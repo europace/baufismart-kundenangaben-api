@@ -8,7 +8,7 @@ info:
     name: Europace AG
     url: http://developer.europace.de
     email: devsupport@europace2.de
-  version: 1.4.17; f04b76d232c2aa7818238ccb0a659fdb2934f990
+  version: 1.4.18; 23fadc0712f3092783ab350b5a65d8b548a5498b
 externalDocs:
   url: https://developer.europace.de/api/baufismart-kundenangaben-api
 servers:
@@ -45,16 +45,6 @@ paths:
         schema:
           type: string
       responses:
-        "503":
-          $ref: '#/components/responses/ServiceNotAvailable'
-        "404":
-          $ref: '#/components/responses/NotFound'
-        "401":
-          $ref: '#/components/responses/Unauthorized'
-        "429":
-          $ref: '#/components/responses/TooManyRequests'
-        "403":
-          $ref: '#/components/responses/Forbidden'
         "200":
           description: Kundenangaben für einen bestehenden Vorgang
           headers:
@@ -65,6 +55,16 @@ paths:
             application/json;version=1.0:
               schema:
                 $ref: '#/components/schemas/Kundenangaben'
+        "503":
+          $ref: '#/components/responses/ServiceNotAvailable'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "429":
+          $ref: '#/components/responses/TooManyRequests'
+        "403":
+          $ref: '#/components/responses/Forbidden'
         "409":
           $ref: '#/components/responses/Conflict'
         "400":
@@ -1694,8 +1694,8 @@ components:
       properties:
         '@type':
           type: string
-      description: "Mögliche Typen: Ledig, Verheiratet, Verwitwet, Geschieden, GetrenntLebend,\
-        \ Lebenspartnerschaft"
+      description: "Mögliche Typen: LEDIG, VERHEIRATET, VERWITWET, GESCHIEDEN, GETRENNT_LEBEND,\
+        \ LEBENSPARTNERSCHAFT"
       discriminator:
         propertyName: '@type'
         mapping:
@@ -2727,7 +2727,7 @@ components:
     KfwProgramm151:
       type: object
       description: "Energieeffizient Sanieren: Kauf oder Komplettsanierung (Programm-Nr.:\
-        \ 151). Die Zinsbindung beträgt immer 10 Jahre. Wird zum 1. Juli 2021 eingestellt."
+        \ 151). Die Zinsbindung beträgt immer 10 Jahre. Das Programm wurde eingestellt."
       deprecated: true
       allOf:
       - $ref: '#/components/schemas/KfwProgramm'
@@ -2748,7 +2748,7 @@ components:
       - tilgungsfreieAnlaufjahre
       type: object
       description: "Energieeffizient Sanieren: Einzelmaßnahmen (Programm-Nr.: 152).\
-        \ Die Zinsbindung beträgt immer 10 Jahre. Wird zum 1. Juli 2021 eingestellt."
+        \ Die Zinsbindung beträgt immer 10 Jahre. Das Programm wurde eingestellt."
       deprecated: true
       allOf:
       - $ref: '#/components/schemas/KfwProgramm'
@@ -2769,8 +2769,8 @@ components:
       - tilgungsfreieAnlaufjahre
       - zinsbindungInJahren
       type: object
-      description: "Energieeffizient Bauen: Effizienzhaus (Programm-Nr.: 153). Wird\
-        \ zum 1. Juli 2021 eingestellt."
+      description: "Energieeffizient Bauen: Effizienzhaus (Programm-Nr.: 153). Das\
+        \ Programm wurde eingestellt."
       deprecated: true
       allOf:
       - $ref: '#/components/schemas/KfwProgramm'
@@ -2837,8 +2837,8 @@ components:
       - tilgungsfreieAnlaufjahre
       type: object
       description: "Energieeffizient Sanieren: Heizungsanlagen Erneuerbare Energien\
-        \ (Programm-Nr.: 167). Die Laufzeit und Zinsbindung sind bei diesem Programmm\
-        \ identisch. Wird zum 1. Juli 2021 eingestellt."
+        \ (Programm-Nr.: 167). Die Laufzeit und Zinsbindung sind bei diesem Programm\
+        \ identisch. Das Programm wurde eingestellt."
       deprecated: true
       allOf:
       - $ref: '#/components/schemas/KfwProgramm'
@@ -2864,7 +2864,9 @@ components:
           kfwEnergieEffizienzStandard:
             type: string
             description: "Erlaubte Werte sind: STANDARD_40_PLUS, STANDARD_40_EEK_ONLY,\
-              \ STANDARD_40_NH, STANDARD_40, STANDARD_40_EEK, STANDARD_55, STANDARD_55_EEK"
+              \ STANDARD_40_NH, STANDARD_40, STANDARD_40_EEK, STANDARD_55, STANDARD_55_EEK.\
+              \ Das Programm wurde eingestellt."
+            deprecated: true
             enum:
             - STANDARD_40
             - STANDARD_40_PLUS
@@ -2938,7 +2940,8 @@ components:
     KfwProgramm262:
       type: object
       description: "Energieeffizient Bauen und Sanieren: Einzelmaßnahmen (Programm-Nr.:\
-        \ 262). Die Zinsbindung beträgt immer 10 Jahre."
+        \ 262). Die Zinsbindung beträgt immer 10 Jahre. Das Programm wurde eingestellt."
+      deprecated: true
       allOf:
       - $ref: '#/components/schemas/KfwProgramm'
       - type: object
@@ -3853,6 +3856,7 @@ components:
             - KSK_KOELN
             - KSK_KELHEIM
             - KSK_KUSEL
+            - KSK_KUSEL_RATENKREDIT
             - KSK_LIMBURG
             - KSK_LUDWIGSBURG
             - KSK_MAYEN
