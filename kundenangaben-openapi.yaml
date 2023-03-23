@@ -8,7 +8,7 @@ info:
     name: Europace AG
     url: http://developer.europace.de
     email: devsupport@europace2.de
-  version: 1.4.18; 23fadc0712f3092783ab350b5a65d8b548a5498b
+  version: 1.4.19; a8f4ef56c24a477a81b73dae04221e1ee54c42d3
 externalDocs:
   url: https://developer.europace.de/api/baufismart-kundenangaben-api
 servers:
@@ -45,6 +45,10 @@ paths:
         schema:
           type: string
       responses:
+        "503":
+          $ref: '#/components/responses/ServiceNotAvailable'
+        "404":
+          $ref: '#/components/responses/NotFound'
         "200":
           description: Kundenangaben für einen bestehenden Vorgang
           headers:
@@ -55,10 +59,6 @@ paths:
             application/json;version=1.0:
               schema:
                 $ref: '#/components/schemas/Kundenangaben'
-        "503":
-          $ref: '#/components/responses/ServiceNotAvailable'
-        "404":
-          $ref: '#/components/responses/NotFound'
         "401":
           $ref: '#/components/responses/Unauthorized'
         "429":
@@ -103,6 +103,12 @@ paths:
       responses:
         "503":
           $ref: '#/components/responses/ServiceNotAvailable'
+        "204":
+          description: Kundenangaben in einem bestehenden Vorgang überschrieben
+          headers:
+            X-TraceId:
+              $ref: '#/components/headers/tracingIdHeader'
+              style: simple
         "404":
           $ref: '#/components/responses/NotFound'
         "422":
@@ -113,12 +119,6 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
         "403":
           $ref: '#/components/responses/Forbidden'
-        "204":
-          description: Kundenangaben in einem bestehenden Vorgang überschrieben
-          headers:
-            X-TraceId:
-              $ref: '#/components/headers/tracingIdHeader'
-              style: simple
         "409":
           $ref: '#/components/responses/Conflict'
         "400":
@@ -2998,7 +2998,7 @@ components:
             format: int32
           tilgungsfreieAnlaufjahre:
             type: integer
-            description: "2, 3, 5 oder 10 Jahre"
+            description: "1, 2, 3, 4, 5 oder 10 Jahre"
             format: int32
     KfwProgramm298:
       required:
@@ -3041,7 +3041,7 @@ components:
             format: int32
           tilgungsfreieAnlaufjahre:
             type: integer
-            description: "2, 3, 5 oder 10 Jahre"
+            description: "1, 2, 3, 4, 5 oder 10 Jahre"
             format: int32
     Kind:
       type: object
@@ -4087,6 +4087,8 @@ components:
             - SEB_LUXEMBURG
             - SIGNAL_IDUNA
             - SIGNAL_IDUNA_BAUSPAR
+            - SKATBANK
+            - SKATBANK_RATENKREDIT
             - SKB_HARDT
             - SKG_BANK
             - SKG_BANK_RATENKREDIT
