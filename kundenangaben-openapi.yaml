@@ -8,7 +8,7 @@ info:
     name: Europace AG
     url: http://developer.europace.de
     email: devsupport@europace2.de
-  version: 1.4.20; f2c25afd5390cf7b0d2691fa86ae5dcdc163a851
+  version: 1.4.21; c404e8e84c830fa6acc066ff094195cedd799f20
 externalDocs:
   url: https://developer.europace.de/api/baufismart-kundenangaben-api
 servers:
@@ -47,8 +47,6 @@ paths:
       responses:
         "503":
           $ref: '#/components/responses/ServiceNotAvailable'
-        "404":
-          $ref: '#/components/responses/NotFound'
         "200":
           description: Kundenangaben für einen bestehenden Vorgang
           headers:
@@ -59,6 +57,8 @@ paths:
             application/json;version=1.0:
               schema:
                 $ref: '#/components/schemas/Kundenangaben'
+        "404":
+          $ref: '#/components/responses/NotFound'
         "401":
           $ref: '#/components/responses/Unauthorized'
         "429":
@@ -101,6 +101,12 @@ paths:
               $ref: '#/components/schemas/UpdateKundenangabenRequest'
         required: true
       responses:
+        "204":
+          description: Kundenangaben in einem bestehenden Vorgang überschrieben
+          headers:
+            X-TraceId:
+              $ref: '#/components/headers/tracingIdHeader'
+              style: simple
         "503":
           $ref: '#/components/responses/ServiceNotAvailable'
         "404":
@@ -111,12 +117,6 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         "429":
           $ref: '#/components/responses/TooManyRequests'
-        "204":
-          description: Kundenangaben in einem bestehenden Vorgang überschrieben
-          headers:
-            X-TraceId:
-              $ref: '#/components/headers/tracingIdHeader'
-              style: simple
         "403":
           $ref: '#/components/responses/Forbidden'
         "409":
@@ -158,6 +158,10 @@ paths:
           $ref: '#/components/responses/UnprocessableEntity'
         "401":
           $ref: '#/components/responses/Unauthorized'
+        "429":
+          $ref: '#/components/responses/TooManyRequests'
+        "403":
+          $ref: '#/components/responses/Forbidden'
         "201":
           description: Kundenangaben in neuen Vorgang importiert
           headers:
@@ -168,10 +172,6 @@ paths:
             application/json;version=1.0:
               schema:
                 $ref: '#/components/schemas/KundenangabenImportResponse'
-        "429":
-          $ref: '#/components/responses/TooManyRequests'
-        "403":
-          $ref: '#/components/responses/Forbidden'
         "409":
           $ref: '#/components/responses/Conflict'
         "400":
@@ -754,6 +754,34 @@ components:
               - LBS_SHH_PRIMUS_TD
               - LBS_SHH_TREND_TD
               - LBS_SHH_CLASSIC_TRAUMHAUS
+              - LBS_SHH_CLASSIC_AUSBAU_TD
+              - LBS_SHH_CLASSIC_FORMAT
+              - LBS_SHH_CLASSIC_FORMAT_MB
+              - LBS_SHH_CLASSIC_HAUSBAU_TC
+              - LBS_SHH_CLASSIC_HAUSBAU_TH
+              - LBS_SHH_CLASSIC_HAUSBAU_TI
+              - LBS_SHH_CLASSIC_HAUSBAU_TJ
+              - LBS_SHH_CLASSIC_HAUSBAU_TK
+              - LBS_SHH_CLASSIC_HAUSBAU_TL
+              - LBS_SHH_CLASSIC_HAUSBAU_TM
+              - LBS_SHH_CLASSIC_HAUSBAU_TN
+              - LBS_SHH_CLASSIC_PERSPEKTIVE
+              - LBS_SHH_CLASSIC_PERSPEKTIVE_MA
+              - LBS_SHH_CLASSIC_PRIMUS
+              - LBS_SHH_CLASSIC_PRIMUS_MC
+              - LBS_SHH_CLASSIC_PRIMUS_SC
+              - LBS_SHH_CLASSIC_PRIMUS_SH
+              - LBS_SHH_CLASSIC_PRIMUS_SI
+              - LBS_SHH_CLASSIC_PRIMUS_SJ
+              - LBS_SHH_CLASSIC_PRIMUS_SK
+              - LBS_SHH_CLASSIC_PRIMUS_SL
+              - LBS_SHH_CLASSIC_PRIMUS_SM
+              - LBS_SHH_CLASSIC_PRIMUS_SN
+              - LBS_SHH_CLASSIC_TRAUMHAUS_TB
+              - LBS_SHH_CLASSIC_TREND
+              - LBS_SHH_CLASSIC_TREND_MD
+              - LBS_SHH_CLASSIC_TREND_SD
+              - LBS_SHH_CLASSIC_VITA_SE
               - LBS_WEST_ZUHAUSE_DIREKT_10
               - LBS_WEST_ZUHAUSE_DIREKT_15
               - LBS_WEST_ZUHAUSE_PLUS
@@ -5399,6 +5427,8 @@ components:
         dr:
           type: boolean
     UnbesichertesExternesDarlehen:
+      required:
+      - typ
       type: object
       properties:
         typ:
