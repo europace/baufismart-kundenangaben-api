@@ -8,7 +8,7 @@ info:
     name: Europace AG
     url: http://developer.europace.de
     email: devsupport@europace2.de
-  version: 1.4.21; c404e8e84c830fa6acc066ff094195cedd799f20
+  version: 1.4.22; aab0984d69278c351ab2058ae208e49dcd8ee6e3
 externalDocs:
   url: https://developer.europace.de/api/baufismart-kundenangaben-api
 servers:
@@ -47,6 +47,12 @@ paths:
       responses:
         "503":
           $ref: '#/components/responses/ServiceNotAvailable'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "429":
+          $ref: '#/components/responses/TooManyRequests'
         "200":
           description: Kundenangaben für einen bestehenden Vorgang
           headers:
@@ -57,12 +63,6 @@ paths:
             application/json;version=1.0:
               schema:
                 $ref: '#/components/schemas/Kundenangaben'
-        "404":
-          $ref: '#/components/responses/NotFound'
-        "401":
-          $ref: '#/components/responses/Unauthorized'
-        "429":
-          $ref: '#/components/responses/TooManyRequests'
         "403":
           $ref: '#/components/responses/Forbidden'
         "409":
@@ -101,12 +101,6 @@ paths:
               $ref: '#/components/schemas/UpdateKundenangabenRequest'
         required: true
       responses:
-        "204":
-          description: Kundenangaben in einem bestehenden Vorgang überschrieben
-          headers:
-            X-TraceId:
-              $ref: '#/components/headers/tracingIdHeader'
-              style: simple
         "503":
           $ref: '#/components/responses/ServiceNotAvailable'
         "404":
@@ -117,6 +111,12 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         "429":
           $ref: '#/components/responses/TooManyRequests'
+        "204":
+          description: Kundenangaben in einem bestehenden Vorgang überschrieben
+          headers:
+            X-TraceId:
+              $ref: '#/components/headers/tracingIdHeader'
+              style: simple
         "403":
           $ref: '#/components/responses/Forbidden'
         "409":
@@ -644,6 +644,26 @@ components:
               - FUCHS_IMMO_XS
               - FUCHS_START_XX
               - FUCHS_START_XY
+              - LBS_BAYERN_F6_PLUS
+              - LBS_BAYERN_F9
+              - LBS_BAYERN_FU4
+              - LBS_BAYERN_FU4_RIESTER
+              - LBS_BAYERN_FU5
+              - LBS_BAYERN_FU5_RIESTER
+              - LBS_BAYERN_FU6
+              - LBS_BAYERN_FU6_RIESTER
+              - LBS_BAYERN_FU6_PLUS_RIESTER
+              - LBS_BAYERN_FU9_RIESTER
+              - LBS_BAYERN_N4_PLUS
+              - LBS_BAYERN_N4_PLUS_RIESTER
+              - LBS_BAYERN_N5
+              - LBS_BAYERN_N5_RIESTER
+              - LBS_BAYERN_N5_PLUS
+              - LBS_BAYERN_N5_PLUS_RIESTER
+              - LBS_BAYERN_N6_PLUS
+              - LBS_BAYERN_N6_PLUS_RIESTER
+              - LBS_BAYERN_N8
+              - LBS_BAYERN_N8_RIESTER
               - LBS_BAYERN_T4_PLUS
               - LBS_BAYERN_T4_PLUS_RIESTER
               - LBS_BAYERN_T5_PLUS
@@ -666,6 +686,9 @@ components:
               - LBS_BAYERN_U9_RIESTER
               - LBS_BAYERN_U5
               - LBS_BAYERN_U5_RIESTER
+              - LBS_BAYERN_V18
+              - LBS_BAYERN_V25
+              - LBS_BAYERN_V30
               - LBS_BAYERN_W4
               - LBS_BAYERN_W4_RIESTER
               - LBS_BAYERN_W6
@@ -741,6 +764,19 @@ components:
               - LBS_OST_KONSTANT30_V250
               - LBS_OST_KONSTANT30_V270
               - LBS_OST_KONSTANT30_V290
+              - LBS_OST_KONSTANT30_V310
+              - LBS_OST_KONSTANT30_V330
+              - LBS_OST_KONSTANT30_V350
+              - LBS_OST_KONSTANT30_V370
+              - LBS_OST_KONSTANT30_V390
+              - LBS_OST_KONSTANT30_V410
+              - LBS_OST_KONSTANT30_V430
+              - LBS_OST_KONSTANT30_V450
+              - LBS_OST_KONSTANT30_V470
+              - LBS_OST_KONSTANT30_V490
+              - LBS_OST_KONSTANT30_V510
+              - LBS_OST_KONSTANT30_V530
+              - LBS_OST_KONSTANT30_V550
               - LBS_SHH_PRIMUS_SC
               - LBS_SHH_PRIMUS_SD
               - LBS_SHH_PRIMUS_SH
@@ -769,10 +805,6 @@ components:
               - LBS_SHH_CLASSIC_PERSPEKTIVE_MA
               - LBS_SHH_CLASSIC_PRIMUS
               - LBS_SHH_CLASSIC_PRIMUS_MC
-              - LBS_SHH_CLASSIC_PRIMUS_SC
-              - LBS_SHH_CLASSIC_PRIMUS_SH
-              - LBS_SHH_CLASSIC_PRIMUS_SI
-              - LBS_SHH_CLASSIC_PRIMUS_SJ
               - LBS_SHH_CLASSIC_PRIMUS_SK
               - LBS_SHH_CLASSIC_PRIMUS_SL
               - LBS_SHH_CLASSIC_PRIMUS_SM
@@ -780,7 +812,6 @@ components:
               - LBS_SHH_CLASSIC_TRAUMHAUS_TB
               - LBS_SHH_CLASSIC_TREND
               - LBS_SHH_CLASSIC_TREND_MD
-              - LBS_SHH_CLASSIC_TREND_SD
               - LBS_SHH_CLASSIC_VITA_SE
               - LBS_WEST_ZUHAUSE_DIREKT_10
               - LBS_WEST_ZUHAUSE_DIREKT_15
@@ -3923,6 +3954,7 @@ components:
             - LBS_BAYERN
             - LBS_BAYERN_ANNU
             - LBS_BAYERN_HV_FAEH
+            - LBS_BAYERN_BAUSPAREN
             - LBS_BREMEN
             - LBS_HESSEN_THUERINGEN
             - LBS_NORD
@@ -4203,6 +4235,7 @@ components:
             - SPK_EINBECK
             - SPK_ELBE_ELSTER
             - SPK_ELMSHORN
+            - SPK_EMDEN
             - SPK_EMSDETTEN
             - SPK_EMSLAND
             - SPK_ENNE_BRECKERFELD
