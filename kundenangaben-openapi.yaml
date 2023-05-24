@@ -8,7 +8,7 @@ info:
     name: Europace AG
     url: http://developer.europace.de
     email: devsupport@europace2.de
-  version: 1.4.22; aab0984d69278c351ab2058ae208e49dcd8ee6e3
+  version: 1.4.23; 1e82169c777817a811704d2e295e0761e4775e08
 externalDocs:
   url: https://developer.europace.de/api/baufismart-kundenangaben-api
 servers:
@@ -51,8 +51,6 @@ paths:
           $ref: '#/components/responses/NotFound'
         "401":
           $ref: '#/components/responses/Unauthorized'
-        "429":
-          $ref: '#/components/responses/TooManyRequests'
         "200":
           description: Kundenangaben für einen bestehenden Vorgang
           headers:
@@ -63,6 +61,8 @@ paths:
             application/json;version=1.0:
               schema:
                 $ref: '#/components/schemas/Kundenangaben'
+        "429":
+          $ref: '#/components/responses/TooManyRequests'
         "403":
           $ref: '#/components/responses/Forbidden'
         "409":
@@ -154,14 +154,6 @@ paths:
       responses:
         "503":
           $ref: '#/components/responses/ServiceNotAvailable'
-        "422":
-          $ref: '#/components/responses/UnprocessableEntity'
-        "401":
-          $ref: '#/components/responses/Unauthorized'
-        "429":
-          $ref: '#/components/responses/TooManyRequests'
-        "403":
-          $ref: '#/components/responses/Forbidden'
         "201":
           description: Kundenangaben in neuen Vorgang importiert
           headers:
@@ -172,6 +164,14 @@ paths:
             application/json;version=1.0:
               schema:
                 $ref: '#/components/schemas/KundenangabenImportResponse'
+        "422":
+          $ref: '#/components/responses/UnprocessableEntity'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "429":
+          $ref: '#/components/responses/TooManyRequests'
+        "403":
+          $ref: '#/components/responses/Forbidden'
         "409":
           $ref: '#/components/responses/Conflict'
         "400":
@@ -4198,6 +4198,7 @@ components:
             - SPK_ATT_LENNE_KIRCH
             - SPK_AURICH_NORDEN
             - SPK_BAD_KISSINGEN
+            - SPK_BAD_NEUSTADT_ADS
             - SPK_BAD_TOELZ
             - SPK_BAD_OEYNHAUSEN
             - SPK_BADEN_BADEN
