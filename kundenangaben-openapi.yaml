@@ -8,7 +8,7 @@ info:
     name: Europace AG
     url: http://developer.europace.de
     email: devsupport@europace2.de
-  version: 1.4.24; f06374a7e46a324460e66ba3438ddedca42aa15f
+  version: 1.4.25; 828c6ed94b3d13464948445f8752c634a0bfed61
 externalDocs:
   url: https://developer.europace.de/api/baufismart-kundenangaben-api
 servers:
@@ -49,6 +49,14 @@ paths:
           $ref: '#/components/responses/ServiceNotAvailable'
         "404":
           $ref: '#/components/responses/NotFound'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "429":
+          $ref: '#/components/responses/TooManyRequests'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "409":
+          $ref: '#/components/responses/Conflict'
         "200":
           description: Kundenangaben für einen bestehenden Vorgang
           headers:
@@ -59,14 +67,6 @@ paths:
             application/json;version=1.0:
               schema:
                 $ref: '#/components/schemas/Kundenangaben'
-        "401":
-          $ref: '#/components/responses/Unauthorized'
-        "429":
-          $ref: '#/components/responses/TooManyRequests'
-        "403":
-          $ref: '#/components/responses/Forbidden'
-        "409":
-          $ref: '#/components/responses/Conflict'
         "400":
           $ref: '#/components/responses/BadRequest'
       security:
@@ -101,12 +101,6 @@ paths:
               $ref: '#/components/schemas/UpdateKundenangabenRequest'
         required: true
       responses:
-        "204":
-          description: Kundenangaben in einem bestehenden Vorgang überschrieben
-          headers:
-            X-TraceId:
-              $ref: '#/components/headers/tracingIdHeader'
-              style: simple
         "503":
           $ref: '#/components/responses/ServiceNotAvailable'
         "404":
@@ -119,6 +113,12 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
         "403":
           $ref: '#/components/responses/Forbidden'
+        "204":
+          description: Kundenangaben in einem bestehenden Vorgang überschrieben
+          headers:
+            X-TraceId:
+              $ref: '#/components/headers/tracingIdHeader'
+              style: simple
         "409":
           $ref: '#/components/responses/Conflict'
         "400":
@@ -156,6 +156,10 @@ paths:
           $ref: '#/components/responses/ServiceNotAvailable'
         "422":
           $ref: '#/components/responses/UnprocessableEntity'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "429":
+          $ref: '#/components/responses/TooManyRequests'
         "201":
           description: Kundenangaben in neuen Vorgang importiert
           headers:
@@ -166,10 +170,6 @@ paths:
             application/json;version=1.0:
               schema:
                 $ref: '#/components/schemas/KundenangabenImportResponse'
-        "401":
-          $ref: '#/components/responses/Unauthorized'
-        "429":
-          $ref: '#/components/responses/TooManyRequests'
         "403":
           $ref: '#/components/responses/Forbidden'
         "409":
@@ -2767,7 +2767,7 @@ components:
           type: string
       description: "Mögliche Typen: KfwProgramm124, KfwProgramm151, KfwProgramm152,\
         \ KfwProgramm153, KfwProgramm159, KfwProgramm167, KfwProgramm261Neubau, KfwProgramm261Sanierung,\
-        \ KfwProgramm262, KfwProgramm297, KfwProgramm298"
+        \ KfwProgramm262, KfwProgramm297, KfwProgramm298, KfwProgramm300"
       discriminator:
         propertyName: '@type'
         mapping:
@@ -3055,7 +3055,8 @@ components:
         properties:
           kfwEnergieEffizienzStandard:
             type: string
-            description: "Erlaubte Werte sind: KLIMAFREUNDLICH_STANDARD, KLIMAFREUNDLICH_QNG"
+            description: "Erlaubte Werte sind: KLIMAFREUNDLICH_STANDARD, KLIMAFREUNDLICH_QNG\
+              \ - bei KfW 297, 298, 300 mandatory"
             enum:
             - STANDARD_40
             - STANDARD_40_PLUS
@@ -3098,7 +3099,8 @@ components:
         properties:
           kfwEnergieEffizienzStandard:
             type: string
-            description: "Erlaubte Werte sind: KLIMAFREUNDLICH_STANDARD, KLIMAFREUNDLICH_QNG"
+            description: "Erlaubte Werte sind: KLIMAFREUNDLICH_STANDARD, KLIMAFREUNDLICH_QNG\
+              \ - bei KfW 297, 298, 300 mandatory"
             enum:
             - STANDARD_40
             - STANDARD_40_PLUS
@@ -3141,7 +3143,8 @@ components:
         properties:
           kfwEnergieEffizienzStandard:
             type: string
-            description: "Erlaubte Werte sind: KLIMAFREUNDLICH_STANDARD, KLIMAFREUNDLICH_QNG"
+            description: "Erlaubte Werte sind: KLIMAFREUNDLICH_STANDARD, KLIMAFREUNDLICH_QNG\
+              \ - bei KfW 297, 298, 300 mandatory"
             enum:
             - STANDARD_40
             - STANDARD_40_PLUS
