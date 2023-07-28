@@ -8,7 +8,7 @@ info:
     name: Europace AG
     url: http://developer.europace.de
     email: devsupport@europace2.de
-  version: 1.4.26; d357b1c1ebcd7aa07fe83ee150641e4278f6d64e
+  version: 1.4.27; 6e8cb25af769c00ff1e82280ec33808862ed62dd
 externalDocs:
   url: https://developer.europace.de/api/baufismart-kundenangaben-api
 servers:
@@ -45,6 +45,14 @@ paths:
         schema:
           type: string
       responses:
+        "503":
+          $ref: '#/components/responses/ServiceNotAvailable'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "429":
+          $ref: '#/components/responses/TooManyRequests'
         "200":
           description: Kundenangaben für einen bestehenden Vorgang
           headers:
@@ -55,14 +63,6 @@ paths:
             application/json;version=1.0:
               schema:
                 $ref: '#/components/schemas/Kundenangaben'
-        "503":
-          $ref: '#/components/responses/ServiceNotAvailable'
-        "404":
-          $ref: '#/components/responses/NotFound'
-        "401":
-          $ref: '#/components/responses/Unauthorized'
-        "429":
-          $ref: '#/components/responses/TooManyRequests'
         "403":
           $ref: '#/components/responses/Forbidden'
         "409":
@@ -103,12 +103,6 @@ paths:
       responses:
         "503":
           $ref: '#/components/responses/ServiceNotAvailable'
-        "204":
-          description: Kundenangaben in einem bestehenden Vorgang überschrieben
-          headers:
-            X-TraceId:
-              $ref: '#/components/headers/tracingIdHeader'
-              style: simple
         "404":
           $ref: '#/components/responses/NotFound'
         "422":
@@ -119,6 +113,12 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
         "403":
           $ref: '#/components/responses/Forbidden'
+        "204":
+          description: Kundenangaben in einem bestehenden Vorgang überschrieben
+          headers:
+            X-TraceId:
+              $ref: '#/components/headers/tracingIdHeader'
+              style: simple
         "409":
           $ref: '#/components/responses/Conflict'
         "400":
@@ -152,16 +152,6 @@ paths:
               $ref: '#/components/schemas/ImportKundenangabenRequest'
         required: true
       responses:
-        "503":
-          $ref: '#/components/responses/ServiceNotAvailable'
-        "422":
-          $ref: '#/components/responses/UnprocessableEntity'
-        "401":
-          $ref: '#/components/responses/Unauthorized'
-        "429":
-          $ref: '#/components/responses/TooManyRequests'
-        "403":
-          $ref: '#/components/responses/Forbidden'
         "201":
           description: Kundenangaben in neuen Vorgang importiert
           headers:
@@ -172,6 +162,16 @@ paths:
             application/json;version=1.0:
               schema:
                 $ref: '#/components/schemas/KundenangabenImportResponse'
+        "503":
+          $ref: '#/components/responses/ServiceNotAvailable'
+        "422":
+          $ref: '#/components/responses/UnprocessableEntity'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "429":
+          $ref: '#/components/responses/TooManyRequests'
+        "403":
+          $ref: '#/components/responses/Forbidden'
         "409":
           $ref: '#/components/responses/Conflict'
         "400":
@@ -1004,40 +1004,40 @@ components:
               - WUESTENROT_01064_07_5161
               - WUESTENROT_01064_09_0000
               - WUESTENROT_01073_08_0000
+              - WUESTENROT_01074_10_0000
+              - WUESTENROT_01075_03_5000
+              - WUESTENROT_01076_08_0000
+              - WUESTENROT_01077_04_0000
+              - WUESTENROT_01077_07_5000
+              - WUESTENROT_01077_08_0000
+              - WUESTENROT_01078_04_0000
+              - WUESTENROT_01079_04_0000
+              - WUESTENROT_01079_04_5000
               - WUESTENROT_01073_04_5000
               - WUESTENROT_01073_05_9000
               - WUESTENROT_01094_04_5000
               - WUESTENROT_01094_08_0000
               - WUESTENROT_01094_05_9000
-              - WUESTENROT_01076_08_0000
               - WUESTENROT_01076_07_9872
               - WUESTENROT_01076_05_8633
               - WUESTENROT_01087_08_0000
               - WUESTENROT_01087_07_9872
               - WUESTENROT_01087_05_8633
-              - WUESTENROT_01077_04_0000
               - WUESTENROT_01088_04_0000
-              - WUESTENROT_01077_07_5000
               - WUESTENROT_01077_06_3000
               - WUESTENROT_01077_04_7000
               - WUESTENROT_01088_07_5000
               - WUESTENROT_01088_06_3000
               - WUESTENROT_01088_04_7000
-              - WUESTENROT_01077_08_0000
               - WUESTENROT_01077_07_9648
               - WUESTENROT_01077_06_2500
               - WUESTENROT_01088_08_0000
               - WUESTENROT_01088_07_9648
               - WUESTENROT_01088_06_2500
-              - WUESTENROT_01074_10_0000
               - WUESTENROT_01085_10_0000
-              - WUESTENROT_01075_03_5000
               - WUESTENROT_01086_03_5000
-              - WUESTENROT_01079_04_0000
-              - WUESTENROT_01079_04_5000
               - WUESTENROT_01090_04_0000
               - WUESTENROT_01090_04_5000
-              - WUESTENROT_01078_04_0000
               - WUESTENROT_01089_04_0000
               - WUESTENROT_01093_05_0000
               - DEUTSCHE_BANK_BAUSPAR_TARIF_FI1
@@ -2950,28 +2950,16 @@ components:
         properties:
           kfwEnergieEffizienzStandard:
             type: string
-            description: "Erlaubte Werte sind: STANDARD_40_PLUS, STANDARD_40_EEK_ONLY,\
-              \ STANDARD_40_NH, STANDARD_40, STANDARD_40_EEK, STANDARD_55, STANDARD_55_EEK.\
-              \ Das Programm wurde eingestellt."
+            description: Das Programm wurde eingestellt.
             deprecated: true
             enum:
-            - STANDARD_40
             - STANDARD_40_PLUS
-            - STANDARD_40_EEK
             - STANDARD_40_EEK_ONLY
             - STANDARD_40_NH
+            - STANDARD_40
+            - STANDARD_40_EEK
             - STANDARD_55
             - STANDARD_55_EEK
-            - STANDARD_70
-            - STANDARD_70_EEK
-            - STANDARD_85
-            - STANDARD_85_EEK
-            - STANDARD_100
-            - STANDARD_100_EEK
-            - STANDARD_DENKMAL
-            - STANDARD_DENKMAL_EEK
-            - KLIMAFREUNDLICH_STANDARD
-            - KLIMAFREUNDLICH_QNG
           laufzeitInJahren:
             maximum: 30
             minimum: 4
@@ -2992,15 +2980,9 @@ components:
         properties:
           kfwEnergieEffizienzStandard:
             type: string
-            description: "Erlaubte Werte sind: STANDARD_40, STANDARD_40_EEK, STANDARD_55,\
-              \ STANDARD_55_EEK, STANDARD_70, STANDARD_70_EEK, STANDARD_85, STANDARD_85_EEK,\
-              \ STANDARD_100, STANDARD_100_EEK, STANDARD_DENKMAL, STANDARD_DENKMAL_EEK"
             enum:
             - STANDARD_40
-            - STANDARD_40_PLUS
             - STANDARD_40_EEK
-            - STANDARD_40_EEK_ONLY
-            - STANDARD_40_NH
             - STANDARD_55
             - STANDARD_55_EEK
             - STANDARD_70
@@ -3011,8 +2993,6 @@ components:
             - STANDARD_100_EEK
             - STANDARD_DENKMAL
             - STANDARD_DENKMAL_EEK
-            - KLIMAFREUNDLICH_STANDARD
-            - KLIMAFREUNDLICH_QNG
           kfwSanierungsFahrplanLiegtVor:
             type: boolean
           laufzeitInJahren:
@@ -3055,24 +3035,9 @@ components:
         properties:
           kfwEnergieEffizienzStandard:
             type: string
-            description: "Erlaubte Werte sind: KLIMAFREUNDLICH_STANDARD, KLIMAFREUNDLICH_QNG\
-              \ - bei KfW 297, 298, 300 mandatory"
+            description: 'Standard = KLIMAFREUNDLICH_STANDARD '
+            default: KLIMAFREUNDLICH_STANDARD
             enum:
-            - STANDARD_40
-            - STANDARD_40_PLUS
-            - STANDARD_40_EEK
-            - STANDARD_40_EEK_ONLY
-            - STANDARD_40_NH
-            - STANDARD_55
-            - STANDARD_55_EEK
-            - STANDARD_70
-            - STANDARD_70_EEK
-            - STANDARD_85
-            - STANDARD_85_EEK
-            - STANDARD_100
-            - STANDARD_100_EEK
-            - STANDARD_DENKMAL
-            - STANDARD_DENKMAL_EEK
             - KLIMAFREUNDLICH_STANDARD
             - KLIMAFREUNDLICH_QNG
           laufzeitInJahren:
@@ -3099,24 +3064,9 @@ components:
         properties:
           kfwEnergieEffizienzStandard:
             type: string
-            description: "Erlaubte Werte sind: KLIMAFREUNDLICH_STANDARD, KLIMAFREUNDLICH_QNG\
-              \ - bei KfW 297, 298, 300 mandatory"
+            description: 'Standard = KLIMAFREUNDLICH_STANDARD '
+            default: KLIMAFREUNDLICH_STANDARD
             enum:
-            - STANDARD_40
-            - STANDARD_40_PLUS
-            - STANDARD_40_EEK
-            - STANDARD_40_EEK_ONLY
-            - STANDARD_40_NH
-            - STANDARD_55
-            - STANDARD_55_EEK
-            - STANDARD_70
-            - STANDARD_70_EEK
-            - STANDARD_85
-            - STANDARD_85_EEK
-            - STANDARD_100
-            - STANDARD_100_EEK
-            - STANDARD_DENKMAL
-            - STANDARD_DENKMAL_EEK
             - KLIMAFREUNDLICH_STANDARD
             - KLIMAFREUNDLICH_QNG
           laufzeitInJahren:
@@ -3143,24 +3093,9 @@ components:
         properties:
           kfwEnergieEffizienzStandard:
             type: string
-            description: "Erlaubte Werte sind: KLIMAFREUNDLICH_STANDARD, KLIMAFREUNDLICH_QNG\
-              \ - bei KfW 297, 298, 300 mandatory"
+            description: 'Standard = KLIMAFREUNDLICH_STANDARD '
+            default: KLIMAFREUNDLICH_STANDARD
             enum:
-            - STANDARD_40
-            - STANDARD_40_PLUS
-            - STANDARD_40_EEK
-            - STANDARD_40_EEK_ONLY
-            - STANDARD_40_NH
-            - STANDARD_55
-            - STANDARD_55_EEK
-            - STANDARD_70
-            - STANDARD_70_EEK
-            - STANDARD_85
-            - STANDARD_85_EEK
-            - STANDARD_100
-            - STANDARD_100_EEK
-            - STANDARD_DENKMAL
-            - STANDARD_DENKMAL_EEK
             - KLIMAFREUNDLICH_STANDARD
             - KLIMAFREUNDLICH_QNG
           laufzeitInJahren:
@@ -3829,6 +3764,7 @@ components:
             - ACCEDOBANK
             - ALLGAEUER_VOBA
             - ALLIANZ
+            - ALLIANZ_RATENSCHUTZ
             - ALTE_LEIPZIGER_BAUSPAR
             - ALTE_LEIPZIGER_BAUSPAR_RATENKREDIT
             - ALTE_LEIPZIGER_BSV
