@@ -8,7 +8,7 @@ info:
     name: Europace AG
     url: http://developer.europace.de
     email: devsupport@europace2.de
-  version: 1.4.27; 6e8cb25af769c00ff1e82280ec33808862ed62dd
+  version: 1.4.28; 2735149912f70c9d6b5cdae374d6022623d25122
 externalDocs:
   url: https://developer.europace.de/api/baufismart-kundenangaben-api
 servers:
@@ -105,6 +105,12 @@ paths:
           $ref: '#/components/responses/ServiceNotAvailable'
         "404":
           $ref: '#/components/responses/NotFound'
+        "204":
+          description: Kundenangaben in einem bestehenden Vorgang überschrieben
+          headers:
+            X-TraceId:
+              $ref: '#/components/headers/tracingIdHeader'
+              style: simple
         "422":
           $ref: '#/components/responses/UnprocessableEntity'
         "401":
@@ -113,12 +119,6 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
         "403":
           $ref: '#/components/responses/Forbidden'
-        "204":
-          description: Kundenangaben in einem bestehenden Vorgang überschrieben
-          headers:
-            X-TraceId:
-              $ref: '#/components/headers/tracingIdHeader'
-              style: simple
         "409":
           $ref: '#/components/responses/Conflict'
         "400":
@@ -4288,6 +4288,7 @@ components:
             - SPK_HASLACH_ZELL
             - SPK_HEGAUBODENSEE
             - SPK_HEIDELBERG
+            - SPK_HEIDELBERG_RATENKREDIT
             - SPK_HEILBRONN
             - SPK_HEILBRONN_RATENKREDIT
             - SPK_HERFORD
