@@ -8,7 +8,7 @@ info:
     name: Europace AG
     url: http://developer.europace.de
     email: devsupport@europace2.de
-  version: 1.4.28; 2735149912f70c9d6b5cdae374d6022623d25122
+  version: 1.4.29; 7329a71651f0fcb67220a109bc99ebae11f3fdf5
 externalDocs:
   url: https://developer.europace.de/api/baufismart-kundenangaben-api
 servers:
@@ -47,12 +47,6 @@ paths:
       responses:
         "503":
           $ref: '#/components/responses/ServiceNotAvailable'
-        "404":
-          $ref: '#/components/responses/NotFound'
-        "401":
-          $ref: '#/components/responses/Unauthorized'
-        "429":
-          $ref: '#/components/responses/TooManyRequests'
         "200":
           description: Kundenangaben für einen bestehenden Vorgang
           headers:
@@ -63,6 +57,12 @@ paths:
             application/json;version=1.0:
               schema:
                 $ref: '#/components/schemas/Kundenangaben'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "429":
+          $ref: '#/components/responses/TooManyRequests'
         "403":
           $ref: '#/components/responses/Forbidden'
         "409":
@@ -101,16 +101,16 @@ paths:
               $ref: '#/components/schemas/UpdateKundenangabenRequest'
         required: true
       responses:
-        "503":
-          $ref: '#/components/responses/ServiceNotAvailable'
-        "404":
-          $ref: '#/components/responses/NotFound'
         "204":
           description: Kundenangaben in einem bestehenden Vorgang überschrieben
           headers:
             X-TraceId:
               $ref: '#/components/headers/tracingIdHeader'
               style: simple
+        "503":
+          $ref: '#/components/responses/ServiceNotAvailable'
+        "404":
+          $ref: '#/components/responses/NotFound'
         "422":
           $ref: '#/components/responses/UnprocessableEntity'
         "401":
@@ -152,6 +152,8 @@ paths:
               $ref: '#/components/schemas/ImportKundenangabenRequest'
         required: true
       responses:
+        "503":
+          $ref: '#/components/responses/ServiceNotAvailable'
         "201":
           description: Kundenangaben in neuen Vorgang importiert
           headers:
@@ -162,8 +164,6 @@ paths:
             application/json;version=1.0:
               schema:
                 $ref: '#/components/schemas/KundenangabenImportResponse'
-        "503":
-          $ref: '#/components/responses/ServiceNotAvailable'
         "422":
           $ref: '#/components/responses/UnprocessableEntity'
         "401":
@@ -4069,6 +4069,7 @@ components:
             - QLICK
             - QLICK_RATENKREDIT
             - R_UND_V_ALLGEMEINE_VERSICHERUNG
+            - R_UND_V_GENO_KOMB_EP
             - R_UND_V_LEBENSVERSICHERUNG
             - R_UND_V_LEBEN_TEST
             - R_UND_V_VERSICHERUNG
