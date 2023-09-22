@@ -8,7 +8,7 @@ info:
     name: Europace AG
     url: http://developer.europace.de
     email: devsupport@europace2.de
-  version: 1.4.30; 61a6f87c006886e873dca81c40cbdfa3f5356fb6
+  version: 1.4.31; a9e4cde7603fe3ac669cc6de7a6416a01c0ab19f
 externalDocs:
   url: https://developer.europace.de/api/baufismart-kundenangaben-api
 servers:
@@ -51,6 +51,12 @@ paths:
           $ref: '#/components/responses/NotFound'
         "401":
           $ref: '#/components/responses/Unauthorized'
+        "429":
+          $ref: '#/components/responses/TooManyRequests'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "409":
+          $ref: '#/components/responses/Conflict'
         "200":
           description: Kundenangaben für einen bestehenden Vorgang
           headers:
@@ -61,12 +67,6 @@ paths:
             application/json;version=1.0:
               schema:
                 $ref: '#/components/schemas/Kundenangaben'
-        "429":
-          $ref: '#/components/responses/TooManyRequests'
-        "403":
-          $ref: '#/components/responses/Forbidden'
-        "409":
-          $ref: '#/components/responses/Conflict'
         "400":
           $ref: '#/components/responses/BadRequest'
       security:
@@ -103,12 +103,6 @@ paths:
       responses:
         "503":
           $ref: '#/components/responses/ServiceNotAvailable'
-        "204":
-          description: Kundenangaben in einem bestehenden Vorgang überschrieben
-          headers:
-            X-TraceId:
-              $ref: '#/components/headers/tracingIdHeader'
-              style: simple
         "404":
           $ref: '#/components/responses/NotFound'
         "422":
@@ -119,6 +113,12 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
         "403":
           $ref: '#/components/responses/Forbidden'
+        "204":
+          description: Kundenangaben in einem bestehenden Vorgang überschrieben
+          headers:
+            X-TraceId:
+              $ref: '#/components/headers/tracingIdHeader'
+              style: simple
         "409":
           $ref: '#/components/responses/Conflict'
         "400":
@@ -1656,6 +1656,19 @@ components:
         endEnergie:
           type: integer
           format: int32
+        primaerEnergieTraeger:
+          type: string
+          enum:
+          - OEL_GAS
+          - PHOTOVOLTAIK_WINDKRAFT
+          - WAERME_KAELTE
+          - STEINKOHLE
+          - BRAUNKOHLE
+          - NETZSTROM
+          - VERDRAENGUNGSSTROM
+          - HOLZ
+          - ABFAELLE
+          - SONSTIGES
         energieEffizienzklasse:
           type: string
           enum:
