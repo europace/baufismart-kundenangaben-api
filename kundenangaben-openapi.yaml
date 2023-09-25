@@ -8,7 +8,7 @@ info:
     name: Europace AG
     url: http://developer.europace.de
     email: devsupport@europace2.de
-  version: 1.4.31; a9e4cde7603fe3ac669cc6de7a6416a01c0ab19f
+  version: 1.4.32; 8edf0eb296af07a8dc2d8639c9a6a44ba0ed2fd5
 externalDocs:
   url: https://developer.europace.de/api/baufismart-kundenangaben-api
 servers:
@@ -45,6 +45,16 @@ paths:
         schema:
           type: string
       responses:
+        "200":
+          description: Kundenangaben für einen bestehenden Vorgang
+          headers:
+            X-TraceId:
+              $ref: '#/components/headers/tracingIdHeader'
+              style: simple
+          content:
+            application/json;version=1.0:
+              schema:
+                $ref: '#/components/schemas/Kundenangaben'
         "503":
           $ref: '#/components/responses/ServiceNotAvailable'
         "404":
@@ -57,16 +67,6 @@ paths:
           $ref: '#/components/responses/Forbidden'
         "409":
           $ref: '#/components/responses/Conflict'
-        "200":
-          description: Kundenangaben für einen bestehenden Vorgang
-          headers:
-            X-TraceId:
-              $ref: '#/components/headers/tracingIdHeader'
-              style: simple
-          content:
-            application/json;version=1.0:
-              schema:
-                $ref: '#/components/schemas/Kundenangaben'
         "400":
           $ref: '#/components/responses/BadRequest'
       security:
@@ -101,6 +101,12 @@ paths:
               $ref: '#/components/schemas/UpdateKundenangabenRequest'
         required: true
       responses:
+        "204":
+          description: Kundenangaben in einem bestehenden Vorgang überschrieben
+          headers:
+            X-TraceId:
+              $ref: '#/components/headers/tracingIdHeader'
+              style: simple
         "503":
           $ref: '#/components/responses/ServiceNotAvailable'
         "404":
@@ -113,12 +119,6 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
         "403":
           $ref: '#/components/responses/Forbidden'
-        "204":
-          description: Kundenangaben in einem bestehenden Vorgang überschrieben
-          headers:
-            X-TraceId:
-              $ref: '#/components/headers/tracingIdHeader'
-              style: simple
         "409":
           $ref: '#/components/responses/Conflict'
         "400":
@@ -152,6 +152,8 @@ paths:
               $ref: '#/components/schemas/ImportKundenangabenRequest'
         required: true
       responses:
+        "503":
+          $ref: '#/components/responses/ServiceNotAvailable'
         "201":
           description: Kundenangaben in neuen Vorgang importiert
           headers:
@@ -162,8 +164,6 @@ paths:
             application/json;version=1.0:
               schema:
                 $ref: '#/components/schemas/KundenangabenImportResponse'
-        "503":
-          $ref: '#/components/responses/ServiceNotAvailable'
         "422":
           $ref: '#/components/responses/UnprocessableEntity'
         "401":
@@ -1671,6 +1671,8 @@ components:
           - SONSTIGES
         energieEffizienzklasse:
           type: string
+          description: "Wird beim Anlegen/Updaten nicht übernommen, sondern aus dem\
+            \ Feld endEnergie berechnet."
           enum:
           - A_PLUS
           - A
