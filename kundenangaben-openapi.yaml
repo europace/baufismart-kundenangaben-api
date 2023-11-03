@@ -8,7 +8,7 @@ info:
     name: Europace AG
     url: http://developer.europace.de
     email: devsupport@europace2.de
-  version: 1.4.32; 8edf0eb296af07a8dc2d8639c9a6a44ba0ed2fd5
+  version: 1.4.33; 765adeb6c807e9ebb8e9c70eda40ed4ddde6cf0a
 externalDocs:
   url: https://developer.europace.de/api/baufismart-kundenangaben-api
 servers:
@@ -737,6 +737,15 @@ components:
               - LBS_NORD_N_MODERNISIERER_MINIZINS
               - LBS_NORD_N_MODERNISIERER_M8
               - LBS_NORD_N_MODERNISIERER_MX
+              - LBS_NORD_CLASSIC_GU
+              - LBS_NORD_CLASSIC_GV
+              - LBS_NORD_CLASSIC_JC
+              - LBS_NORD_CLASSIC_JV
+              - LBS_NORD_CLASSIC_MINI
+              - LBS_NORD_CLASSIC_MINI_GM
+              - LBS_NORD_CLASSIC_TF_GF
+              - LBS_NORD_CLASSIC_TF_JF
+              - LBS_NORD_PLUS
               - LBS_OST_CLASSIC15_F5
               - LBS_OST_CLASSIC_F15_F5
               - LBS_OST_CLASSIC_F_H4
