@@ -8,7 +8,7 @@ info:
     name: Europace AG
     url: http://developer.europace.de
     email: devsupport@europace2.de
-  version: 1.4.33; 765adeb6c807e9ebb8e9c70eda40ed4ddde6cf0a
+  version: 1.4.34; 953860c898978ac102791a336340825407dd6944
 externalDocs:
   url: https://developer.europace.de/api/baufismart-kundenangaben-api
 servers:
@@ -45,16 +45,6 @@ paths:
         schema:
           type: string
       responses:
-        "200":
-          description: Kundenangaben für einen bestehenden Vorgang
-          headers:
-            X-TraceId:
-              $ref: '#/components/headers/tracingIdHeader'
-              style: simple
-          content:
-            application/json;version=1.0:
-              schema:
-                $ref: '#/components/schemas/Kundenangaben'
         "503":
           $ref: '#/components/responses/ServiceNotAvailable'
         "404":
@@ -65,6 +55,16 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
         "403":
           $ref: '#/components/responses/Forbidden'
+        "200":
+          description: Kundenangaben für einen bestehenden Vorgang
+          headers:
+            X-TraceId:
+              $ref: '#/components/headers/tracingIdHeader'
+              style: simple
+          content:
+            application/json;version=1.0:
+              schema:
+                $ref: '#/components/schemas/Kundenangaben'
         "409":
           $ref: '#/components/responses/Conflict'
         "400":
@@ -101,12 +101,6 @@ paths:
               $ref: '#/components/schemas/UpdateKundenangabenRequest'
         required: true
       responses:
-        "204":
-          description: Kundenangaben in einem bestehenden Vorgang überschrieben
-          headers:
-            X-TraceId:
-              $ref: '#/components/headers/tracingIdHeader'
-              style: simple
         "503":
           $ref: '#/components/responses/ServiceNotAvailable'
         "404":
@@ -119,6 +113,12 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
         "403":
           $ref: '#/components/responses/Forbidden'
+        "204":
+          description: Kundenangaben in einem bestehenden Vorgang überschrieben
+          headers:
+            X-TraceId:
+              $ref: '#/components/headers/tracingIdHeader'
+              style: simple
         "409":
           $ref: '#/components/responses/Conflict'
         "400":
@@ -154,6 +154,12 @@ paths:
       responses:
         "503":
           $ref: '#/components/responses/ServiceNotAvailable'
+        "422":
+          $ref: '#/components/responses/UnprocessableEntity'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "429":
+          $ref: '#/components/responses/TooManyRequests'
         "201":
           description: Kundenangaben in neuen Vorgang importiert
           headers:
@@ -164,12 +170,6 @@ paths:
             application/json;version=1.0:
               schema:
                 $ref: '#/components/schemas/KundenangabenImportResponse'
-        "422":
-          $ref: '#/components/responses/UnprocessableEntity'
-        "401":
-          $ref: '#/components/responses/Unauthorized'
-        "429":
-          $ref: '#/components/responses/TooManyRequests'
         "403":
           $ref: '#/components/responses/Forbidden'
         "409":
@@ -4019,6 +4019,7 @@ components:
             - MUSTER_RATENSCHUTZVERSICHERUNG
             - MUSTERBANK
             - NAEV
+            - NATIONAL_BANK
             - NETBANK
             - NETBANK_RATENKREDIT
             - NEUE_LEBEN
