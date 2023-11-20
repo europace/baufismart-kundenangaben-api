@@ -8,7 +8,7 @@ info:
     name: Europace AG
     url: http://developer.europace.de
     email: devsupport@europace2.de
-  version: 1.4.34; 953860c898978ac102791a336340825407dd6944
+  version: 1.4.35; e27b2d35ab1af594a19554d536e6f9d7da0904db
 externalDocs:
   url: https://developer.europace.de/api/baufismart-kundenangaben-api
 servers:
@@ -45,16 +45,6 @@ paths:
         schema:
           type: string
       responses:
-        "503":
-          $ref: '#/components/responses/ServiceNotAvailable'
-        "404":
-          $ref: '#/components/responses/NotFound'
-        "401":
-          $ref: '#/components/responses/Unauthorized'
-        "429":
-          $ref: '#/components/responses/TooManyRequests'
-        "403":
-          $ref: '#/components/responses/Forbidden'
         "200":
           description: Kundenangaben für einen bestehenden Vorgang
           headers:
@@ -65,6 +55,16 @@ paths:
             application/json;version=1.0:
               schema:
                 $ref: '#/components/schemas/Kundenangaben'
+        "503":
+          $ref: '#/components/responses/ServiceNotAvailable'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "429":
+          $ref: '#/components/responses/TooManyRequests'
+        "403":
+          $ref: '#/components/responses/Forbidden'
         "409":
           $ref: '#/components/responses/Conflict'
         "400":
@@ -101,6 +101,12 @@ paths:
               $ref: '#/components/schemas/UpdateKundenangabenRequest'
         required: true
       responses:
+        "204":
+          description: Kundenangaben in einem bestehenden Vorgang überschrieben
+          headers:
+            X-TraceId:
+              $ref: '#/components/headers/tracingIdHeader'
+              style: simple
         "503":
           $ref: '#/components/responses/ServiceNotAvailable'
         "404":
@@ -113,12 +119,6 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
         "403":
           $ref: '#/components/responses/Forbidden'
-        "204":
-          description: Kundenangaben in einem bestehenden Vorgang überschrieben
-          headers:
-            X-TraceId:
-              $ref: '#/components/headers/tracingIdHeader'
-              style: simple
         "409":
           $ref: '#/components/responses/Conflict'
         "400":
@@ -160,6 +160,8 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         "429":
           $ref: '#/components/responses/TooManyRequests'
+        "403":
+          $ref: '#/components/responses/Forbidden'
         "201":
           description: Kundenangaben in neuen Vorgang importiert
           headers:
@@ -170,8 +172,6 @@ paths:
             application/json;version=1.0:
               schema:
                 $ref: '#/components/schemas/KundenangabenImportResponse'
-        "403":
-          $ref: '#/components/responses/Forbidden'
         "409":
           $ref: '#/components/responses/Conflict'
         "400":
@@ -825,6 +825,10 @@ components:
               - LBS_SHH_CLASSIC_TREND
               - LBS_SHH_CLASSIC_TREND_MD
               - LBS_SHH_CLASSIC_VITA_SE
+              - LBS_SHH_VITA_ME
+              - LBS_SHH_VITA_OE
+              - LBS_SHH_VITA_PE
+              - LBS_SHH_VITA_SE
               - LBS_WEST_ZUHAUSE_DIREKT_10
               - LBS_WEST_ZUHAUSE_DIREKT_15
               - LBS_WEST_ZUHAUSE_PLUS
