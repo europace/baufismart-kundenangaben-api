@@ -8,7 +8,7 @@ info:
     name: Europace AG
     url: http://developer.europace.de
     email: devsupport@europace2.de
-  version: 1.4.35; e27b2d35ab1af594a19554d536e6f9d7da0904db
+  version: 1.4.36; a3e154774bb4273d6364c81edc6c3cbdc02523c5
 externalDocs:
   url: https://developer.europace.de/api/baufismart-kundenangaben-api
 servers:
@@ -45,16 +45,6 @@ paths:
         schema:
           type: string
       responses:
-        "200":
-          description: Kundenangaben für einen bestehenden Vorgang
-          headers:
-            X-TraceId:
-              $ref: '#/components/headers/tracingIdHeader'
-              style: simple
-          content:
-            application/json;version=1.0:
-              schema:
-                $ref: '#/components/schemas/Kundenangaben'
         "503":
           $ref: '#/components/responses/ServiceNotAvailable'
         "404":
@@ -67,6 +57,16 @@ paths:
           $ref: '#/components/responses/Forbidden'
         "409":
           $ref: '#/components/responses/Conflict'
+        "200":
+          description: Kundenangaben für einen bestehenden Vorgang
+          headers:
+            X-TraceId:
+              $ref: '#/components/headers/tracingIdHeader'
+              style: simple
+          content:
+            application/json;version=1.0:
+              schema:
+                $ref: '#/components/schemas/Kundenangaben'
         "400":
           $ref: '#/components/responses/BadRequest'
       security:
@@ -101,12 +101,6 @@ paths:
               $ref: '#/components/schemas/UpdateKundenangabenRequest'
         required: true
       responses:
-        "204":
-          description: Kundenangaben in einem bestehenden Vorgang überschrieben
-          headers:
-            X-TraceId:
-              $ref: '#/components/headers/tracingIdHeader'
-              style: simple
         "503":
           $ref: '#/components/responses/ServiceNotAvailable'
         "404":
@@ -119,6 +113,12 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
         "403":
           $ref: '#/components/responses/Forbidden'
+        "204":
+          description: Kundenangaben in einem bestehenden Vorgang überschrieben
+          headers:
+            X-TraceId:
+              $ref: '#/components/headers/tracingIdHeader'
+              style: simple
         "409":
           $ref: '#/components/responses/Conflict'
         "400":
@@ -152,16 +152,6 @@ paths:
               $ref: '#/components/schemas/ImportKundenangabenRequest'
         required: true
       responses:
-        "503":
-          $ref: '#/components/responses/ServiceNotAvailable'
-        "422":
-          $ref: '#/components/responses/UnprocessableEntity'
-        "401":
-          $ref: '#/components/responses/Unauthorized'
-        "429":
-          $ref: '#/components/responses/TooManyRequests'
-        "403":
-          $ref: '#/components/responses/Forbidden'
         "201":
           description: Kundenangaben in neuen Vorgang importiert
           headers:
@@ -172,6 +162,16 @@ paths:
             application/json;version=1.0:
               schema:
                 $ref: '#/components/schemas/KundenangabenImportResponse'
+        "503":
+          $ref: '#/components/responses/ServiceNotAvailable'
+        "422":
+          $ref: '#/components/responses/UnprocessableEntity'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "429":
+          $ref: '#/components/responses/TooManyRequests'
+        "403":
+          $ref: '#/components/responses/Forbidden'
         "409":
           $ref: '#/components/responses/Conflict'
         "400":
@@ -921,10 +921,32 @@ components:
               - BHW_TARIF_FI1
               - BHW_TARIF_FI2
               - BHW_TARIF_FI3
+              - BHW_TARIF_FI3N
               - BHW_TARIF_FI4
+              - BHW_TARIF_FI4N
               - BHW_TARIF_FX1
               - BHW_TARIF_FX2
               - BHW_TARIF_REN
+              - BHW_TARIF_DISPOPLUS
+              - BHW_TARIF_DX3
+              - BHW_TARIF_DX4
+              - BHW_TARIF_DX5
+              - BHW_TARIF_DM3
+              - BHW_TARIF_DM3N
+              - BHW_TARIF_DM4
+              - BHW_TARIF_DM4N
+              - BHW_TARIF_DM4_75N
+              - BHW_TARIF_DM5
+              - BHW_TARIF_DN2
+              - BHW_TARIF_DN3
+              - BHW_TARIF_DN4
+              - BHW_TARIF_DV1
+              - BHW_TARIF_DV1N
+              - BHW_TARIF_DV2
+              - BHW_TARIF_DV2N
+              - BHW_TARIF_DV3
+              - BHW_TARIF_DV3N
+              - BHW_TARIF_WM
               - BHW_TARIF_FI1N
               - BHW_TARIF_FI2N
               - BHW_TARIF_FX1N
@@ -3885,6 +3907,7 @@ components:
             - DZ_HYP
             - DZ_HYP_EP
             - DZ_HYP_TEST
+            - DZ_HYP_OHNE_RV
             - DZ_HYP_VERTRIEB_EP
             - DZ_PRIVATBANK
             - ERFURTER_BANK
