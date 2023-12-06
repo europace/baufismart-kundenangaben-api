@@ -8,7 +8,7 @@ info:
     name: Europace AG
     url: http://developer.europace.de
     email: devsupport@europace2.de
-  version: 1.4.36; a3e154774bb4273d6364c81edc6c3cbdc02523c5
+  version: 1.4.37; 35aa413fd827c17922fbf4ae901670a352647329
 externalDocs:
   url: https://developer.europace.de/api/baufismart-kundenangaben-api
 servers:
@@ -55,8 +55,6 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
         "403":
           $ref: '#/components/responses/Forbidden'
-        "409":
-          $ref: '#/components/responses/Conflict'
         "200":
           description: Kundenangaben für einen bestehenden Vorgang
           headers:
@@ -67,6 +65,8 @@ paths:
             application/json;version=1.0:
               schema:
                 $ref: '#/components/schemas/Kundenangaben'
+        "409":
+          $ref: '#/components/responses/Conflict'
         "400":
           $ref: '#/components/responses/BadRequest'
       security:
@@ -152,6 +152,14 @@ paths:
               $ref: '#/components/schemas/ImportKundenangabenRequest'
         required: true
       responses:
+        "503":
+          $ref: '#/components/responses/ServiceNotAvailable'
+        "422":
+          $ref: '#/components/responses/UnprocessableEntity'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "429":
+          $ref: '#/components/responses/TooManyRequests'
         "201":
           description: Kundenangaben in neuen Vorgang importiert
           headers:
@@ -162,14 +170,6 @@ paths:
             application/json;version=1.0:
               schema:
                 $ref: '#/components/schemas/KundenangabenImportResponse'
-        "503":
-          $ref: '#/components/responses/ServiceNotAvailable'
-        "422":
-          $ref: '#/components/responses/UnprocessableEntity'
-        "401":
-          $ref: '#/components/responses/Unauthorized'
-        "429":
-          $ref: '#/components/responses/TooManyRequests'
         "403":
           $ref: '#/components/responses/Forbidden'
         "409":
@@ -746,6 +746,17 @@ components:
               - LBS_NORD_CLASSIC_TF_GF
               - LBS_NORD_CLASSIC_TF_JF
               - LBS_NORD_PLUS
+              - LBS_NORD_FINANZIERER_F3_2016
+              - LBS_NORD_FINANZIERER_F4_2016
+              - LBS_NORD_FINANZIERER_F5_2016
+              - LBS_NORD_FINANZIERER_F6_2016
+              - LBS_NORD_FINANZIERER_F7_2016
+              - LBS_NORD_MODERNISIERER_M8_2016
+              - LBS_NORD_MODERNISIERER_M10_2016
+              - LBS_NORD_MODERNISIERER_MINIZINS_2016
+              - LBS_NORD_STARTER_S4_2016
+              - LBS_NORD_STARTER_S5_2016
+              - LBS_NORD_STARTER_S6_2016
               - LBS_OST_CLASSIC15_F5
               - LBS_OST_CLASSIC_F15_F5
               - LBS_OST_CLASSIC_F_H4
