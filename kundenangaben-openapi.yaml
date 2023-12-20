@@ -8,7 +8,7 @@ info:
     name: Europace AG
     url: http://developer.europace.de
     email: devsupport@europace2.de
-  version: 1.4.37; 35aa413fd827c17922fbf4ae901670a352647329
+  version: 1.4.38; 2ea8e32e37155dd3543fa59345f1094c6a942a4f
 externalDocs:
   url: https://developer.europace.de/api/baufismart-kundenangaben-api
 servers:
@@ -45,16 +45,6 @@ paths:
         schema:
           type: string
       responses:
-        "503":
-          $ref: '#/components/responses/ServiceNotAvailable'
-        "404":
-          $ref: '#/components/responses/NotFound'
-        "401":
-          $ref: '#/components/responses/Unauthorized'
-        "429":
-          $ref: '#/components/responses/TooManyRequests'
-        "403":
-          $ref: '#/components/responses/Forbidden'
         "200":
           description: Kundenangaben für einen bestehenden Vorgang
           headers:
@@ -65,6 +55,16 @@ paths:
             application/json;version=1.0:
               schema:
                 $ref: '#/components/schemas/Kundenangaben'
+        "503":
+          $ref: '#/components/responses/ServiceNotAvailable'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "429":
+          $ref: '#/components/responses/TooManyRequests'
+        "403":
+          $ref: '#/components/responses/Forbidden'
         "409":
           $ref: '#/components/responses/Conflict'
         "400":
@@ -103,6 +103,12 @@ paths:
       responses:
         "503":
           $ref: '#/components/responses/ServiceNotAvailable'
+        "204":
+          description: Kundenangaben in einem bestehenden Vorgang überschrieben
+          headers:
+            X-TraceId:
+              $ref: '#/components/headers/tracingIdHeader'
+              style: simple
         "404":
           $ref: '#/components/responses/NotFound'
         "422":
@@ -113,12 +119,6 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
         "403":
           $ref: '#/components/responses/Forbidden'
-        "204":
-          description: Kundenangaben in einem bestehenden Vorgang überschrieben
-          headers:
-            X-TraceId:
-              $ref: '#/components/headers/tracingIdHeader'
-              style: simple
         "409":
           $ref: '#/components/responses/Conflict'
         "400":
@@ -160,6 +160,10 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         "429":
           $ref: '#/components/responses/TooManyRequests'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "409":
+          $ref: '#/components/responses/Conflict'
         "201":
           description: Kundenangaben in neuen Vorgang importiert
           headers:
@@ -170,10 +174,6 @@ paths:
             application/json;version=1.0:
               schema:
                 $ref: '#/components/schemas/KundenangabenImportResponse'
-        "403":
-          $ref: '#/components/responses/Forbidden'
-        "409":
-          $ref: '#/components/responses/Conflict'
         "400":
           $ref: '#/components/responses/BadRequest'
       security:
@@ -1010,16 +1010,16 @@ components:
               - ALTE_LEIPZIGER_ZG_21XX_20
               - ALTE_LEIPZIGER_ZG_21XX_30
               - ALTE_LEIPZIGER_ZG_25XX_49
+              - ALTE_LEIPZIGER_21XX
               - ALTE_LEIPZIGER_21XX_27
+              - ALTE_LEIPZIGER_22XX
+              - ALTE_LEIPZIGER_22XX_27
               - ALTE_LEIPZIGER_21XX_20
               - ALTE_LEIPZIGER_21XX_33
-              - ALTE_LEIPZIGER_21XX
+              - ALTE_LEIPZIGER_22XX_20
+              - ALTE_LEIPZIGER_22XX_33
               - ALTE_LEIPZIGER_25XX_30
               - ALTE_LEIPZIGER_25XX_45
-              - ALTE_LEIPZIGER_22XX_33
-              - ALTE_LEIPZIGER_22XX_27
-              - ALTE_LEIPZIGER_22XX_20
-              - ALTE_LEIPZIGER_22XX
               - ALTE_LEIPZIGER_26XX_30
               - ALTE_LEIPZIGER_26XX_45
               - WUESTENROT_01063_4
@@ -4146,6 +4146,7 @@ components:
             - RAIBA_BAUNATAL
             - RAIBA_BIBERACH
             - RAIBA_BIBERTGRUND
+            - RAIBA_CHAMER_LAND
             - RAIBA_EMS_VECHTE
             - RAIBA_ESTENFELD_BH
             - RAIBA_ESSENBACH
@@ -4155,6 +4156,7 @@ components:
             - RAIBA_HANDEWITT
             - RAIBA_HEILSBRONN_WIN
             - RAIBA_HESSENNORD
+            - RAIBA_HOCHFRANKEN
             - RAIBA_IM_DONAUTAL
             - RAIBA_IM_OBERLAND
             - RAIBA_KAISERSTUHL
