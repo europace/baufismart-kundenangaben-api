@@ -8,7 +8,7 @@ info:
     name: Europace AG
     url: http://developer.europace.de
     email: devsupport@europace2.de
-  version: 1.4.38; 2ea8e32e37155dd3543fa59345f1094c6a942a4f
+  version: 1.4.39; dff3fe220311d92e22f73a3a0b456088a3d0c2a8
 externalDocs:
   url: https://developer.europace.de/api/baufismart-kundenangaben-api
 servers:
@@ -45,6 +45,14 @@ paths:
         schema:
           type: string
       responses:
+        "503":
+          $ref: '#/components/responses/ServiceNotAvailable'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "429":
+          $ref: '#/components/responses/TooManyRequests'
         "200":
           description: Kundenangaben für einen bestehenden Vorgang
           headers:
@@ -55,14 +63,6 @@ paths:
             application/json;version=1.0:
               schema:
                 $ref: '#/components/schemas/Kundenangaben'
-        "503":
-          $ref: '#/components/responses/ServiceNotAvailable'
-        "404":
-          $ref: '#/components/responses/NotFound'
-        "401":
-          $ref: '#/components/responses/Unauthorized'
-        "429":
-          $ref: '#/components/responses/TooManyRequests'
         "403":
           $ref: '#/components/responses/Forbidden'
         "409":
@@ -103,16 +103,16 @@ paths:
       responses:
         "503":
           $ref: '#/components/responses/ServiceNotAvailable'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "422":
+          $ref: '#/components/responses/UnprocessableEntity'
         "204":
           description: Kundenangaben in einem bestehenden Vorgang überschrieben
           headers:
             X-TraceId:
               $ref: '#/components/headers/tracingIdHeader'
               style: simple
-        "404":
-          $ref: '#/components/responses/NotFound'
-        "422":
-          $ref: '#/components/responses/UnprocessableEntity'
         "401":
           $ref: '#/components/responses/Unauthorized'
         "429":
@@ -152,6 +152,16 @@ paths:
               $ref: '#/components/schemas/ImportKundenangabenRequest'
         required: true
       responses:
+        "201":
+          description: Kundenangaben in neuen Vorgang importiert
+          headers:
+            X-TraceId:
+              $ref: '#/components/headers/tracingIdHeader'
+              style: simple
+          content:
+            application/json;version=1.0:
+              schema:
+                $ref: '#/components/schemas/KundenangabenImportResponse'
         "503":
           $ref: '#/components/responses/ServiceNotAvailable'
         "422":
@@ -164,16 +174,6 @@ paths:
           $ref: '#/components/responses/Forbidden'
         "409":
           $ref: '#/components/responses/Conflict'
-        "201":
-          description: Kundenangaben in neuen Vorgang importiert
-          headers:
-            X-TraceId:
-              $ref: '#/components/headers/tracingIdHeader'
-              style: simple
-          content:
-            application/json;version=1.0:
-              schema:
-                $ref: '#/components/schemas/KundenangabenImportResponse'
         "400":
           $ref: '#/components/responses/BadRequest'
       security:
@@ -4176,6 +4176,7 @@ components:
             - RAIBA_OLDENBURG
             - RAIBA_OLDENBURG_A
             - RAIBA_ORTENBURG
+            - RAIBA_OSTPRIGNITZ
             - RAIBA_PLANKSTETTEN
             - RAIBA_RATZEBURG
             - RAIBA_RAVENSBURG
@@ -4374,6 +4375,7 @@ components:
             - SPK_KARLSRUHE_ETTLINGEN
             - SPK_KIERSPE_MEINERZ
             - SPK_KLEVE
+            - SPK_KOBLENZ
             - SPK_KOELN_BONN
             - SPK_KRAICHGAU
             - SPK_KREDITPARTNER
@@ -4813,6 +4815,7 @@ components:
             - VR_BAD_HERSFELD
             - VR_BAD_KISSINGEN
             - VR_BAMBERG
+            - VR_BANK_COBURG
             - VR_BANK_DINKLAGE_STE
             - VR_BANK_IN_MITTELBAD
             - VR_BANK_MITTLERE_OBE
