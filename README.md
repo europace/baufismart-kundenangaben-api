@@ -272,8 +272,10 @@ example-response:
 {       
     "haushalte": [
         {
+            "id": "65c388f13e1fd44cbadab021",
             "kunden": [
                 {
+                    "id": "65c388f1d087ea4f0edd01a1",
                     "externeKundenId": "extKunde1",
                     "referenzId": "jsonRef1",
                     "personendaten": {
@@ -345,6 +347,7 @@ Authorization: Bearer eyJraWQiOiJZUUZYT...
   "kundenangaben": {
     "haushalte": [
       {
+        "id": "65c388f13e1fd44cbadab021",
         "kunden": [ ...
 ```
 [Body as in create case (POST)]
@@ -382,6 +385,15 @@ External references can be specified for both the case and the customers, which 
 The following references are possible:
 * case: `externeVorgangsId`
 * customer: `externeKundenId`
+
+### What are the differences between the supported IDs?
+
+| ID                | Description                                                                       |
+|-------------------|-----------------------------------------------------------------------------------|
+| id                | ID that is defined in BaufiSmart and can be used for unique external referencing. |
+| referenzId        | Freely selectable ID, which is only used within a call for the unique assignment. |
+| externeVorgangsId | Freely selectable ID of the case in the API user's system.                        |
+| externeKundenId   | Freely selectable ID of the customer in the API user's system.                    |
 
 ### How can I open the created case in the browser?
 
