@@ -8,7 +8,7 @@ info:
     name: Europace AG
     url: http://developer.europace.de
     email: devsupport@europace2.de
-  version: 1.5.0; f1accdacee254c339eb81e25fe81cec7549b9445
+  version: 1.5.0; b18cf6d633a7cec5c3f570f5be45a9935b49ce32
 externalDocs:
   url: https://developer.europace.de/api/baufismart-kundenangaben-api
 servers:
@@ -103,12 +103,6 @@ paths:
       responses:
         "503":
           $ref: '#/components/responses/ServiceNotAvailable'
-        "204":
-          description: Kundenangaben in einem bestehenden Vorgang überschrieben
-          headers:
-            X-TraceId:
-              $ref: '#/components/headers/tracingIdHeader'
-              style: simple
         "404":
           $ref: '#/components/responses/NotFound'
         "422":
@@ -117,6 +111,12 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         "429":
           $ref: '#/components/responses/TooManyRequests'
+        "204":
+          description: Kundenangaben in einem bestehenden Vorgang überschrieben
+          headers:
+            X-TraceId:
+              $ref: '#/components/headers/tracingIdHeader'
+              style: simple
         "403":
           $ref: '#/components/responses/Forbidden'
         "409":
@@ -152,6 +152,12 @@ paths:
               $ref: '#/components/schemas/ImportKundenangabenRequest'
         required: true
       responses:
+        "503":
+          $ref: '#/components/responses/ServiceNotAvailable'
+        "422":
+          $ref: '#/components/responses/UnprocessableEntity'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
         "201":
           description: Kundenangaben in neuen Vorgang importiert
           headers:
@@ -162,12 +168,6 @@ paths:
             application/json;version=1.0:
               schema:
                 $ref: '#/components/schemas/KundenangabenImportResponse'
-        "503":
-          $ref: '#/components/responses/ServiceNotAvailable'
-        "422":
-          $ref: '#/components/responses/UnprocessableEntity'
-        "401":
-          $ref: '#/components/responses/Unauthorized'
         "429":
           $ref: '#/components/responses/TooManyRequests'
         "403":
@@ -4534,6 +4534,7 @@ components:
             - SPK_STARKENBURG
             - SPK_SUEDHOLSTEIN
             - SPK_SUEDHOLSTEIN_EV
+            - SPK_SUEDWESTPFALZ
             - SPK_TAUBERFRANKEN
             - SPK_TAUNUS
             - SPK_TEST
