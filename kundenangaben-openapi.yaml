@@ -8,7 +8,7 @@ info:
     name: Europace AG
     url: http://developer.europace.de
     email: devsupport@europace2.de
-  version: 1.5.0; f1accdacee254c339eb81e25fe81cec7549b9445
+  version: 1.5.1; bfcf94b3f1cd3c65b2b42cedeccbf9bb5b06044a
 externalDocs:
   url: https://developer.europace.de/api/baufismart-kundenangaben-api
 servers:
@@ -45,14 +45,6 @@ paths:
         schema:
           type: string
       responses:
-        "503":
-          $ref: '#/components/responses/ServiceNotAvailable'
-        "404":
-          $ref: '#/components/responses/NotFound'
-        "401":
-          $ref: '#/components/responses/Unauthorized'
-        "429":
-          $ref: '#/components/responses/TooManyRequests'
         "200":
           description: Kundenangaben für einen bestehenden Vorgang
           headers:
@@ -63,6 +55,14 @@ paths:
             application/json;version=1.0:
               schema:
                 $ref: '#/components/schemas/Kundenangaben'
+        "503":
+          $ref: '#/components/responses/ServiceNotAvailable'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "429":
+          $ref: '#/components/responses/TooManyRequests'
         "403":
           $ref: '#/components/responses/Forbidden'
         "409":
@@ -101,14 +101,14 @@ paths:
               $ref: '#/components/schemas/UpdateKundenangabenRequest'
         required: true
       responses:
-        "503":
-          $ref: '#/components/responses/ServiceNotAvailable'
         "204":
           description: Kundenangaben in einem bestehenden Vorgang überschrieben
           headers:
             X-TraceId:
               $ref: '#/components/headers/tracingIdHeader'
               style: simple
+        "503":
+          $ref: '#/components/responses/ServiceNotAvailable'
         "404":
           $ref: '#/components/responses/NotFound'
         "422":
@@ -152,16 +152,6 @@ paths:
               $ref: '#/components/schemas/ImportKundenangabenRequest'
         required: true
       responses:
-        "201":
-          description: Kundenangaben in neuen Vorgang importiert
-          headers:
-            X-TraceId:
-              $ref: '#/components/headers/tracingIdHeader'
-              style: simple
-          content:
-            application/json;version=1.0:
-              schema:
-                $ref: '#/components/schemas/KundenangabenImportResponse'
         "503":
           $ref: '#/components/responses/ServiceNotAvailable'
         "422":
@@ -174,6 +164,16 @@ paths:
           $ref: '#/components/responses/Forbidden'
         "409":
           $ref: '#/components/responses/Conflict'
+        "201":
+          description: Kundenangaben in neuen Vorgang importiert
+          headers:
+            X-TraceId:
+              $ref: '#/components/headers/tracingIdHeader'
+              style: simple
+          content:
+            application/json;version=1.0:
+              schema:
+                $ref: '#/components/schemas/KundenangabenImportResponse'
         "400":
           $ref: '#/components/responses/BadRequest'
       security:
@@ -4534,6 +4534,7 @@ components:
             - SPK_STARKENBURG
             - SPK_SUEDHOLSTEIN
             - SPK_SUEDHOLSTEIN_EV
+            - SPK_SUEDWESTPFALZ
             - SPK_TAUBERFRANKEN
             - SPK_TAUNUS
             - SPK_TEST
@@ -4790,6 +4791,7 @@ components:
             - VOBA_PFORZHEIM
             - VOBA_PINNEBERG
             - VOBA_PIRNA
+            - VOBA_PLOCHINGEN
             - VOBA_POMMERN
             - VOBA_REMSCHEID_SOLINGEN
             - VOBA_REMSECK
