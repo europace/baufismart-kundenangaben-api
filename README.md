@@ -1,7 +1,8 @@
 # Kundenangaben API
+
 As advisor with Kundenangaben API you can create new cases or update cases with customer data from your crm system or lead applications for a seamless and fast start of advising.
 
-Kundenangaben are also named as `Erfasste Daten` in Mortgage APIs (Vorgaenge-API or Antraege-API) .
+Kundenangaben are also named as `Erfasste Daten` in Mortgage APIs (Vorgaenge-API or Antraege-API).
 
 ![advisor](https://img.shields.io/badge/-advisor-lightblue)
 ![mortgageLoan](https://img.shields.io/badge/-mortgageLoan-lightblue)
@@ -13,24 +14,29 @@ Kundenangaben are also named as `Erfasste Daten` in Mortgage APIs (Vorgaenge-API
 [![Pattern](https://img.shields.io/badge/Pattern-Tolerant%20Reader-yellowgreen)](https://martinfowler.com/bliki/TolerantReader.html)
 
 ## Documentation
+
 [![YAML](https://img.shields.io/badge/OAS-HTML_Doc-lightblue)](https://refined-github-html-preview.kidonng.workers.dev/europace/baufismart-kundenangaben-api/raw/master/reference/index.html)
 [![YAML](https://img.shields.io/badge/OAS-YAML-lightgrey)](https://github.com/europace/baufismart-kundenangaben-api/blob/master/kundenangaben-openapi.yaml)
 [![JSON](https://img.shields.io/badge/OAS-JSON-lightgrey)](https://github.com/europace/baufismart-kundenangaben-api/blob/master/kundenangaben-openapi.json)
 
-Feedback und Fragen zum Modell sind als [GitHub Issue](https://github.com/europace/baufismart-kundenangaben-api/issues/new) willkommen.
+Feedback and questions about the model are welcome as [GitHub Issue](https://github.com/europace/baufismart-kundenangaben-api/issues/new).
 
 ## Usecases
+
 - create case with customer data from CRM system or lead applications
-- get case with customer data 
-    - to update CRM system or lead applications or
-    - to create own financing proposals with your structure, story and design
+- get case with customer data
+  - to update CRM system or lead applications or
+  - to create own financing proposals with your structure, story and design
 - overwrite existing case with customer data
 
 ## Quick Start
+
 To test our APIs and your use cases as quickly as possible, we have created a [Postman Collection](https://github.com/europace/api-quickstart) for you.
 
 In the Postman collection in the folder "BaufiSmart Kundenangaben-API" you will find two examples. Since the data model in the Kundengaben API is very extensive, we provide a way to test/validate requests without storing data in Europace with the „validate customer data" request. This endpoint is for faster connectivity, but is not required for functionality.
+
 ### Authentication
+
 Please use [![Authentication](https://img.shields.io/badge/Auth-OAuth2-green)](https://docs.api.europace.de/common/authentifizierung/authorization-api/) to get access to the APIs. The OAuth2 client requires the following scopes:
 
 | Scope                               | API Use case                    |
@@ -39,7 +45,8 @@ Please use [![Authentication](https://img.shields.io/badge/Auth-OAuth2-green)](h
 | `baufinanzierung:vorgang:schreiben` | create cases for mortgage loans |
 
 ## Create case
-As Advisor you can create a case with your customers data to start seamless and fast advising.
+
+As advisor, you can create a case with your customers data to start seamless and fast advising.
 
 > **IMPORTANT: Provide privacy statement** \
 > Before you transfer consumer data to Europace please note our [terms of use](https://docs.api.europace.de/terms/) and [provide the privacy statement of the advisor](https://docs.api.europace.de/common/privacystatement/) (MUST).
@@ -57,7 +64,7 @@ Host: baufinanzierung.api.europace.de
 Content-Type: application/json
 Authorization: Bearer eyJraWQiOiJZUUZ...
 ```
-``` json
+```json
 {
     "importMetadaten": {
         "datenkontext": "ECHT_GESCHAEFT",
@@ -243,15 +250,16 @@ Authorization: Bearer eyJraWQiOiJZUUZ...
 ```
 
 example-response:
-``` json
+```http
 201 - created
 {
     "vorgangsnummer": "YX4MDU"
 }
 ```
 
-## Get case 
-As advisor I can read out the data of the case, to create an individual financial proposal for a convincing sales story.
+## Get case
+
+As advisor, I can read out the data of the case, to create an individual financial proposal for a convincing sales story.
 
 Requirements:
 * authenticated as advisor, editor or sales organisation with access to the case
@@ -268,12 +276,14 @@ Authorization: Bearer eyJraWQiOiJZUUZYT...
 ```
 
 example-response:
-``` json
+```json
 {       
     "haushalte": [
         {
+            "id": "65c388f13e1fd44cbadab021",
             "kunden": [
                 {
+                    "id": "65c388f1d087ea4f0edd01a1",
                     "externeKundenId": "extKunde1",
                     "referenzId": "jsonRef1",
                     "personendaten": {
@@ -315,8 +325,9 @@ example-response:
 ```
 
 ## Replace case
-As Advisor the input data of the case has to be replaced, to use the current customer data from a crm system or digital self-disclosure.
-> Attention: The data will be completely replaced by the specified values. If data fields are not transferred, the data in the case will be replaced by ’null' and thus deleted.
+
+As advisor the input data of the case has to be replaced, to use the current customer data from a crm system or digital self-disclosure.
+> Attention: The data will be completely replaced by the specified values. If data fields are not transferred, the data in the case will be replaced by 'null' and thus deleted.
 
 Requirement:
 * OAuth token has the scope `baufinanzierung:vorgang:schreiben`
@@ -325,12 +336,13 @@ Requirement:
 In the example the entered customer data of case A65JS6 will be replaced.
 
 example-request:
-``` http
+```http
 PUT /kundenangaben/A65JS6 HTTP/1.1
 Host: baufinanzierung.api.europace.de
 Content-Type: application/json
 Authorization: Bearer eyJraWQiOiJZUUZYT...
 ```
+
 ```json
 {
   "updateMetadaten": {
@@ -345,26 +357,27 @@ Authorization: Bearer eyJraWQiOiJZUUZYT...
   "kundenangaben": {
     "haushalte": [
       {
+        "id": "65c388f13e1fd44cbadab021",
         "kunden": [ ...
 ```
 [Body as in create case (POST)]
 
-
 example-response:
-``` http
+```http
 204 - no content
 ```
 
 ## FAQ
+
 ### Where is the case created?
 
 The owner of a case is always the advsior. His settings are applied to the case and teh advisor  usually also receives the sales commission. The editor of the case may differ, for example, if the completion of the customer data is done by a team assistant or a clearing takes place.
 
-If the advisor is not specified under ‚betreuung', the subject of the API client is entered as advisor in the generated case. If no editor is specified, the user will be asked if he/she wants to take over the editing during the first editing.
+If the advisor is not specified under 'betreuung', the subject of the API client is entered as advisor in the generated case. If no editor is specified, the user will be asked if he/she wants to take over the editing during the first editing.
 
-If the case is to be created for a different advisor than the API user, then we recommend setting the roles of the case in the object ‚betreuung'.
+If the case is to be created for a different advisor than the API user, then we recommend setting the roles of the case in the object 'betreuung'.
 
-``` json
+```json
 "importMetadaten": {
         "betreuung": {
             "kundenbetreuer": "{{PARTNER_ID}}",
@@ -383,6 +396,15 @@ The following references are possible:
 * case: `externeVorgangsId`
 * customer: `externeKundenId`
 
+### What are the differences between the supported IDs and how can they be used correctly?
+
+| ID                | Description                                                                       | Usage                                                                                                                                                                                  |
+|-------------------|-----------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| id                | ID that is defined in BaufiSmart and can be used for unique external referencing. | IDs are returned in the get case. In the replace case, the IDs for identical objects must be included. IDs cannot be included in the create case. Self-defined IDs are always ignored. |
+| referenzId        | Freely selectable ID, which is only used within a call for the unique assignment. | ID for some internal referencing purposes. It is only valid within a call, is freely selectable and is not saved. It is referred to in other places within the 'kundenangaben'.        |
+| externeVorgangsId | Freely selectable ID of the case in the API user's system.                        | External reference specified for the case, which can be read out again with other APIs (see above).                                                                                    |
+| externeKundenId   | Freely selectable ID of the customer in the API user's system.                    | External reference specified for the customer, which can be read out again with other APIs (see above).                                                                                |
+
 ### How can I open the created case in the browser?
 
 Open the created case via: `https://www.europace2.de/vorgang/oeffne/XXXXXX` \
@@ -395,7 +417,9 @@ We offer the most error-tolerant API possible. Errors would lead to interruption
 To increase the error tolerance of the API, the API applies the Tolerant Reader Pattern. That is, fields or enum values that are unknown to the API are ignored. For example, in the type `Bauspardarlehen.abschlussgebuehrmodus` only the values `SOFORTZAHLUNG` and `VERRECHNUNG ` are allowed. Other values are ignored by the API and processed as if the field was empty.
 
 ## Terms of use
+
 The APIs are provided under the following [Terms of Use](https://docs.api.europace.de/nutzungsbedingungen).
 
 ## Support
+
 If you have any questions or problems, you can contact devsupport@europace2.de.
