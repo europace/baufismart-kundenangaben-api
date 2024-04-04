@@ -8,7 +8,7 @@ info:
     name: Europace AG
     url: http://developer.europace.de
     email: devsupport@europace2.de
-  version: 1.5.3; 052f008e5b7e286d2c3b27807ad7bac6dfbe5fd6
+  version: 1.5.4; 564aa16ea07e8cc35830eea99db70b1476bbfede
 externalDocs:
   url: https://developer.europace.de/api/baufismart-kundenangaben-api
 servers:
@@ -45,6 +45,10 @@ paths:
         schema:
           type: string
       responses:
+        "503":
+          $ref: '#/components/responses/ServiceNotAvailable'
+        "404":
+          $ref: '#/components/responses/NotFound'
         "200":
           description: Kundenangaben für einen bestehenden Vorgang
           headers:
@@ -55,10 +59,6 @@ paths:
             application/json;version=1.0:
               schema:
                 $ref: '#/components/schemas/Kundenangaben'
-        "503":
-          $ref: '#/components/responses/ServiceNotAvailable'
-        "404":
-          $ref: '#/components/responses/NotFound'
         "401":
           $ref: '#/components/responses/Unauthorized'
         "429":
@@ -152,6 +152,16 @@ paths:
               $ref: '#/components/schemas/ImportKundenangabenRequest'
         required: true
       responses:
+        "201":
+          description: Kundenangaben in neuen Vorgang importiert
+          headers:
+            X-TraceId:
+              $ref: '#/components/headers/tracingIdHeader'
+              style: simple
+          content:
+            application/json;version=1.0:
+              schema:
+                $ref: '#/components/schemas/KundenangabenImportResponse'
         "503":
           $ref: '#/components/responses/ServiceNotAvailable'
         "422":
@@ -164,16 +174,6 @@ paths:
           $ref: '#/components/responses/Forbidden'
         "409":
           $ref: '#/components/responses/Conflict'
-        "201":
-          description: Kundenangaben in neuen Vorgang importiert
-          headers:
-            X-TraceId:
-              $ref: '#/components/headers/tracingIdHeader'
-              style: simple
-          content:
-            application/json;version=1.0:
-              schema:
-                $ref: '#/components/schemas/KundenangabenImportResponse'
         "400":
           $ref: '#/components/responses/BadRequest'
       security:
@@ -748,11 +748,11 @@ components:
               - LBS_NORD_N_MODERNISIERER_MX
               - LBS_NORD_CLASSIC_GU
               - LBS_NORD_CLASSIC_GV
+              - LBS_NORD_CLASSIC_MINI_GM
+              - LBS_NORD_CLASSIC_TF_GF
               - LBS_NORD_CLASSIC_JC
               - LBS_NORD_CLASSIC_JV
               - LBS_NORD_CLASSIC_MINI
-              - LBS_NORD_CLASSIC_MINI_GM
-              - LBS_NORD_CLASSIC_TF_GF
               - LBS_NORD_CLASSIC_TF_JF
               - LBS_NORD_PLUS
               - LBS_NORD_FINANZIERER_F3_2016
@@ -4046,6 +4046,7 @@ components:
             - KSK_MUENCHEN_STARNBERG_EBERSBERG
             - KSK_NORDHAUSEN
             - KSK_NORDHORN
+            - KSK_NORTHEIM
             - KSK_OSTERHOLZ
             - KSK_PEINE
             - KSK_RATZEBURG
