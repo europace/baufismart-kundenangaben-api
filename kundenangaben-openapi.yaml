@@ -8,7 +8,7 @@ info:
     name: Europace AG
     url: http://developer.europace.de
     email: devsupport@europace2.de
-  version: 1.5.4; 564aa16ea07e8cc35830eea99db70b1476bbfede
+  version: 1.5.5; 59ecb861ec6e8b95ee41ed6663bd8b42eafeacd5
 externalDocs:
   url: https://developer.europace.de/api/baufismart-kundenangaben-api
 servers:
@@ -47,8 +47,6 @@ paths:
       responses:
         "503":
           $ref: '#/components/responses/ServiceNotAvailable'
-        "404":
-          $ref: '#/components/responses/NotFound'
         "200":
           description: Kundenangaben für einen bestehenden Vorgang
           headers:
@@ -59,6 +57,8 @@ paths:
             application/json;version=1.0:
               schema:
                 $ref: '#/components/schemas/Kundenangaben'
+        "404":
+          $ref: '#/components/responses/NotFound'
         "401":
           $ref: '#/components/responses/Unauthorized'
         "429":
@@ -101,14 +101,14 @@ paths:
               $ref: '#/components/schemas/UpdateKundenangabenRequest'
         required: true
       responses:
-        "503":
-          $ref: '#/components/responses/ServiceNotAvailable'
         "204":
           description: Kundenangaben in einem bestehenden Vorgang überschrieben
           headers:
             X-TraceId:
               $ref: '#/components/headers/tracingIdHeader'
               style: simple
+        "503":
+          $ref: '#/components/responses/ServiceNotAvailable'
         "404":
           $ref: '#/components/responses/NotFound'
         "422":
@@ -152,6 +152,8 @@ paths:
               $ref: '#/components/schemas/ImportKundenangabenRequest'
         required: true
       responses:
+        "503":
+          $ref: '#/components/responses/ServiceNotAvailable'
         "201":
           description: Kundenangaben in neuen Vorgang importiert
           headers:
@@ -162,8 +164,6 @@ paths:
             application/json;version=1.0:
               schema:
                 $ref: '#/components/schemas/KundenangabenImportResponse'
-        "503":
-          $ref: '#/components/responses/ServiceNotAvailable'
         "422":
           $ref: '#/components/responses/UnprocessableEntity'
         "401":
@@ -1027,6 +1027,7 @@ components:
               - ALTE_LEIPZIGER_21XX_33
               - ALTE_LEIPZIGER_22XX_20
               - ALTE_LEIPZIGER_22XX_33
+              - ALTE_LEIPZIGER_BS_22XX_33
               - ALTE_LEIPZIGER_25XX_30
               - ALTE_LEIPZIGER_25XX_45
               - ALTE_LEIPZIGER_26XX_30
@@ -1425,6 +1426,9 @@ components:
           oneOf:
           - $ref: '#/components/schemas/ProduktanbieterDarlehensgeber'
           - $ref: '#/components/schemas/SonstigerDarlehensgeber'
+        darlehenskontonummer:
+          type: string
+          description: IBAN des Darlehenskontos
         grundschuld:
           type: number
           format: double
@@ -1445,9 +1449,6 @@ components:
           format: date
         restschuld:
           $ref: '#/components/schemas/Restschuld'
-        darlehenskontonummer:
-          type: string
-          description: IBAN des Darlehenskontos
         '@type':
           type: string
       description: "Mögliche Typen: BestehendesImmobiliendarlehen, BestehendesBauspardarlehen,\
