@@ -8,7 +8,7 @@ info:
     name: Europace AG
     url: http://developer.europace.de
     email: devsupport@europace2.de
-  version: 1.5.5; 59ecb861ec6e8b95ee41ed6663bd8b42eafeacd5
+  version: 1.5.6; a0d6da76b8c246a3815e1f09b6b2c2a91756d0a2
 externalDocs:
   url: https://developer.europace.de/api/baufismart-kundenangaben-api
 servers:
@@ -45,8 +45,6 @@ paths:
         schema:
           type: string
       responses:
-        "503":
-          $ref: '#/components/responses/ServiceNotAvailable'
         "200":
           description: Kundenangaben für einen bestehenden Vorgang
           headers:
@@ -57,6 +55,8 @@ paths:
             application/json;version=1.0:
               schema:
                 $ref: '#/components/schemas/Kundenangaben'
+        "503":
+          $ref: '#/components/responses/ServiceNotAvailable'
         "404":
           $ref: '#/components/responses/NotFound'
         "401":
@@ -154,6 +154,14 @@ paths:
       responses:
         "503":
           $ref: '#/components/responses/ServiceNotAvailable'
+        "422":
+          $ref: '#/components/responses/UnprocessableEntity'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "429":
+          $ref: '#/components/responses/TooManyRequests'
+        "403":
+          $ref: '#/components/responses/Forbidden'
         "201":
           description: Kundenangaben in neuen Vorgang importiert
           headers:
@@ -164,14 +172,6 @@ paths:
             application/json;version=1.0:
               schema:
                 $ref: '#/components/schemas/KundenangabenImportResponse'
-        "422":
-          $ref: '#/components/responses/UnprocessableEntity'
-        "401":
-          $ref: '#/components/responses/Unauthorized'
-        "429":
-          $ref: '#/components/responses/TooManyRequests'
-        "403":
-          $ref: '#/components/responses/Forbidden'
         "409":
           $ref: '#/components/responses/Conflict'
         "400":
@@ -746,6 +746,24 @@ components:
               - LBS_NORD_N_MODERNISIERER_MINIZINS
               - LBS_NORD_N_MODERNISIERER_M8
               - LBS_NORD_N_MODERNISIERER_MX
+              - LBS_NORDWEST_WT_FIN_10_V1_2024
+              - LBS_NORDWEST_WT_FIN_10_V2_2024
+              - LBS_NORDWEST_WT_FIN_12_2024
+              - LBS_NORDWEST_WT_FIN_15_V1_2024
+              - LBS_NORDWEST_WT_FIN_15_V2_2024
+              - LBS_NORDWEST_WT_FIN_SPEZIAL_2024
+              - LBS_NORDWEST_WT_MINI_2024
+              - LBS_NORDWEST_WT_MOD_ECOFLEX_2024
+              - LBS_NORDWEST_WT_MOD_FLEX_2024
+              - LBS_NORDWEST_WT_MOD_ECOSPRINT_2024
+              - LBS_NORDWEST_WT_MOD_SPRINT_2024
+              - LBS_NORDWEST_WT_FIN_10_V1_2024_R
+              - LBS_NORDWEST_WT_FIN_10_V2_2024_R
+              - LBS_NORDWEST_WT_FIN_15_V1_2024_R
+              - LBS_NORDWEST_WT_FIN_15_V2_2024_R
+              - LBS_NORDWEST_WT_SPEZIAL_2024_R
+              - LBS_NORDWEST_WT_MOD_ECOFLEX_2024_R
+              - LBS_NORDWEST_WT_MOD_FLEX_2024_R
               - LBS_NORD_CLASSIC_GU
               - LBS_NORD_CLASSIC_GV
               - LBS_NORD_CLASSIC_MINI_GM
@@ -1426,9 +1444,6 @@ components:
           oneOf:
           - $ref: '#/components/schemas/ProduktanbieterDarlehensgeber'
           - $ref: '#/components/schemas/SonstigerDarlehensgeber'
-        darlehenskontonummer:
-          type: string
-          description: IBAN des Darlehenskontos
         grundschuld:
           type: number
           format: double
@@ -1449,6 +1464,9 @@ components:
           format: date
         restschuld:
           $ref: '#/components/schemas/Restschuld'
+        darlehenskontonummer:
+          type: string
+          description: IBAN des Darlehenskontos
         '@type':
           type: string
       description: "Mögliche Typen: BestehendesImmobiliendarlehen, BestehendesBauspardarlehen,\
