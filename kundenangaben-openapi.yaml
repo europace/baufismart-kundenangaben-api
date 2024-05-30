@@ -8,7 +8,7 @@ info:
     name: Europace AG
     url: http://developer.europace.de
     email: devsupport@europace2.de
-  version: 1.5.6; a0d6da76b8c246a3815e1f09b6b2c2a91756d0a2
+  version: 1.5.7; c98572e30a92e98da9f95123e3f128181115fb42
 externalDocs:
   url: https://developer.europace.de/api/baufismart-kundenangaben-api
 servers:
@@ -45,6 +45,14 @@ paths:
         schema:
           type: string
       responses:
+        "503":
+          $ref: '#/components/responses/ServiceNotAvailable'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "429":
+          $ref: '#/components/responses/TooManyRequests'
         "200":
           description: Kundenangaben für einen bestehenden Vorgang
           headers:
@@ -55,14 +63,6 @@ paths:
             application/json;version=1.0:
               schema:
                 $ref: '#/components/schemas/Kundenangaben'
-        "503":
-          $ref: '#/components/responses/ServiceNotAvailable'
-        "404":
-          $ref: '#/components/responses/NotFound'
-        "401":
-          $ref: '#/components/responses/Unauthorized'
-        "429":
-          $ref: '#/components/responses/TooManyRequests'
         "403":
           $ref: '#/components/responses/Forbidden'
         "409":
@@ -101,12 +101,6 @@ paths:
               $ref: '#/components/schemas/UpdateKundenangabenRequest'
         required: true
       responses:
-        "204":
-          description: Kundenangaben in einem bestehenden Vorgang überschrieben
-          headers:
-            X-TraceId:
-              $ref: '#/components/headers/tracingIdHeader'
-              style: simple
         "503":
           $ref: '#/components/responses/ServiceNotAvailable'
         "404":
@@ -117,6 +111,12 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         "429":
           $ref: '#/components/responses/TooManyRequests'
+        "204":
+          description: Kundenangaben in einem bestehenden Vorgang überschrieben
+          headers:
+            X-TraceId:
+              $ref: '#/components/headers/tracingIdHeader'
+              style: simple
         "403":
           $ref: '#/components/responses/Forbidden'
         "409":
@@ -935,6 +935,12 @@ components:
               - LBS_SAAR_MODERNISIERER_ZUHAUSE
               - LBS_SAAR_KLIMAFIT_ZUHAUSE
               - LBS_SAAR_EINSTEIGER
+              - LBS_SAAR_FINANZIERER_MAX
+              - LBS_SAAR_KLASSIK
+              - LBS_SAAR_KLIMAFIT
+              - LBS_SAAR_TOP_RATE
+              - LBS_SAAR_TOP_ZINS
+              - LBS_SAAR_WOHNFIT
               - SIGNAL_IDUNA_FREIRAUM_F_35
               - SIGNAL_IDUNA_FREIRAUM_F_35_16
               - SIGNAL_IDUNA_FREIRAUM_F_45
@@ -4532,6 +4538,7 @@ components:
             - SPK_RADEVORMWALD
             - SPK_RASTATT_GERN
             - SPK_REGENSBURG
+            - SPK_REGEN_VIECHTACH
             - SPK_RHEIN_HAARDT
             - SPK_RHEIN_NAHE
             - SPK_RHEIN_NECKAR_N
