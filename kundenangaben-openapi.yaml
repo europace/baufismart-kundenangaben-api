@@ -8,7 +8,7 @@ info:
     name: Europace AG
     url: http://developer.europace.de
     email: devsupport@europace2.de
-  version: 1.5.7; c98572e30a92e98da9f95123e3f128181115fb42
+  version: 1.5.8; 14294b58765a914cfe7a4a5fa02b479cea3e69bb
 externalDocs:
   url: https://developer.europace.de/api/baufismart-kundenangaben-api
 servers:
@@ -156,12 +156,6 @@ paths:
           $ref: '#/components/responses/ServiceNotAvailable'
         "422":
           $ref: '#/components/responses/UnprocessableEntity'
-        "401":
-          $ref: '#/components/responses/Unauthorized'
-        "429":
-          $ref: '#/components/responses/TooManyRequests'
-        "403":
-          $ref: '#/components/responses/Forbidden'
         "201":
           description: Kundenangaben in neuen Vorgang importiert
           headers:
@@ -172,6 +166,12 @@ paths:
             application/json;version=1.0:
               schema:
                 $ref: '#/components/schemas/KundenangabenImportResponse'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "429":
+          $ref: '#/components/responses/TooManyRequests'
+        "403":
+          $ref: '#/components/responses/Forbidden'
         "409":
           $ref: '#/components/responses/Conflict'
         "400":
@@ -2886,7 +2886,8 @@ components:
           type: string
       description: "Mögliche Typen: KfwProgramm124, KfwProgramm151, KfwProgramm152,\
         \ KfwProgramm153, KfwProgramm159, KfwProgramm167, KfwProgramm261Neubau, KfwProgramm261Sanierung,\
-        \ KfwProgramm262, KfwProgramm297, KfwProgramm298, KfwProgramm300"
+        \ KfwProgramm262, KfwProgramm297, KfwProgramm298, KfwProgramm300, KfwProgramm358,\
+        \ KfwProgramm359"
       discriminator:
         propertyName: '@type'
         mapping:
@@ -2902,6 +2903,8 @@ components:
           KFW_PROGRAMM_297: '#/components/schemas/KfwProgramm297'
           KFW_PROGRAMM_298: '#/components/schemas/KfwProgramm298'
           KFW_PROGRAMM_300: '#/components/schemas/KfwProgramm300'
+          KFW_PROGRAMM_358: '#/components/schemas/KfwProgramm358'
+          KFW_PROGRAMM_359: '#/components/schemas/KfwProgramm359'
     KfwProgramm124:
       required:
       - laufzeitInJahren
@@ -3225,6 +3228,64 @@ components:
           zinsbindungInJahren:
             type: integer
             description: 10 oder 20 Jahre
+            format: int32
+          tilgungsfreieAnlaufjahre:
+            type: integer
+            description: "1, 2, 3, 4 oder 5 Jahre"
+            format: int32
+    KfwProgramm358:
+      required:
+      - tilgungsfreieAnlaufjahre
+      type: object
+      description: "BEG Einzelmaßnahmen Ergänzungskredit Plus (Programm-Nr.: 358)"
+      allOf:
+      - $ref: '#/components/schemas/KfwProgramm'
+      - type: object
+        properties:
+          kfwEnergieEffizienzStandard:
+            type: string
+            description: 'Standard = KLIMAFREUNDLICH_STANDARD '
+            default: KLIMAFREUNDLICH_STANDARD
+            enum:
+            - KLIMAFREUNDLICH_STANDARD
+            - KLIMAFREUNDLICH_QNG
+          laufzeitInJahren:
+            maximum: 35
+            minimum: 5
+            type: integer
+            format: int32
+          zinsbindungInJahren:
+            type: integer
+            description: 5 oder 10 Jahre
+            format: int32
+          tilgungsfreieAnlaufjahre:
+            type: integer
+            description: "1, 2, 3, 4 oder 5 Jahre"
+            format: int32
+    KfwProgramm359:
+      required:
+      - tilgungsfreieAnlaufjahre
+      type: object
+      description: "BEG Einzelmaßnahmen Ergänzungskredit (Programm-Nr.: 359)"
+      allOf:
+      - $ref: '#/components/schemas/KfwProgramm'
+      - type: object
+        properties:
+          kfwEnergieEffizienzStandard:
+            type: string
+            description: 'Standard = KLIMAFREUNDLICH_STANDARD '
+            default: KLIMAFREUNDLICH_STANDARD
+            enum:
+            - KLIMAFREUNDLICH_STANDARD
+            - KLIMAFREUNDLICH_QNG
+          laufzeitInJahren:
+            maximum: 35
+            minimum: 5
+            type: integer
+            format: int32
+          zinsbindungInJahren:
+            type: integer
+            description: 5 oder 10 Jahre
             format: int32
           tilgungsfreieAnlaufjahre:
             type: integer
