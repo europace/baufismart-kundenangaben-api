@@ -8,7 +8,7 @@ info:
     name: Europace AG
     url: http://developer.europace.de
     email: devsupport@europace2.de
-  version: 1.5.8; 14294b58765a914cfe7a4a5fa02b479cea3e69bb
+  version: 1.5.9; 2c37790570e7a2a61eda8f3e9666be54ae544382
 externalDocs:
   url: https://developer.europace.de/api/baufismart-kundenangaben-api
 servers:
@@ -45,14 +45,6 @@ paths:
         schema:
           type: string
       responses:
-        "503":
-          $ref: '#/components/responses/ServiceNotAvailable'
-        "404":
-          $ref: '#/components/responses/NotFound'
-        "401":
-          $ref: '#/components/responses/Unauthorized'
-        "429":
-          $ref: '#/components/responses/TooManyRequests'
         "200":
           description: Kundenangaben für einen bestehenden Vorgang
           headers:
@@ -63,6 +55,14 @@ paths:
             application/json;version=1.0:
               schema:
                 $ref: '#/components/schemas/Kundenangaben'
+        "503":
+          $ref: '#/components/responses/ServiceNotAvailable'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "429":
+          $ref: '#/components/responses/TooManyRequests'
         "403":
           $ref: '#/components/responses/Forbidden'
         "409":
@@ -101,6 +101,12 @@ paths:
               $ref: '#/components/schemas/UpdateKundenangabenRequest'
         required: true
       responses:
+        "204":
+          description: Kundenangaben in einem bestehenden Vorgang überschrieben
+          headers:
+            X-TraceId:
+              $ref: '#/components/headers/tracingIdHeader'
+              style: simple
         "503":
           $ref: '#/components/responses/ServiceNotAvailable'
         "404":
@@ -111,12 +117,6 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         "429":
           $ref: '#/components/responses/TooManyRequests'
-        "204":
-          description: Kundenangaben in einem bestehenden Vorgang überschrieben
-          headers:
-            X-TraceId:
-              $ref: '#/components/headers/tracingIdHeader'
-              style: simple
         "403":
           $ref: '#/components/responses/Forbidden'
         "409":
@@ -154,8 +154,6 @@ paths:
       responses:
         "503":
           $ref: '#/components/responses/ServiceNotAvailable'
-        "422":
-          $ref: '#/components/responses/UnprocessableEntity'
         "201":
           description: Kundenangaben in neuen Vorgang importiert
           headers:
@@ -166,6 +164,8 @@ paths:
             application/json;version=1.0:
               schema:
                 $ref: '#/components/schemas/KundenangabenImportResponse'
+        "422":
+          $ref: '#/components/responses/UnprocessableEntity'
         "401":
           $ref: '#/components/responses/Unauthorized'
         "429":
@@ -746,6 +746,7 @@ components:
               - LBS_NORD_N_MODERNISIERER_MINIZINS
               - LBS_NORD_N_MODERNISIERER_M8
               - LBS_NORD_N_MODERNISIERER_MX
+              - LBS_NORDWEST_TRAUMSTART_YOUNG
               - LBS_NORDWEST_WT_FIN_10_V1_2024
               - LBS_NORDWEST_WT_FIN_10_V2_2024
               - LBS_NORDWEST_WT_FIN_12_2024
@@ -757,6 +758,7 @@ components:
               - LBS_NORDWEST_WT_MOD_FLEX_2024
               - LBS_NORDWEST_WT_MOD_ECOSPRINT_2024
               - LBS_NORDWEST_WT_MOD_SPRINT_2024
+              - LBS_NORDWEST_WT_PLUS
               - LBS_NORDWEST_WT_FIN_10_V1_2024_R
               - LBS_NORDWEST_WT_FIN_10_V2_2024_R
               - LBS_NORDWEST_WT_FIN_15_V1_2024_R
@@ -3242,16 +3244,9 @@ components:
       - $ref: '#/components/schemas/KfwProgramm'
       - type: object
         properties:
-          kfwEnergieEffizienzStandard:
-            type: string
-            description: 'Standard = KLIMAFREUNDLICH_STANDARD '
-            default: KLIMAFREUNDLICH_STANDARD
-            enum:
-            - KLIMAFREUNDLICH_STANDARD
-            - KLIMAFREUNDLICH_QNG
           laufzeitInJahren:
             maximum: 35
-            minimum: 5
+            minimum: 4
             type: integer
             format: int32
           zinsbindungInJahren:
@@ -3271,16 +3266,9 @@ components:
       - $ref: '#/components/schemas/KfwProgramm'
       - type: object
         properties:
-          kfwEnergieEffizienzStandard:
-            type: string
-            description: 'Standard = KLIMAFREUNDLICH_STANDARD '
-            default: KLIMAFREUNDLICH_STANDARD
-            enum:
-            - KLIMAFREUNDLICH_STANDARD
-            - KLIMAFREUNDLICH_QNG
           laufzeitInJahren:
             maximum: 35
-            minimum: 5
+            minimum: 4
             type: integer
             format: int32
           zinsbindungInJahren:
