@@ -8,7 +8,7 @@ info:
     name: Europace AG
     url: http://developer.europace.de
     email: devsupport@europace2.de
-  version: 1.5.9; 2c37790570e7a2a61eda8f3e9666be54ae544382
+  version: 1.5.10; d27b0060cd59884850ae4ae1729ad0b266753046
 externalDocs:
   url: https://developer.europace.de/api/baufismart-kundenangaben-api
 servers:
@@ -154,6 +154,8 @@ paths:
       responses:
         "503":
           $ref: '#/components/responses/ServiceNotAvailable'
+        "422":
+          $ref: '#/components/responses/UnprocessableEntity'
         "201":
           description: Kundenangaben in neuen Vorgang importiert
           headers:
@@ -164,8 +166,6 @@ paths:
             application/json;version=1.0:
               schema:
                 $ref: '#/components/schemas/KundenangabenImportResponse'
-        "422":
-          $ref: '#/components/responses/UnprocessableEntity'
         "401":
           $ref: '#/components/responses/Unauthorized'
         "429":
@@ -3640,6 +3640,10 @@ components:
           description: "Nicht werterhöhende Maßnahmen wie Malerarbeiten, kleine Reparaturen\
             \ etc."
           format: double
+        endEnergieGeplant:
+          type: number
+          description: "Wenn mit der Modernisierung eine Verbesserung der Energieeffizienz\
+            \ einhergeht: angestrebter Gebäudeendenergiebedarf in kWh/(m²*a)"
         eigenleistung:
           type: number
           description: Persönlich erbrachte Arbeitsleistung als Eigenleistung
@@ -4042,6 +4046,7 @@ components:
             - DZ_HYP_OHNE_RV
             - DZ_HYP_VERTRIEB_EP
             - DZ_PRIVATBANK
+            - ELLWANGER
             - ERFURTER_BANK
             - ERGO
             - EVANGELISCHE_BANK
@@ -4997,6 +5002,7 @@ components:
             - VR_NORDEIFEL
             - VR_NORDRHOEN
             - VR_NUERNBERG
+            - VR_OBERBAYERN_SO
             - VR_OBERFRANKEN_MITTE
             - VR_ODER_SPREE
             - VR_OSTHOLSTEIN
@@ -5929,6 +5935,10 @@ components:
             description: "Nicht werterhöhende Maßnahmen wie Malerarbeiten, kleine\
               \ Reparaturen etc."
             format: double
+          endEnergieGeplant:
+            type: number
+            description: "Wenn mit der Modernisierung eine Verbesserung der Energieeffizienz\
+              \ einhergeht: angestrebter Gebäudeendenergiebedarf in kWh/(m²*a)"
           eigenleistungErfassung:
             $ref: '#/components/schemas/EigenleistungErfassung'
     VorhandeneRechteAbteilung2:
