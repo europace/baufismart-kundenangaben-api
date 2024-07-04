@@ -8,7 +8,7 @@ info:
     name: Europace AG
     url: http://developer.europace.de
     email: devsupport@europace2.de
-  version: 1.5.10; d27b0060cd59884850ae4ae1729ad0b266753046
+  version: 1.5.11; 725f3293b907eadc83af0dc4afef22c34c957603
 externalDocs:
   url: https://developer.europace.de/api/baufismart-kundenangaben-api
 servers:
@@ -45,6 +45,8 @@ paths:
         schema:
           type: string
       responses:
+        "503":
+          $ref: '#/components/responses/ServiceNotAvailable'
         "200":
           description: Kundenangaben für einen bestehenden Vorgang
           headers:
@@ -55,8 +57,6 @@ paths:
             application/json;version=1.0:
               schema:
                 $ref: '#/components/schemas/Kundenangaben'
-        "503":
-          $ref: '#/components/responses/ServiceNotAvailable'
         "404":
           $ref: '#/components/responses/NotFound'
         "401":
@@ -733,19 +733,6 @@ components:
               - LBS_HT_COMFORT_S
               - LBS_HT_COMFORT_N
               - LBS_HT_FLEX
-              - LBS_NORD_N_STARTER_S4
-              - LBS_NORD_N_STARTER_Q5
-              - LBS_NORD_N_STARTER_S5
-              - LBS_NORD_N_STARTER_S6
-              - LBS_NORD_N_FINANZIERER_F3
-              - LBS_NORD_N_FINANZIERER_F4
-              - LBS_NORD_N_FINANZIERER_F5
-              - LBS_NORD_N_FINANZIERER_F6
-              - LBS_NORD_N_FINANZIERER_F7
-              - LBS_NORD_N_FINANZIERER_MEINZUHAUSE
-              - LBS_NORD_N_MODERNISIERER_MINIZINS
-              - LBS_NORD_N_MODERNISIERER_M8
-              - LBS_NORD_N_MODERNISIERER_MX
               - LBS_NORDWEST_TRAUMSTART_YOUNG
               - LBS_NORDWEST_WT_FIN_10_V1_2024
               - LBS_NORDWEST_WT_FIN_10_V2_2024
@@ -786,6 +773,30 @@ components:
               - LBS_NORD_STARTER_S4_2016
               - LBS_NORD_STARTER_S5_2016
               - LBS_NORD_STARTER_S6_2016
+              - LBS_NORD_N_STARTER_S4
+              - LBS_NORD_N_STARTER_S5
+              - LBS_NORD_N_STARTER_S6
+              - LBS_NORD_N_FINANZIERER_F3
+              - LBS_NORD_N_FINANZIERER_F4
+              - LBS_NORD_N_FINANZIERER_F5
+              - LBS_NORD_N_FINANZIERER_F6
+              - LBS_NORD_N_FINANZIERER_F7
+              - LBS_NORD_N_FINANZIERER_MEINZUHAUSE
+              - LBS_NORD_N_MODERNISIERER_MINIZINS
+              - LBS_NORD_N_MODERNISIERER_M8
+              - LBS_NORD_N_MODERNISIERER_MX
+              - LBS_NORD_N_STARTER_Q5
+              - LBS_WEST_BESTAND_ZUHAUSE_DIREKT_10
+              - LBS_WEST_BESTAND_ZUHAUSE_DIREKT_15
+              - LBS_WEST_BESTAND_ZUHAUSE_PRIMA
+              - LBS_WEST_BESTAND_ZUHAUSE_FLEX_4
+              - LBS_WEST_BESTAND_ZUHAUSE_FLEX_5
+              - LBS_WEST_BESTAND_ZUHAUSE_FLEX_8
+              - LBS_WEST_BESTAND_ZUHAUSE_SPEZIAL
+              - LBS_WEST_BESTAND_RIESTER_ZUHAUSE_DIREKT_10
+              - LBS_WEST_BESTAND_RIESTER_ZUHAUSE_DIREKT_15
+              - LBS_WEST_BESTAND_RIESTER_ZUHAUSE_FLEX_4
+              - LBS_WEST_BESTAND_RIESTER_ZUHAUSE_SPEZIAL
               - LBS_OST_CLASSIC15_F5
               - LBS_OST_CLASSIC_F15_F5
               - LBS_OST_CLASSIC_F_H4
@@ -1455,9 +1466,6 @@ components:
         grundschuld:
           type: number
           format: double
-        darlehensbetrag:
-          type: number
-          format: double
         rateMonatlich:
           type: number
           format: double
@@ -1475,6 +1483,9 @@ components:
         darlehenskontonummer:
           type: string
           description: IBAN des Darlehenskontos
+        darlehensbetrag:
+          type: number
+          format: double
         '@type':
           type: string
       description: "Mögliche Typen: BestehendesImmobiliendarlehen, BestehendesBauspardarlehen,\
