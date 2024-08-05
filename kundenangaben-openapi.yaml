@@ -8,7 +8,7 @@ info:
     name: Europace AG
     url: http://developer.europace.de
     email: devsupport@europace2.de
-  version: 1.5.12; f934db217842ab553b22005053eed422be18e80b
+  version: 1.5.13; 4fa3244a15a10a008a84696d707ae1f26b0ffe67
 externalDocs:
   url: https://developer.europace.de/api/baufismart-kundenangaben-api
 servers:
@@ -38,7 +38,7 @@ paths:
         schema:
           type: string
       - name: X-TraceId
-        $ref: '#/components/parameters/tracingIdParam'
+        $ref: "#/components/parameters/tracingIdParam"
       - name: vorgangsnummer
         in: path
         required: true
@@ -46,29 +46,32 @@ paths:
           type: string
       responses:
         "503":
-          $ref: '#/components/responses/ServiceNotAvailable'
+          $ref: "#/components/responses/ServiceNotAvailable"
         "404":
-          $ref: '#/components/responses/NotFound'
+          $ref: "#/components/responses/NotFound"
         "401":
-          $ref: '#/components/responses/Unauthorized'
+          $ref: "#/components/responses/Unauthorized"
         "429":
-          $ref: '#/components/responses/TooManyRequests'
+          $ref: "#/components/responses/TooManyRequests"
         "403":
-          $ref: '#/components/responses/Forbidden'
-        "409":
-          $ref: '#/components/responses/Conflict'
+          $ref: "#/components/responses/Forbidden"
         "200":
           description: Kundenangaben für einen bestehenden Vorgang
           headers:
             X-TraceId:
-              $ref: '#/components/headers/tracingIdHeader'
+              $ref: "#/components/headers/tracingIdHeader"
               style: simple
           content:
             application/json;version=1.0:
               schema:
-                $ref: '#/components/schemas/Kundenangaben'
+                $ref: "#/components/schemas/Kundenangaben"
+            application/json; version=1.0:
+              schema:
+                $ref: "#/components/schemas/Kundenangaben"
+        "409":
+          $ref: "#/components/responses/Conflict"
         "400":
-          $ref: '#/components/responses/BadRequest'
+          $ref: "#/components/responses/BadRequest"
       security:
       - oAuth2:
         - baufinanzierung:vorgang:lesen
@@ -88,7 +91,7 @@ paths:
         schema:
           type: string
       - name: X-TraceId
-        $ref: '#/components/parameters/tracingIdParam'
+        $ref: "#/components/parameters/tracingIdParam"
       - name: vorgangsnummer
         in: path
         required: true
@@ -98,31 +101,34 @@ paths:
         content:
           application/json;version=1.0:
             schema:
-              $ref: '#/components/schemas/UpdateKundenangabenRequest'
+              $ref: "#/components/schemas/UpdateKundenangabenRequest"
+          application/json; version=1.0:
+            schema:
+              $ref: "#/components/schemas/UpdateKundenangabenRequest"
         required: true
       responses:
+        "503":
+          $ref: "#/components/responses/ServiceNotAvailable"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "422":
+          $ref: "#/components/responses/UnprocessableEntity"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "204":
           description: Kundenangaben in einem bestehenden Vorgang überschrieben
           headers:
             X-TraceId:
-              $ref: '#/components/headers/tracingIdHeader'
+              $ref: "#/components/headers/tracingIdHeader"
               style: simple
-        "503":
-          $ref: '#/components/responses/ServiceNotAvailable'
-        "404":
-          $ref: '#/components/responses/NotFound'
-        "422":
-          $ref: '#/components/responses/UnprocessableEntity'
-        "401":
-          $ref: '#/components/responses/Unauthorized'
-        "429":
-          $ref: '#/components/responses/TooManyRequests'
         "403":
-          $ref: '#/components/responses/Forbidden'
+          $ref: "#/components/responses/Forbidden"
         "409":
-          $ref: '#/components/responses/Conflict'
+          $ref: "#/components/responses/Conflict"
         "400":
-          $ref: '#/components/responses/BadRequest'
+          $ref: "#/components/responses/BadRequest"
       security:
       - oAuth2:
         - baufinanzierung:vorgang:schreiben
@@ -144,38 +150,44 @@ paths:
         schema:
           type: string
       - name: X-TraceId
-        $ref: '#/components/parameters/tracingIdParam'
+        $ref: "#/components/parameters/tracingIdParam"
       requestBody:
         content:
           application/json;version=1.0:
             schema:
-              $ref: '#/components/schemas/ImportKundenangabenRequest'
+              $ref: "#/components/schemas/ImportKundenangabenRequest"
+          application/json; version=1.0:
+            schema:
+              $ref: "#/components/schemas/ImportKundenangabenRequest"
         required: true
       responses:
         "503":
-          $ref: '#/components/responses/ServiceNotAvailable'
+          $ref: "#/components/responses/ServiceNotAvailable"
         "422":
-          $ref: '#/components/responses/UnprocessableEntity'
+          $ref: "#/components/responses/UnprocessableEntity"
         "401":
-          $ref: '#/components/responses/Unauthorized'
+          $ref: "#/components/responses/Unauthorized"
         "429":
-          $ref: '#/components/responses/TooManyRequests'
+          $ref: "#/components/responses/TooManyRequests"
         "403":
-          $ref: '#/components/responses/Forbidden'
+          $ref: "#/components/responses/Forbidden"
+        "409":
+          $ref: "#/components/responses/Conflict"
         "201":
           description: Kundenangaben in neuen Vorgang importiert
           headers:
             X-TraceId:
-              $ref: '#/components/headers/tracingIdHeader'
+              $ref: "#/components/headers/tracingIdHeader"
               style: simple
           content:
             application/json;version=1.0:
               schema:
-                $ref: '#/components/schemas/KundenangabenImportResponse'
-        "409":
-          $ref: '#/components/responses/Conflict'
+                $ref: "#/components/schemas/KundenangabenImportResponse"
+            application/json; version=1.0:
+              schema:
+                $ref: "#/components/schemas/KundenangabenImportResponse"
         "400":
-          $ref: '#/components/responses/BadRequest'
+          $ref: "#/components/responses/BadRequest"
       security:
       - oAuth2:
         - baufinanzierung:vorgang:schreiben
@@ -198,12 +210,15 @@ paths:
         schema:
           type: string
       - name: X-TraceId
-        $ref: '#/components/parameters/tracingIdParam'
+        $ref: "#/components/parameters/tracingIdParam"
       requestBody:
         content:
           application/json;version=1.0:
             schema:
-              $ref: '#/components/schemas/ImportKundenangabenRequest'
+              $ref: "#/components/schemas/ImportKundenangabenRequest"
+          application/json; version=1.0:
+            schema:
+              $ref: "#/components/schemas/ImportKundenangabenRequest"
         required: true
       responses:
         "200":
@@ -211,7 +226,10 @@ paths:
           content:
             application/json;version=1.0:
               schema:
-                $ref: '#/components/schemas/KundenangabenImportResponse'
+                $ref: "#/components/schemas/KundenangabenImportResponse"
+            application/json; version=1.0:
+              schema:
+                $ref: "#/components/schemas/KundenangabenImportResponse"
       security:
       - oAuth2:
         - baufinanzierung:vorgang:schreiben
@@ -251,7 +269,7 @@ components:
     AbtretenAlsVerwendung:
       type: object
       allOf:
-      - $ref: '#/components/schemas/LiquidierbareZusatzsicherheitVerwendung'
+      - $ref: "#/components/schemas/LiquidierbareZusatzsicherheitVerwendung"
       - type: object
         properties:
           kommentar:
@@ -271,7 +289,7 @@ components:
           type: integer
           format: int32
         abzugZurWerteanpassung:
-          $ref: '#/components/schemas/AbzugZurWerteanpassung'
+          $ref: "#/components/schemas/AbzugZurWerteanpassung"
         sicherheitsabschlag:
           type: number
           format: double
@@ -292,7 +310,7 @@ components:
     AndereAusweisart:
       type: object
       allOf:
-      - $ref: '#/components/schemas/Ausweisart'
+      - $ref: "#/components/schemas/Ausweisart"
       - type: object
         properties:
           typ:
@@ -300,15 +318,15 @@ components:
     Angestellter:
       type: object
       allOf:
-      - $ref: '#/components/schemas/Beschaeftigung'
+      - $ref: "#/components/schemas/Beschaeftigung"
       - type: object
         properties:
           beruf:
             type: string
           situationNachRenteneintritt:
-            $ref: '#/components/schemas/SituationNachRenteneintritt'
+            $ref: "#/components/schemas/SituationNachRenteneintritt"
           beschaeftigungsverhaeltnis:
-            $ref: '#/components/schemas/Beschaeftigungsverhaeltnis'
+            $ref: "#/components/schemas/Beschaeftigungsverhaeltnis"
           beschaeftigungsstatus:
             type: string
             enum:
@@ -317,7 +335,7 @@ components:
     Annuitaetendarlehen:
       type: object
       allOf:
-      - $ref: '#/components/schemas/Finanzierungsbaustein'
+      - $ref: "#/components/schemas/Finanzierungsbaustein"
       - type: object
         properties:
           id:
@@ -333,7 +351,7 @@ components:
             type: number
             format: double
           annuitaetendetails:
-            $ref: '#/components/schemas/Annuitaetendetails'
+            $ref: "#/components/schemas/Annuitaetendetails"
           bereitstellungszinsfreieZeitInMonaten:
             type: integer
             format: int32
@@ -351,7 +369,11 @@ components:
           type: integer
           format: int32
         tilgungswunsch:
-          $ref: '#/components/schemas/Tilgungswunsch'
+          oneOf:
+          - $ref: "#/components/schemas/Rate"
+          - $ref: "#/components/schemas/TilgungAusgesetzt"
+          - $ref: "#/components/schemas/TilgungInProzent"
+          - $ref: "#/components/schemas/Volltilger"
         sondertilgungJaehrlich:
           type: number
           description: Angabe in Prozent.
@@ -364,11 +386,11 @@ components:
       type: object
       properties:
         beleihungswertangaben:
-          $ref: '#/components/schemas/BeleihungswertangabenGenopace'
+          $ref: "#/components/schemas/BeleihungswertangabenGenopace"
         sachwertErmittlung:
-          $ref: '#/components/schemas/SachwertErmittlungGenopace'
+          $ref: "#/components/schemas/SachwertErmittlungGenopace"
         ertragswertErmittlung:
-          $ref: '#/components/schemas/ErtragswertErmittlungGenopace'
+          $ref: "#/components/schemas/ErtragswertErmittlungGenopace"
         begruendungFuerAenderungen:
           type: string
     Anschlussfinanzierung:
@@ -378,20 +400,24 @@ components:
         \ und 'modernisierungskostenErfassung' kopiert, falls 'zuBeschaffendesKapitalErfassung'\
         \ und 'modernisierungskostenErfassung' leer sind."
       allOf:
-      - $ref: '#/components/schemas/Finanzierungszweck'
+      - $ref: "#/components/schemas/Finanzierungszweck"
       - type: object
         properties:
           bereitsBeglicheneKosten:
             type: number
             format: double
           modernisierung:
-            $ref: '#/components/schemas/Modernisierungskosten'
+            $ref: "#/components/schemas/Modernisierungskosten"
           modernisierungskostenErfassung:
-            $ref: '#/components/schemas/ModernisierungskostenErfassung'
+            oneOf:
+            - $ref: "#/components/schemas/KeineModernisierungskosten"
+            - $ref: "#/components/schemas/VorhandeneModernisierungskosten"
           zuBeschaffendesKapital:
-            $ref: '#/components/schemas/KommentierterBetrag'
+            $ref: "#/components/schemas/KommentierterBetrag"
           zuBeschaffendesKapitalErfassung:
-            $ref: '#/components/schemas/ZuBeschaffendesKapitalErfassung'
+            oneOf:
+            - $ref: "#/components/schemas/KeinZuBeschaffendesKapital"
+            - $ref: "#/components/schemas/VorhandenesZuBeschaffendesKapital"
           marktwertFinanzierungsobjekt:
             type: number
             format: double
@@ -400,13 +426,13 @@ components:
             description: Ablösung der bestehenden Darlehen des Finanzierungsobjektes.
               (Nicht von bestehenden Immobilien.)
             items:
-              $ref: '#/components/schemas/AbloesungBestehendesDarlehen'
+              $ref: "#/components/schemas/AbloesungBestehendesDarlehen"
           rangruecktrittDarlehenDesFinanzierungsobjektes:
             type: array
             description: Rangrücktritt nicht abzulösender bestehender Darlehen des
               Finanzierungsobjektes. (Nicht von bestehenden Immobilien.)
             items:
-              $ref: '#/components/schemas/RangruecktrittBestehendesDarlehen'
+              $ref: "#/components/schemas/RangruecktrittBestehendesDarlehen"
     Anschrift:
       type: object
       properties:
@@ -425,15 +451,15 @@ components:
     Arbeiter:
       type: object
       allOf:
-      - $ref: '#/components/schemas/Beschaeftigung'
+      - $ref: "#/components/schemas/Beschaeftigung"
       - type: object
         properties:
           beruf:
             type: string
           situationNachRenteneintritt:
-            $ref: '#/components/schemas/SituationNachRenteneintritt'
+            $ref: "#/components/schemas/SituationNachRenteneintritt"
           beschaeftigungsverhaeltnis:
-            $ref: '#/components/schemas/Beschaeftigungsverhaeltnis'
+            $ref: "#/components/schemas/Beschaeftigungsverhaeltnis"
           beschaeftigungsstatus:
             type: string
             enum:
@@ -459,12 +485,12 @@ components:
       discriminator:
         propertyName: '@type'
         mapping:
-          ARBEITSERLAUBNIS_VORHANDEN: '#/components/schemas/ArbeitserlaubnisVorhanden'
-          KEINE_ARBEITSERLAUBNIS: '#/components/schemas/KeineArbeitserlaubnis'
+          ARBEITSERLAUBNIS_VORHANDEN: "#/components/schemas/ArbeitserlaubnisVorhanden"
+          KEINE_ARBEITSERLAUBNIS: "#/components/schemas/KeineArbeitserlaubnis"
     ArbeitserlaubnisVorhanden:
       type: object
       allOf:
-      - $ref: '#/components/schemas/Arbeitserlaubnis'
+      - $ref: "#/components/schemas/Arbeitserlaubnis"
       - type: object
         properties:
           befristetBis:
@@ -474,13 +500,13 @@ components:
     Arbeitsloser:
       type: object
       allOf:
-      - $ref: '#/components/schemas/Beschaeftigung'
+      - $ref: "#/components/schemas/Beschaeftigung"
       - type: object
         properties:
           beruf:
             type: string
           situationNachRenteneintritt:
-            $ref: '#/components/schemas/SituationNachRenteneintritt'
+            $ref: "#/components/schemas/SituationNachRenteneintritt"
     Aufenthalt:
       type: object
       properties:
@@ -489,14 +515,15 @@ components:
           format: date
         aufenthaltstitel:
           oneOf:
-          - $ref: '#/components/schemas/Aufenthaltserlaubnis'
-          - $ref: '#/components/schemas/DaueraufenthaltEu'
-          - $ref: '#/components/schemas/Niederlassungserlaubnis'
-          - $ref: '#/components/schemas/Visum'
+          - $ref: "#/components/schemas/Aufenthaltserlaubnis"
+          - $ref: "#/components/schemas/BlaueKarteEu"
+          - $ref: "#/components/schemas/DaueraufenthaltEu"
+          - $ref: "#/components/schemas/Niederlassungserlaubnis"
+          - $ref: "#/components/schemas/Visum"
     Aufenthaltserlaubnis:
       type: object
       allOf:
-      - $ref: '#/components/schemas/Aufenthaltstitel'
+      - $ref: "#/components/schemas/Aufenthaltstitel"
       - type: object
         properties:
           befristetBis:
@@ -504,7 +531,9 @@ components:
             description: Die Aufenthaltserlaubnis muss gültig sein.
             format: date
           arbeitserlaubnis:
-            $ref: '#/components/schemas/Arbeitserlaubnis'
+            oneOf:
+            - $ref: "#/components/schemas/ArbeitserlaubnisVorhanden"
+            - $ref: "#/components/schemas/KeineArbeitserlaubnis"
     Aufenthaltstitel:
       required:
       - '@type'
@@ -517,14 +546,15 @@ components:
       discriminator:
         propertyName: '@type'
         mapping:
-          VISUM: '#/components/schemas/Visum'
-          AUFENTHALTSERLAUBNIS: '#/components/schemas/Aufenthaltserlaubnis'
-          NIEDERLASSUNGSERLAUBNIS: '#/components/schemas/Niederlassungserlaubnis'
-          DAUERAUFENTHALT_EU: '#/components/schemas/DaueraufenthaltEu'
+          VISUM: "#/components/schemas/Visum"
+          AUFENTHALTSERLAUBNIS: "#/components/schemas/Aufenthaltserlaubnis"
+          NIEDERLASSUNGSERLAUBNIS: "#/components/schemas/Niederlassungserlaubnis"
+          DAUERAUFENTHALT_EU: "#/components/schemas/DaueraufenthaltEu"
+          BLAUE_KARTE_EU: "#/components/schemas/BlaueKarteEu"
     AufloesungAlsVerwendung:
       type: object
       allOf:
-      - $ref: '#/components/schemas/LiquidierbareVerwendung'
+      - $ref: "#/components/schemas/LiquidierbareVerwendung"
       - type: object
         properties:
           maximalEinzusetzenderBetrag:
@@ -532,7 +562,7 @@ components:
             format: double
           kommentar:
             type: string
-      - $ref: '#/components/schemas/LiquidierbareZusatzsicherheitVerwendung'
+      - $ref: "#/components/schemas/LiquidierbareZusatzsicherheitVerwendung"
     Ausweisart:
       required:
       - '@type'
@@ -544,9 +574,9 @@ components:
       discriminator:
         propertyName: '@type'
         mapping:
-          PERSONALAUSWEIS: '#/components/schemas/Personalausweis'
-          REISEPASS: '#/components/schemas/Reisepass'
-          ANDERE_AUSWEISART: '#/components/schemas/AndereAusweisart'
+          PERSONALAUSWEIS: "#/components/schemas/Personalausweis"
+          REISEPASS: "#/components/schemas/Reisepass"
+          ANDERE_AUSWEISART: "#/components/schemas/AndereAusweisart"
     BankUndSparguthaben:
       type: object
       properties:
@@ -558,8 +588,8 @@ components:
           format: double
         verwendung:
           oneOf:
-          - $ref: '#/components/schemas/AufloesungAlsVerwendung'
-          - $ref: '#/components/schemas/KeineVerwendung'
+          - $ref: "#/components/schemas/AufloesungAlsVerwendung"
+          - $ref: "#/components/schemas/KeineVerwendung"
     Bankverbindung:
       type: object
       properties:
@@ -582,7 +612,7 @@ components:
     Baugrundstueck:
       type: object
       allOf:
-      - $ref: '#/components/schemas/Immobilientyp'
+      - $ref: "#/components/schemas/Immobilientyp"
       - type: object
         properties:
           grundstuecksgroesse:
@@ -601,7 +631,7 @@ components:
       type: object
       description: Für leer gelassene Parameter werden automatisch Vorschläge berechnet.
       allOf:
-      - $ref: '#/components/schemas/Finanzierungsbaustein'
+      - $ref: "#/components/schemas/Finanzierungsbaustein"
       - type: object
         properties:
           id:
@@ -1147,11 +1177,15 @@ components:
             description: Pro Art des Wunschparameters darf maximal ein Eintrag vorhanden
               sein.
             items:
-              $ref: '#/components/schemas/BauspardarlehenWunschparameter'
+              oneOf:
+              - $ref: "#/components/schemas/Bausparsumme"
+              - $ref: "#/components/schemas/MonatlicherSparbeitrag"
+              - $ref: "#/components/schemas/Sparbeginn"
+              - $ref: "#/components/schemas/Zuteilungszeitpunkt"
           sonderzahlungen:
             type: array
             items:
-              $ref: '#/components/schemas/Sonderzahlung'
+              $ref: "#/components/schemas/Sonderzahlung"
           riesterzulagenverwendung:
             type: string
             enum:
@@ -1169,14 +1203,14 @@ components:
       discriminator:
         propertyName: '@type'
         mapping:
-          SPARBEGINN: '#/components/schemas/Sparbeginn'
-          BAUSPARSUMME: '#/components/schemas/Bausparsumme'
-          MONATLICHER_SPARBEITRAG: '#/components/schemas/MonatlicherSparbeitrag'
-          ZUTEILUNGSZEITPUNKT: '#/components/schemas/Zuteilungszeitpunkt'
+          SPARBEGINN: "#/components/schemas/Sparbeginn"
+          BAUSPARSUMME: "#/components/schemas/Bausparsumme"
+          MONATLICHER_SPARBEITRAG: "#/components/schemas/MonatlicherSparbeitrag"
+          ZUTEILUNGSZEITPUNKT: "#/components/schemas/Zuteilungszeitpunkt"
     Bausparsumme:
       type: object
       allOf:
-      - $ref: '#/components/schemas/BauspardarlehenWunschparameter'
+      - $ref: "#/components/schemas/BauspardarlehenWunschparameter"
       - type: object
         properties:
           betrag:
@@ -1240,22 +1274,22 @@ components:
           format: date
         verwendung:
           oneOf:
-          - $ref: '#/components/schemas/AbtretenAlsVerwendung'
-          - $ref: '#/components/schemas/AufloesungAlsVerwendung'
-          - $ref: '#/components/schemas/KeineVerwendung'
+          - $ref: "#/components/schemas/AbtretenAlsVerwendung"
+          - $ref: "#/components/schemas/AufloesungAlsVerwendung"
+          - $ref: "#/components/schemas/KeineVerwendung"
       description: In anderen APIs als 'bestehenderBausparvertrag' bezeichnet.
     Beamter:
       type: object
       allOf:
-      - $ref: '#/components/schemas/Beschaeftigung'
+      - $ref: "#/components/schemas/Beschaeftigung"
       - type: object
         properties:
           beruf:
             type: string
           situationNachRenteneintritt:
-            $ref: '#/components/schemas/SituationNachRenteneintritt'
+            $ref: "#/components/schemas/SituationNachRenteneintritt"
           beschaeftigungsverhaeltnis:
-            $ref: '#/components/schemas/Beschaeftigungsverhaeltnis'
+            $ref: "#/components/schemas/Beschaeftigungsverhaeltnis"
     Beleihungswertangaben:
       type: object
       properties:
@@ -1289,9 +1323,9 @@ components:
       type: object
       properties:
         allgemeineWertermittlung:
-          $ref: '#/components/schemas/AllgemeineWertermittlungGenopace'
+          $ref: "#/components/schemas/AllgemeineWertermittlungGenopace"
         erbbaurecht:
-          $ref: '#/components/schemas/ErbbaurechtGenopace'
+          $ref: "#/components/schemas/ErbbaurechtGenopace"
     BereitstellungszinsfreieZeitPraeferenz:
       required:
       - '@type'
@@ -1304,10 +1338,10 @@ components:
       discriminator:
         propertyName: '@type'
         mapping:
-          DARLEHENSBETRAG_BENOETIGT_KURZ_NACH_DARLEHENSVERTRAG: '#/components/schemas/DarlehensbetragBenoetigtKurzNachDarlehensvertrag'
-          IN_MONATEN: '#/components/schemas/InMonaten'
-          NOCH_NICHT_FESTGELEGT: '#/components/schemas/NochNichtFestgelegt'
-          KEINE_BEREITSTELLUNGSZINSFREIE_ZEIT_PRAEFERENZ: '#/components/schemas/KeineBereitstellungszinsfreieZeitPraeferenz'
+          DARLEHENSBETRAG_BENOETIGT_KURZ_NACH_DARLEHENSVERTRAG: "#/components/schemas/DarlehensbetragBenoetigtKurzNachDarlehensvertrag"
+          IN_MONATEN: "#/components/schemas/InMonaten"
+          NOCH_NICHT_FESTGELEGT: "#/components/schemas/NochNichtFestgelegt"
+          KEINE_BEREITSTELLUNGSZINSFREIE_ZEIT_PRAEFERENZ: "#/components/schemas/KeineBereitstellungszinsfreieZeitPraeferenz"
     Beschaeftigung:
       required:
       - '@type'
@@ -1320,19 +1354,19 @@ components:
       discriminator:
         propertyName: '@type'
         mapping:
-          ARBEITSLOSER: '#/components/schemas/Arbeitsloser'
-          HAUSHALTENDE_PERSON: '#/components/schemas/HaushaltendePerson'
-          ANGESTELLTER: '#/components/schemas/Angestellter'
-          ARBEITER: '#/components/schemas/Arbeiter'
-          BEAMTER: '#/components/schemas/Beamter'
-          SELBSTSTAENDIGER: '#/components/schemas/Selbststaendiger'
-          FREIBERUFLER: '#/components/schemas/Freiberufler'
-          RENTNER: '#/components/schemas/Rentner'
+          ARBEITSLOSER: "#/components/schemas/Arbeitsloser"
+          HAUSHALTENDE_PERSON: "#/components/schemas/HaushaltendePerson"
+          ANGESTELLTER: "#/components/schemas/Angestellter"
+          ARBEITER: "#/components/schemas/Arbeiter"
+          BEAMTER: "#/components/schemas/Beamter"
+          SELBSTSTAENDIGER: "#/components/schemas/Selbststaendiger"
+          FREIBERUFLER: "#/components/schemas/Freiberufler"
+          RENTNER: "#/components/schemas/Rentner"
     Beschaeftigungsverhaeltnis:
       type: object
       properties:
         arbeitgeber:
-          $ref: '#/components/schemas/Arbeitgeber'
+          $ref: "#/components/schemas/Arbeitgeber"
         probezeit:
           type: boolean
         anzahlGehaelterProJahr:
@@ -1373,8 +1407,8 @@ components:
       discriminator:
         propertyName: '@type'
         mapping:
-          VORHANDENE_BESTEHENDE_DARLEHEN_DES_FINANZIERUNGSOBJEKTES: '#/components/schemas/VorhandeneBestehendeDarlehenDesFinanzierungsobjektes'
-          KEINE_BESTEHENDE_DARLEHEN_DES_FINANZIERUNGSOBJEKTES: '#/components/schemas/KeineBestehendeDarlehenDesFinanzierungsobjektes'
+          VORHANDENE_BESTEHENDE_DARLEHEN_DES_FINANZIERUNGSOBJEKTES: "#/components/schemas/VorhandeneBestehendeDarlehenDesFinanzierungsobjektes"
+          KEINE_BESTEHENDE_DARLEHEN_DES_FINANZIERUNGSOBJEKTES: "#/components/schemas/KeineBestehendeDarlehenDesFinanzierungsobjektes"
     BestehendeDarlehenErfassung:
       required:
       - '@type'
@@ -1386,8 +1420,8 @@ components:
       discriminator:
         propertyName: '@type'
         mapping:
-          VORHANDENE_BESTEHENDE_DARLEHEN: '#/components/schemas/VorhandeneBestehendeDarlehen'
-          KEINE_BESTEHENDEN_DARLEHEN: '#/components/schemas/KeineBestehendenDarlehen'
+          VORHANDENE_BESTEHENDE_DARLEHEN: "#/components/schemas/VorhandeneBestehendeDarlehen"
+          KEINE_BESTEHENDEN_DARLEHEN: "#/components/schemas/KeineBestehendenDarlehen"
     BestehendeImmobilie:
       type: object
       properties:
@@ -1397,20 +1431,20 @@ components:
         bezeichnung:
           type: string
         immobilie:
-          $ref: '#/components/schemas/Immobilie'
+          $ref: "#/components/schemas/Immobilie"
         darlehensliste:
           type: array
           items:
             oneOf:
-            - $ref: '#/components/schemas/BestehendesBauspardarlehen'
-            - $ref: '#/components/schemas/BestehendesFoerderdarlehen'
-            - $ref: '#/components/schemas/BestehendesImmobiliendarlehen'
-            - $ref: '#/components/schemas/BestehendesPrivatdarlehen'
-            - $ref: '#/components/schemas/BestehendesSonstigesDarlehen'
+            - $ref: "#/components/schemas/BestehendesBauspardarlehen"
+            - $ref: "#/components/schemas/BestehendesFoerderdarlehen"
+            - $ref: "#/components/schemas/BestehendesImmobiliendarlehen"
+            - $ref: "#/components/schemas/BestehendesPrivatdarlehen"
+            - $ref: "#/components/schemas/BestehendesSonstigesDarlehen"
         darlehenslisteErfassung:
           oneOf:
-          - $ref: '#/components/schemas/KeineBestehendenDarlehen'
-          - $ref: '#/components/schemas/VorhandeneBestehendeDarlehen'
+          - $ref: "#/components/schemas/KeineBestehendenDarlehen"
+          - $ref: "#/components/schemas/VorhandeneBestehendeDarlehen"
         marktwert:
           type: number
           format: double
@@ -1439,12 +1473,12 @@ components:
       discriminator:
         propertyName: '@type'
         mapping:
-          VORHANDENE_BESTEHENDE_IMMOBILIEN: '#/components/schemas/VorhandeneBestehendeImmobilien'
-          KEINE_BESTEHENDEN_IMMOBILIEN: '#/components/schemas/KeineBestehendenImmobilien'
+          VORHANDENE_BESTEHENDE_IMMOBILIEN: "#/components/schemas/VorhandeneBestehendeImmobilien"
+          KEINE_BESTEHENDEN_IMMOBILIEN: "#/components/schemas/KeineBestehendenImmobilien"
     BestehendesBauspardarlehen:
       type: object
       allOf:
-      - $ref: '#/components/schemas/BestehendesDarlehen'
+      - $ref: "#/components/schemas/BestehendesDarlehen"
       - type: object
         properties:
           grundschuldart:
@@ -1457,13 +1491,10 @@ components:
       - '@type'
       type: object
       properties:
-        id:
-          type: string
-          description: Eindeutige interne ID
         darlehensgeber:
           oneOf:
-          - $ref: '#/components/schemas/ProduktanbieterDarlehensgeber'
-          - $ref: '#/components/schemas/SonstigerDarlehensgeber'
+          - $ref: "#/components/schemas/ProduktanbieterDarlehensgeber"
+          - $ref: "#/components/schemas/SonstigerDarlehensgeber"
         grundschuld:
           type: number
           format: double
@@ -1480,10 +1511,13 @@ components:
           type: string
           format: date
         restschuld:
-          $ref: '#/components/schemas/Restschuld'
+          $ref: "#/components/schemas/Restschuld"
         darlehenskontonummer:
           type: string
           description: IBAN des Darlehenskontos
+        id:
+          type: string
+          description: Eindeutige interne ID
         darlehensbetrag:
           type: number
           format: double
@@ -1494,11 +1528,11 @@ components:
       discriminator:
         propertyName: '@type'
         mapping:
-          BESTEHENDES_IMMOBILIENDARLEHEN: '#/components/schemas/BestehendesImmobiliendarlehen'
-          BESTEHENDES_BAUSPARDARLEHEN: '#/components/schemas/BestehendesBauspardarlehen'
-          BESTEHENDES_FOERDERDARLEHEN: '#/components/schemas/BestehendesFoerderdarlehen'
-          BESTEHENDES_PRIVATDARLEHEN: '#/components/schemas/BestehendesPrivatdarlehen'
-          BESTEHENDES_SONSTIGES_DARLEHEN: '#/components/schemas/BestehendesSonstigesDarlehen'
+          BESTEHENDES_IMMOBILIENDARLEHEN: "#/components/schemas/BestehendesImmobiliendarlehen"
+          BESTEHENDES_BAUSPARDARLEHEN: "#/components/schemas/BestehendesBauspardarlehen"
+          BESTEHENDES_FOERDERDARLEHEN: "#/components/schemas/BestehendesFoerderdarlehen"
+          BESTEHENDES_PRIVATDARLEHEN: "#/components/schemas/BestehendesPrivatdarlehen"
+          BESTEHENDES_SONSTIGES_DARLEHEN: "#/components/schemas/BestehendesSonstigesDarlehen"
     BestehendesDarlehenDesFinanzierungsobjektes:
       required:
       - darlehen
@@ -1512,15 +1546,15 @@ components:
             sen dieses Darlehens verwiesen."
         darlehen:
           oneOf:
-          - $ref: '#/components/schemas/BestehendesBauspardarlehen'
-          - $ref: '#/components/schemas/BestehendesFoerderdarlehen'
-          - $ref: '#/components/schemas/BestehendesImmobiliendarlehen'
-          - $ref: '#/components/schemas/BestehendesPrivatdarlehen'
-          - $ref: '#/components/schemas/BestehendesSonstigesDarlehen'
+          - $ref: "#/components/schemas/BestehendesBauspardarlehen"
+          - $ref: "#/components/schemas/BestehendesFoerderdarlehen"
+          - $ref: "#/components/schemas/BestehendesImmobiliendarlehen"
+          - $ref: "#/components/schemas/BestehendesPrivatdarlehen"
+          - $ref: "#/components/schemas/BestehendesSonstigesDarlehen"
     BestehendesFoerderdarlehen:
       type: object
       allOf:
-      - $ref: '#/components/schemas/BestehendesDarlehen'
+      - $ref: "#/components/schemas/BestehendesDarlehen"
       - type: object
         properties:
           grundschuldart:
@@ -1531,7 +1565,7 @@ components:
     BestehendesImmobiliendarlehen:
       type: object
       allOf:
-      - $ref: '#/components/schemas/BestehendesDarlehen'
+      - $ref: "#/components/schemas/BestehendesDarlehen"
       - type: object
         properties:
           grundschuldart:
@@ -1542,11 +1576,11 @@ components:
     BestehendesPrivatdarlehen:
       type: object
       allOf:
-      - $ref: '#/components/schemas/BestehendesDarlehen'
+      - $ref: "#/components/schemas/BestehendesDarlehen"
     BestehendesSonstigesDarlehen:
       type: object
       allOf:
-      - $ref: '#/components/schemas/BestehendesDarlehen'
+      - $ref: "#/components/schemas/BestehendesDarlehen"
       - type: object
         properties:
           grundschuldart:
@@ -1557,7 +1591,7 @@ components:
     Betrag:
       type: object
       allOf:
-      - $ref: '#/components/schemas/Tippgeberprovision'
+      - $ref: "#/components/schemas/Tippgeberprovision"
       - type: object
         properties:
           betrag:
@@ -1566,7 +1600,7 @@ components:
     BisZumJahr:
       type: object
       allOf:
-      - $ref: '#/components/schemas/LaufzeitPraeferenz'
+      - $ref: "#/components/schemas/LaufzeitPraeferenz"
       - type: object
         properties:
           jahr:
@@ -1577,7 +1611,7 @@ components:
     BisZurRenteImJahr:
       type: object
       allOf:
-      - $ref: '#/components/schemas/LaufzeitPraeferenz'
+      - $ref: "#/components/schemas/LaufzeitPraeferenz"
       - type: object
         properties:
           jahr:
@@ -1585,10 +1619,20 @@ components:
             format: int32
           kommentar:
             type: string
+    BlaueKarteEu:
+      type: object
+      allOf:
+      - $ref: "#/components/schemas/Aufenthaltstitel"
+      - type: object
+        properties:
+          befristetBis:
+            type: string
+            description: Die EU Blue Card muss gültig sein.
+            format: date
     DarlehensbetragBenoetigtKurzNachDarlehensvertrag:
       type: object
       allOf:
-      - $ref: '#/components/schemas/BereitstellungszinsfreieZeitPraeferenz'
+      - $ref: "#/components/schemas/BereitstellungszinsfreieZeitPraeferenz"
       - type: object
         properties:
           kommentar:
@@ -1604,16 +1648,16 @@ components:
       discriminator:
         propertyName: '@type'
         mapping:
-          SONSTIGER_DARLEHENSGEBER: '#/components/schemas/SonstigerDarlehensgeber'
-          PRODUKTANBIETER_DARLEHENSGEBER: '#/components/schemas/ProduktanbieterDarlehensgeber'
+          SONSTIGER_DARLEHENSGEBER: "#/components/schemas/SonstigerDarlehensgeber"
+          PRODUKTANBIETER_DARLEHENSGEBER: "#/components/schemas/ProduktanbieterDarlehensgeber"
     DaueraufenthaltEu:
       type: object
       allOf:
-      - $ref: '#/components/schemas/Aufenthaltstitel'
+      - $ref: "#/components/schemas/Aufenthaltstitel"
     Deadline:
       type: object
       allOf:
-      - $ref: '#/components/schemas/ZeitlicherRahmenPraeferenz'
+      - $ref: "#/components/schemas/ZeitlicherRahmenPraeferenz"
       - type: object
         properties:
           zumDatum:
@@ -1629,12 +1673,12 @@ components:
           format: double
         verwendung:
           oneOf:
-          - $ref: '#/components/schemas/AufloesungAlsVerwendung'
-          - $ref: '#/components/schemas/KeineVerwendung'
+          - $ref: "#/components/schemas/AufloesungAlsVerwendung"
+          - $ref: "#/components/schemas/KeineVerwendung"
     DerzeitNichtGeplant:
       type: object
       allOf:
-      - $ref: '#/components/schemas/SondertilgungPraeferenz'
+      - $ref: "#/components/schemas/SondertilgungPraeferenz"
       - type: object
         properties:
           kommentar:
@@ -1642,7 +1686,7 @@ components:
     Doppelhaushaelfte:
       type: object
       allOf:
-      - $ref: '#/components/schemas/Immobilientyp'
+      - $ref: "#/components/schemas/Immobilientyp"
       - type: object
         properties:
           grundstuecksgroesse:
@@ -1650,11 +1694,11 @@ components:
             type: number
             format: double
           gebaeude:
-            $ref: '#/components/schemas/Gebaeude'
+            $ref: "#/components/schemas/Gebaeude"
           einliegerwohnungVorhanden:
             type: boolean
           nutzflaechen:
-            $ref: '#/components/schemas/Nutzflaechen'
+            $ref: "#/components/schemas/Nutzflaechen"
           fertighaus:
             type: boolean
     EffektivzinsErhoehendeKosten:
@@ -1667,12 +1711,12 @@ components:
           type: number
           format: double
         sonstigeKosten:
-          $ref: '#/components/schemas/SonstigeEffektivzinsErhoehendeKosten'
+          $ref: "#/components/schemas/SonstigeEffektivzinsErhoehendeKosten"
       description: Anpassungen nach PAngV
     Eigengenutzt:
       type: object
       allOf:
-      - $ref: '#/components/schemas/Nutzungsart'
+      - $ref: "#/components/schemas/Nutzungsart"
     EigenleistungErfassung:
       required:
       - '@type'
@@ -1684,12 +1728,12 @@ components:
       discriminator:
         propertyName: '@type'
         mapping:
-          VORHANDENE_EIGENLEISTUNG: '#/components/schemas/VorhandeneEigenleistung'
-          KEINE_EIGENLEISTUNG: '#/components/schemas/KeineEigenleistung'
+          VORHANDENE_EIGENLEISTUNG: "#/components/schemas/VorhandeneEigenleistung"
+          KEINE_EIGENLEISTUNG: "#/components/schemas/KeineEigenleistung"
     Eigentumswohnung:
       type: object
       allOf:
-      - $ref: '#/components/schemas/Immobilientyp'
+      - $ref: "#/components/schemas/Immobilientyp"
       - type: object
         properties:
           grundstuecksgroesse:
@@ -1697,9 +1741,9 @@ components:
             type: number
             format: double
           gebaeude:
-            $ref: '#/components/schemas/Gebaeude'
+            $ref: "#/components/schemas/Gebaeude"
           miteigentumsanteil:
-            $ref: '#/components/schemas/Miteigentumsanteil'
+            $ref: "#/components/schemas/Miteigentumsanteil"
           anzahlDerWohneinheitenImObjekt:
             type: integer
             format: int32
@@ -1711,7 +1755,7 @@ components:
     Einfamilienhaus:
       type: object
       allOf:
-      - $ref: '#/components/schemas/Immobilientyp'
+      - $ref: "#/components/schemas/Immobilientyp"
       - type: object
         properties:
           grundstuecksgroesse:
@@ -1719,11 +1763,11 @@ components:
             type: number
             format: double
           gebaeude:
-            $ref: '#/components/schemas/Gebaeude'
+            $ref: "#/components/schemas/Gebaeude"
           einliegerwohnungVorhanden:
             type: boolean
           nutzflaechen:
-            $ref: '#/components/schemas/Nutzflaechen'
+            $ref: "#/components/schemas/Nutzflaechen"
           fertighaus:
             type: boolean
     EinkuenfteAusNebentaetigkeit:
@@ -1740,7 +1784,7 @@ components:
     EinmaligePraemienzahlung:
       type: object
       allOf:
-      - $ref: '#/components/schemas/Praemienzahlung'
+      - $ref: "#/components/schemas/Praemienzahlung"
       - type: object
         properties:
           absicherungsfinanzierungsweise:
@@ -1813,8 +1857,8 @@ components:
       discriminator:
         propertyName: '@type'
         mapping:
-          VORHANDENES_ERBBAURECHT: '#/components/schemas/VorhandenesErbbaurecht'
-          KEIN_ERBBAURECHT: '#/components/schemas/KeinErbbaurecht'
+          VORHANDENES_ERBBAURECHT: "#/components/schemas/VorhandenesErbbaurecht"
+          KEIN_ERBBAURECHT: "#/components/schemas/KeinErbbaurecht"
     ErbbaurechtGenopace:
       type: object
       properties:
@@ -1828,14 +1872,14 @@ components:
       type: object
       properties:
         wohnwirtschaftlich:
-          $ref: '#/components/schemas/ErtragswertErmittlungWohnwirtschaftlich'
+          $ref: "#/components/schemas/ErtragswertErmittlungWohnwirtschaftlich"
         gewerblich:
-          $ref: '#/components/schemas/ErtragswertErmittlungsangaben'
+          $ref: "#/components/schemas/ErtragswertErmittlungsangaben"
     ErtragswertErmittlungWohnwirtschaftlich:
       type: object
       properties:
         angaben:
-          $ref: '#/components/schemas/ErtragswertErmittlungsangaben'
+          $ref: "#/components/schemas/ErtragswertErmittlungsangaben"
         bewirtschaftungskostenGarage:
           type: number
           format: double
@@ -1869,7 +1913,7 @@ components:
     EuroEinmalig:
       type: object
       allOf:
-      - $ref: '#/components/schemas/SondertilgungPraeferenz'
+      - $ref: "#/components/schemas/SondertilgungPraeferenz"
       - type: object
         properties:
           betrag:
@@ -1880,7 +1924,7 @@ components:
     EuroJaehrlich:
       type: object
       allOf:
-      - $ref: '#/components/schemas/SondertilgungPraeferenz'
+      - $ref: "#/components/schemas/SondertilgungPraeferenz"
       - type: object
         properties:
           betrag:
@@ -1900,31 +1944,31 @@ components:
       discriminator:
         propertyName: '@type'
         mapping:
-          LEDIG: '#/components/schemas/Ledig'
-          VERHEIRATET: '#/components/schemas/Verheiratet'
-          VERWITWET: '#/components/schemas/Verwitwet'
-          GESCHIEDEN: '#/components/schemas/Geschieden'
-          GETRENNT_LEBEND: '#/components/schemas/GetrenntLebend'
-          LEBENSPARTNERSCHAFT: '#/components/schemas/Lebenspartnerschaft'
+          LEDIG: "#/components/schemas/Ledig"
+          VERHEIRATET: "#/components/schemas/Verheiratet"
+          VERWITWET: "#/components/schemas/Verwitwet"
+          GESCHIEDEN: "#/components/schemas/Geschieden"
+          GETRENNT_LEBEND: "#/components/schemas/GetrenntLebend"
+          LEBENSPARTNERSCHAFT: "#/components/schemas/Lebenspartnerschaft"
     FinanzielleSituation:
       type: object
       properties:
         bestehendeImmobilien:
           type: array
           items:
-            $ref: '#/components/schemas/BestehendeImmobilie'
+            $ref: "#/components/schemas/BestehendeImmobilie"
         bestehendeImmobilienErfassung:
           oneOf:
-          - $ref: '#/components/schemas/KeineBestehendenImmobilien'
-          - $ref: '#/components/schemas/VorhandeneBestehendeImmobilien'
+          - $ref: "#/components/schemas/KeineBestehendenImmobilien"
+          - $ref: "#/components/schemas/VorhandeneBestehendeImmobilien"
         vermoegen:
-          $ref: '#/components/schemas/Haushaltsvermoegen'
+          $ref: "#/components/schemas/Haushaltsvermoegen"
         einnahmen:
-          $ref: '#/components/schemas/Haushaltseinnahmen'
+          $ref: "#/components/schemas/Haushaltseinnahmen"
         ausgaben:
-          $ref: '#/components/schemas/Haushaltsausgaben'
+          $ref: "#/components/schemas/Haushaltsausgaben"
         verbindlichkeiten:
-          $ref: '#/components/schemas/Haushaltsverbindlichkeiten'
+          $ref: "#/components/schemas/Haushaltsverbindlichkeiten"
       description: "Bitte Feld 'bestehendeImmobilien' nicht mehr verwenden. Falls\
         \ mitgeschickt, werden die Angaben ins Feld 'bestehendeImmobilienErfassung'\
         \ kopiert, falls 'bestehendeImmobilienErfassung' leer ist."
@@ -1935,19 +1979,19 @@ components:
           type: string
         beschaeftigung:
           oneOf:
-          - $ref: '#/components/schemas/Angestellter'
-          - $ref: '#/components/schemas/Arbeiter'
-          - $ref: '#/components/schemas/Arbeitsloser'
-          - $ref: '#/components/schemas/Beamter'
-          - $ref: '#/components/schemas/Freiberufler'
-          - $ref: '#/components/schemas/HaushaltendePerson'
-          - $ref: '#/components/schemas/Rentner'
-          - $ref: '#/components/schemas/Selbststaendiger'
+          - $ref: "#/components/schemas/Angestellter"
+          - $ref: "#/components/schemas/Arbeiter"
+          - $ref: "#/components/schemas/Arbeitsloser"
+          - $ref: "#/components/schemas/Beamter"
+          - $ref: "#/components/schemas/Freiberufler"
+          - $ref: "#/components/schemas/HaushaltendePerson"
+          - $ref: "#/components/schemas/Rentner"
+          - $ref: "#/components/schemas/Selbststaendiger"
         einkommenNetto:
           type: number
           format: double
         riesterangaben:
-          $ref: '#/components/schemas/Riesterangaben'
+          $ref: "#/components/schemas/Riesterangaben"
     Finanzierungsbaustein:
       required:
       - '@type'
@@ -1960,13 +2004,13 @@ components:
       discriminator:
         propertyName: '@type'
         mapping:
-          ANNUITAETENDARLEHEN: '#/components/schemas/Annuitaetendarlehen'
-          FORWARDDARLEHEN: '#/components/schemas/Forwarddarlehen'
-          PRIVATDARLEHEN: '#/components/schemas/Privatdarlehen'
-          ZWISCHENFINANZIERUNG: '#/components/schemas/Zwischenfinanzierung'
-          VARIABLES_DARLEHEN: '#/components/schemas/VariablesDarlehen'
-          BAUSPARDARLEHEN: '#/components/schemas/Bauspardarlehen'
-          KFW_DARLEHEN: '#/components/schemas/KfwDarlehen'
+          ANNUITAETENDARLEHEN: "#/components/schemas/Annuitaetendarlehen"
+          FORWARDDARLEHEN: "#/components/schemas/Forwarddarlehen"
+          PRIVATDARLEHEN: "#/components/schemas/Privatdarlehen"
+          ZWISCHENFINANZIERUNG: "#/components/schemas/Zwischenfinanzierung"
+          VARIABLES_DARLEHEN: "#/components/schemas/VariablesDarlehen"
+          BAUSPARDARLEHEN: "#/components/schemas/Bauspardarlehen"
+          KFW_DARLEHEN: "#/components/schemas/KfwDarlehen"
     Finanzierungsbedarf:
       type: object
       properties:
@@ -1975,12 +2019,12 @@ components:
           description: Eindeutige interne ID
         finanzierungszweck:
           oneOf:
-          - $ref: '#/components/schemas/Anschlussfinanzierung'
-          - $ref: '#/components/schemas/Kapitalbeschaffung'
-          - $ref: '#/components/schemas/Kauf'
-          - $ref: '#/components/schemas/KaufNeubauVomBautraeger'
-          - $ref: '#/components/schemas/ModernisierungUmbauAnbau'
-          - $ref: '#/components/schemas/Neubau'
+          - $ref: "#/components/schemas/Anschlussfinanzierung"
+          - $ref: "#/components/schemas/Kapitalbeschaffung"
+          - $ref: "#/components/schemas/Kauf"
+          - $ref: "#/components/schemas/KaufNeubauVomBautraeger"
+          - $ref: "#/components/schemas/ModernisierungUmbauAnbau"
+          - $ref: "#/components/schemas/Neubau"
         beratungshonorar:
           type: number
           description: "Das Beratungshonorar, welches anstelle einer Provision zwischen\
@@ -1991,9 +2035,9 @@ components:
           description: Als Eigenkapital. In anderen APIs als 'nachrangigesExternesDarlehen'
             bezeichnet.
           items:
-            $ref: '#/components/schemas/UnbesichertesExternesDarlehen'
+            $ref: "#/components/schemas/UnbesichertesExternesDarlehen"
         praeferenzen:
-          $ref: '#/components/schemas/Praeferenzen'
+          $ref: "#/components/schemas/Praeferenzen"
         finanzierungsbausteine:
           maxItems: 5
           minItems: 0
@@ -2001,13 +2045,13 @@ components:
           description: In anderen APIs im 'Finanzierungswunsch' zu finden.
           items:
             oneOf:
-            - $ref: '#/components/schemas/Annuitaetendarlehen'
-            - $ref: '#/components/schemas/Bauspardarlehen'
-            - $ref: '#/components/schemas/Forwarddarlehen'
-            - $ref: '#/components/schemas/KfwDarlehen'
-            - $ref: '#/components/schemas/Privatdarlehen'
-            - $ref: '#/components/schemas/VariablesDarlehen'
-            - $ref: '#/components/schemas/Zwischenfinanzierung'
+            - $ref: "#/components/schemas/Annuitaetendarlehen"
+            - $ref: "#/components/schemas/Bauspardarlehen"
+            - $ref: "#/components/schemas/Forwarddarlehen"
+            - $ref: "#/components/schemas/KfwDarlehen"
+            - $ref: "#/components/schemas/Privatdarlehen"
+            - $ref: "#/components/schemas/VariablesDarlehen"
+            - $ref: "#/components/schemas/Zwischenfinanzierung"
         ratenschutzbausteine:
           maxItems: 2
           minItems: 0
@@ -2016,7 +2060,7 @@ components:
             In anderen APIs im 'absicherungsWunsch' zu finden. Maximal ein Baustein
             je Kunde.
           items:
-            $ref: '#/components/schemas/Ratenschutz'
+            $ref: "#/components/schemas/Ratenschutz"
       description: Der Finanzierungsbedarf beinhaltet alle relevanten Finanzierungsinformationen.
         In anderen APIs als 'Vorhaben' bezeichnet.
     Finanzierungsdetailspraeferenzen:
@@ -2024,57 +2068,57 @@ components:
       properties:
         zinsbindung:
           oneOf:
-          - $ref: '#/components/schemas/FlexibelKurzfristigHandlungsfaehig'
-          - $ref: '#/components/schemas/KeineZinsbindungPraeferenz'
-          - $ref: '#/components/schemas/LangeZinssicherheit'
-          - $ref: '#/components/schemas/ZinsbindungInJahren'
-          - $ref: '#/components/schemas/Zinsbindungsspanne'
+          - $ref: "#/components/schemas/FlexibelKurzfristigHandlungsfaehig"
+          - $ref: "#/components/schemas/KeineZinsbindungPraeferenz"
+          - $ref: "#/components/schemas/LangeZinssicherheit"
+          - $ref: "#/components/schemas/ZinsbindungInJahren"
+          - $ref: "#/components/schemas/Zinsbindungsspanne"
         laufzeit:
           oneOf:
-          - $ref: '#/components/schemas/BisZumJahr'
-          - $ref: '#/components/schemas/BisZurRenteImJahr'
-          - $ref: '#/components/schemas/InJahren'
-          - $ref: '#/components/schemas/KeineLaufzeitPraeferenz'
-          - $ref: '#/components/schemas/MoeglichstSchnell'
+          - $ref: "#/components/schemas/BisZumJahr"
+          - $ref: "#/components/schemas/BisZurRenteImJahr"
+          - $ref: "#/components/schemas/InJahren"
+          - $ref: "#/components/schemas/KeineLaufzeitPraeferenz"
+          - $ref: "#/components/schemas/MoeglichstSchnell"
         ratenhoehe:
           oneOf:
-          - $ref: '#/components/schemas/KeineRatePraeferenz'
-          - $ref: '#/components/schemas/MoeglichstNiedrigeRate'
-          - $ref: '#/components/schemas/RateAlsBetrag'
-          - $ref: '#/components/schemas/Ratenspanne'
-          - $ref: '#/components/schemas/VerfuegbaresEinkommenAusschoepfen'
-          - $ref: '#/components/schemas/WarmmieteVonHeute'
+          - $ref: "#/components/schemas/KeineRatePraeferenz"
+          - $ref: "#/components/schemas/MoeglichstNiedrigeRate"
+          - $ref: "#/components/schemas/RateAlsBetrag"
+          - $ref: "#/components/schemas/Ratenspanne"
+          - $ref: "#/components/schemas/VerfuegbaresEinkommenAusschoepfen"
+          - $ref: "#/components/schemas/WarmmieteVonHeute"
         tilgungssatzwechsel:
           oneOf:
-          - $ref: '#/components/schemas/KeineTilgungssatzwechselPraeferenz'
-          - $ref: '#/components/schemas/Mindestens'
-          - $ref: '#/components/schemas/NichtEingeplantOderAbsehbar'
+          - $ref: "#/components/schemas/KeineTilgungssatzwechselPraeferenz"
+          - $ref: "#/components/schemas/Mindestens"
+          - $ref: "#/components/schemas/NichtEingeplantOderAbsehbar"
         sondertilgung:
           oneOf:
-          - $ref: '#/components/schemas/DerzeitNichtGeplant'
-          - $ref: '#/components/schemas/EuroEinmalig'
-          - $ref: '#/components/schemas/EuroJaehrlich'
-          - $ref: '#/components/schemas/KeineSondertilgungPraeferenz'
-          - $ref: '#/components/schemas/ProzentJaehrlich'
+          - $ref: "#/components/schemas/DerzeitNichtGeplant"
+          - $ref: "#/components/schemas/EuroEinmalig"
+          - $ref: "#/components/schemas/EuroJaehrlich"
+          - $ref: "#/components/schemas/KeineSondertilgungPraeferenz"
+          - $ref: "#/components/schemas/ProzentJaehrlich"
         bereitstellungszinsfreieZeit:
           oneOf:
-          - $ref: '#/components/schemas/DarlehensbetragBenoetigtKurzNachDarlehensvertrag'
-          - $ref: '#/components/schemas/InMonaten'
-          - $ref: '#/components/schemas/KeineBereitstellungszinsfreieZeitPraeferenz'
-          - $ref: '#/components/schemas/NochNichtFestgelegt'
+          - $ref: "#/components/schemas/DarlehensbetragBenoetigtKurzNachDarlehensvertrag"
+          - $ref: "#/components/schemas/InMonaten"
+          - $ref: "#/components/schemas/KeineBereitstellungszinsfreieZeitPraeferenz"
+          - $ref: "#/components/schemas/NochNichtFestgelegt"
     Finanzierungsobjekt:
       type: object
       properties:
         immobilie:
-          $ref: '#/components/schemas/Immobilie'
+          $ref: "#/components/schemas/Immobilie"
         darlehensliste:
           type: array
           items:
-            $ref: '#/components/schemas/BestehendesDarlehenDesFinanzierungsobjektes'
+            $ref: "#/components/schemas/BestehendesDarlehenDesFinanzierungsobjektes"
         darlehenslisteErfassung:
           oneOf:
-          - $ref: '#/components/schemas/KeineBestehendeDarlehenDesFinanzierungsobjektes'
-          - $ref: '#/components/schemas/VorhandeneBestehendeDarlehenDesFinanzierungsobjektes'
+          - $ref: "#/components/schemas/KeineBestehendeDarlehenDesFinanzierungsobjektes"
+          - $ref: "#/components/schemas/VorhandeneBestehendeDarlehenDesFinanzierungsobjektes"
       description: "Bitte Feld 'darlehensliste' nicht mehr verwenden. Falls mitgeschickt,\
         \ werden die Angaben ins Feld 'darlehenslisteErfassung' kopiert, falls 'darlehenslisteErfassung'\
         \ leer ist."
@@ -2092,12 +2136,12 @@ components:
       discriminator:
         propertyName: '@type'
         mapping:
-          NEUBAU: '#/components/schemas/Neubau'
-          KAUF: '#/components/schemas/Kauf'
-          KAUF_NEUBAU_VOM_BAUTRAEGER: '#/components/schemas/KaufNeubauVomBautraeger'
-          MODERNISIERUNG_UMBAU_ANBAU: '#/components/schemas/ModernisierungUmbauAnbau'
-          ANSCHLUSSFINANZIERUNG: '#/components/schemas/Anschlussfinanzierung'
-          KAPITALBESCHAFFUNG: '#/components/schemas/Kapitalbeschaffung'
+          NEUBAU: "#/components/schemas/Neubau"
+          KAUF: "#/components/schemas/Kauf"
+          KAUF_NEUBAU_VOM_BAUTRAEGER: "#/components/schemas/KaufNeubauVomBautraeger"
+          MODERNISIERUNG_UMBAU_ANBAU: "#/components/schemas/ModernisierungUmbauAnbau"
+          ANSCHLUSSFINANZIERUNG: "#/components/schemas/Anschlussfinanzierung"
+          KAPITALBESCHAFFUNG: "#/components/schemas/Kapitalbeschaffung"
     Flaechennutzung:
       type: object
       properties:
@@ -2106,11 +2150,14 @@ components:
           type: number
           format: double
         nutzungsart:
-          $ref: '#/components/schemas/Nutzungsart'
+          oneOf:
+          - $ref: "#/components/schemas/Eigengenutzt"
+          - $ref: "#/components/schemas/Teilvermietet"
+          - $ref: "#/components/schemas/Vermietet"
     FlexibelKurzfristigHandlungsfaehig:
       type: object
       allOf:
-      - $ref: '#/components/schemas/ZinsbindungPraeferenz'
+      - $ref: "#/components/schemas/ZinsbindungPraeferenz"
       - type: object
         properties:
           kommentar:
@@ -2123,7 +2170,7 @@ components:
         flurstueck:
           type: string
         anteil:
-          $ref: '#/components/schemas/Miteigentumsanteil'
+          $ref: "#/components/schemas/Miteigentumsanteil"
         groesse:
           minimum: 0
           type: number
@@ -2131,7 +2178,7 @@ components:
     Forwarddarlehen:
       type: object
       allOf:
-      - $ref: '#/components/schemas/Finanzierungsbaustein'
+      - $ref: "#/components/schemas/Finanzierungsbaustein"
       - type: object
         properties:
           id:
@@ -2147,7 +2194,7 @@ components:
             type: number
             format: double
           annuitaetendetails:
-            $ref: '#/components/schemas/Annuitaetendetails'
+            $ref: "#/components/schemas/Annuitaetendetails"
           provision:
             type: number
             description: Angabe in Prozent.
@@ -2155,15 +2202,15 @@ components:
     Freiberufler:
       type: object
       allOf:
-      - $ref: '#/components/schemas/Beschaeftigung'
+      - $ref: "#/components/schemas/Beschaeftigung"
       - type: object
         properties:
           beruf:
             type: string
           situationNachRenteneintritt:
-            $ref: '#/components/schemas/SituationNachRenteneintritt'
+            $ref: "#/components/schemas/SituationNachRenteneintritt"
           taetigkeit:
-            $ref: '#/components/schemas/SelbststaendigeTaetigkeit'
+            $ref: "#/components/schemas/SelbststaendigeTaetigkeit"
     Gebaeude:
       type: object
       properties:
@@ -2199,24 +2246,26 @@ components:
           - MITTEL
           - EINFACH
         nutzung:
-          $ref: '#/components/schemas/Nutzung'
+          $ref: "#/components/schemas/Nutzung"
         modernisierung:
-          $ref: '#/components/schemas/Modernisierung'
+          $ref: "#/components/schemas/Modernisierung"
         modernisierungErfassung:
-          $ref: '#/components/schemas/ModernisierungErfassung'
+          oneOf:
+          - $ref: "#/components/schemas/KeineModernisierung"
+          - $ref: "#/components/schemas/VorhandeneModernisierung"
         energieEffizienzAusweis:
-          $ref: '#/components/schemas/EnergieEffizienzAusweis'
+          $ref: "#/components/schemas/EnergieEffizienzAusweis"
       description: "Bitte Feld 'modernisierung' nicht mehr verwenden. Falls mitgeschickt,\
         \ werden die Angaben ins Feld 'modernisierungErfassung' kopiert, falls 'modernisierungErfassung'\
         \ leer ist."
     Geschieden:
       type: object
       allOf:
-      - $ref: '#/components/schemas/Familienstand'
+      - $ref: "#/components/schemas/Familienstand"
     GetrenntLebend:
       type: object
       allOf:
-      - $ref: '#/components/schemas/Familienstand'
+      - $ref: "#/components/schemas/Familienstand"
       - type: object
         properties:
           guetertrennungVereinbart:
@@ -2233,8 +2282,8 @@ components:
       discriminator:
         propertyName: '@type'
         mapping:
-          VORHANDENES_GEWERBE: '#/components/schemas/VorhandenesGewerbe'
-          KEIN_GEWERBE: '#/components/schemas/KeinGewerbe'
+          VORHANDENES_GEWERBE: "#/components/schemas/VorhandenesGewerbe"
+          KEIN_GEWERBE: "#/components/schemas/KeinGewerbe"
     GirokontoPraeferenz:
       type: object
       properties:
@@ -2263,9 +2312,9 @@ components:
         flurstuecke:
           type: array
           items:
-            $ref: '#/components/schemas/Flurstueck'
+            $ref: "#/components/schemas/Flurstueck"
         rechteInAbteilung2:
-          $ref: '#/components/schemas/RechteAbteilung2'
+          $ref: "#/components/schemas/RechteAbteilung2"
         anmerkungen:
           type: string
       description: Bitte 'Grundbuchangabe' nicht mehr verwenden. Ersetzt durch 'GrundbuchangabeErfassung'
@@ -2281,8 +2330,8 @@ components:
       discriminator:
         propertyName: '@type'
         mapping:
-          VORHANDENE_GRUNDBUCHANGABE: '#/components/schemas/VorhandeneGrundbuchangabe'
-          KEINE_GRUNDBUCHANGABE: '#/components/schemas/KeineGrundbuchangabe'
+          VORHANDENE_GRUNDBUCHANGABE: "#/components/schemas/VorhandeneGrundbuchangabe"
+          KEINE_GRUNDBUCHANGABE: "#/components/schemas/KeineGrundbuchangabe"
     Grundstueckskosten:
       type: object
       properties:
@@ -2306,21 +2355,21 @@ components:
           type: array
           description: In anderen APIs als 'Antragsteller' bezeichnet.
           items:
-            $ref: '#/components/schemas/Kunde'
+            $ref: "#/components/schemas/Kunde"
         erfahrungImmobilienFinanzierung:
           type: boolean
         kinder:
           type: array
           items:
-            $ref: '#/components/schemas/Kind'
+            $ref: "#/components/schemas/Kind"
         kinderErfassung:
           oneOf:
-          - $ref: '#/components/schemas/KeineKinder'
-          - $ref: '#/components/schemas/VorhandeneKinder'
+          - $ref: "#/components/schemas/KeineKinder"
+          - $ref: "#/components/schemas/VorhandeneKinder"
         finanzielleSituation:
-          $ref: '#/components/schemas/FinanzielleSituation'
+          $ref: "#/components/schemas/FinanzielleSituation"
         zusatzangaben:
-          $ref: '#/components/schemas/ZusatzangabenHaushalt'
+          $ref: "#/components/schemas/ZusatzangabenHaushalt"
       description: "Bitte Feld 'kinder' nicht mehr verwenden. Falls mitgeschickt,\
         \ werden die Angaben ins Feld 'kinderErfassung' kopiert, falls 'kinderErfassung'\
         \ leer ist."
@@ -2329,18 +2378,18 @@ components:
       description: "Ein allgemeiner Begriff, der die Beschäftigungen 'Hausfrau' und\
         \ 'Hausmann' zusammenfasst."
       allOf:
-      - $ref: '#/components/schemas/Beschaeftigung'
+      - $ref: "#/components/schemas/Beschaeftigung"
       - type: object
         properties:
           beruf:
             type: string
           situationNachRenteneintritt:
-            $ref: '#/components/schemas/SituationNachRenteneintritt'
+            $ref: "#/components/schemas/SituationNachRenteneintritt"
     Haushaltsausgaben:
       type: object
       properties:
         summeMietausgaben:
-          $ref: '#/components/schemas/Mietausgaben'
+          $ref: "#/components/schemas/Mietausgaben"
         summePrivaterKrankenversicherungenMonatlich:
           type: number
           format: double
@@ -2350,9 +2399,9 @@ components:
             type: number
             format: double
         summeSonstigerVersicherungsausgabenMonatlich:
-          $ref: '#/components/schemas/KommentierterBetrag'
+          $ref: "#/components/schemas/KommentierterBetrag"
         summeSonstigerAusgabenMonatlich:
-          $ref: '#/components/schemas/KommentierterBetrag'
+          $ref: "#/components/schemas/KommentierterBetrag"
     Haushaltseinnahmen:
       type: object
       properties:
@@ -2366,14 +2415,14 @@ components:
         einkuenfteAusNebentaetigkeit:
           type: array
           items:
-            $ref: '#/components/schemas/EinkuenfteAusNebentaetigkeit'
+            $ref: "#/components/schemas/EinkuenfteAusNebentaetigkeit"
         summeEhegattenunterhalt:
           type: number
           format: double
         summeUnbefristeteZusatzrentenMonatlich:
-          $ref: '#/components/schemas/KommentierterBetrag'
+          $ref: "#/components/schemas/KommentierterBetrag"
         summeSonstigeEinnahmenMonatlich:
-          $ref: '#/components/schemas/KommentierterBetrag'
+          $ref: "#/components/schemas/KommentierterBetrag"
     Haushaltsverbindlichkeiten:
       type: object
       properties:
@@ -2382,34 +2431,34 @@ components:
           minItems: 0
           type: array
           items:
-            $ref: '#/components/schemas/Verbindlichkeit'
+            $ref: "#/components/schemas/Verbindlichkeit"
         privatdarlehen:
           maxItems: 3
           minItems: 0
           type: array
           items:
-            $ref: '#/components/schemas/Verbindlichkeit'
+            $ref: "#/components/schemas/Verbindlichkeit"
         sonstigeVerbindlichkeit:
-          $ref: '#/components/schemas/Verbindlichkeit'
+          $ref: "#/components/schemas/Verbindlichkeit"
     Haushaltsvermoegen:
       type: object
       properties:
         summeBankUndSparguthaben:
-          $ref: '#/components/schemas/BankUndSparguthaben'
+          $ref: "#/components/schemas/BankUndSparguthaben"
         summeSparplaene:
-          $ref: '#/components/schemas/Sparplaene'
+          $ref: "#/components/schemas/Sparplaene"
         summeDepotvermoegen:
-          $ref: '#/components/schemas/Depotvermoegen'
+          $ref: "#/components/schemas/Depotvermoegen"
         bausparvertraege:
           type: array
           items:
-            $ref: '#/components/schemas/BausparvertragAlsVermoegen'
+            $ref: "#/components/schemas/BausparvertragAlsVermoegen"
         lebensOderRentenversicherungen:
           type: array
           items:
-            $ref: '#/components/schemas/LebensOderRentenversicherung'
+            $ref: "#/components/schemas/LebensOderRentenversicherung"
         summeSonstigesVermoegen:
-          $ref: '#/components/schemas/SonstigesVermoegen'
+          $ref: "#/components/schemas/SonstigesVermoegen"
     Immobilie:
       type: object
       properties:
@@ -2417,46 +2466,46 @@ components:
           type: string
           description: Eindeutige interne ID
         adresse:
-          $ref: '#/components/schemas/Anschrift'
+          $ref: "#/components/schemas/Anschrift"
         typ:
           oneOf:
-          - $ref: '#/components/schemas/Baugrundstueck'
-          - $ref: '#/components/schemas/Doppelhaushaelfte'
-          - $ref: '#/components/schemas/Eigentumswohnung'
-          - $ref: '#/components/schemas/Einfamilienhaus'
-          - $ref: '#/components/schemas/ImmobilieOhneTyp'
-          - $ref: '#/components/schemas/Mehrfamilienhaus'
-          - $ref: '#/components/schemas/Reihenhaus'
-          - $ref: '#/components/schemas/Zweifamilienhaus'
+          - $ref: "#/components/schemas/Baugrundstueck"
+          - $ref: "#/components/schemas/Doppelhaushaelfte"
+          - $ref: "#/components/schemas/Eigentumswohnung"
+          - $ref: "#/components/schemas/Einfamilienhaus"
+          - $ref: "#/components/schemas/ImmobilieOhneTyp"
+          - $ref: "#/components/schemas/Mehrfamilienhaus"
+          - $ref: "#/components/schemas/Reihenhaus"
+          - $ref: "#/components/schemas/Zweifamilienhaus"
         stellplaetze:
           type: array
           items:
-            $ref: '#/components/schemas/Stellplatz'
+            $ref: "#/components/schemas/Stellplatz"
         stellplaetzeErfassung:
           oneOf:
-          - $ref: '#/components/schemas/KeineStellplaetze'
-          - $ref: '#/components/schemas/VorhandeneStellplaetze'
+          - $ref: "#/components/schemas/KeineStellplaetze"
+          - $ref: "#/components/schemas/VorhandeneStellplaetze"
         erbbaurecht:
-          $ref: '#/components/schemas/Erbbaurecht'
+          $ref: "#/components/schemas/Erbbaurecht"
         erbbaurechtErfassung:
           oneOf:
-          - $ref: '#/components/schemas/KeinErbbaurecht'
-          - $ref: '#/components/schemas/VorhandenesErbbaurecht'
+          - $ref: "#/components/schemas/KeinErbbaurecht"
+          - $ref: "#/components/schemas/VorhandenesErbbaurecht"
         grundbuchangabe:
-          $ref: '#/components/schemas/Grundbuchangabe'
+          $ref: "#/components/schemas/Grundbuchangabe"
         grundbuchangabeErfassung:
           oneOf:
-          - $ref: '#/components/schemas/KeineGrundbuchangabe'
-          - $ref: '#/components/schemas/VorhandeneGrundbuchangabe'
+          - $ref: "#/components/schemas/KeineGrundbuchangabe"
+          - $ref: "#/components/schemas/VorhandeneGrundbuchangabe"
         zusatzangaben:
-          $ref: '#/components/schemas/ZusatzangabenImmobilie'
+          $ref: "#/components/schemas/ZusatzangabenImmobilie"
       description: "Bitte Felder 'erbbaurecht', 'stellplaetze' und 'grundbuchangabe'\
         \ nicht mehr verwenden. Falls mitgeschickt, werden die Angaben in die Felder\
         \ '...Erfassung' kopiert, falls '...Erfassung' leer sind."
     ImmobilieOhneTyp:
       type: object
       allOf:
-      - $ref: '#/components/schemas/Immobilientyp'
+      - $ref: "#/components/schemas/Immobilientyp"
       - type: object
         properties:
           grundstuecksgroesse:
@@ -2464,7 +2513,7 @@ components:
             type: number
             format: double
           gebaeude:
-            $ref: '#/components/schemas/Gebaeude'
+            $ref: "#/components/schemas/Gebaeude"
     Immobilientyp:
       required:
       - '@type'
@@ -2477,18 +2526,18 @@ components:
       discriminator:
         propertyName: '@type'
         mapping:
-          BAUGRUNDSTUECK: '#/components/schemas/Baugrundstueck'
-          EIGENTUMSWOHNUNG: '#/components/schemas/Eigentumswohnung'
-          DOPPELHAUSHAELFTE: '#/components/schemas/Doppelhaushaelfte'
-          EINFAMILIENHAUS: '#/components/schemas/Einfamilienhaus'
-          ZWEIFAMILIENHAUS: '#/components/schemas/Zweifamilienhaus'
-          MEHRFAMILIENHAUS: '#/components/schemas/Mehrfamilienhaus'
-          REIHENHAUS: '#/components/schemas/Reihenhaus'
-          IMMOBILIE_OHNE_TYP: '#/components/schemas/ImmobilieOhneTyp'
+          BAUGRUNDSTUECK: "#/components/schemas/Baugrundstueck"
+          EIGENTUMSWOHNUNG: "#/components/schemas/Eigentumswohnung"
+          DOPPELHAUSHAELFTE: "#/components/schemas/Doppelhaushaelfte"
+          EINFAMILIENHAUS: "#/components/schemas/Einfamilienhaus"
+          ZWEIFAMILIENHAUS: "#/components/schemas/Zweifamilienhaus"
+          MEHRFAMILIENHAUS: "#/components/schemas/Mehrfamilienhaus"
+          REIHENHAUS: "#/components/schemas/Reihenhaus"
+          IMMOBILIE_OHNE_TYP: "#/components/schemas/ImmobilieOhneTyp"
     InJahren:
       type: object
       allOf:
-      - $ref: '#/components/schemas/LaufzeitPraeferenz'
+      - $ref: "#/components/schemas/LaufzeitPraeferenz"
       - type: object
         properties:
           jahre:
@@ -2499,7 +2548,7 @@ components:
     InMonaten:
       type: object
       allOf:
-      - $ref: '#/components/schemas/BereitstellungszinsfreieZeitPraeferenz'
+      - $ref: "#/components/schemas/BereitstellungszinsfreieZeitPraeferenz"
       - type: object
         properties:
           monate:
@@ -2518,13 +2567,13 @@ components:
       discriminator:
         propertyName: '@type'
         mapping:
-          ING_EIGENTUMSWOHNUNG: '#/components/schemas/IngEigentumswohnung'
-          ING_HAUS: '#/components/schemas/IngHaus'
-          ING_GRUNDSTUECK: '#/components/schemas/IngGrundstueck'
+          ING_EIGENTUMSWOHNUNG: "#/components/schemas/IngEigentumswohnung"
+          ING_HAUS: "#/components/schemas/IngHaus"
+          ING_GRUNDSTUECK: "#/components/schemas/IngGrundstueck"
     IngEigentumswohnung:
       type: object
       allOf:
-      - $ref: '#/components/schemas/IngBeleihungsobjekt'
+      - $ref: "#/components/schemas/IngBeleihungsobjekt"
       - type: object
         properties:
           geschosslage:
@@ -2538,7 +2587,7 @@ components:
             - AB_SECHSTES_OBERGESCHOSS
             - UNBEKANNT
           gebaude:
-            $ref: '#/components/schemas/IngGebaeude'
+            $ref: "#/components/schemas/IngGebaeude"
     IngGebaeude:
       type: object
       properties:
@@ -2559,9 +2608,9 @@ components:
         aufzugVorhanden:
           type: boolean
         modernisierungsangaben:
-          $ref: '#/components/schemas/IngModernisierungsangaben'
+          $ref: "#/components/schemas/IngModernisierungsangaben"
         modernisierung:
-          $ref: '#/components/schemas/IngModernisierung'
+          $ref: "#/components/schemas/IngModernisierung"
         aufbaufinanzierung:
           type: boolean
           description: "Nur bei Neubau. Ja, falls das Grundstück bereits von ING finanziert\
@@ -2575,36 +2624,36 @@ components:
     IngGrundstueck:
       type: object
       allOf:
-      - $ref: '#/components/schemas/IngBeleihungsobjekt'
+      - $ref: "#/components/schemas/IngBeleihungsobjekt"
     IngHaus:
       type: object
       allOf:
-      - $ref: '#/components/schemas/IngBeleihungsobjekt'
+      - $ref: "#/components/schemas/IngBeleihungsobjekt"
       - type: object
         properties:
           gebaude:
-            $ref: '#/components/schemas/IngGebaeude'
+            $ref: "#/components/schemas/IngGebaeude"
     IngModernisierung:
       type: object
       properties:
         kernsanierung:
-          $ref: '#/components/schemas/Kernsanierung'
+          $ref: "#/components/schemas/Kernsanierung"
         bodenWandTreppe:
-          $ref: '#/components/schemas/IngModernisierungElement'
+          $ref: "#/components/schemas/IngModernisierungElement"
         heizungZentral:
-          $ref: '#/components/schemas/IngModernisierungElement'
+          $ref: "#/components/schemas/IngModernisierungElement"
         fenster:
-          $ref: '#/components/schemas/IngModernisierungElement'
+          $ref: "#/components/schemas/IngModernisierungElement"
         dach:
-          $ref: '#/components/schemas/IngModernisierungElement'
+          $ref: "#/components/schemas/IngModernisierungElement"
         badWc:
-          $ref: '#/components/schemas/IngModernisierungElement'
+          $ref: "#/components/schemas/IngModernisierungElement"
         stromAbwasserHeizkoerper:
-          $ref: '#/components/schemas/IngModernisierungElement'
+          $ref: "#/components/schemas/IngModernisierungElement"
         waermedaemmung:
-          $ref: '#/components/schemas/IngModernisierungElement'
+          $ref: "#/components/schemas/IngModernisierungElement"
         raumaufteilung:
-          $ref: '#/components/schemas/IngModernisierungElement'
+          $ref: "#/components/schemas/IngModernisierungElement"
       description: "Alle Modernisierungen der letzten 15 Jahre, inklusive der neu\
         \ zu finanzierenden."
     IngModernisierungElement:
@@ -2651,11 +2700,11 @@ components:
     Kapitalbeschaffung:
       type: object
       allOf:
-      - $ref: '#/components/schemas/Finanzierungszweck'
+      - $ref: "#/components/schemas/Finanzierungszweck"
       - type: object
         properties:
           zuBeschaffendesKapital:
-            $ref: '#/components/schemas/KommentierterBetrag'
+            $ref: "#/components/schemas/KommentierterBetrag"
           marktwertFinanzierungsobjekt:
             type: number
             format: double
@@ -2664,46 +2713,48 @@ components:
             description: Rangrücktritt nicht abzulösender bestehender Darlehen des
               Finanzierungsobjektes. (Nicht von bestehenden Immobilien.)
             items:
-              $ref: '#/components/schemas/RangruecktrittBestehendesDarlehen'
+              $ref: "#/components/schemas/RangruecktrittBestehendesDarlehen"
     Kauf:
       type: object
       description: "Bitte Feld 'modernisierung' nicht mehr verwenden. Falls mitgeschickt,\
         \ werden die Angaben ins Feld 'modernisierungskostenErfassung' kopiert, falls\
         \ 'modernisierungskostenErfassung' leer ist."
       allOf:
-      - $ref: '#/components/schemas/Finanzierungszweck'
+      - $ref: "#/components/schemas/Finanzierungszweck"
       - type: object
         properties:
           weitereKosten:
-            $ref: '#/components/schemas/WeitereKosten'
+            $ref: "#/components/schemas/WeitereKosten"
           nebenkosten:
-            $ref: '#/components/schemas/Nebenkosten'
+            $ref: "#/components/schemas/Nebenkosten"
           kaufpreis:
             type: number
             format: double
           modernisierung:
-            $ref: '#/components/schemas/Modernisierungskosten'
+            $ref: "#/components/schemas/Modernisierungskosten"
           modernisierungskostenErfassung:
-            $ref: '#/components/schemas/ModernisierungskostenErfassung'
+            oneOf:
+            - $ref: "#/components/schemas/KeineModernisierungskosten"
+            - $ref: "#/components/schemas/VorhandeneModernisierungskosten"
           rangruecktrittDarlehenDesFinanzierungsobjektes:
             type: array
             description: Rangrücktritt nicht abzulösender bestehender Darlehen des
               Finanzierungsobjektes. (Nicht von bestehenden Immobilien.)
             items:
-              $ref: '#/components/schemas/RangruecktrittBestehendesDarlehen'
+              $ref: "#/components/schemas/RangruecktrittBestehendesDarlehen"
     KaufNeubauVomBautraeger:
       type: object
       description: "Bitte Feld 'eigenleistung' nicht mehr verwenden. Falls mitgeschickt,\
         \ werden die Angaben ins Feld 'eigenleistungErfassung' kopiert, falls 'eigenleistungErfassung'\
         \ leer ist."
       allOf:
-      - $ref: '#/components/schemas/Finanzierungszweck'
+      - $ref: "#/components/schemas/Finanzierungszweck"
       - type: object
         properties:
           weitereKosten:
-            $ref: '#/components/schemas/WeitereKosten'
+            $ref: "#/components/schemas/WeitereKosten"
           nebenkosten:
-            $ref: '#/components/schemas/Nebenkosten'
+            $ref: "#/components/schemas/Nebenkosten"
           kaufpreis:
             type: number
             format: double
@@ -2714,25 +2765,27 @@ components:
             type: number
             format: double
           eigenleistungErfassung:
-            $ref: '#/components/schemas/EigenleistungErfassung'
+            oneOf:
+            - $ref: "#/components/schemas/KeineEigenleistung"
+            - $ref: "#/components/schemas/VorhandeneEigenleistung"
           rangruecktrittDarlehenDesFinanzierungsobjektes:
             type: array
             description: Rangrücktritt nicht abzulösender bestehender Darlehen des
               Finanzierungsobjektes. (Nicht von bestehenden Immobilien.)
             items:
-              $ref: '#/components/schemas/RangruecktrittBestehendesDarlehen'
+              $ref: "#/components/schemas/RangruecktrittBestehendesDarlehen"
     KeinErbbaurecht:
       type: object
       allOf:
-      - $ref: '#/components/schemas/ErbbaurechtErfassung'
+      - $ref: "#/components/schemas/ErbbaurechtErfassung"
     KeinGewerbe:
       type: object
       allOf:
-      - $ref: '#/components/schemas/GewerbeErfassung'
+      - $ref: "#/components/schemas/GewerbeErfassung"
     KeinZeitdruck:
       type: object
       allOf:
-      - $ref: '#/components/schemas/ZeitlicherRahmenPraeferenz'
+      - $ref: "#/components/schemas/ZeitlicherRahmenPraeferenz"
       - type: object
         properties:
           kommentar:
@@ -2740,15 +2793,15 @@ components:
     KeinZuBeschaffendesKapital:
       type: object
       allOf:
-      - $ref: '#/components/schemas/ZuBeschaffendesKapitalErfassung'
+      - $ref: "#/components/schemas/ZuBeschaffendesKapitalErfassung"
     KeineArbeitserlaubnis:
       type: object
       allOf:
-      - $ref: '#/components/schemas/Arbeitserlaubnis'
+      - $ref: "#/components/schemas/Arbeitserlaubnis"
     KeineBereitstellungszinsfreieZeitPraeferenz:
       type: object
       allOf:
-      - $ref: '#/components/schemas/BereitstellungszinsfreieZeitPraeferenz'
+      - $ref: "#/components/schemas/BereitstellungszinsfreieZeitPraeferenz"
       - type: object
         properties:
           kommentar:
@@ -2756,31 +2809,31 @@ components:
     KeineBestehendeDarlehenDesFinanzierungsobjektes:
       type: object
       allOf:
-      - $ref: '#/components/schemas/BestehendeDarlehenDesFinanzierungsobjektesErfassung'
+      - $ref: "#/components/schemas/BestehendeDarlehenDesFinanzierungsobjektesErfassung"
     KeineBestehendenDarlehen:
       type: object
       allOf:
-      - $ref: '#/components/schemas/BestehendeDarlehenErfassung'
+      - $ref: "#/components/schemas/BestehendeDarlehenErfassung"
     KeineBestehendenImmobilien:
       type: object
       allOf:
-      - $ref: '#/components/schemas/BestehendeImmobilienErfassung'
+      - $ref: "#/components/schemas/BestehendeImmobilienErfassung"
     KeineEigenleistung:
       type: object
       allOf:
-      - $ref: '#/components/schemas/EigenleistungErfassung'
+      - $ref: "#/components/schemas/EigenleistungErfassung"
     KeineGrundbuchangabe:
       type: object
       allOf:
-      - $ref: '#/components/schemas/GrundbuchangabeErfassung'
+      - $ref: "#/components/schemas/GrundbuchangabeErfassung"
     KeineKinder:
       type: object
       allOf:
-      - $ref: '#/components/schemas/KinderErfassung'
+      - $ref: "#/components/schemas/KinderErfassung"
     KeineLaufzeitPraeferenz:
       type: object
       allOf:
-      - $ref: '#/components/schemas/LaufzeitPraeferenz'
+      - $ref: "#/components/schemas/LaufzeitPraeferenz"
       - type: object
         properties:
           kommentar:
@@ -2788,15 +2841,15 @@ components:
     KeineModernisierung:
       type: object
       allOf:
-      - $ref: '#/components/schemas/ModernisierungErfassung'
+      - $ref: "#/components/schemas/ModernisierungErfassung"
     KeineModernisierungskosten:
       type: object
       allOf:
-      - $ref: '#/components/schemas/ModernisierungskostenErfassung'
+      - $ref: "#/components/schemas/ModernisierungskostenErfassung"
     KeineRatePraeferenz:
       type: object
       allOf:
-      - $ref: '#/components/schemas/RatenhoehePraeferenz'
+      - $ref: "#/components/schemas/RatenhoehePraeferenz"
       - type: object
         properties:
           kommentar:
@@ -2804,11 +2857,11 @@ components:
     KeineRechteAbteilung2:
       type: object
       allOf:
-      - $ref: '#/components/schemas/RechteAbteilung2Erfassung'
+      - $ref: "#/components/schemas/RechteAbteilung2Erfassung"
     KeineSondertilgungPraeferenz:
       type: object
       allOf:
-      - $ref: '#/components/schemas/SondertilgungPraeferenz'
+      - $ref: "#/components/schemas/SondertilgungPraeferenz"
       - type: object
         properties:
           kommentar:
@@ -2816,15 +2869,15 @@ components:
     KeineStellplaetze:
       type: object
       allOf:
-      - $ref: '#/components/schemas/StellplaetzeErfassung'
+      - $ref: "#/components/schemas/StellplaetzeErfassung"
     KeineStellplatzVermietung:
       type: object
       allOf:
-      - $ref: '#/components/schemas/StellplatzVermietungErfassung'
+      - $ref: "#/components/schemas/StellplatzVermietungErfassung"
     KeineTilgungssatzwechselPraeferenz:
       type: object
       allOf:
-      - $ref: '#/components/schemas/TilgungssatzwechselPraeferenz'
+      - $ref: "#/components/schemas/TilgungssatzwechselPraeferenz"
       - type: object
         properties:
           kommentar:
@@ -2832,20 +2885,20 @@ components:
     KeineVerwendung:
       type: object
       allOf:
-      - $ref: '#/components/schemas/LiquidierbareVerwendung'
+      - $ref: "#/components/schemas/LiquidierbareVerwendung"
       - type: object
         properties:
           kommentar:
             type: string
-      - $ref: '#/components/schemas/LiquidierbareZusatzsicherheitVerwendung'
+      - $ref: "#/components/schemas/LiquidierbareZusatzsicherheitVerwendung"
     KeineWeitereStaatsangehoerigkeiten:
       type: object
       allOf:
-      - $ref: '#/components/schemas/WeitereStaatsangehoerigkeitenErfassung'
+      - $ref: "#/components/schemas/WeitereStaatsangehoerigkeitenErfassung"
     KeineZeitlicherRahmenPraeferenz:
       type: object
       allOf:
-      - $ref: '#/components/schemas/ZeitlicherRahmenPraeferenz'
+      - $ref: "#/components/schemas/ZeitlicherRahmenPraeferenz"
       - type: object
         properties:
           kommentar:
@@ -2853,7 +2906,7 @@ components:
     KeineZinsbindungPraeferenz:
       type: object
       allOf:
-      - $ref: '#/components/schemas/ZinsbindungPraeferenz'
+      - $ref: "#/components/schemas/ZinsbindungPraeferenz"
       - type: object
         properties:
           kommentar:
@@ -2872,7 +2925,7 @@ components:
       - programm
       type: object
       allOf:
-      - $ref: '#/components/schemas/Finanzierungsbaustein'
+      - $ref: "#/components/schemas/Finanzierungsbaustein"
       - type: object
         properties:
           id:
@@ -2888,9 +2941,27 @@ components:
             - ENDFAELLIG_BERECHNET
             - ENDFAELLIG_EIGENES_ANGEBOT
           tilgungswunsch:
-            $ref: '#/components/schemas/Tilgungswunsch'
+            oneOf:
+            - $ref: "#/components/schemas/Rate"
+            - $ref: "#/components/schemas/TilgungAusgesetzt"
+            - $ref: "#/components/schemas/TilgungInProzent"
+            - $ref: "#/components/schemas/Volltilger"
           programm:
-            $ref: '#/components/schemas/KfwProgramm'
+            oneOf:
+            - $ref: "#/components/schemas/KfwProgramm124"
+            - $ref: "#/components/schemas/KfwProgramm151"
+            - $ref: "#/components/schemas/KfwProgramm152"
+            - $ref: "#/components/schemas/KfwProgramm153"
+            - $ref: "#/components/schemas/KfwProgramm159"
+            - $ref: "#/components/schemas/KfwProgramm167"
+            - $ref: "#/components/schemas/KfwProgramm261Neubau"
+            - $ref: "#/components/schemas/KfwProgramm261Sanierung"
+            - $ref: "#/components/schemas/KfwProgramm262"
+            - $ref: "#/components/schemas/KfwProgramm297"
+            - $ref: "#/components/schemas/KfwProgramm298"
+            - $ref: "#/components/schemas/KfwProgramm300"
+            - $ref: "#/components/schemas/KfwProgramm358"
+            - $ref: "#/components/schemas/KfwProgramm359"
     KfwProgramm:
       required:
       - '@type'
@@ -2905,20 +2976,20 @@ components:
       discriminator:
         propertyName: '@type'
         mapping:
-          KFW_PROGRAMM_124: '#/components/schemas/KfwProgramm124'
-          KFW_PROGRAMM_151: '#/components/schemas/KfwProgramm151'
-          KFW_PROGRAMM_152: '#/components/schemas/KfwProgramm152'
-          KFW_PROGRAMM_153: '#/components/schemas/KfwProgramm153'
-          KFW_PROGRAMM_159: '#/components/schemas/KfwProgramm159'
-          KFW_PROGRAMM_167: '#/components/schemas/KfwProgramm167'
-          KFW_PROGRAMM_261_NEUBAU: '#/components/schemas/KfwProgramm261Neubau'
-          KFW_PROGRAMM_261_SANIERUNG: '#/components/schemas/KfwProgramm261Sanierung'
-          KFW_PROGRAMM_262: '#/components/schemas/KfwProgramm262'
-          KFW_PROGRAMM_297: '#/components/schemas/KfwProgramm297'
-          KFW_PROGRAMM_298: '#/components/schemas/KfwProgramm298'
-          KFW_PROGRAMM_300: '#/components/schemas/KfwProgramm300'
-          KFW_PROGRAMM_358: '#/components/schemas/KfwProgramm358'
-          KFW_PROGRAMM_359: '#/components/schemas/KfwProgramm359'
+          KFW_PROGRAMM_124: "#/components/schemas/KfwProgramm124"
+          KFW_PROGRAMM_151: "#/components/schemas/KfwProgramm151"
+          KFW_PROGRAMM_152: "#/components/schemas/KfwProgramm152"
+          KFW_PROGRAMM_153: "#/components/schemas/KfwProgramm153"
+          KFW_PROGRAMM_159: "#/components/schemas/KfwProgramm159"
+          KFW_PROGRAMM_167: "#/components/schemas/KfwProgramm167"
+          KFW_PROGRAMM_261_NEUBAU: "#/components/schemas/KfwProgramm261Neubau"
+          KFW_PROGRAMM_261_SANIERUNG: "#/components/schemas/KfwProgramm261Sanierung"
+          KFW_PROGRAMM_262: "#/components/schemas/KfwProgramm262"
+          KFW_PROGRAMM_297: "#/components/schemas/KfwProgramm297"
+          KFW_PROGRAMM_298: "#/components/schemas/KfwProgramm298"
+          KFW_PROGRAMM_300: "#/components/schemas/KfwProgramm300"
+          KFW_PROGRAMM_358: "#/components/schemas/KfwProgramm358"
+          KFW_PROGRAMM_359: "#/components/schemas/KfwProgramm359"
     KfwProgramm124:
       required:
       - laufzeitInJahren
@@ -2928,7 +2999,7 @@ components:
       description: "Wohneigentum Schaffen: Selbstgenutztes Eigentum (Programm-Nr.:\
         \ 124)"
       allOf:
-      - $ref: '#/components/schemas/KfwProgramm'
+      - $ref: "#/components/schemas/KfwProgramm"
       - type: object
         properties:
           laufzeitInJahren:
@@ -2953,7 +3024,7 @@ components:
         \ 151). Die Zinsbindung beträgt immer 10 Jahre. Das Programm wurde eingestellt."
       deprecated: true
       allOf:
-      - $ref: '#/components/schemas/KfwProgramm'
+      - $ref: "#/components/schemas/KfwProgramm"
       - type: object
         properties:
           laufzeitInJahren:
@@ -2974,7 +3045,7 @@ components:
         \ Die Zinsbindung beträgt immer 10 Jahre. Das Programm wurde eingestellt."
       deprecated: true
       allOf:
-      - $ref: '#/components/schemas/KfwProgramm'
+      - $ref: "#/components/schemas/KfwProgramm"
       - type: object
         properties:
           laufzeitInJahren:
@@ -2996,7 +3067,7 @@ components:
         \ Programm wurde eingestellt."
       deprecated: true
       allOf:
-      - $ref: '#/components/schemas/KfwProgramm'
+      - $ref: "#/components/schemas/KfwProgramm"
       - type: object
         properties:
           kfwEnergieEffizienzStandard:
@@ -3038,7 +3109,7 @@ components:
       type: object
       description: "Wohnraum Modernisieren: Altersgerecht Umbauen (Programm-Nr.: 159)"
       allOf:
-      - $ref: '#/components/schemas/KfwProgramm'
+      - $ref: "#/components/schemas/KfwProgramm"
       - type: object
         properties:
           laufzeitInJahren:
@@ -3064,7 +3135,7 @@ components:
         \ identisch. Das Programm wurde eingestellt."
       deprecated: true
       allOf:
-      - $ref: '#/components/schemas/KfwProgramm'
+      - $ref: "#/components/schemas/KfwProgramm"
       - type: object
         properties:
           laufzeitUndZinsbindungInJahren:
@@ -3081,7 +3152,7 @@ components:
       description: "Energieeffizient Bauen: bauen oder kaufen (Programm-Nr.: 261).\
         \ Die Zinsbindung beträgt immer 10 Jahre."
       allOf:
-      - $ref: '#/components/schemas/KfwProgramm'
+      - $ref: "#/components/schemas/KfwProgramm"
       - type: object
         properties:
           kfwEnergieEffizienzStandard:
@@ -3111,7 +3182,7 @@ components:
         \ Effizienzhaus kaufen (Programm-Nr.: 261). Die Zinsbindung beträgt immer\
         \ 10 Jahre."
       allOf:
-      - $ref: '#/components/schemas/KfwProgramm'
+      - $ref: "#/components/schemas/KfwProgramm"
       - type: object
         properties:
           kfwEnergieEffizienzStandard:
@@ -3146,7 +3217,7 @@ components:
         \ 262). Die Zinsbindung beträgt immer 10 Jahre. Das Programm wurde eingestellt."
       deprecated: true
       allOf:
-      - $ref: '#/components/schemas/KfwProgramm'
+      - $ref: "#/components/schemas/KfwProgramm"
       - type: object
         properties:
           kfwSanierungsFahrplanLiegtVor:
@@ -3166,7 +3237,7 @@ components:
       type: object
       description: "Klimafreundliches Wohngebäude (Programm-Nr.: 297)"
       allOf:
-      - $ref: '#/components/schemas/KfwProgramm'
+      - $ref: "#/components/schemas/KfwProgramm"
       - type: object
         properties:
           kfwEnergieEffizienzStandard:
@@ -3195,7 +3266,7 @@ components:
       type: object
       description: "Klimafreundliches Wohngebäude (Programm-Nr.: 298)"
       allOf:
-      - $ref: '#/components/schemas/KfwProgramm'
+      - $ref: "#/components/schemas/KfwProgramm"
       - type: object
         properties:
           kfwEnergieEffizienzStandard:
@@ -3224,7 +3295,7 @@ components:
       type: object
       description: "Wohneigentum für Familien (Programm-Nr.: 300)"
       allOf:
-      - $ref: '#/components/schemas/KfwProgramm'
+      - $ref: "#/components/schemas/KfwProgramm"
       - type: object
         properties:
           kfwEnergieEffizienzStandard:
@@ -3253,7 +3324,7 @@ components:
       type: object
       description: "BEG Einzelmaßnahmen Ergänzungskredit Plus (Programm-Nr.: 358)"
       allOf:
-      - $ref: '#/components/schemas/KfwProgramm'
+      - $ref: "#/components/schemas/KfwProgramm"
       - type: object
         properties:
           laufzeitInJahren:
@@ -3275,7 +3346,7 @@ components:
       type: object
       description: "BEG Einzelmaßnahmen Ergänzungskredit (Programm-Nr.: 359)"
       allOf:
-      - $ref: '#/components/schemas/KfwProgramm'
+      - $ref: "#/components/schemas/KfwProgramm"
       - type: object
         properties:
           laufzeitInJahren:
@@ -3322,8 +3393,8 @@ components:
       discriminator:
         propertyName: '@type'
         mapping:
-          VORHANDENE_KINDER: '#/components/schemas/VorhandeneKinder'
-          KEINE_KINDER: '#/components/schemas/KeineKinder'
+          VORHANDENE_KINDER: "#/components/schemas/VorhandeneKinder"
+          KEINE_KINDER: "#/components/schemas/KeineKinder"
     KommentierterBetrag:
       type: object
       properties:
@@ -3336,7 +3407,7 @@ components:
       type: object
       properties:
         telefonnummer:
-          $ref: '#/components/schemas/Telefonnummer'
+          $ref: "#/components/schemas/Telefonnummer"
         email:
           type: string
         weitereKontaktmoeglichkeiten:
@@ -3360,15 +3431,15 @@ components:
             \ wird an mehreren Stellen verwiesen. Hier kann auch die externeKundenId\
             \ verwendet werden."
         personendaten:
-          $ref: '#/components/schemas/Personendaten'
+          $ref: "#/components/schemas/Personendaten"
         wohnsituation:
-          $ref: '#/components/schemas/Wohnsituation'
+          $ref: "#/components/schemas/Wohnsituation"
         finanzielles:
-          $ref: '#/components/schemas/Finanzielles'
+          $ref: "#/components/schemas/Finanzielles"
         kontakt:
-          $ref: '#/components/schemas/Kontakt'
+          $ref: "#/components/schemas/Kontakt"
         zusatzangaben:
-          $ref: '#/components/schemas/ZusatzangabenKunde'
+          $ref: "#/components/schemas/ZusatzangabenKunde"
       description: In anderen APIs als 'Antragsteller' bezeichnet.
     Kundenangaben:
       type: object
@@ -3378,18 +3449,18 @@ components:
           minItems: 0
           type: array
           items:
-            $ref: '#/components/schemas/Haushalt'
+            $ref: "#/components/schemas/Haushalt"
         finanzierungsobjekt:
-          $ref: '#/components/schemas/Finanzierungsobjekt'
+          $ref: "#/components/schemas/Finanzierungsobjekt"
         finanzierungsbedarf:
-          $ref: '#/components/schemas/Finanzierungsbedarf'
+          $ref: "#/components/schemas/Finanzierungsbedarf"
         bankverbindung:
-          $ref: '#/components/schemas/Bankverbindung'
+          $ref: "#/components/schemas/Bankverbindung"
       description: In anderen APIs als 'Erfasste Daten' bezeichnet.
     LangeZinssicherheit:
       type: object
       allOf:
-      - $ref: '#/components/schemas/ZinsbindungPraeferenz'
+      - $ref: "#/components/schemas/ZinsbindungPraeferenz"
       - type: object
         properties:
           kommentar:
@@ -3406,11 +3477,11 @@ components:
       discriminator:
         propertyName: '@type'
         mapping:
-          MOEGLICHST_SCHNELL: '#/components/schemas/MoeglichstSchnell'
-          IN_JAHREN: '#/components/schemas/InJahren'
-          BIS_ZUM_JAHR: '#/components/schemas/BisZumJahr'
-          BIS_ZUR_RENTE_IM_JAHR: '#/components/schemas/BisZurRenteImJahr'
-          KEINE_LAUFZEIT_PRAEFERENZ: '#/components/schemas/KeineLaufzeitPraeferenz'
+          MOEGLICHST_SCHNELL: "#/components/schemas/MoeglichstSchnell"
+          IN_JAHREN: "#/components/schemas/InJahren"
+          BIS_ZUM_JAHR: "#/components/schemas/BisZumJahr"
+          BIS_ZUR_RENTE_IM_JAHR: "#/components/schemas/BisZurRenteImJahr"
+          KEINE_LAUFZEIT_PRAEFERENZ: "#/components/schemas/KeineLaufzeitPraeferenz"
     LebensOderRentenversicherung:
       type: object
       properties:
@@ -3425,11 +3496,11 @@ components:
           format: double
         verwendung:
           oneOf:
-          - $ref: '#/components/schemas/AbtretenAlsVerwendung'
-          - $ref: '#/components/schemas/AufloesungAlsVerwendung'
-          - $ref: '#/components/schemas/KeineVerwendung'
+          - $ref: "#/components/schemas/AbtretenAlsVerwendung"
+          - $ref: "#/components/schemas/AufloesungAlsVerwendung"
+          - $ref: "#/components/schemas/KeineVerwendung"
         detailsWennZusatzsicherheit:
-          $ref: '#/components/schemas/LebensOderRentenversicherungsdetails'
+          $ref: "#/components/schemas/LebensOderRentenversicherungsdetails"
     LebensOderRentenversicherungsdetails:
       type: object
       properties:
@@ -3462,7 +3533,7 @@ components:
     Lebenspartnerschaft:
       type: object
       allOf:
-      - $ref: '#/components/schemas/Familienstand'
+      - $ref: "#/components/schemas/Familienstand"
       - type: object
         properties:
           guetertrennungVereinbart:
@@ -3471,15 +3542,15 @@ components:
     Ledig:
       type: object
       allOf:
-      - $ref: '#/components/schemas/Familienstand'
+      - $ref: "#/components/schemas/Familienstand"
     Legitimationsdaten:
       type: object
       properties:
         ausweisart:
           oneOf:
-          - $ref: '#/components/schemas/AndereAusweisart'
-          - $ref: '#/components/schemas/Personalausweis'
-          - $ref: '#/components/schemas/Reisepass'
+          - $ref: "#/components/schemas/AndereAusweisart"
+          - $ref: "#/components/schemas/Personalausweis"
+          - $ref: "#/components/schemas/Reisepass"
         ausstellungsdatum:
           type: string
           description: Das Ausstellungsdatum muss in der Zukunft liegen.
@@ -3499,8 +3570,8 @@ components:
       discriminator:
         propertyName: '@type'
         mapping:
-          AUFLOESUNG_ALS_VERWENDUNG: '#/components/schemas/AufloesungAlsVerwendung'
-          KEINE_VERWENDUNG: '#/components/schemas/KeineVerwendung'
+          AUFLOESUNG_ALS_VERWENDUNG: "#/components/schemas/AufloesungAlsVerwendung"
+          KEINE_VERWENDUNG: "#/components/schemas/KeineVerwendung"
     LiquidierbareZusatzsicherheitVerwendung:
       required:
       - '@type'
@@ -3513,13 +3584,13 @@ components:
       discriminator:
         propertyName: '@type'
         mapping:
-          AUFLOESUNG_ALS_VERWENDUNG: '#/components/schemas/AufloesungAlsVerwendung'
-          ABTRETEN_ALS_VERWENDUNG: '#/components/schemas/AbtretenAlsVerwendung'
-          KEINE_VERWENDUNG: '#/components/schemas/KeineVerwendung'
+          AUFLOESUNG_ALS_VERWENDUNG: "#/components/schemas/AufloesungAlsVerwendung"
+          ABTRETEN_ALS_VERWENDUNG: "#/components/schemas/AbtretenAlsVerwendung"
+          KEINE_VERWENDUNG: "#/components/schemas/KeineVerwendung"
     Mehrfamilienhaus:
       type: object
       allOf:
-      - $ref: '#/components/schemas/Immobilientyp'
+      - $ref: "#/components/schemas/Immobilientyp"
       - type: object
         properties:
           grundstuecksgroesse:
@@ -3527,7 +3598,7 @@ components:
             type: number
             format: double
           gebaeude:
-            $ref: '#/components/schemas/Gebaeude'
+            $ref: "#/components/schemas/Gebaeude"
           haustyp:
             type: string
             enum:
@@ -3535,7 +3606,7 @@ components:
             - KOPFHAUS
             - MITTELHAUS
           nutzflaechen:
-            $ref: '#/components/schemas/Nutzflaechen'
+            $ref: "#/components/schemas/Nutzflaechen"
           anzahlDerWohneinheiten:
             type: integer
             format: int32
@@ -3553,7 +3624,7 @@ components:
     Mindestens:
       type: object
       allOf:
-      - $ref: '#/components/schemas/TilgungssatzwechselPraeferenz'
+      - $ref: "#/components/schemas/TilgungssatzwechselPraeferenz"
       - type: object
         properties:
           anzahl:
@@ -3595,25 +3666,27 @@ components:
       discriminator:
         propertyName: '@type'
         mapping:
-          VORHANDENE_MODERNISIERUNG: '#/components/schemas/VorhandeneModernisierung'
-          KEINE_MODERNISIERUNG: '#/components/schemas/KeineModernisierung'
+          VORHANDENE_MODERNISIERUNG: "#/components/schemas/VorhandeneModernisierung"
+          KEINE_MODERNISIERUNG: "#/components/schemas/KeineModernisierung"
     ModernisierungUmbauAnbau:
       type: object
       description: "Bitte Feld 'zuBeschaffendesKapital' nicht mehr verwenden. Falls\
         \ mitgeschickt, werden die Angaben ins Feld 'zuBeschaffendesKapitalErfassung'\
         \ kopiert, falls 'zuBeschaffendesKapitalErfassung' leer ist."
       allOf:
-      - $ref: '#/components/schemas/Finanzierungszweck'
+      - $ref: "#/components/schemas/Finanzierungszweck"
       - type: object
         properties:
           weitereKosten:
-            $ref: '#/components/schemas/WeitereKosten'
+            $ref: "#/components/schemas/WeitereKosten"
           modernisierung:
-            $ref: '#/components/schemas/Modernisierungskosten'
+            $ref: "#/components/schemas/Modernisierungskosten"
           zuBeschaffendesKapital:
-            $ref: '#/components/schemas/KommentierterBetrag'
+            $ref: "#/components/schemas/KommentierterBetrag"
           zuBeschaffendesKapitalErfassung:
-            $ref: '#/components/schemas/ZuBeschaffendesKapitalErfassung'
+            oneOf:
+            - $ref: "#/components/schemas/KeinZuBeschaffendesKapital"
+            - $ref: "#/components/schemas/VorhandenesZuBeschaffendesKapital"
           anzahlTeilzahlungen:
             type: integer
             format: int32
@@ -3625,7 +3698,7 @@ components:
             description: Rangrücktritt nicht abzulösender bestehender Darlehen des
               Finanzierungsobjektes. (Nicht von bestehenden Immobilien.)
             items:
-              $ref: '#/components/schemas/RangruecktrittBestehendesDarlehen'
+              $ref: "#/components/schemas/RangruecktrittBestehendesDarlehen"
     Modernisierungsangaben:
       type: object
       properties:
@@ -3661,7 +3734,9 @@ components:
           description: Persönlich erbrachte Arbeitsleistung als Eigenleistung
           format: double
         eigenleistungErfassung:
-          $ref: '#/components/schemas/EigenleistungErfassung'
+          oneOf:
+          - $ref: "#/components/schemas/KeineEigenleistung"
+          - $ref: "#/components/schemas/VorhandeneEigenleistung"
       description: "Bitte Feld 'eigenleistung' nicht mehr verwenden. Falls mitgeschickt,\
         \ werden die Angaben ins Feld 'eigenleistungErfassung' kopiert, falls 'eigenleistungErfassung'\
         \ leer ist."
@@ -3676,33 +3751,33 @@ components:
       discriminator:
         propertyName: '@type'
         mapping:
-          VORHANDENE_MODERNISIERUNGSKOSTEN: '#/components/schemas/VorhandeneModernisierungskosten'
-          KEINE_MODERNISIERUNGSKOSTEN: '#/components/schemas/KeineModernisierungskosten'
+          VORHANDENE_MODERNISIERUNGSKOSTEN: "#/components/schemas/VorhandeneModernisierungskosten"
+          KEINE_MODERNISIERUNGSKOSTEN: "#/components/schemas/KeineModernisierungskosten"
     Modernisierungszusatzangaben:
       type: object
       properties:
         kernsanierung:
-          $ref: '#/components/schemas/Modernisierungsangaben'
+          $ref: "#/components/schemas/Modernisierungsangaben"
         dacherneuerung:
-          $ref: '#/components/schemas/Modernisierungsangaben'
+          $ref: "#/components/schemas/Modernisierungsangaben"
         fenster:
-          $ref: '#/components/schemas/Modernisierungsangaben'
+          $ref: "#/components/schemas/Modernisierungsangaben"
         rohrleitungen:
-          $ref: '#/components/schemas/Modernisierungsangaben'
+          $ref: "#/components/schemas/Modernisierungsangaben"
         heizung:
-          $ref: '#/components/schemas/Modernisierungsangaben'
+          $ref: "#/components/schemas/Modernisierungsangaben"
         waermedaemmung:
-          $ref: '#/components/schemas/Modernisierungsangaben'
+          $ref: "#/components/schemas/Modernisierungsangaben"
         baeder:
-          $ref: '#/components/schemas/Modernisierungsangaben'
+          $ref: "#/components/schemas/Modernisierungsangaben"
         innenausbau:
-          $ref: '#/components/schemas/Modernisierungsangaben'
+          $ref: "#/components/schemas/Modernisierungsangaben"
         raumaufteilung:
-          $ref: '#/components/schemas/Modernisierungsangaben'
+          $ref: "#/components/schemas/Modernisierungsangaben"
     MoeglichstNiedrigeRate:
       type: object
       allOf:
-      - $ref: '#/components/schemas/RatenhoehePraeferenz'
+      - $ref: "#/components/schemas/RatenhoehePraeferenz"
       - type: object
         properties:
           kommentar:
@@ -3710,7 +3785,7 @@ components:
     MoeglichstSchnell:
       type: object
       allOf:
-      - $ref: '#/components/schemas/LaufzeitPraeferenz'
+      - $ref: "#/components/schemas/LaufzeitPraeferenz"
       - type: object
         properties:
           kommentar:
@@ -3718,11 +3793,11 @@ components:
     MonatlichePraemienzahlung:
       type: object
       allOf:
-      - $ref: '#/components/schemas/Praemienzahlung'
+      - $ref: "#/components/schemas/Praemienzahlung"
     MonatlicherSparbeitrag:
       type: object
       allOf:
-      - $ref: '#/components/schemas/BauspardarlehenWunschparameter'
+      - $ref: "#/components/schemas/BauspardarlehenWunschparameter"
       - type: object
         properties:
           betrag:
@@ -3732,11 +3807,11 @@ components:
       type: object
       properties:
         maklergebuehr:
-          $ref: '#/components/schemas/WertInEuroOderProzent'
+          $ref: "#/components/schemas/WertInEuroOderProzent"
         notargebuehr:
-          $ref: '#/components/schemas/WertInEuroOderProzent'
+          $ref: "#/components/schemas/WertInEuroOderProzent"
         grunderwerbsteuer:
-          $ref: '#/components/schemas/WertInEuroOderProzent'
+          $ref: "#/components/schemas/WertInEuroOderProzent"
       description: "Fehlt die Notargebühr, wird automatisch ein Standardwert in %\
         \ gesetzt. Fehlt die Grunderwerbssteuer, wird der Prozentwert für das entsprechende\
         \ Bundesland, falls aus Adresse bestimmbar, automatisch gesetzt."
@@ -3746,15 +3821,15 @@ components:
         \ werden die Angaben ins Feld 'eigenleistungErfassung' kopiert, falls 'eigenleistungErfassung'\
         \ leer ist."
       allOf:
-      - $ref: '#/components/schemas/Finanzierungszweck'
+      - $ref: "#/components/schemas/Finanzierungszweck"
       - type: object
         properties:
           weitereKosten:
-            $ref: '#/components/schemas/WeitereKosten'
+            $ref: "#/components/schemas/WeitereKosten"
           nebenkosten:
-            $ref: '#/components/schemas/Nebenkosten'
+            $ref: "#/components/schemas/Nebenkosten"
           grundstueckskosten:
-            $ref: '#/components/schemas/Grundstueckskosten'
+            $ref: "#/components/schemas/Grundstueckskosten"
           herstellungskostenInklusiveEigenleistungen:
             type: number
             format: double
@@ -3771,17 +3846,19 @@ components:
             type: number
             format: double
           eigenleistungErfassung:
-            $ref: '#/components/schemas/EigenleistungErfassung'
+            oneOf:
+            - $ref: "#/components/schemas/KeineEigenleistung"
+            - $ref: "#/components/schemas/VorhandeneEigenleistung"
           rangruecktrittDarlehenDesFinanzierungsobjektes:
             type: array
             description: Rangrücktritt nicht abzulösender bestehender Darlehen des
               Finanzierungsobjektes. (Nicht von bestehenden Immobilien.)
             items:
-              $ref: '#/components/schemas/RangruecktrittBestehendesDarlehen'
+              $ref: "#/components/schemas/RangruecktrittBestehendesDarlehen"
     NichtEingeplantOderAbsehbar:
       type: object
       allOf:
-      - $ref: '#/components/schemas/TilgungssatzwechselPraeferenz'
+      - $ref: "#/components/schemas/TilgungssatzwechselPraeferenz"
       - type: object
         properties:
           kommentar:
@@ -3789,11 +3866,11 @@ components:
     Niederlassungserlaubnis:
       type: object
       allOf:
-      - $ref: '#/components/schemas/Aufenthaltstitel'
+      - $ref: "#/components/schemas/Aufenthaltstitel"
     NochNichtFestgelegt:
       type: object
       allOf:
-      - $ref: '#/components/schemas/BereitstellungszinsfreieZeitPraeferenz'
+      - $ref: "#/components/schemas/BereitstellungszinsfreieZeitPraeferenz"
       - type: object
         properties:
           kommentar:
@@ -3819,11 +3896,13 @@ components:
       type: object
       properties:
         wohnen:
-          $ref: '#/components/schemas/Flaechennutzung'
+          $ref: "#/components/schemas/Flaechennutzung"
         gewerbe:
-          $ref: '#/components/schemas/Flaechennutzung'
+          $ref: "#/components/schemas/Flaechennutzung"
         gewerbeErfassung:
-          $ref: '#/components/schemas/GewerbeErfassung'
+          oneOf:
+          - $ref: "#/components/schemas/KeinGewerbe"
+          - $ref: "#/components/schemas/VorhandenesGewerbe"
       description: "Bitte Feld 'gewerbe' nicht mehr verwenden. Falls mitgeschickt,\
         \ werden die Angaben ins Feld 'gewerbeErfassung' kopiert, falls 'gewerbeErfassung'\
         \ leer ist."
@@ -3838,14 +3917,14 @@ components:
       discriminator:
         propertyName: '@type'
         mapping:
-          EIGENGENUTZT: '#/components/schemas/Eigengenutzt'
-          VERMIETET: '#/components/schemas/Vermietet'
-          TEILVERMIETET: '#/components/schemas/Teilvermietet'
+          EIGENGENUTZT: "#/components/schemas/Eigengenutzt"
+          VERMIETET: "#/components/schemas/Vermietet"
+          TEILVERMIETET: "#/components/schemas/Teilvermietet"
     Person:
       type: object
       properties:
         titel:
-          $ref: '#/components/schemas/Titel'
+          $ref: "#/components/schemas/Titel"
         anrede:
           type: string
           enum:
@@ -3858,12 +3937,12 @@ components:
     Personalausweis:
       type: object
       allOf:
-      - $ref: '#/components/schemas/Ausweisart'
+      - $ref: "#/components/schemas/Ausweisart"
     Personendaten:
       type: object
       properties:
         person:
-          $ref: '#/components/schemas/Person'
+          $ref: "#/components/schemas/Person"
         geburtsdatum:
           type: string
           description: Das Geburtsdatum muss in der Vergangenheit liegen.
@@ -3874,32 +3953,32 @@ components:
           type: string
           description: ISO 3166-1 alpha-2 code
         nichtEuBuerger:
-          $ref: '#/components/schemas/Aufenthalt'
+          $ref: "#/components/schemas/Aufenthalt"
         familienstand:
           oneOf:
-          - $ref: '#/components/schemas/Geschieden'
-          - $ref: '#/components/schemas/GetrenntLebend'
-          - $ref: '#/components/schemas/Lebenspartnerschaft'
-          - $ref: '#/components/schemas/Ledig'
-          - $ref: '#/components/schemas/Verheiratet'
-          - $ref: '#/components/schemas/Verwitwet'
+          - $ref: "#/components/schemas/Geschieden"
+          - $ref: "#/components/schemas/GetrenntLebend"
+          - $ref: "#/components/schemas/Lebenspartnerschaft"
+          - $ref: "#/components/schemas/Ledig"
+          - $ref: "#/components/schemas/Verheiratet"
+          - $ref: "#/components/schemas/Verwitwet"
     Praeferenzen:
       type: object
       properties:
         finanzierungsdetailspraeferenzen:
-          $ref: '#/components/schemas/Finanzierungsdetailspraeferenzen'
+          $ref: "#/components/schemas/Finanzierungsdetailspraeferenzen"
         bestandteileDerFinanzierung:
-          $ref: '#/components/schemas/BestandteileDerFinanzierungPraeferenz'
+          $ref: "#/components/schemas/BestandteileDerFinanzierungPraeferenz"
         absicherungUndVorsorge:
-          $ref: '#/components/schemas/AbsicherungUndVorsorgePraeferenz'
+          $ref: "#/components/schemas/AbsicherungUndVorsorgePraeferenz"
         zeitlicherRahmen:
           oneOf:
-          - $ref: '#/components/schemas/Deadline'
-          - $ref: '#/components/schemas/KeinZeitdruck'
-          - $ref: '#/components/schemas/KeineZeitlicherRahmenPraeferenz'
-          - $ref: '#/components/schemas/SoSchnellWieMoeglich'
+          - $ref: "#/components/schemas/Deadline"
+          - $ref: "#/components/schemas/KeinZeitdruck"
+          - $ref: "#/components/schemas/KeineZeitlicherRahmenPraeferenz"
+          - $ref: "#/components/schemas/SoSchnellWieMoeglich"
         girokonto:
-          $ref: '#/components/schemas/GirokontoPraeferenz'
+          $ref: "#/components/schemas/GirokontoPraeferenz"
         weiterePraeferenz:
           type: string
     Praemienzahlung:
@@ -3913,12 +3992,12 @@ components:
       discriminator:
         propertyName: '@type'
         mapping:
-          MONATLICHE_PRAEMIENZAHLUNG: '#/components/schemas/MonatlichePraemienzahlung'
-          EINMALIGE_PRAEMIENZAHLUNG: '#/components/schemas/EinmaligePraemienzahlung'
+          MONATLICHE_PRAEMIENZAHLUNG: "#/components/schemas/MonatlichePraemienzahlung"
+          EINMALIGE_PRAEMIENZAHLUNG: "#/components/schemas/EinmaligePraemienzahlung"
     Privatdarlehen:
       type: object
       allOf:
-      - $ref: '#/components/schemas/Finanzierungsbaustein'
+      - $ref: "#/components/schemas/Finanzierungsbaustein"
       - type: object
         properties:
           id:
@@ -3943,7 +4022,7 @@ components:
     ProduktanbieterDarlehensgeber:
       type: object
       allOf:
-      - $ref: '#/components/schemas/Darlehensgeber'
+      - $ref: "#/components/schemas/Darlehensgeber"
       - type: object
         properties:
           name:
@@ -5082,7 +5161,7 @@ components:
     ProzentDerDarlehenssumme:
       type: object
       allOf:
-      - $ref: '#/components/schemas/Tippgeberprovision'
+      - $ref: "#/components/schemas/Tippgeberprovision"
       - type: object
         properties:
           prozent:
@@ -5091,7 +5170,7 @@ components:
     ProzentDerProvision:
       type: object
       allOf:
-      - $ref: '#/components/schemas/Tippgeberprovision'
+      - $ref: "#/components/schemas/Tippgeberprovision"
       - type: object
         properties:
           prozent:
@@ -5100,7 +5179,7 @@ components:
     ProzentJaehrlich:
       type: object
       allOf:
-      - $ref: '#/components/schemas/SondertilgungPraeferenz'
+      - $ref: "#/components/schemas/SondertilgungPraeferenz"
       - type: object
         properties:
           prozent:
@@ -5122,7 +5201,7 @@ components:
     Rate:
       type: object
       allOf:
-      - $ref: '#/components/schemas/Tilgungswunsch'
+      - $ref: "#/components/schemas/Tilgungswunsch"
       - type: object
         properties:
           rate:
@@ -5135,7 +5214,7 @@ components:
     RateAlsBetrag:
       type: object
       allOf:
-      - $ref: '#/components/schemas/RatenhoehePraeferenz'
+      - $ref: "#/components/schemas/RatenhoehePraeferenz"
       - type: object
         properties:
           betrag:
@@ -5155,12 +5234,12 @@ components:
       discriminator:
         propertyName: '@type'
         mapping:
-          WARMMIETE_VON_HEUTE: '#/components/schemas/WarmmieteVonHeute'
-          RATE_ALS_BETRAG: '#/components/schemas/RateAlsBetrag'
-          RATENSPANNE: '#/components/schemas/Ratenspanne'
-          MOEGLICHST_NIEDRIGE_RATE: '#/components/schemas/MoeglichstNiedrigeRate'
-          VERFUEGBARES_EINKOMMEN_AUSSCHOEPFEN: '#/components/schemas/VerfuegbaresEinkommenAusschoepfen'
-          KEINE_RATE_PRAEFERENZ: '#/components/schemas/KeineRatePraeferenz'
+          WARMMIETE_VON_HEUTE: "#/components/schemas/WarmmieteVonHeute"
+          RATE_ALS_BETRAG: "#/components/schemas/RateAlsBetrag"
+          RATENSPANNE: "#/components/schemas/Ratenspanne"
+          MOEGLICHST_NIEDRIGE_RATE: "#/components/schemas/MoeglichstNiedrigeRate"
+          VERFUEGBARES_EINKOMMEN_AUSSCHOEPFEN: "#/components/schemas/VerfuegbaresEinkommenAusschoepfen"
+          KEINE_RATE_PRAEFERENZ: "#/components/schemas/KeineRatePraeferenz"
     Ratenschutz:
       type: object
       properties:
@@ -5179,17 +5258,17 @@ components:
           format: int32
         praemienzahlung:
           oneOf:
-          - $ref: '#/components/schemas/EinmaligePraemienzahlung'
-          - $ref: '#/components/schemas/MonatlichePraemienzahlung'
+          - $ref: "#/components/schemas/EinmaligePraemienzahlung"
+          - $ref: "#/components/schemas/MonatlichePraemienzahlung"
         risikoabsicherungswuensche:
           type: array
           items:
-            $ref: '#/components/schemas/Risikoabsicherungswunsch'
+            $ref: "#/components/schemas/Risikoabsicherungswunsch"
       description: Ratenschutzversicherung als Absicherungswunsch.
     Ratenspanne:
       type: object
       allOf:
-      - $ref: '#/components/schemas/RatenhoehePraeferenz'
+      - $ref: "#/components/schemas/RatenhoehePraeferenz"
       - type: object
         properties:
           von:
@@ -5221,12 +5300,12 @@ components:
       discriminator:
         propertyName: '@type'
         mapping:
-          VORHANDENE_RECHTE_ABTEILUNG_2: '#/components/schemas/VorhandeneRechteAbteilung2'
-          KEINE_RECHTE_ABTEILUNG_2: '#/components/schemas/KeineRechteAbteilung2'
+          VORHANDENE_RECHTE_ABTEILUNG_2: "#/components/schemas/VorhandeneRechteAbteilung2"
+          KEINE_RECHTE_ABTEILUNG_2: "#/components/schemas/KeineRechteAbteilung2"
     Reihenhaus:
       type: object
       allOf:
-      - $ref: '#/components/schemas/Immobilientyp'
+      - $ref: "#/components/schemas/Immobilientyp"
       - type: object
         properties:
           grundstuecksgroesse:
@@ -5234,7 +5313,7 @@ components:
             type: number
             format: double
           gebaeude:
-            $ref: '#/components/schemas/Gebaeude'
+            $ref: "#/components/schemas/Gebaeude"
           einliegerwohnungVorhanden:
             type: boolean
           haustyp:
@@ -5243,15 +5322,15 @@ components:
             - KOPFHAUS
             - MITTELHAUS
           nutzflaechen:
-            $ref: '#/components/schemas/Nutzflaechen'
+            $ref: "#/components/schemas/Nutzflaechen"
     Reisepass:
       type: object
       allOf:
-      - $ref: '#/components/schemas/Ausweisart'
+      - $ref: "#/components/schemas/Ausweisart"
     Rentner:
       type: object
       allOf:
-      - $ref: '#/components/schemas/Beschaeftigung'
+      - $ref: "#/components/schemas/Beschaeftigung"
     Restschuld:
       type: object
       properties:
@@ -5317,19 +5396,19 @@ components:
       type: object
       properties:
         konsumentenkredit:
-          $ref: '#/components/schemas/SantanderVerbindlichkeit'
+          $ref: "#/components/schemas/SantanderVerbindlichkeit"
         dispokredit:
-          $ref: '#/components/schemas/SantanderVerbindlichkeit'
+          $ref: "#/components/schemas/SantanderVerbindlichkeit"
         kreditkarte:
-          $ref: '#/components/schemas/SantanderVerbindlichkeit'
+          $ref: "#/components/schemas/SantanderVerbindlichkeit"
         kkKredit:
-          $ref: '#/components/schemas/SantanderVerbindlichkeit'
+          $ref: "#/components/schemas/SantanderVerbindlichkeit"
         immobilienkredit:
-          $ref: '#/components/schemas/SantanderVerbindlichkeit'
+          $ref: "#/components/schemas/SantanderVerbindlichkeit"
         buergschaft:
-          $ref: '#/components/schemas/SantanderVerbindlichkeit'
+          $ref: "#/components/schemas/SantanderVerbindlichkeit"
         kfwHausbankenwechsel:
-          $ref: '#/components/schemas/SantanderVerbindlichkeit'
+          $ref: "#/components/schemas/SantanderVerbindlichkeit"
     SantanderVermoegen:
       type: object
       properties:
@@ -5342,21 +5421,21 @@ components:
       type: object
       properties:
         bankUndSparguthaben:
-          $ref: '#/components/schemas/SantanderVermoegen'
+          $ref: "#/components/schemas/SantanderVermoegen"
         wertpapiereAktien:
-          $ref: '#/components/schemas/SantanderVermoegen'
+          $ref: "#/components/schemas/SantanderVermoegen"
         bausparvertrag:
-          $ref: '#/components/schemas/SantanderVermoegen'
+          $ref: "#/components/schemas/SantanderVermoegen"
         sonstigesVermoegen:
-          $ref: '#/components/schemas/SantanderVermoegen'
+          $ref: "#/components/schemas/SantanderVermoegen"
         lebensversicherungKapitalgebunden:
-          $ref: '#/components/schemas/SantanderVermoegen'
+          $ref: "#/components/schemas/SantanderVermoegen"
         rentenversicherungKapitalgebunden:
-          $ref: '#/components/schemas/SantanderVermoegen'
+          $ref: "#/components/schemas/SantanderVermoegen"
         lebensversicherungFondsgebunden:
-          $ref: '#/components/schemas/SantanderVermoegen'
+          $ref: "#/components/schemas/SantanderVermoegen"
         rentenversicherungFondsgebunden:
-          $ref: '#/components/schemas/SantanderVermoegen'
+          $ref: "#/components/schemas/SantanderVermoegen"
     SelbststaendigeTaetigkeit:
       type: object
       properties:
@@ -5422,15 +5501,15 @@ components:
     Selbststaendiger:
       type: object
       allOf:
-      - $ref: '#/components/schemas/Beschaeftigung'
+      - $ref: "#/components/schemas/Beschaeftigung"
       - type: object
         properties:
           beruf:
             type: string
           situationNachRenteneintritt:
-            $ref: '#/components/schemas/SituationNachRenteneintritt'
+            $ref: "#/components/schemas/SituationNachRenteneintritt"
           taetigkeit:
-            $ref: '#/components/schemas/SelbststaendigeTaetigkeit'
+            $ref: "#/components/schemas/SelbststaendigeTaetigkeit"
     SituationNachRenteneintritt:
       type: object
       properties:
@@ -5449,7 +5528,7 @@ components:
     SoSchnellWieMoeglich:
       type: object
       allOf:
-      - $ref: '#/components/schemas/ZeitlicherRahmenPraeferenz'
+      - $ref: "#/components/schemas/ZeitlicherRahmenPraeferenz"
       - type: object
         properties:
           kommentar:
@@ -5466,11 +5545,11 @@ components:
       discriminator:
         propertyName: '@type'
         mapping:
-          EURO_JAEHRLICH: '#/components/schemas/EuroJaehrlich'
-          PROZENT_JAEHRLICH: '#/components/schemas/ProzentJaehrlich'
-          EURO_EINMALIG: '#/components/schemas/EuroEinmalig'
-          DERZEIT_NICHT_GEPLANT: '#/components/schemas/DerzeitNichtGeplant'
-          KEINE_SONDERTILGUNG_PRAEFERENZ: '#/components/schemas/KeineSondertilgungPraeferenz'
+          EURO_JAEHRLICH: "#/components/schemas/EuroJaehrlich"
+          PROZENT_JAEHRLICH: "#/components/schemas/ProzentJaehrlich"
+          EURO_EINMALIG: "#/components/schemas/EuroEinmalig"
+          DERZEIT_NICHT_GEPLANT: "#/components/schemas/DerzeitNichtGeplant"
+          KEINE_SONDERTILGUNG_PRAEFERENZ: "#/components/schemas/KeineSondertilgungPraeferenz"
     Sonderzahlung:
       type: object
       properties:
@@ -5501,7 +5580,7 @@ components:
     SonstigerDarlehensgeber:
       type: object
       allOf:
-      - $ref: '#/components/schemas/Darlehensgeber'
+      - $ref: "#/components/schemas/Darlehensgeber"
       - type: object
         properties:
           name:
@@ -5514,12 +5593,12 @@ components:
           format: double
         verwendung:
           oneOf:
-          - $ref: '#/components/schemas/AufloesungAlsVerwendung'
-          - $ref: '#/components/schemas/KeineVerwendung'
+          - $ref: "#/components/schemas/AufloesungAlsVerwendung"
+          - $ref: "#/components/schemas/KeineVerwendung"
     Sparbeginn:
       type: object
       allOf:
-      - $ref: '#/components/schemas/BauspardarlehenWunschparameter'
+      - $ref: "#/components/schemas/BauspardarlehenWunschparameter"
       - type: object
         properties:
           beginn:
@@ -5537,8 +5616,8 @@ components:
           format: double
         verwendung:
           oneOf:
-          - $ref: '#/components/schemas/AufloesungAlsVerwendung'
-          - $ref: '#/components/schemas/KeineVerwendung'
+          - $ref: "#/components/schemas/AufloesungAlsVerwendung"
+          - $ref: "#/components/schemas/KeineVerwendung"
     StellplaetzeErfassung:
       required:
       - '@type'
@@ -5550,8 +5629,8 @@ components:
       discriminator:
         propertyName: '@type'
         mapping:
-          VORHANDENE_STELLPLAETZE: '#/components/schemas/VorhandeneStellplaetze'
-          KEINE_STELLPLAETZE: '#/components/schemas/KeineStellplaetze'
+          VORHANDENE_STELLPLAETZE: "#/components/schemas/VorhandeneStellplaetze"
+          KEINE_STELLPLAETZE: "#/components/schemas/KeineStellplaetze"
     Stellplatz:
       required:
       - typ
@@ -5574,8 +5653,8 @@ components:
           format: double
         vermietungErfassung:
           oneOf:
-          - $ref: '#/components/schemas/KeineStellplatzVermietung'
-          - $ref: '#/components/schemas/VorhandeneStellplatzVermietung'
+          - $ref: "#/components/schemas/KeineStellplatzVermietung"
+          - $ref: "#/components/schemas/VorhandeneStellplatzVermietung"
     StellplatzVermietungErfassung:
       required:
       - '@type'
@@ -5587,12 +5666,12 @@ components:
       discriminator:
         propertyName: '@type'
         mapping:
-          VORHANDENE_STELLPLATZ_VERMIETUNG: '#/components/schemas/VorhandeneStellplatzVermietung'
-          KEINE_STELLPLATZ_VERMIETUNG: '#/components/schemas/KeineStellplatzVermietung'
+          VORHANDENE_STELLPLATZ_VERMIETUNG: "#/components/schemas/VorhandeneStellplatzVermietung"
+          KEINE_STELLPLATZ_VERMIETUNG: "#/components/schemas/KeineStellplatzVermietung"
     Teilvermietet:
       type: object
       allOf:
-      - $ref: '#/components/schemas/Nutzungsart'
+      - $ref: "#/components/schemas/Nutzungsart"
       - type: object
         properties:
           vermieteteFlaeche:
@@ -5614,15 +5693,15 @@ components:
       description: "Wenn 'TilgungAusgesetzt' als Tilgungswunsch angegeben wird, dannmuss\
         \ die Verwendung des Bauspardarlehens 'ABTRETEN' sein."
       allOf:
-      - $ref: '#/components/schemas/Tilgungswunsch'
+      - $ref: "#/components/schemas/Tilgungswunsch"
       - type: object
         properties:
           bausparwunsch:
-            $ref: '#/components/schemas/Bauspardarlehen'
+            $ref: "#/components/schemas/Bauspardarlehen"
     TilgungInProzent:
       type: object
       allOf:
-      - $ref: '#/components/schemas/Tilgungswunsch'
+      - $ref: "#/components/schemas/Tilgungswunsch"
       - type: object
         properties:
           tilgungssatzInProzent:
@@ -5643,9 +5722,9 @@ components:
       discriminator:
         propertyName: '@type'
         mapping:
-          MINDESTENS: '#/components/schemas/Mindestens'
-          NICHT_EINGEPLANT_ODER_ABSEHBAR: '#/components/schemas/NichtEingeplantOderAbsehbar'
-          KEINE_TILGUNGSSATZWECHSEL_PRAEFERENZ: '#/components/schemas/KeineTilgungssatzwechselPraeferenz'
+          MINDESTENS: "#/components/schemas/Mindestens"
+          NICHT_EINGEPLANT_ODER_ABSEHBAR: "#/components/schemas/NichtEingeplantOderAbsehbar"
+          KEINE_TILGUNGSSATZWECHSEL_PRAEFERENZ: "#/components/schemas/KeineTilgungssatzwechselPraeferenz"
     Tilgungswunsch:
       required:
       - '@type'
@@ -5658,10 +5737,10 @@ components:
       discriminator:
         propertyName: '@type'
         mapping:
-          TILGUNG_IN_PROZENT: '#/components/schemas/TilgungInProzent'
-          VOLLTILGER: '#/components/schemas/Volltilger'
-          RATE: '#/components/schemas/Rate'
-          TILGUNG_AUSGESETZT: '#/components/schemas/TilgungAusgesetzt'
+          TILGUNG_IN_PROZENT: "#/components/schemas/TilgungInProzent"
+          VOLLTILGER: "#/components/schemas/Volltilger"
+          RATE: "#/components/schemas/Rate"
+          TILGUNG_AUSGESETZT: "#/components/schemas/TilgungAusgesetzt"
     Tippgeber:
       required:
       - tippgeberPartnerId
@@ -5672,9 +5751,9 @@ components:
           description: Hier wird eine gültige PartnerId erwartet.
         tippgeberprovisionswunsch:
           oneOf:
-          - $ref: '#/components/schemas/Betrag'
-          - $ref: '#/components/schemas/ProzentDerDarlehenssumme'
-          - $ref: '#/components/schemas/ProzentDerProvision'
+          - $ref: "#/components/schemas/Betrag"
+          - $ref: "#/components/schemas/ProzentDerDarlehenssumme"
+          - $ref: "#/components/schemas/ProzentDerProvision"
     Tippgeberprovision:
       required:
       - '@type'
@@ -5686,9 +5765,9 @@ components:
       discriminator:
         propertyName: '@type'
         mapping:
-          BETRAG: '#/components/schemas/Betrag'
-          PROZENT_DER_DARLEHENSSUMME: '#/components/schemas/ProzentDerDarlehenssumme'
-          PROZENT_DER_PROVISION: '#/components/schemas/ProzentDerProvision'
+          BETRAG: "#/components/schemas/Betrag"
+          PROZENT_DER_DARLEHENSSUMME: "#/components/schemas/ProzentDerDarlehenssumme"
+          PROZENT_DER_PROVISION: "#/components/schemas/ProzentDerProvision"
     Titel:
       type: object
       properties:
@@ -5736,18 +5815,18 @@ components:
       type: object
       properties:
         kundenangaben:
-          $ref: '#/components/schemas/Kundenangaben'
+          $ref: "#/components/schemas/Kundenangaben"
         updateMetadaten:
-          $ref: '#/components/schemas/UpdateMetadaten'
+          $ref: "#/components/schemas/UpdateMetadaten"
     UpdateMetadaten:
       type: object
       properties:
         tippgeber:
-          $ref: '#/components/schemas/Tippgeber'
+          $ref: "#/components/schemas/Tippgeber"
     VariablesDarlehen:
       type: object
       allOf:
-      - $ref: '#/components/schemas/Finanzierungsbaustein'
+      - $ref: "#/components/schemas/Finanzierungsbaustein"
       - type: object
         properties:
           id:
@@ -5763,7 +5842,11 @@ components:
             type: number
             format: double
           tilgungswunsch:
-            $ref: '#/components/schemas/Tilgungswunsch'
+            oneOf:
+            - $ref: "#/components/schemas/Rate"
+            - $ref: "#/components/schemas/TilgungAusgesetzt"
+            - $ref: "#/components/schemas/TilgungInProzent"
+            - $ref: "#/components/schemas/Volltilger"
           provision:
             type: number
             description: Angabe in Prozent.
@@ -5792,7 +5875,7 @@ components:
     VerfuegbaresEinkommenAusschoepfen:
       type: object
       allOf:
-      - $ref: '#/components/schemas/RatenhoehePraeferenz'
+      - $ref: "#/components/schemas/RatenhoehePraeferenz"
       - type: object
         properties:
           kommentar:
@@ -5800,7 +5883,7 @@ components:
     Verheiratet:
       type: object
       allOf:
-      - $ref: '#/components/schemas/Familienstand'
+      - $ref: "#/components/schemas/Familienstand"
       - type: object
         properties:
           guetertrennungVereinbart:
@@ -5809,7 +5892,7 @@ components:
     Vermietet:
       type: object
       allOf:
-      - $ref: '#/components/schemas/Nutzungsart'
+      - $ref: "#/components/schemas/Nutzungsart"
       - type: object
         properties:
           mieteinnahmenNettoKaltMonatlich:
@@ -5818,11 +5901,11 @@ components:
     Verwitwet:
       type: object
       allOf:
-      - $ref: '#/components/schemas/Familienstand'
+      - $ref: "#/components/schemas/Familienstand"
     Visum:
       type: object
       allOf:
-      - $ref: '#/components/schemas/Aufenthaltstitel'
+      - $ref: "#/components/schemas/Aufenthaltstitel"
       - type: object
         properties:
           befristetBis:
@@ -5830,11 +5913,13 @@ components:
             description: Das Visum muss gültig sein.
             format: date
           arbeitserlaubnis:
-            $ref: '#/components/schemas/Arbeitserlaubnis'
+            oneOf:
+            - $ref: "#/components/schemas/ArbeitserlaubnisVorhanden"
+            - $ref: "#/components/schemas/KeineArbeitserlaubnis"
     Volltilger:
       type: object
       allOf:
-      - $ref: '#/components/schemas/Tilgungswunsch'
+      - $ref: "#/components/schemas/Tilgungswunsch"
       - type: object
         properties:
           tilgungsbeginn:
@@ -5844,42 +5929,42 @@ components:
     VorhandeneBestehendeDarlehen:
       type: object
       allOf:
-      - $ref: '#/components/schemas/BestehendeDarlehenErfassung'
+      - $ref: "#/components/schemas/BestehendeDarlehenErfassung"
       - type: object
         properties:
           darlehensliste:
             type: array
             items:
               oneOf:
-              - $ref: '#/components/schemas/BestehendesBauspardarlehen'
-              - $ref: '#/components/schemas/BestehendesFoerderdarlehen'
-              - $ref: '#/components/schemas/BestehendesImmobiliendarlehen'
-              - $ref: '#/components/schemas/BestehendesPrivatdarlehen'
-              - $ref: '#/components/schemas/BestehendesSonstigesDarlehen'
+              - $ref: "#/components/schemas/BestehendesBauspardarlehen"
+              - $ref: "#/components/schemas/BestehendesFoerderdarlehen"
+              - $ref: "#/components/schemas/BestehendesImmobiliendarlehen"
+              - $ref: "#/components/schemas/BestehendesPrivatdarlehen"
+              - $ref: "#/components/schemas/BestehendesSonstigesDarlehen"
     VorhandeneBestehendeDarlehenDesFinanzierungsobjektes:
       type: object
       allOf:
-      - $ref: '#/components/schemas/BestehendeDarlehenDesFinanzierungsobjektesErfassung'
+      - $ref: "#/components/schemas/BestehendeDarlehenDesFinanzierungsobjektesErfassung"
       - type: object
         properties:
           darlehensliste:
             type: array
             items:
-              $ref: '#/components/schemas/BestehendesDarlehenDesFinanzierungsobjektes'
+              $ref: "#/components/schemas/BestehendesDarlehenDesFinanzierungsobjektes"
     VorhandeneBestehendeImmobilien:
       type: object
       allOf:
-      - $ref: '#/components/schemas/BestehendeImmobilienErfassung'
+      - $ref: "#/components/schemas/BestehendeImmobilienErfassung"
       - type: object
         properties:
           bestehendeImmobilien:
             type: array
             items:
-              $ref: '#/components/schemas/BestehendeImmobilie'
+              $ref: "#/components/schemas/BestehendeImmobilie"
     VorhandeneEigenleistung:
       type: object
       allOf:
-      - $ref: '#/components/schemas/EigenleistungErfassung'
+      - $ref: "#/components/schemas/EigenleistungErfassung"
       - type: object
         properties:
           eigenleistung:
@@ -5889,7 +5974,7 @@ components:
     VorhandeneGrundbuchangabe:
       type: object
       allOf:
-      - $ref: '#/components/schemas/GrundbuchangabeErfassung'
+      - $ref: "#/components/schemas/GrundbuchangabeErfassung"
       - type: object
         properties:
           ort:
@@ -5901,25 +5986,27 @@ components:
           flurstuecke:
             type: array
             items:
-              $ref: '#/components/schemas/Flurstueck'
+              $ref: "#/components/schemas/Flurstueck"
           rechteInAbteilung2:
-            $ref: '#/components/schemas/RechteAbteilung2Erfassung'
+            oneOf:
+            - $ref: "#/components/schemas/KeineRechteAbteilung2"
+            - $ref: "#/components/schemas/VorhandeneRechteAbteilung2"
           anmerkungen:
             type: string
     VorhandeneKinder:
       type: object
       allOf:
-      - $ref: '#/components/schemas/KinderErfassung'
+      - $ref: "#/components/schemas/KinderErfassung"
       - type: object
         properties:
           kinder:
             type: array
             items:
-              $ref: '#/components/schemas/Kind'
+              $ref: "#/components/schemas/Kind"
     VorhandeneModernisierung:
       type: object
       allOf:
-      - $ref: '#/components/schemas/ModernisierungErfassung'
+      - $ref: "#/components/schemas/ModernisierungErfassung"
       - type: object
         properties:
           jahr:
@@ -5934,7 +6021,7 @@ components:
     VorhandeneModernisierungskosten:
       type: object
       allOf:
-      - $ref: '#/components/schemas/ModernisierungskostenErfassung'
+      - $ref: "#/components/schemas/ModernisierungskostenErfassung"
       - type: object
         properties:
           modernisierungskostenInklEigenleistungen:
@@ -5952,11 +6039,13 @@ components:
             description: "Wenn mit der Modernisierung eine Verbesserung der Energieeffizienz\
               \ einhergeht: angestrebter Gebäudeendenergiebedarf in kWh/(m²*a)"
           eigenleistungErfassung:
-            $ref: '#/components/schemas/EigenleistungErfassung'
+            oneOf:
+            - $ref: "#/components/schemas/KeineEigenleistung"
+            - $ref: "#/components/schemas/VorhandeneEigenleistung"
     VorhandeneRechteAbteilung2:
       type: object
       allOf:
-      - $ref: '#/components/schemas/RechteAbteilung2Erfassung'
+      - $ref: "#/components/schemas/RechteAbteilung2Erfassung"
       - type: object
         properties:
           betrag:
@@ -5967,17 +6056,17 @@ components:
     VorhandeneStellplaetze:
       type: object
       allOf:
-      - $ref: '#/components/schemas/StellplaetzeErfassung'
+      - $ref: "#/components/schemas/StellplaetzeErfassung"
       - type: object
         properties:
           stellplaetze:
             type: array
             items:
-              $ref: '#/components/schemas/Stellplatz'
+              $ref: "#/components/schemas/Stellplatz"
     VorhandeneStellplatzVermietung:
       type: object
       allOf:
-      - $ref: '#/components/schemas/StellplatzVermietungErfassung'
+      - $ref: "#/components/schemas/StellplatzVermietungErfassung"
       - type: object
         properties:
           mieteMonatlich:
@@ -5986,7 +6075,7 @@ components:
     VorhandeneWeitereStaatsangehoerigkeiten:
       type: object
       allOf:
-      - $ref: '#/components/schemas/WeitereStaatsangehoerigkeitenErfassung'
+      - $ref: "#/components/schemas/WeitereStaatsangehoerigkeitenErfassung"
       - type: object
         properties:
           weitereStaatsangehoerigkeiten:
@@ -6002,7 +6091,7 @@ components:
     VorhandenesErbbaurecht:
       type: object
       allOf:
-      - $ref: '#/components/schemas/ErbbaurechtErfassung'
+      - $ref: "#/components/schemas/ErbbaurechtErfassung"
       - type: object
         properties:
           erbbauzinsJaehrlich:
@@ -6019,23 +6108,23 @@ components:
     VorhandenesGewerbe:
       type: object
       allOf:
-      - $ref: '#/components/schemas/GewerbeErfassung'
+      - $ref: "#/components/schemas/GewerbeErfassung"
       - type: object
         properties:
           gewerbe:
-            $ref: '#/components/schemas/Flaechennutzung'
+            $ref: "#/components/schemas/Flaechennutzung"
     VorhandenesZuBeschaffendesKapital:
       type: object
       allOf:
-      - $ref: '#/components/schemas/ZuBeschaffendesKapitalErfassung'
+      - $ref: "#/components/schemas/ZuBeschaffendesKapitalErfassung"
       - type: object
         properties:
           zuBeschaffendesKapital:
-            $ref: '#/components/schemas/KommentierterBetrag'
+            $ref: "#/components/schemas/KommentierterBetrag"
     WarmmieteVonHeute:
       type: object
       allOf:
-      - $ref: '#/components/schemas/RatenhoehePraeferenz'
+      - $ref: "#/components/schemas/RatenhoehePraeferenz"
       - type: object
         properties:
           kommentar:
@@ -6047,7 +6136,7 @@ components:
           type: number
           format: double
         sonstigeKosten:
-          $ref: '#/components/schemas/KommentierterBetrag'
+          $ref: "#/components/schemas/KommentierterBetrag"
         beglicheneKosten:
           type: number
           format: double
@@ -6062,8 +6151,8 @@ components:
       discriminator:
         propertyName: '@type'
         mapping:
-          VORHANDENE_WEITERE_STAATSANGEHOERIGKEITEN: '#/components/schemas/VorhandeneWeitereStaatsangehoerigkeiten'
-          KEINE_WEITERE_STAATSANGEHOERIGKEITEN: '#/components/schemas/KeineWeitereStaatsangehoerigkeiten'
+          VORHANDENE_WEITERE_STAATSANGEHOERIGKEITEN: "#/components/schemas/VorhandeneWeitereStaatsangehoerigkeiten"
+          KEINE_WEITERE_STAATSANGEHOERIGKEITEN: "#/components/schemas/KeineWeitereStaatsangehoerigkeiten"
     WertInEuroOderProzent:
       required:
       - einheit
@@ -6086,9 +6175,9 @@ components:
           description: Das Datum darf nur maximal 60 Tage in der Zukunft liegen.
           format: date
         anschrift:
-          $ref: '#/components/schemas/Anschrift'
+          $ref: "#/components/schemas/Anschrift"
         voranschrift:
-          $ref: '#/components/schemas/Anschrift'
+          $ref: "#/components/schemas/Anschrift"
     ZeitlicherRahmenPraeferenz:
       required:
       - '@type'
@@ -6101,14 +6190,14 @@ components:
       discriminator:
         propertyName: '@type'
         mapping:
-          KEIN_ZEITDRUCK: '#/components/schemas/KeinZeitdruck'
-          DEADLINE: '#/components/schemas/Deadline'
-          SO_SCHNELL_WIE_MOEGLICH: '#/components/schemas/SoSchnellWieMoeglich'
-          KEINE_ZEITLICHER_RAHMEN_PRAEFERENZ: '#/components/schemas/KeineZeitlicherRahmenPraeferenz'
+          KEIN_ZEITDRUCK: "#/components/schemas/KeinZeitdruck"
+          DEADLINE: "#/components/schemas/Deadline"
+          SO_SCHNELL_WIE_MOEGLICH: "#/components/schemas/SoSchnellWieMoeglich"
+          KEINE_ZEITLICHER_RAHMEN_PRAEFERENZ: "#/components/schemas/KeineZeitlicherRahmenPraeferenz"
     ZinsbindungInJahren:
       type: object
       allOf:
-      - $ref: '#/components/schemas/ZinsbindungPraeferenz'
+      - $ref: "#/components/schemas/ZinsbindungPraeferenz"
       - type: object
         properties:
           jahre:
@@ -6128,15 +6217,15 @@ components:
       discriminator:
         propertyName: '@type'
         mapping:
-          ZINSBINDUNG_IN_JAHREN: '#/components/schemas/ZinsbindungInJahren'
-          ZINSBINDUNGSSPANNE: '#/components/schemas/Zinsbindungsspanne'
-          FLEXIBEL_KURZFRISTIG_HANDLUNGSFAEHIG: '#/components/schemas/FlexibelKurzfristigHandlungsfaehig'
-          LANGE_ZINSSICHERHEIT: '#/components/schemas/LangeZinssicherheit'
-          KEINE_ZINSBINDUNG_PRAEFERENZ: '#/components/schemas/KeineZinsbindungPraeferenz'
+          ZINSBINDUNG_IN_JAHREN: "#/components/schemas/ZinsbindungInJahren"
+          ZINSBINDUNGSSPANNE: "#/components/schemas/Zinsbindungsspanne"
+          FLEXIBEL_KURZFRISTIG_HANDLUNGSFAEHIG: "#/components/schemas/FlexibelKurzfristigHandlungsfaehig"
+          LANGE_ZINSSICHERHEIT: "#/components/schemas/LangeZinssicherheit"
+          KEINE_ZINSBINDUNG_PRAEFERENZ: "#/components/schemas/KeineZinsbindungPraeferenz"
     Zinsbindungsspanne:
       type: object
       allOf:
-      - $ref: '#/components/schemas/ZinsbindungPraeferenz'
+      - $ref: "#/components/schemas/ZinsbindungPraeferenz"
       - type: object
         properties:
           vonJahre:
@@ -6158,8 +6247,8 @@ components:
       discriminator:
         propertyName: '@type'
         mapping:
-          VORHANDENES_ZU_BESCHAFFENDES_KAPITAL: '#/components/schemas/VorhandenesZuBeschaffendesKapital'
-          KEIN_ZU_BESCHAFFENDES_KAPITAL: '#/components/schemas/KeinZuBeschaffendesKapital'
+          VORHANDENES_ZU_BESCHAFFENDES_KAPITAL: "#/components/schemas/VorhandenesZuBeschaffendesKapital"
+          KEIN_ZU_BESCHAFFENDES_KAPITAL: "#/components/schemas/KeinZuBeschaffendesKapital"
     ZusatzangabenHaushalt:
       type: object
       properties:
@@ -6176,13 +6265,13 @@ components:
           type: array
           items:
             oneOf:
-            - $ref: '#/components/schemas/ZusatzangabenHaushaltDsl'
-            - $ref: '#/components/schemas/ZusatzangabenHaushaltIng'
-            - $ref: '#/components/schemas/ZusatzangabenHaushaltSantander'
+            - $ref: "#/components/schemas/ZusatzangabenHaushaltDsl"
+            - $ref: "#/components/schemas/ZusatzangabenHaushaltIng"
+            - $ref: "#/components/schemas/ZusatzangabenHaushaltSantander"
     ZusatzangabenHaushaltDsl:
       type: object
       allOf:
-      - $ref: '#/components/schemas/ZusatzangabenHaushaltFuerProduktanbieter'
+      - $ref: "#/components/schemas/ZusatzangabenHaushaltFuerProduktanbieter"
       - type: object
         properties:
           lebenshaltungskostenMonatlich:
@@ -6200,13 +6289,13 @@ components:
       discriminator:
         propertyName: '@type'
         mapping:
-          ZUSATZANGABEN_HAUSHALT_ING: '#/components/schemas/ZusatzangabenHaushaltIng'
-          ZUSATZANGABEN_HAUSHALT_SANTANDER: '#/components/schemas/ZusatzangabenHaushaltSantander'
-          ZUSATZANGABEN_HAUSHALT_DSL: '#/components/schemas/ZusatzangabenHaushaltDsl'
+          ZUSATZANGABEN_HAUSHALT_ING: "#/components/schemas/ZusatzangabenHaushaltIng"
+          ZUSATZANGABEN_HAUSHALT_SANTANDER: "#/components/schemas/ZusatzangabenHaushaltSantander"
+          ZUSATZANGABEN_HAUSHALT_DSL: "#/components/schemas/ZusatzangabenHaushaltDsl"
     ZusatzangabenHaushaltIng:
       type: object
       allOf:
-      - $ref: '#/components/schemas/ZusatzangabenHaushaltFuerProduktanbieter'
+      - $ref: "#/components/schemas/ZusatzangabenHaushaltFuerProduktanbieter"
       - type: object
         properties:
           anzahlErwachseneImHaushalt:
@@ -6218,36 +6307,36 @@ components:
     ZusatzangabenHaushaltSantander:
       type: object
       allOf:
-      - $ref: '#/components/schemas/ZusatzangabenHaushaltFuerProduktanbieter'
+      - $ref: "#/components/schemas/ZusatzangabenHaushaltFuerProduktanbieter"
       - type: object
         properties:
           vermoegen:
-            $ref: '#/components/schemas/SantanderVermoegenswerte'
+            $ref: "#/components/schemas/SantanderVermoegenswerte"
           verbindlichkeiten:
-            $ref: '#/components/schemas/SantanderVerbindlichkeiten'
+            $ref: "#/components/schemas/SantanderVerbindlichkeiten"
           bemerkungen:
             type: string
     ZusatzangabenImmobilie:
       type: object
       properties:
         beleihungswertangaben:
-          $ref: '#/components/schemas/Beleihungswertangaben'
+          $ref: "#/components/schemas/Beleihungswertangaben"
         effektivzinsErhoehendeKosten:
-          $ref: '#/components/schemas/EffektivzinsErhoehendeKosten'
+          $ref: "#/components/schemas/EffektivzinsErhoehendeKosten"
         modernisierung:
-          $ref: '#/components/schemas/Modernisierungszusatzangaben'
+          $ref: "#/components/schemas/Modernisierungszusatzangaben"
         zusatzangabenProProduktanbieter:
           type: array
           items:
             oneOf:
-            - $ref: '#/components/schemas/ZusatzangabenImmobilieDsl'
-            - $ref: '#/components/schemas/ZusatzangabenImmobilieGenopace'
-            - $ref: '#/components/schemas/ZusatzangabenImmobilieIng'
-            - $ref: '#/components/schemas/ZusatzangabenImmobilieSantander'
+            - $ref: "#/components/schemas/ZusatzangabenImmobilieDsl"
+            - $ref: "#/components/schemas/ZusatzangabenImmobilieGenopace"
+            - $ref: "#/components/schemas/ZusatzangabenImmobilieIng"
+            - $ref: "#/components/schemas/ZusatzangabenImmobilieSantander"
     ZusatzangabenImmobilieDsl:
       type: object
       allOf:
-      - $ref: '#/components/schemas/ZusatzangabenImmobilieFuerProduktanbieter'
+      - $ref: "#/components/schemas/ZusatzangabenImmobilieFuerProduktanbieter"
       - type: object
         properties:
           bewirtschaftungskostenJaehrlich:
@@ -6269,33 +6358,36 @@ components:
       discriminator:
         propertyName: '@type'
         mapping:
-          ZUSATZANGABEN_IMMOBILIE_ING: '#/components/schemas/ZusatzangabenImmobilieIng'
-          ZUSATZANGABEN_IMMOBILIE_SANTANDER: '#/components/schemas/ZusatzangabenImmobilieSantander'
-          ZUSATZANGABEN_IMMOBILIE_GENOPACE: '#/components/schemas/ZusatzangabenImmobilieGenopace'
-          ZUSATZANGABEN_IMMOBILIE_DSL: '#/components/schemas/ZusatzangabenImmobilieDsl'
+          ZUSATZANGABEN_IMMOBILIE_ING: "#/components/schemas/ZusatzangabenImmobilieIng"
+          ZUSATZANGABEN_IMMOBILIE_SANTANDER: "#/components/schemas/ZusatzangabenImmobilieSantander"
+          ZUSATZANGABEN_IMMOBILIE_GENOPACE: "#/components/schemas/ZusatzangabenImmobilieGenopace"
+          ZUSATZANGABEN_IMMOBILIE_DSL: "#/components/schemas/ZusatzangabenImmobilieDsl"
     ZusatzangabenImmobilieGenopace:
       type: object
       description: Volksbanken und Raiffeisenbanken
       allOf:
-      - $ref: '#/components/schemas/ZusatzangabenImmobilieFuerProduktanbieter'
+      - $ref: "#/components/schemas/ZusatzangabenImmobilieFuerProduktanbieter"
       - type: object
         properties:
           anpassungenNachBelWertV:
-            $ref: '#/components/schemas/AnpassungenNachBelWertV'
+            $ref: "#/components/schemas/AnpassungenNachBelWertV"
     ZusatzangabenImmobilieIng:
       type: object
       description: "Typ des Beleihungsobjektes muss dem Finanzierungsobjekt entsprechen,\
         \ sonst wird es ignoriert."
       allOf:
-      - $ref: '#/components/schemas/ZusatzangabenImmobilieFuerProduktanbieter'
+      - $ref: "#/components/schemas/ZusatzangabenImmobilieFuerProduktanbieter"
       - type: object
         properties:
           beleihungsobjekt:
-            $ref: '#/components/schemas/IngBeleihungsobjekt'
+            oneOf:
+            - $ref: "#/components/schemas/IngEigentumswohnung"
+            - $ref: "#/components/schemas/IngGrundstueck"
+            - $ref: "#/components/schemas/IngHaus"
     ZusatzangabenImmobilieSantander:
       type: object
       allOf:
-      - $ref: '#/components/schemas/ZusatzangabenImmobilieFuerProduktanbieter'
+      - $ref: "#/components/schemas/ZusatzangabenImmobilieFuerProduktanbieter"
       - type: object
         properties:
           vorlaeufigerVerkehrswert:
@@ -6324,18 +6416,18 @@ components:
           - VERSICHERUNGEN
           - SONSTIGE
         legitimationsdaten:
-          $ref: '#/components/schemas/Legitimationsdaten'
+          $ref: "#/components/schemas/Legitimationsdaten"
         zusatzangabenProProduktanbieter:
           type: array
           items:
             oneOf:
-            - $ref: '#/components/schemas/ZusatzangabenKundeDsl'
-            - $ref: '#/components/schemas/ZusatzangabenKundeIng'
-            - $ref: '#/components/schemas/ZusatzangabenKundeMhb'
+            - $ref: "#/components/schemas/ZusatzangabenKundeDsl"
+            - $ref: "#/components/schemas/ZusatzangabenKundeIng"
+            - $ref: "#/components/schemas/ZusatzangabenKundeMhb"
     ZusatzangabenKundeDsl:
       type: object
       allOf:
-      - $ref: '#/components/schemas/ZusatzangabenKundeFuerProduktanbieter'
+      - $ref: "#/components/schemas/ZusatzangabenKundeFuerProduktanbieter"
       - type: object
         properties:
           bruttoVorjahresEinkommen:
@@ -6356,16 +6448,16 @@ components:
       discriminator:
         propertyName: '@type'
         mapping:
-          ZUSATZANGABEN_KUNDE_ING: '#/components/schemas/ZusatzangabenKundeIng'
-          ZUSATZANGABEN_KUNDE_MHB: '#/components/schemas/ZusatzangabenKundeMhb'
-          ZUSATZANGABEN_KUNDE_DSL: '#/components/schemas/ZusatzangabenKundeDsl'
+          ZUSATZANGABEN_KUNDE_ING: "#/components/schemas/ZusatzangabenKundeIng"
+          ZUSATZANGABEN_KUNDE_MHB: "#/components/schemas/ZusatzangabenKundeMhb"
+          ZUSATZANGABEN_KUNDE_DSL: "#/components/schemas/ZusatzangabenKundeDsl"
     ZusatzangabenKundeIng:
       type: object
       description: "Bitte Feld 'weitereStaatsangehoerigkeiten' nicht mehr verwenden.\
         \ Falls mitgeschickt, werden die Angaben ins Feld 'weitereStaatsangehoerigkeitenErfassung'\
         \ kopiert, falls 'weitereStaatsangehoerigkeitenErfassung' leer ist."
       allOf:
-      - $ref: '#/components/schemas/ZusatzangabenKundeFuerProduktanbieter'
+      - $ref: "#/components/schemas/ZusatzangabenKundeFuerProduktanbieter"
       - type: object
         properties:
           berufsgruppe:
@@ -6419,11 +6511,13 @@ components:
             items:
               type: string
           weitereStaatsangehoerigkeitenErfassung:
-            $ref: '#/components/schemas/WeitereStaatsangehoerigkeitenErfassung'
+            oneOf:
+            - $ref: "#/components/schemas/KeineWeitereStaatsangehoerigkeiten"
+            - $ref: "#/components/schemas/VorhandeneWeitereStaatsangehoerigkeiten"
     ZusatzangabenKundeMhb:
       type: object
       allOf:
-      - $ref: '#/components/schemas/ZusatzangabenKundeFuerProduktanbieter'
+      - $ref: "#/components/schemas/ZusatzangabenKundeFuerProduktanbieter"
       - type: object
         properties:
           branche:
@@ -6441,7 +6535,7 @@ components:
       - zeitpunkt
       type: object
       allOf:
-      - $ref: '#/components/schemas/BauspardarlehenWunschparameter'
+      - $ref: "#/components/schemas/BauspardarlehenWunschparameter"
       - type: object
         properties:
           zeitpunkt:
@@ -6451,7 +6545,7 @@ components:
     Zweifamilienhaus:
       type: object
       allOf:
-      - $ref: '#/components/schemas/Immobilientyp'
+      - $ref: "#/components/schemas/Immobilientyp"
       - type: object
         properties:
           grundstuecksgroesse:
@@ -6459,7 +6553,7 @@ components:
             type: number
             format: double
           gebaeude:
-            $ref: '#/components/schemas/Gebaeude'
+            $ref: "#/components/schemas/Gebaeude"
           haustyp:
             type: string
             enum:
@@ -6467,13 +6561,13 @@ components:
             - KOPFHAUS
             - MITTELHAUS
           nutzflaechen:
-            $ref: '#/components/schemas/Nutzflaechen'
+            $ref: "#/components/schemas/Nutzflaechen"
           fertighaus:
             type: boolean
     Zwischenfinanzierung:
       type: object
       allOf:
-      - $ref: '#/components/schemas/Finanzierungsbaustein'
+      - $ref: "#/components/schemas/Finanzierungsbaustein"
       - type: object
         properties:
           id:
@@ -6526,9 +6620,9 @@ components:
       type: object
       properties:
         kundenangaben:
-          $ref: '#/components/schemas/Kundenangaben'
+          $ref: "#/components/schemas/Kundenangaben"
         importMetadaten:
-          $ref: '#/components/schemas/ImportMetadaten'
+          $ref: "#/components/schemas/ImportMetadaten"
     ImportMetadaten:
       required:
       - datenkontext
@@ -6543,7 +6637,7 @@ components:
           - TEST_MODUS
           - ECHT_GESCHAEFT
         betreuung:
-          $ref: '#/components/schemas/Betreuung'
+          $ref: "#/components/schemas/Betreuung"
         externeVorgangsId:
           type: string
           description: "Externe VorgangsId, mit welcher sich z.B. die importierten\
@@ -6553,7 +6647,7 @@ components:
           description: "Quelle, aus der die Kundenangaben importiert werden. Kann\
             \ im Reporting zur Gruppierung verwendet werden."
         leadtracking:
-          $ref: '#/components/schemas/Leadtracking'
+          $ref: "#/components/schemas/Leadtracking"
         zusaetzlicherEreignistext:
           type: string
           description: Bei erfolgreichem Import der Kundenangaben wird ein 'Vorgang
@@ -6568,7 +6662,7 @@ components:
           - NEUTRAL
           - HOCH
         tippgeber:
-          $ref: '#/components/schemas/Tippgeber'
+          $ref: "#/components/schemas/Tippgeber"
     Leadtracking:
       type: object
       properties:
@@ -6636,7 +6730,7 @@ components:
           example: kundenangaben-1abc
     BadRequestProblem:
       allOf:
-      - $ref: '#/components/schemas/Problem'
+      - $ref: "#/components/schemas/Problem"
       - type: object
         properties:
           violations:
@@ -6662,7 +6756,7 @@ components:
       content:
         application/problem+json:
           schema:
-            $ref: '#/components/schemas/BadRequestProblem'
+            $ref: "#/components/schemas/BadRequestProblem"
     Conflict:
       description: Kundenbetreuer oder Bearbeiter können nicht festgelegt werden.
         Die Ursache sind entweder fehlende Übernahmerechte oder eine nicht vorhandene
@@ -6675,7 +6769,7 @@ components:
       content:
         application/problem+json:
           schema:
-            $ref: '#/components/schemas/Problem'
+            $ref: "#/components/schemas/Problem"
     Forbidden:
       description: "Es fehlt die Berechtigung, um die Anfrage auszuführen"
       headers:
@@ -6686,7 +6780,7 @@ components:
       content:
         application/problem+json:
           schema:
-            $ref: '#/components/schemas/Problem'
+            $ref: "#/components/schemas/Problem"
     NotFound:
       description: Es wurde kein Vorgang mit der angegebenen Vorgangsnummer gefunden
       headers:
@@ -6697,7 +6791,7 @@ components:
       content:
         application/problem+json:
           schema:
-            $ref: '#/components/schemas/Problem'
+            $ref: "#/components/schemas/Problem"
     Unauthorized:
       description: Die Authentifizierung ist fehlgeschlagen
       headers:
@@ -6717,7 +6811,7 @@ components:
       content:
         application/problem+json:
           schema:
-            $ref: '#/components/schemas/Problem'
+            $ref: "#/components/schemas/Problem"
     ServiceNotAvailable:
       description: Der Service kann den Request momentan nicht verarbeiten
       headers:
@@ -6728,7 +6822,7 @@ components:
       content:
         application/problem+json:
           schema:
-            $ref: '#/components/schemas/Problem'
+            $ref: "#/components/schemas/Problem"
     TooManyRequests:
       description: Der Service wurde zu häufig hintereinander aufgerufen.
       headers:
@@ -6739,7 +6833,7 @@ components:
       content:
         application/problem+json:
           schema:
-            $ref: '#/components/schemas/Problem'
+            $ref: "#/components/schemas/Problem"
   parameters:
     tracingIdParam:
       name: X-TraceId
