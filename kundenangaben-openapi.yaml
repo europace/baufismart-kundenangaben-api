@@ -8,7 +8,7 @@ info:
     name: Europace AG
     url: http://developer.europace.de
     email: devsupport@europace2.de
-  version: 1.5.12; f934db217842ab553b22005053eed422be18e80b
+  version: 1.5.13; a017a6a8a62f3ae0239fa5d6ae4e7740397a84f5
 externalDocs:
   url: https://developer.europace.de/api/baufismart-kundenangaben-api
 servers:
@@ -51,12 +51,6 @@ paths:
           $ref: '#/components/responses/NotFound'
         "401":
           $ref: '#/components/responses/Unauthorized'
-        "429":
-          $ref: '#/components/responses/TooManyRequests'
-        "403":
-          $ref: '#/components/responses/Forbidden'
-        "409":
-          $ref: '#/components/responses/Conflict'
         "200":
           description: Kundenangaben für einen bestehenden Vorgang
           headers:
@@ -67,6 +61,12 @@ paths:
             application/json;version=1.0:
               schema:
                 $ref: '#/components/schemas/Kundenangaben'
+        "429":
+          $ref: '#/components/responses/TooManyRequests'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "409":
+          $ref: '#/components/responses/Conflict'
         "400":
           $ref: '#/components/responses/BadRequest'
       security:
@@ -154,14 +154,6 @@ paths:
       responses:
         "503":
           $ref: '#/components/responses/ServiceNotAvailable'
-        "422":
-          $ref: '#/components/responses/UnprocessableEntity'
-        "401":
-          $ref: '#/components/responses/Unauthorized'
-        "429":
-          $ref: '#/components/responses/TooManyRequests'
-        "403":
-          $ref: '#/components/responses/Forbidden'
         "201":
           description: Kundenangaben in neuen Vorgang importiert
           headers:
@@ -172,6 +164,14 @@ paths:
             application/json;version=1.0:
               schema:
                 $ref: '#/components/schemas/KundenangabenImportResponse'
+        "422":
+          $ref: '#/components/responses/UnprocessableEntity'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "429":
+          $ref: '#/components/responses/TooManyRequests'
+        "403":
+          $ref: '#/components/responses/Forbidden'
         "409":
           $ref: '#/components/responses/Conflict'
         "400":
@@ -490,6 +490,7 @@ components:
         aufenthaltstitel:
           oneOf:
           - $ref: '#/components/schemas/Aufenthaltserlaubnis'
+          - $ref: '#/components/schemas/BlaueKarteEu'
           - $ref: '#/components/schemas/DaueraufenthaltEu'
           - $ref: '#/components/schemas/Niederlassungserlaubnis'
           - $ref: '#/components/schemas/Visum'
@@ -513,7 +514,7 @@ components:
         '@type':
           type: string
       description: "Mögliche Typen: Visum, Aufenthaltserlaubnis, Niederlassungserlaubnis,\
-        \ DaueraufenthaltEu"
+        \ DaueraufenthaltEu, BlaueKarteEu"
       discriminator:
         propertyName: '@type'
         mapping:
@@ -521,6 +522,7 @@ components:
           AUFENTHALTSERLAUBNIS: '#/components/schemas/Aufenthaltserlaubnis'
           NIEDERLASSUNGSERLAUBNIS: '#/components/schemas/Niederlassungserlaubnis'
           DAUERAUFENTHALT_EU: '#/components/schemas/DaueraufenthaltEu'
+          BLAUE_KARTE_EU: '#/components/schemas/BlaueKarteEu'
     AufloesungAlsVerwendung:
       type: object
       allOf:
@@ -1585,6 +1587,16 @@ components:
             format: int32
           kommentar:
             type: string
+    BlaueKarteEu:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/Aufenthaltstitel'
+      - type: object
+        properties:
+          befristetBis:
+            type: string
+            description: Die EU Blue Card muss gültig sein.
+            format: date
     DarlehensbetragBenoetigtKurzNachDarlehensvertrag:
       type: object
       allOf:
