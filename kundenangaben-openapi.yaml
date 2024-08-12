@@ -8,7 +8,7 @@ info:
     name: Europace AG
     url: http://developer.europace.de
     email: devsupport@europace2.de
-  version: 1.5.14; 3574c2e2d38fd6204d493e2838c58c3b3b1b47d8
+  version: 1.5.15; dfedf5b828ab1af716f0f3caba44d7d85952dcdf
 externalDocs:
   url: https://developer.europace.de/api/baufismart-kundenangaben-api
 servers:
@@ -49,10 +49,6 @@ paths:
           $ref: '#/components/responses/ServiceNotAvailable'
         "404":
           $ref: '#/components/responses/NotFound'
-        "401":
-          $ref: '#/components/responses/Unauthorized'
-        "429":
-          $ref: '#/components/responses/TooManyRequests'
         "200":
           description: Kundenangaben für einen bestehenden Vorgang
           headers:
@@ -63,6 +59,10 @@ paths:
             application/json;version=1.0:
               schema:
                 $ref: '#/components/schemas/Kundenangaben'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "429":
+          $ref: '#/components/responses/TooManyRequests'
         "403":
           $ref: '#/components/responses/Forbidden'
         "409":
@@ -109,14 +109,14 @@ paths:
           $ref: '#/components/responses/UnprocessableEntity'
         "401":
           $ref: '#/components/responses/Unauthorized'
-        "429":
-          $ref: '#/components/responses/TooManyRequests'
         "204":
           description: Kundenangaben in einem bestehenden Vorgang überschrieben
           headers:
             X-TraceId:
               $ref: '#/components/headers/tracingIdHeader'
               style: simple
+        "429":
+          $ref: '#/components/responses/TooManyRequests'
         "403":
           $ref: '#/components/responses/Forbidden'
         "409":
@@ -156,6 +156,10 @@ paths:
           $ref: '#/components/responses/ServiceNotAvailable'
         "422":
           $ref: '#/components/responses/UnprocessableEntity'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "429":
+          $ref: '#/components/responses/TooManyRequests'
         "201":
           description: Kundenangaben in neuen Vorgang importiert
           headers:
@@ -166,10 +170,6 @@ paths:
             application/json;version=1.0:
               schema:
                 $ref: '#/components/schemas/KundenangabenImportResponse'
-        "401":
-          $ref: '#/components/responses/Unauthorized'
-        "429":
-          $ref: '#/components/responses/TooManyRequests'
         "403":
           $ref: '#/components/responses/Forbidden'
         "409":
@@ -735,6 +735,13 @@ components:
               - LBS_BAYERN_ZF_X40_RIESTER
               - LBS_BAYERN_ZF_X35
               - LBS_BAYERN_ZF_X35_RIESTER
+              - LBS_SUED_ANKOMMER_3_5
+              - LBS_SUED_ANKOMMER_5
+              - LBS_SUED_BONUSBRINGER
+              - LBS_SUED_SPRINTER
+              - LBS_SUED_SPRINTER_E
+              - LBS_SUED_ZINSSPARER
+              - LBS_SUED_VORSORGER_RIESTER
               - LBS_HT_CLASSIC_S_2015
               - LBS_HT_CLASSIC_F_2015
               - LBS_HT_CLASSIC_L_2015
@@ -809,18 +816,11 @@ components:
               - LBS_WEST_BESTAND_RIESTER_ZUHAUSE_DIREKT_15
               - LBS_WEST_BESTAND_RIESTER_ZUHAUSE_FLEX_4
               - LBS_WEST_BESTAND_RIESTER_ZUHAUSE_SPEZIAL
-              - LBS_OST_CLASSIC15_F5
               - LBS_OST_CLASSIC_F15_F5
               - LBS_OST_CLASSIC_F_H4
               - LBS_OST_CLASSIC_F_H5
               - LBS_OST_CLASSIC_12_C4
               - LBS_OST_CLASSIC_12_C9
-              - LBS_OST_CLASSIC15_F3
-              - LBS_OST_CLASSIC15_F4
-              - LBS_OST_CLASSIC15_F6
-              - LBS_OST_CLASSIC15_F8
-              - LBS_OST_CLASSIC15_PLUS_F
-              - LBS_OST_CLASSIC15_PLUS_S
               - LBS_OST_VARIO_FLEX
               - LBS_OST_CLASSIC20_F3
               - LBS_OST_CLASSIC20_F8
@@ -852,6 +852,16 @@ components:
               - LBS_OST_KONSTANT30_V510
               - LBS_OST_KONSTANT30_V530
               - LBS_OST_KONSTANT30_V550
+              - LBS_OST_CLASSIC15_F3
+              - LBS_OST_CLASSIC15_F4
+              - LBS_OST_CLASSIC15_F5
+              - LBS_OST_CLASSIC15_F6
+              - LBS_OST_CLASSIC15_F8
+              - LBS_OST_CLASSIC15_PLUS_F
+              - LBS_OST_CLASSIC15_PLUS_S
+              - LBS_OST_BESTAND_CLASSIC_F4
+              - LBS_OST_BESTAND_CLASSIC_F5
+              - LBS_OST_BESTAND_CLASSIC_F6
               - LBS_SHH_PRIMUS_SC
               - LBS_SHH_PRIMUS_SD
               - LBS_SHH_PRIMUS_SH
@@ -946,6 +956,13 @@ components:
               - LBS_SUEDWEST_LANGZEIT_PLUS_SPEZIAL
               - LBS_SUEDWEST_NIEDRIGZINS
               - LBS_SUEDWEST_ZUKUNFT_PLUS
+              - LBS_SUEDWEST_ANKOMMER_3_5
+              - LBS_SUEDWEST_ANKOMMER_5
+              - LBS_SUEDWEST_BONUSBRINGER
+              - LBS_SUEDWEST_SPRINTER
+              - LBS_SUEDWEST_SPRINTER_E
+              - LBS_SUEDWEST_ZINSSPARER
+              - LBS_SUEDWEST_VORSORGER_RIESTER
               - LBS_SAAR_PREMIUM_FLEX_18
               - LBS_SAAR_PREMIUM_SICHER_18
               - LBS_SAAR_PREMIUM_TOP_18
@@ -1468,9 +1485,6 @@ components:
       - '@type'
       type: object
       properties:
-        zinsbindungBis:
-          type: string
-          format: date
         darlehensgeber:
           oneOf:
           - $ref: '#/components/schemas/ProduktanbieterDarlehensgeber'
@@ -1484,6 +1498,9 @@ components:
         sollzins:
           type: number
           format: double
+        zinsbindungBis:
+          type: string
+          format: date
         laufzeitende:
           type: string
           format: date
