@@ -8,7 +8,7 @@ info:
     name: Europace AG
     url: http://developer.europace.de
     email: devsupport@europace2.de
-  version: 1.5.15; dfedf5b828ab1af716f0f3caba44d7d85952dcdf
+  version: 1.5.16; 70df1d2bf61fc0765cfffba77bf8e084ea8c6b49
 externalDocs:
   url: https://developer.europace.de/api/baufismart-kundenangaben-api
 servers:
@@ -45,10 +45,6 @@ paths:
         schema:
           type: string
       responses:
-        "503":
-          $ref: '#/components/responses/ServiceNotAvailable'
-        "404":
-          $ref: '#/components/responses/NotFound'
         "200":
           description: Kundenangaben für einen bestehenden Vorgang
           headers:
@@ -59,6 +55,10 @@ paths:
             application/json;version=1.0:
               schema:
                 $ref: '#/components/schemas/Kundenangaben'
+        "503":
+          $ref: '#/components/responses/ServiceNotAvailable'
+        "404":
+          $ref: '#/components/responses/NotFound'
         "401":
           $ref: '#/components/responses/Unauthorized'
         "429":
@@ -101,6 +101,12 @@ paths:
               $ref: '#/components/schemas/UpdateKundenangabenRequest'
         required: true
       responses:
+        "204":
+          description: Kundenangaben in einem bestehenden Vorgang überschrieben
+          headers:
+            X-TraceId:
+              $ref: '#/components/headers/tracingIdHeader'
+              style: simple
         "503":
           $ref: '#/components/responses/ServiceNotAvailable'
         "404":
@@ -109,12 +115,6 @@ paths:
           $ref: '#/components/responses/UnprocessableEntity'
         "401":
           $ref: '#/components/responses/Unauthorized'
-        "204":
-          description: Kundenangaben in einem bestehenden Vorgang überschrieben
-          headers:
-            X-TraceId:
-              $ref: '#/components/headers/tracingIdHeader'
-              style: simple
         "429":
           $ref: '#/components/responses/TooManyRequests'
         "403":
@@ -156,10 +156,6 @@ paths:
           $ref: '#/components/responses/ServiceNotAvailable'
         "422":
           $ref: '#/components/responses/UnprocessableEntity'
-        "401":
-          $ref: '#/components/responses/Unauthorized'
-        "429":
-          $ref: '#/components/responses/TooManyRequests'
         "201":
           description: Kundenangaben in neuen Vorgang importiert
           headers:
@@ -170,6 +166,10 @@ paths:
             application/json;version=1.0:
               schema:
                 $ref: '#/components/schemas/KundenangabenImportResponse'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "429":
+          $ref: '#/components/responses/TooManyRequests'
         "403":
           $ref: '#/components/responses/Forbidden'
         "409":
@@ -1485,6 +1485,9 @@ components:
       - '@type'
       type: object
       properties:
+        id:
+          type: string
+          description: Eindeutige interne ID
         darlehensgeber:
           oneOf:
           - $ref: '#/components/schemas/ProduktanbieterDarlehensgeber'
@@ -1509,9 +1512,6 @@ components:
         darlehenskontonummer:
           type: string
           description: IBAN des Darlehenskontos
-        id:
-          type: string
-          description: Eindeutige interne ID
         darlehensbetrag:
           type: number
           format: double
