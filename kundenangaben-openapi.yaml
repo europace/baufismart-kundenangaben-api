@@ -8,7 +8,7 @@ info:
     name: Europace AG
     url: http://developer.europace.de
     email: devsupport@europace2.de
-  version: 1.5.15; dfedf5b828ab1af716f0f3caba44d7d85952dcdf
+  version: 1.5.16; e50075838872b4b0b9003426bb8dc7db4ceeb08a
 externalDocs:
   url: https://developer.europace.de/api/baufismart-kundenangaben-api
 servers:
@@ -49,6 +49,10 @@ paths:
           $ref: '#/components/responses/ServiceNotAvailable'
         "404":
           $ref: '#/components/responses/NotFound'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "429":
+          $ref: '#/components/responses/TooManyRequests'
         "200":
           description: Kundenangaben für einen bestehenden Vorgang
           headers:
@@ -59,10 +63,6 @@ paths:
             application/json;version=1.0:
               schema:
                 $ref: '#/components/schemas/Kundenangaben'
-        "401":
-          $ref: '#/components/responses/Unauthorized'
-        "429":
-          $ref: '#/components/responses/TooManyRequests'
         "403":
           $ref: '#/components/responses/Forbidden'
         "409":
@@ -109,14 +109,14 @@ paths:
           $ref: '#/components/responses/UnprocessableEntity'
         "401":
           $ref: '#/components/responses/Unauthorized'
+        "429":
+          $ref: '#/components/responses/TooManyRequests'
         "204":
           description: Kundenangaben in einem bestehenden Vorgang überschrieben
           headers:
             X-TraceId:
               $ref: '#/components/headers/tracingIdHeader'
               style: simple
-        "429":
-          $ref: '#/components/responses/TooManyRequests'
         "403":
           $ref: '#/components/responses/Forbidden'
         "409":
@@ -158,8 +158,6 @@ paths:
           $ref: '#/components/responses/UnprocessableEntity'
         "401":
           $ref: '#/components/responses/Unauthorized'
-        "429":
-          $ref: '#/components/responses/TooManyRequests'
         "201":
           description: Kundenangaben in neuen Vorgang importiert
           headers:
@@ -170,6 +168,8 @@ paths:
             application/json;version=1.0:
               schema:
                 $ref: '#/components/schemas/KundenangabenImportResponse'
+        "429":
+          $ref: '#/components/responses/TooManyRequests'
         "403":
           $ref: '#/components/responses/Forbidden'
         "409":
@@ -2938,8 +2938,8 @@ components:
           type: string
       description: "Mögliche Typen: KfwProgramm124, KfwProgramm151, KfwProgramm152,\
         \ KfwProgramm153, KfwProgramm159, KfwProgramm167, KfwProgramm261Neubau, KfwProgramm261Sanierung,\
-        \ KfwProgramm262, KfwProgramm297, KfwProgramm298, KfwProgramm300, KfwProgramm358,\
-        \ KfwProgramm359"
+        \ KfwProgramm262, KfwProgramm297, KfwProgramm298, KfwProgramm300, KfwProgramm308,\
+        \ KfwProgramm358, KfwProgramm359"
       discriminator:
         propertyName: '@type'
         mapping:
@@ -2955,6 +2955,7 @@ components:
           KFW_PROGRAMM_297: '#/components/schemas/KfwProgramm297'
           KFW_PROGRAMM_298: '#/components/schemas/KfwProgramm298'
           KFW_PROGRAMM_300: '#/components/schemas/KfwProgramm300'
+          KFW_PROGRAMM_308: '#/components/schemas/KfwProgramm308'
           KFW_PROGRAMM_358: '#/components/schemas/KfwProgramm358'
           KFW_PROGRAMM_359: '#/components/schemas/KfwProgramm359'
     KfwProgramm124:
@@ -3275,6 +3276,28 @@ components:
           laufzeitInJahren:
             maximum: 35
             minimum: 10
+            type: integer
+            format: int32
+          zinsbindungInJahren:
+            type: integer
+            description: 10 oder 20 Jahre
+            format: int32
+          tilgungsfreieAnlaufjahre:
+            type: integer
+            description: "1, 2, 3, 4 oder 5 Jahre"
+            format: int32
+    KfwProgramm308:
+      required:
+      - tilgungsfreieAnlaufjahre
+      type: object
+      description: "Jung kauft Alt (Programm-Nr.: 308)"
+      allOf:
+      - $ref: '#/components/schemas/KfwProgramm'
+      - type: object
+        properties:
+          laufzeitInJahren:
+            maximum: 35
+            minimum: 7
             type: integer
             format: int32
           zinsbindungInJahren:
