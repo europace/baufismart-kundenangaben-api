@@ -8,7 +8,7 @@ info:
     name: Europace AG
     url: http://developer.europace.de
     email: devsupport@europace2.de
-  version: 1.5.16; e50075838872b4b0b9003426bb8dc7db4ceeb08a
+  version: 1.5.17; 74d75cf9b59ebc8de0f267acf2b8e4d64dfae4e9
 externalDocs:
   url: https://developer.europace.de/api/baufismart-kundenangaben-api
 servers:
@@ -156,8 +156,6 @@ paths:
           $ref: '#/components/responses/ServiceNotAvailable'
         "422":
           $ref: '#/components/responses/UnprocessableEntity'
-        "401":
-          $ref: '#/components/responses/Unauthorized'
         "201":
           description: Kundenangaben in neuen Vorgang importiert
           headers:
@@ -168,6 +166,8 @@ paths:
             application/json;version=1.0:
               schema:
                 $ref: '#/components/schemas/KundenangabenImportResponse'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
         "429":
           $ref: '#/components/responses/TooManyRequests'
         "403":
@@ -1485,6 +1485,9 @@ components:
       - '@type'
       type: object
       properties:
+        id:
+          type: string
+          description: Eindeutige interne ID
         darlehensgeber:
           oneOf:
           - $ref: '#/components/schemas/ProduktanbieterDarlehensgeber'
@@ -1509,9 +1512,6 @@ components:
         darlehenskontonummer:
           type: string
           description: IBAN des Darlehenskontos
-        id:
-          type: string
-          description: Eindeutige interne ID
         darlehensbetrag:
           type: number
           format: double
@@ -5678,6 +5678,8 @@ components:
       - $ref: '#/components/schemas/Tilgungswunsch'
       - type: object
         properties:
+          tilgungsersatzProduktId:
+            type: string
           bausparwunsch:
             $ref: '#/components/schemas/Bauspardarlehen'
     TilgungInProzent:
