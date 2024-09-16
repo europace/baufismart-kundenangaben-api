@@ -8,7 +8,7 @@ info:
     name: Europace AG
     url: http://developer.europace.de
     email: devsupport@europace2.de
-  version: 1.5.17; 74d75cf9b59ebc8de0f267acf2b8e4d64dfae4e9
+  version: 1.5.18; b71ade3a515804268e48d5a1c0fc5eb459d0cf25
 externalDocs:
   url: https://developer.europace.de/api/baufismart-kundenangaben-api
 servers:
@@ -51,8 +51,6 @@ paths:
           $ref: '#/components/responses/NotFound'
         "401":
           $ref: '#/components/responses/Unauthorized'
-        "429":
-          $ref: '#/components/responses/TooManyRequests'
         "200":
           description: Kundenangaben für einen bestehenden Vorgang
           headers:
@@ -63,6 +61,8 @@ paths:
             application/json;version=1.0:
               schema:
                 $ref: '#/components/schemas/Kundenangaben'
+        "429":
+          $ref: '#/components/responses/TooManyRequests'
         "403":
           $ref: '#/components/responses/Forbidden'
         "409":
@@ -101,6 +101,12 @@ paths:
               $ref: '#/components/schemas/UpdateKundenangabenRequest'
         required: true
       responses:
+        "204":
+          description: Kundenangaben in einem bestehenden Vorgang überschrieben
+          headers:
+            X-TraceId:
+              $ref: '#/components/headers/tracingIdHeader'
+              style: simple
         "503":
           $ref: '#/components/responses/ServiceNotAvailable'
         "404":
@@ -111,12 +117,6 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         "429":
           $ref: '#/components/responses/TooManyRequests'
-        "204":
-          description: Kundenangaben in einem bestehenden Vorgang überschrieben
-          headers:
-            X-TraceId:
-              $ref: '#/components/headers/tracingIdHeader'
-              style: simple
         "403":
           $ref: '#/components/responses/Forbidden'
         "409":
@@ -154,8 +154,6 @@ paths:
       responses:
         "503":
           $ref: '#/components/responses/ServiceNotAvailable'
-        "422":
-          $ref: '#/components/responses/UnprocessableEntity'
         "201":
           description: Kundenangaben in neuen Vorgang importiert
           headers:
@@ -166,6 +164,8 @@ paths:
             application/json;version=1.0:
               schema:
                 $ref: '#/components/schemas/KundenangabenImportResponse'
+        "422":
+          $ref: '#/components/responses/UnprocessableEntity'
         "401":
           $ref: '#/components/responses/Unauthorized'
         "429":
@@ -4403,6 +4403,7 @@ components:
             - RB_NEUMARKT_I_D_OPF
             - RB_OBERPFALZ_SUED
             - RB_WERRATAL_LANDECK
+            - RB_WERRATAL_LANDECK_RATENKREDIT
             - RBS
             - RDS_BANK
             - RHEINGAUER_VB
@@ -5680,6 +5681,8 @@ components:
         properties:
           tilgungsersatzProduktId:
             type: string
+            description: "schreibend: ID des Tilgungsersatzprodukts (bestehender Bausparvertrag\
+              \ oder Versicherung; lesend: interne eindeutige ID)"
           bausparwunsch:
             $ref: '#/components/schemas/Bauspardarlehen'
     TilgungInProzent:
