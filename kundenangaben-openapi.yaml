@@ -8,7 +8,7 @@ info:
     name: Europace AG
     url: http://developer.europace.de
     email: devsupport@europace2.de
-  version: 1.5.18; b71ade3a515804268e48d5a1c0fc5eb459d0cf25
+  version: 1.5.19; f9c86ff696de6a0906dde994a117d0e954825691
 externalDocs:
   url: https://developer.europace.de/api/baufismart-kundenangaben-api
 servers:
@@ -45,12 +45,6 @@ paths:
         schema:
           type: string
       responses:
-        "503":
-          $ref: '#/components/responses/ServiceNotAvailable'
-        "404":
-          $ref: '#/components/responses/NotFound'
-        "401":
-          $ref: '#/components/responses/Unauthorized'
         "200":
           description: Kundenangaben für einen bestehenden Vorgang
           headers:
@@ -61,6 +55,12 @@ paths:
             application/json;version=1.0:
               schema:
                 $ref: '#/components/schemas/Kundenangaben'
+        "503":
+          $ref: '#/components/responses/ServiceNotAvailable'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
         "429":
           $ref: '#/components/responses/TooManyRequests'
         "403":
@@ -101,12 +101,6 @@ paths:
               $ref: '#/components/schemas/UpdateKundenangabenRequest'
         required: true
       responses:
-        "204":
-          description: Kundenangaben in einem bestehenden Vorgang überschrieben
-          headers:
-            X-TraceId:
-              $ref: '#/components/headers/tracingIdHeader'
-              style: simple
         "503":
           $ref: '#/components/responses/ServiceNotAvailable'
         "404":
@@ -119,6 +113,12 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
         "403":
           $ref: '#/components/responses/Forbidden'
+        "204":
+          description: Kundenangaben in einem bestehenden Vorgang überschrieben
+          headers:
+            X-TraceId:
+              $ref: '#/components/headers/tracingIdHeader'
+              style: simple
         "409":
           $ref: '#/components/responses/Conflict'
         "400":
@@ -154,6 +154,12 @@ paths:
       responses:
         "503":
           $ref: '#/components/responses/ServiceNotAvailable'
+        "422":
+          $ref: '#/components/responses/UnprocessableEntity'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "429":
+          $ref: '#/components/responses/TooManyRequests'
         "201":
           description: Kundenangaben in neuen Vorgang importiert
           headers:
@@ -164,12 +170,6 @@ paths:
             application/json;version=1.0:
               schema:
                 $ref: '#/components/schemas/KundenangabenImportResponse'
-        "422":
-          $ref: '#/components/responses/UnprocessableEntity'
-        "401":
-          $ref: '#/components/responses/Unauthorized'
-        "429":
-          $ref: '#/components/responses/TooManyRequests'
         "403":
           $ref: '#/components/responses/Forbidden'
         "409":
@@ -737,10 +737,13 @@ components:
               - LBS_BAYERN_ZF_X35_RIESTER
               - LBS_SUED_ANKOMMER_3_5
               - LBS_SUED_ANKOMMER_5
+              - LBS_SUED_ANKOMMER_6
               - LBS_SUED_BONUSBRINGER
               - LBS_SUED_SPRINTER
               - LBS_SUED_SPRINTER_E
               - LBS_SUED_ZINSSPARER
+              - LBS_SUED_SPRINTER_RIESTER
+              - LBS_SUED_SPRINTER_E_RIESTER
               - LBS_SUED_VORSORGER_RIESTER
               - LBS_HT_CLASSIC_S_2015
               - LBS_HT_CLASSIC_F_2015
@@ -958,10 +961,13 @@ components:
               - LBS_SUEDWEST_ZUKUNFT_PLUS
               - LBS_SUEDWEST_ANKOMMER_3_5
               - LBS_SUEDWEST_ANKOMMER_5
+              - LBS_SUEDWEST_ANKOMMER_6
               - LBS_SUEDWEST_BONUSBRINGER
               - LBS_SUEDWEST_SPRINTER
               - LBS_SUEDWEST_SPRINTER_E
               - LBS_SUEDWEST_ZINSSPARER
+              - LBS_SUEDWEST_SPRINTER_RIESTER
+              - LBS_SUEDWEST_SPRINTER_E_RIESTER
               - LBS_SUEDWEST_VORSORGER_RIESTER
               - LBS_SAAR_PREMIUM_FLEX_18
               - LBS_SAAR_PREMIUM_SICHER_18
