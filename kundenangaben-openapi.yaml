@@ -8,7 +8,7 @@ info:
     name: Europace AG
     url: http://developer.europace.de
     email: devsupport@europace2.de
-  version: 1.5.21; 5662527504d045ebd3ba106b971e4bbba6774603
+  version: 1.5.22; ff18abbe4873289fb04380919953f05130f225c2
 externalDocs:
   url: https://developer.europace.de/api/baufismart-kundenangaben-api
 servers:
@@ -45,6 +45,14 @@ paths:
         schema:
           type: string
       responses:
+        "503":
+          $ref: '#/components/responses/ServiceNotAvailable'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "429":
+          $ref: '#/components/responses/TooManyRequests'
         "200":
           description: Kundenangaben für einen bestehenden Vorgang
           headers:
@@ -55,14 +63,6 @@ paths:
             application/json;version=1.0:
               schema:
                 $ref: '#/components/schemas/Kundenangaben'
-        "503":
-          $ref: '#/components/responses/ServiceNotAvailable'
-        "404":
-          $ref: '#/components/responses/NotFound'
-        "401":
-          $ref: '#/components/responses/Unauthorized'
-        "429":
-          $ref: '#/components/responses/TooManyRequests'
         "403":
           $ref: '#/components/responses/Forbidden'
         "409":
@@ -103,12 +103,6 @@ paths:
       responses:
         "503":
           $ref: '#/components/responses/ServiceNotAvailable'
-        "204":
-          description: Kundenangaben in einem bestehenden Vorgang überschrieben
-          headers:
-            X-TraceId:
-              $ref: '#/components/headers/tracingIdHeader'
-              style: simple
         "404":
           $ref: '#/components/responses/NotFound'
         "422":
@@ -117,6 +111,12 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         "429":
           $ref: '#/components/responses/TooManyRequests'
+        "204":
+          description: Kundenangaben in einem bestehenden Vorgang überschrieben
+          headers:
+            X-TraceId:
+              $ref: '#/components/headers/tracingIdHeader'
+              style: simple
         "403":
           $ref: '#/components/responses/Forbidden'
         "409":
@@ -154,16 +154,6 @@ paths:
       responses:
         "503":
           $ref: '#/components/responses/ServiceNotAvailable'
-        "422":
-          $ref: '#/components/responses/UnprocessableEntity'
-        "401":
-          $ref: '#/components/responses/Unauthorized'
-        "429":
-          $ref: '#/components/responses/TooManyRequests'
-        "403":
-          $ref: '#/components/responses/Forbidden'
-        "409":
-          $ref: '#/components/responses/Conflict'
         "201":
           description: Kundenangaben in neuen Vorgang importiert
           headers:
@@ -174,6 +164,16 @@ paths:
             application/json;version=1.0:
               schema:
                 $ref: '#/components/schemas/KundenangabenImportResponse'
+        "422":
+          $ref: '#/components/responses/UnprocessableEntity'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "429":
+          $ref: '#/components/responses/TooManyRequests'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "409":
+          $ref: '#/components/responses/Conflict'
         "400":
           $ref: '#/components/responses/BadRequest'
       security:
@@ -895,6 +895,46 @@ components:
               - LBS_OST_BESTAND_CLASSIC_F4
               - LBS_OST_BESTAND_CLASSIC_F5
               - LBS_OST_BESTAND_CLASSIC_F6
+              - LBS_NORDOST_BESTAND_SHH_PRIMUS_SC
+              - LBS_NORDOST_BESTAND_SHH_PRIMUS_SD
+              - LBS_NORDOST_BESTAND_SHH_PRIMUS_SH
+              - LBS_NORDOST_BESTAND_SHH_PRIMUS_SI
+              - LBS_NORDOST_BESTAND_SHH_PRIMUS_SJ
+              - LBS_NORDOST_BESTAND_SHH_TREND_SD
+              - LBS_NORDOST_BESTAND_SHH_CLASSIC_AUSBAU_TD
+              - LBS_NORDOST_BESTAND_SHH_CLASSIC_FORMAT
+              - LBS_NORDOST_BESTAND_SHH_CLASSIC_FORMAT_MB
+              - LBS_NORDOST_BESTAND_SHH_CLASSIC_HAUSBAU_TC
+              - LBS_NORDOST_BESTAND_SHH_CLASSIC_HAUSBAU_TH
+              - LBS_NORDOST_BESTAND_SHH_CLASSIC_HAUSBAU_TI
+              - LBS_NORDOST_BESTAND_SHH_CLASSIC_HAUSBAU_TJ
+              - LBS_NORDOST_BESTAND_SHH_CLASSIC_HAUSBAU_TK
+              - LBS_NORDOST_BESTAND_SHH_CLASSIC_HAUSBAU_TL
+              - LBS_NORDOST_BESTAND_SHH_CLASSIC_HAUSBAU_TM
+              - LBS_NORDOST_BESTAND_SHH_CLASSIC_HAUSBAU_TN
+              - LBS_NORDOST_BESTAND_SHH_CLASSIC_PERSPEKTIVE
+              - LBS_NORDOST_BESTAND_SHH_CLASSIC_PERSPEKTIVE_MA
+              - LBS_NORDOST_BESTAND_SHH_CLASSIC_PRIMUS
+              - LBS_NORDOST_BESTAND_SHH_CLASSIC_PRIMUS_MC
+              - LBS_NORDOST_BESTAND_SHH_CLASSIC_PRIMUS_SK
+              - LBS_NORDOST_BESTAND_SHH_CLASSIC_PRIMUS_SL
+              - LBS_NORDOST_BESTAND_SHH_CLASSIC_PRIMUS_SM
+              - LBS_NORDOST_BESTAND_SHH_CLASSIC_PRIMUS_SN
+              - LBS_NORDOST_BESTAND_SHH_CLASSIC_TRAUMHAUS_TB
+              - LBS_NORDOST_BESTAND_SHH_CLASSIC_TREND
+              - LBS_NORDOST_BESTAND_SHH_CLASSIC_TREND_MD
+              - LBS_NORDOST_BESTAND_SHH_CLASSIC_VITA_SE
+              - LBS_NORDOST_BESTAND_SHH_VITA_ME
+              - LBS_NORDOST_BESTAND_SHH_VITA_OE
+              - LBS_NORDOST_BESTAND_SHH_VITA_PE
+              - LBS_NORDOST_BESTAND_SHH_VITA_SE
+              - LBS_NORDOST_BESTAND_SHH_PRIMUS_TC
+              - LBS_NORDOST_BESTAND_SHH_PRIMUS_TH
+              - LBS_NORDOST_BESTAND_SHH_PRIMUS_TI
+              - LBS_NORDOST_BESTAND_SHH_PRIMUS_TJ
+              - LBS_NORDOST_BESTAND_SHH_PRIMUS_TD
+              - LBS_NORDOST_BESTAND_SHH_TREND_TD
+              - LBS_NORDOST_BESTAND_SHH_CLASSIC_TRAUMHAUS
               - LBS_SHH_PRIMUS_SC
               - LBS_SHH_PRIMUS_SD
               - LBS_SHH_PRIMUS_SH
@@ -4972,6 +5012,7 @@ components:
             - VOBA_NECKARTAL
             - VOBA_NIEBUELL
             - VOBA_NIEDERRHEIN
+            - VOBA_NIEDERSA_MITTE
             - VOBA_NIEDERSCHLESIEN
             - VOBA_NIENBURG
             - VOBA_NORDHARZ
