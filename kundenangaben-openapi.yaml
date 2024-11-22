@@ -8,7 +8,7 @@ info:
     name: Europace AG
     url: http://developer.europace.de
     email: devsupport@europace2.de
-  version: 1.5.22; ff18abbe4873289fb04380919953f05130f225c2
+  version: 1.5.22; 6645ab31729b5cabedd1339ef17c219e4604d030
 externalDocs:
   url: https://developer.europace.de/api/baufismart-kundenangaben-api
 servers:
@@ -154,6 +154,14 @@ paths:
       responses:
         "503":
           $ref: '#/components/responses/ServiceNotAvailable'
+        "422":
+          $ref: '#/components/responses/UnprocessableEntity'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "429":
+          $ref: '#/components/responses/TooManyRequests'
+        "403":
+          $ref: '#/components/responses/Forbidden'
         "201":
           description: Kundenangaben in neuen Vorgang importiert
           headers:
@@ -164,14 +172,6 @@ paths:
             application/json;version=1.0:
               schema:
                 $ref: '#/components/schemas/KundenangabenImportResponse'
-        "422":
-          $ref: '#/components/responses/UnprocessableEntity'
-        "401":
-          $ref: '#/components/responses/Unauthorized'
-        "429":
-          $ref: '#/components/responses/TooManyRequests'
-        "403":
-          $ref: '#/components/responses/Forbidden'
         "409":
           $ref: '#/components/responses/Conflict'
         "400":
@@ -1561,9 +1561,6 @@ components:
       - '@type'
       type: object
       properties:
-        id:
-          type: string
-          description: Eindeutige interne ID
         darlehensgeber:
           oneOf:
           - $ref: '#/components/schemas/ProduktanbieterDarlehensgeber'
@@ -1588,6 +1585,9 @@ components:
         darlehenskontonummer:
           type: string
           description: IBAN des Darlehenskontos
+        id:
+          type: string
+          description: Eindeutige interne ID
         darlehensbetrag:
           type: number
           format: double
@@ -4475,6 +4475,7 @@ components:
             - RB_ALTDORF_FEUCHT
             - RB_AUGSBURGERL_WEST
             - RB_BAD_KOETZTING
+            - RB_ELBMARSCH
             - RB_IM_KREIS_CALW
             - RB_KISSING_MERING
             - RB_NEUMARKT_I_D_OPF
