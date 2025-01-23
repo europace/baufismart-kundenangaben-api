@@ -8,7 +8,7 @@ info:
     name: Europace AG
     url: http://developer.europace.de
     email: devsupport@europace2.de
-  version: 1.5.23; 05bf53cd01072a30e416595e0465b285bfb4473d
+  version: 1.5.24; 39b4d4950591d8a3b693ab5ecd74b9c4e19f1390
 externalDocs:
   url: https://developer.europace.de/api/baufismart-kundenangaben-api
 servers:
@@ -49,12 +49,6 @@ paths:
           $ref: "#/components/responses/ServiceNotAvailable"
         "404":
           $ref: "#/components/responses/NotFound"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "429":
-          $ref: "#/components/responses/TooManyRequests"
-        "403":
-          $ref: "#/components/responses/Forbidden"
         "200":
           description: Kundenangaben für einen bestehenden Vorgang
           headers:
@@ -65,6 +59,12 @@ paths:
             application/json;version=1.0:
               schema:
                 $ref: "#/components/schemas/Kundenangaben"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "403":
+          $ref: "#/components/responses/Forbidden"
         "409":
           $ref: "#/components/responses/Conflict"
         "400":
@@ -103,6 +103,12 @@ paths:
       responses:
         "503":
           $ref: "#/components/responses/ServiceNotAvailable"
+        "204":
+          description: Kundenangaben in einem bestehenden Vorgang überschrieben
+          headers:
+            X-TraceId:
+              $ref: "#/components/headers/tracingIdHeader"
+              style: simple
         "404":
           $ref: "#/components/responses/NotFound"
         "422":
@@ -113,12 +119,6 @@ paths:
           $ref: "#/components/responses/TooManyRequests"
         "403":
           $ref: "#/components/responses/Forbidden"
-        "204":
-          description: Kundenangaben in einem bestehenden Vorgang überschrieben
-          headers:
-            X-TraceId:
-              $ref: "#/components/headers/tracingIdHeader"
-              style: simple
         "409":
           $ref: "#/components/responses/Conflict"
         "400":
@@ -152,6 +152,14 @@ paths:
               $ref: "#/components/schemas/ImportKundenangabenRequest"
         required: true
       responses:
+        "503":
+          $ref: "#/components/responses/ServiceNotAvailable"
+        "422":
+          $ref: "#/components/responses/UnprocessableEntity"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "201":
           description: Kundenangaben in neuen Vorgang importiert
           headers:
@@ -162,14 +170,6 @@ paths:
             application/json;version=1.0:
               schema:
                 $ref: "#/components/schemas/KundenangabenImportResponse"
-        "503":
-          $ref: "#/components/responses/ServiceNotAvailable"
-        "422":
-          $ref: "#/components/responses/UnprocessableEntity"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "429":
-          $ref: "#/components/responses/TooManyRequests"
         "403":
           $ref: "#/components/responses/Forbidden"
         "409":
@@ -1165,15 +1165,15 @@ components:
               - ALTE_LEIPZIGER_21XX_27
               - ALTE_LEIPZIGER_22XX
               - ALTE_LEIPZIGER_22XX_27
-              - ALTE_LEIPZIGER_21XX_20
               - ALTE_LEIPZIGER_21XX_33
-              - ALTE_LEIPZIGER_22XX_20
               - ALTE_LEIPZIGER_22XX_33
-              - ALTE_LEIPZIGER_BS_22XX_33
-              - ALTE_LEIPZIGER_25XX_30
+              - ALTE_LEIPZIGER_21XX_20
+              - ALTE_LEIPZIGER_22XX_20
               - ALTE_LEIPZIGER_25XX_45
-              - ALTE_LEIPZIGER_26XX_30
               - ALTE_LEIPZIGER_26XX_45
+              - ALTE_LEIPZIGER_25XX_30
+              - ALTE_LEIPZIGER_26XX_30
+              - ALTE_LEIPZIGER_BS_22XX_33
               - WUESTENROT_01063_4
               - WUESTENROT_01063_5
               - WUESTENROT_01063_6
@@ -2071,7 +2071,7 @@ components:
         '@type':
           type: string
       description: "Mögliche Typen: Annuitaetendarlehen, Forwarddarlehen, Privatdarlehen,\
-        \ Zwischenfinanzierung, VariablesDarlehen, Bauspardarlehen, KfwDarlehen"
+        \ Zwischenfinanzierung, VariablesDarlehen, Bauspardarlehen, KfwDarlehen, RegionalFoerderDarlehen"
       discriminator:
         propertyName: '@type'
         mapping:
@@ -2082,6 +2082,7 @@ components:
           VARIABLES_DARLEHEN: "#/components/schemas/VariablesDarlehen"
           BAUSPARDARLEHEN: "#/components/schemas/Bauspardarlehen"
           KFW_DARLEHEN: "#/components/schemas/KfwDarlehen"
+          REGIONALFOERDER_DARLEHEN: "#/components/schemas/RegionalFoerderDarlehen"
     Finanzierungsbedarf:
       type: object
       properties:
@@ -2121,6 +2122,7 @@ components:
             - $ref: "#/components/schemas/Forwarddarlehen"
             - $ref: "#/components/schemas/KfwDarlehen"
             - $ref: "#/components/schemas/Privatdarlehen"
+            - $ref: "#/components/schemas/RegionalFoerderDarlehen"
             - $ref: "#/components/schemas/VariablesDarlehen"
             - $ref: "#/components/schemas/Zwischenfinanzierung"
         ratenschutzbausteine:
@@ -3524,6 +3526,75 @@ components:
         bankverbindung:
           $ref: "#/components/schemas/Bankverbindung"
       description: In anderen APIs als 'Erfasste Daten' bezeichnet.
+    LBankKombiDarlehenWohnen:
+      required:
+      - laufzeitInJahren
+      - tilgungsfreieAnlaufjahre
+      - zinsbindungInJahren
+      type: object
+      description: Kombi-Darlehen Wohnen
+      allOf:
+      - $ref: "#/components/schemas/RegionalFoerderbankProgramm"
+      - type: object
+        properties:
+          laufzeitInJahren:
+            type: integer
+            description: "10, 20, 30 oder 35 Jahre erlaubt"
+            format: int32
+          zinsbindungInJahren:
+            type: integer
+            description: Nur 10 Jahre
+            format: int32
+          tilgungsfreieAnlaufjahre:
+            type: integer
+            description: "1, 2, 3, 4 oder 5 Jahre"
+            format: int32
+    LBankWohnenMitKind:
+      required:
+      - laufzeitInJahren
+      - tilgungsfreieAnlaufjahre
+      - zinsbindungInJahren
+      type: object
+      description: Wohnen mit Kind
+      allOf:
+      - $ref: "#/components/schemas/RegionalFoerderbankProgramm"
+      - type: object
+        properties:
+          laufzeitInJahren:
+            type: integer
+            description: 25 oder 35 Jahre erlaubt
+            format: int32
+          zinsbindungInJahren:
+            type: integer
+            description: Nur 10 Jahre
+            format: int32
+          tilgungsfreieAnlaufjahre:
+            type: integer
+            description: "1, 2, 3, 4 oder 5 Jahre"
+            format: int32
+    LBankWohnenMitZukunft:
+      required:
+      - laufzeitInJahren
+      - tilgungsfreieAnlaufjahre
+      - zinsbindungInJahren
+      type: object
+      description: Wohnen mit Zukunft
+      allOf:
+      - $ref: "#/components/schemas/RegionalFoerderbankProgramm"
+      - type: object
+        properties:
+          laufzeitInJahren:
+            type: integer
+            description: "10, 20 oder 30 Jahre erlaubt"
+            format: int32
+          zinsbindungInJahren:
+            type: integer
+            description: Nur 10 Jahre
+            format: int32
+          tilgungsfreieAnlaufjahre:
+            type: integer
+            description: 1 oder 2 Jahre
+            format: int32
     LangeZinssicherheit:
       type: object
       allOf:
@@ -3866,6 +3937,75 @@ components:
           betrag:
             type: number
             format: double
+    NRWBankGebaeudesanierung:
+      required:
+      - laufzeitInJahren
+      - tilgungsfreieAnlaufjahre
+      - zinsbindungInJahren
+      type: object
+      description: NRW.BANK.Gebäudesanierung
+      allOf:
+      - $ref: "#/components/schemas/RegionalFoerderbankProgramm"
+      - type: object
+        properties:
+          laufzeitInJahren:
+            type: integer
+            description: "10, 15, 20, 30 oder 35 Jahre erlaubt"
+            format: int32
+          zinsbindungInJahren:
+            type: integer
+            description: "10, 15, 20 oder 30 Jahre"
+            format: int32
+          tilgungsfreieAnlaufjahre:
+            type: integer
+            description: Nur 1 Jahre
+            format: int32
+    NRWBankNachhaltigWohnen:
+      required:
+      - laufzeitInJahren
+      - tilgungsfreieAnlaufjahre
+      - zinsbindungInJahren
+      type: object
+      description: NRW.BANK.Nachhaltig Wohnen
+      allOf:
+      - $ref: "#/components/schemas/RegionalFoerderbankProgramm"
+      - type: object
+        properties:
+          laufzeitInJahren:
+            type: integer
+            description: "10, 15, 20, 30 oder 35 Jahre erlaubt"
+            format: int32
+          zinsbindungInJahren:
+            type: integer
+            description: "10, 15, 20 oder 30 Jahre"
+            format: int32
+          tilgungsfreieAnlaufjahre:
+            type: integer
+            description: Nur 1 Jahre
+            format: int32
+    NRWBankWohneigentum:
+      required:
+      - laufzeitInJahren
+      - tilgungsfreieAnlaufjahre
+      - zinsbindungInJahren
+      type: object
+      description: NRW.BANK.Wohneigentum
+      allOf:
+      - $ref: "#/components/schemas/RegionalFoerderbankProgramm"
+      - type: object
+        properties:
+          laufzeitInJahren:
+            type: integer
+            description: "10, 15, 20, 30 oder 35 Jahre erlaubt"
+            format: int32
+          zinsbindungInJahren:
+            type: integer
+            description: "10, 15, 20 oder 30 Jahre"
+            format: int32
+          tilgungsfreieAnlaufjahre:
+            type: integer
+            description: Nur 1 Jahre
+            format: int32
     Nebenkosten:
       type: object
       properties:
@@ -4497,6 +4637,7 @@ components:
             - SAALFELD_RUDOLSTADT
             - SAB
             - SABADELL
+            - SAECHSISCHE_AUFBAU
             - SANTANDER_BANK
             - SANTANDER_CARCREDIT
             - SANTANDER_CARCREDIT_RATENKREDIT
@@ -4895,6 +5036,7 @@ components:
             - VOBA_BREISGAU_SUED
             - VOBA_BREMEN_NORD
             - VOBA_BREMERHAVEN_CUX
+            - VOBA_BRENZTAL
             - VOBA_BRUCHSAL
             - VOBA_BRUHRAIN
             - VOBA_BUTZBACH
@@ -5161,6 +5303,7 @@ components:
             - VR_OBERBAYERN_SO
             - VR_OBERFRANKEN_MITTE
             - VR_ODER_SPREE
+            - VR_OSTBAYERN_MITTE
             - VR_OSTHOLSTEIN
             - VR_REGENSBURG_SCHWAN
             - VR_RHEIN_ERFT
@@ -5367,6 +5510,41 @@ components:
         mapping:
           VORHANDENE_RECHTE_ABTEILUNG_2: "#/components/schemas/VorhandeneRechteAbteilung2"
           KEINE_RECHTE_ABTEILUNG_2: "#/components/schemas/KeineRechteAbteilung2"
+    RegionalFoerderDarlehen:
+      required:
+      - darlehensbetrag
+      - programm
+      type: object
+      allOf:
+      - $ref: "#/components/schemas/Finanzierungsbaustein"
+      - type: object
+        properties:
+          id:
+            type: string
+            description: Eindeutige interne ID
+          darlehensbetrag:
+            type: number
+            format: double
+          programm:
+            $ref: "#/components/schemas/RegionalFoerderbankProgramm"
+    RegionalFoerderbankProgramm:
+      required:
+      - '@type'
+      type: object
+      properties:
+        '@type':
+          type: string
+      description: "Mögliche Typen: LBankKombiDarlehenWohnen, LBankWohnenMitKind,\
+        \ LBankWohnenMitZukunft, NRWBankWohneigentum, NRWBankGebaeudesanierung, NRWBankNachhaltigWohnen"
+      discriminator:
+        propertyName: '@type'
+        mapping:
+          L_BANK_KOMBI_DARLEHEN_WOHNEN: "#/components/schemas/LBankKombiDarlehenWohnen"
+          L_BANK_WOHNEN_MIT_KIND: "#/components/schemas/LBankWohnenMitKind"
+          L_BANK_WOHNEN_MIT_ZUKUNFT: "#/components/schemas/LBankWohnenMitZukunft"
+          NRW_BANK_WOHNEIGENTUM: "#/components/schemas/NRWBankWohneigentum"
+          NRW_BANK_GEBAEUDESANIERUNG: "#/components/schemas/NRWBankGebaeudesanierung"
+          NRW_BANK_NACHHALTIG_WOHNEN: "#/components/schemas/NRWBankNachhaltigWohnen"
     Reihenhaus:
       type: object
       allOf:
