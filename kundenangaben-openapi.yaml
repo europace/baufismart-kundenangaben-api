@@ -8,7 +8,7 @@ info:
     name: Europace AG
     url: http://developer.europace.de
     email: devsupport@europace2.de
-  version: 1.5.24; 39b4d4950591d8a3b693ab5ecd74b9c4e19f1390
+  version: 1.5.25; 57267f85d5b5ad70fca7131fb2f47621c8b7159b
 externalDocs:
   url: https://developer.europace.de/api/baufismart-kundenangaben-api
 servers:
@@ -49,6 +49,10 @@ paths:
           $ref: "#/components/responses/ServiceNotAvailable"
         "404":
           $ref: "#/components/responses/NotFound"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: Kundenangaben für einen bestehenden Vorgang
           headers:
@@ -59,10 +63,6 @@ paths:
             application/json;version=1.0:
               schema:
                 $ref: "#/components/schemas/Kundenangaben"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "429":
-          $ref: "#/components/responses/TooManyRequests"
         "403":
           $ref: "#/components/responses/Forbidden"
         "409":
@@ -103,12 +103,6 @@ paths:
       responses:
         "503":
           $ref: "#/components/responses/ServiceNotAvailable"
-        "204":
-          description: Kundenangaben in einem bestehenden Vorgang überschrieben
-          headers:
-            X-TraceId:
-              $ref: "#/components/headers/tracingIdHeader"
-              style: simple
         "404":
           $ref: "#/components/responses/NotFound"
         "422":
@@ -117,6 +111,12 @@ paths:
           $ref: "#/components/responses/Unauthorized"
         "429":
           $ref: "#/components/responses/TooManyRequests"
+        "204":
+          description: Kundenangaben in einem bestehenden Vorgang überschrieben
+          headers:
+            X-TraceId:
+              $ref: "#/components/headers/tracingIdHeader"
+              style: simple
         "403":
           $ref: "#/components/responses/Forbidden"
         "409":
@@ -160,6 +160,8 @@ paths:
           $ref: "#/components/responses/Unauthorized"
         "429":
           $ref: "#/components/responses/TooManyRequests"
+        "403":
+          $ref: "#/components/responses/Forbidden"
         "201":
           description: Kundenangaben in neuen Vorgang importiert
           headers:
@@ -170,8 +172,6 @@ paths:
             application/json;version=1.0:
               schema:
                 $ref: "#/components/schemas/KundenangabenImportResponse"
-        "403":
-          $ref: "#/components/responses/Forbidden"
         "409":
           $ref: "#/components/responses/Conflict"
         "400":
@@ -3865,6 +3865,24 @@ components:
           type: number
           description: "Wenn mit der Modernisierung eine Verbesserung der Energieeffizienz\
             \ einhergeht: angestrebter Gebäudeendenergiebedarf in kWh/(m²*a)"
+        co2WertGeplant:
+          type: number
+          description: "Wenn mit der Modernisierung eine Verbesserung der CO2-Emissionen\
+            \ einhergeht: angestrebte CO2-Emissionen in kg/(m²*a)"
+        energieEffizienzklasse:
+          type: string
+          description: "Wird beim Anlegen/Updaten nicht übernommen, sondern aus dem\
+            \ Feld endEnergie berechnet."
+          enum:
+          - A_PLUS
+          - A
+          - B
+          - C
+          - D
+          - E
+          - F
+          - G
+          - H
         eigenleistung:
           type: number
           description: Persönlich erbrachte Arbeitsleistung als Eigenleistung
@@ -6286,6 +6304,24 @@ components:
             type: number
             description: "Wenn mit der Modernisierung eine Verbesserung der Energieeffizienz\
               \ einhergeht: angestrebter Gebäudeendenergiebedarf in kWh/(m²*a)"
+          co2WertGeplant:
+            type: number
+            description: "Wenn mit der Modernisierung eine Verbesserung der CO2-Emissionen\
+              \ einhergeht: angestrebte CO2-Emissionen in kg/(m²*a)"
+          energieEffizienzklasse:
+            type: string
+            description: "Wird beim Anlegen/Updaten nicht übernommen, sondern aus\
+              \ dem Feld endEnergie berechnet."
+            enum:
+            - A_PLUS
+            - A
+            - B
+            - C
+            - D
+            - E
+            - F
+            - G
+            - H
           eigenleistungErfassung:
             $ref: "#/components/schemas/EigenleistungErfassung"
     VorhandeneRechteAbteilung2:
