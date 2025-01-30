@@ -8,7 +8,7 @@ info:
     name: Europace AG
     url: http://developer.europace.de
     email: devsupport@europace2.de
-  version: 1.5.25; 57267f85d5b5ad70fca7131fb2f47621c8b7159b
+  version: 1.5.26; 1e88befaae5e9f127ec04a163d2d474f463bbc39
 externalDocs:
   url: https://developer.europace.de/api/baufismart-kundenangaben-api
 servers:
@@ -53,6 +53,8 @@ paths:
           $ref: "#/components/responses/Unauthorized"
         "429":
           $ref: "#/components/responses/TooManyRequests"
+        "403":
+          $ref: "#/components/responses/Forbidden"
         "200":
           description: Kundenangaben für einen bestehenden Vorgang
           headers:
@@ -63,8 +65,6 @@ paths:
             application/json;version=1.0:
               schema:
                 $ref: "#/components/schemas/Kundenangaben"
-        "403":
-          $ref: "#/components/responses/Forbidden"
         "409":
           $ref: "#/components/responses/Conflict"
         "400":
@@ -103,6 +103,12 @@ paths:
       responses:
         "503":
           $ref: "#/components/responses/ServiceNotAvailable"
+        "204":
+          description: Kundenangaben in einem bestehenden Vorgang überschrieben
+          headers:
+            X-TraceId:
+              $ref: "#/components/headers/tracingIdHeader"
+              style: simple
         "404":
           $ref: "#/components/responses/NotFound"
         "422":
@@ -111,12 +117,6 @@ paths:
           $ref: "#/components/responses/Unauthorized"
         "429":
           $ref: "#/components/responses/TooManyRequests"
-        "204":
-          description: Kundenangaben in einem bestehenden Vorgang überschrieben
-          headers:
-            X-TraceId:
-              $ref: "#/components/headers/tracingIdHeader"
-              style: simple
         "403":
           $ref: "#/components/responses/Forbidden"
         "409":
@@ -152,16 +152,6 @@ paths:
               $ref: "#/components/schemas/ImportKundenangabenRequest"
         required: true
       responses:
-        "503":
-          $ref: "#/components/responses/ServiceNotAvailable"
-        "422":
-          $ref: "#/components/responses/UnprocessableEntity"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "429":
-          $ref: "#/components/responses/TooManyRequests"
-        "403":
-          $ref: "#/components/responses/Forbidden"
         "201":
           description: Kundenangaben in neuen Vorgang importiert
           headers:
@@ -172,6 +162,16 @@ paths:
             application/json;version=1.0:
               schema:
                 $ref: "#/components/schemas/KundenangabenImportResponse"
+        "503":
+          $ref: "#/components/responses/ServiceNotAvailable"
+        "422":
+          $ref: "#/components/responses/UnprocessableEntity"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "403":
+          $ref: "#/components/responses/Forbidden"
         "409":
           $ref: "#/components/responses/Conflict"
         "400":
@@ -599,6 +599,83 @@ components:
             - UNBEBAUTES_GEWERBEGRUNDSTUECK
             - LANDWIRTSCHAFTLICHES_GRUNDSTUECK
             - SONSTIGES_GRUNDSTUECK
+    BausparAngebotExtern:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Eindeutige interne ID
+        bausparkasse:
+          type: string
+          enum:
+          - AACHENER_BAUSPARKASSE
+          - ALTE_LEIPZIGER_BAUSPAR
+          - ALTE_LEIPZIGER_BAUSPAR_RATENKREDIT
+          - BAUSPARKASSE_MAINZ
+          - BAUSPARKASSE_SCHWAEBISCH_HALL
+          - BHW
+          - BSQ_BAUSPAR
+          - DEBEKA_BAUSPARKASSE
+          - DEUTSCHE_BANK_BAUSPAR
+          - BADENIA
+          - DEUTSCHER_RING
+          - LBS_BAYERN
+          - LBS_NORD
+          - LBS_BREMEN
+          - LBS_HESSEN_THUERINGEN
+          - LBS_SCHLESWIG_HOLSTEIN_HAMBURG
+          - LBS_RHEINLAND_PFALZ
+          - LBS_WEST
+          - LBS_OST
+          - LBS_SAAR
+          - LBS_SUEDWEST
+          - LBS_BADEN_WUERTTEMBERG
+          - SIGNAL_IDUNA
+          - SIGNAL_IDUNA_BAUSPAR
+          - WUESTENROT
+        vertragsnummer:
+          type: string
+        tarif:
+          type: string
+        vertragsbeginn:
+          type: string
+          format: date
+        jahresentgelt:
+          type: number
+          format: double
+        sparbeitragMonatlich:
+          type: number
+          format: double
+        bausparsumme:
+          type: number
+          format: double
+        zuteilungsdatum:
+          type: string
+          format: date
+        angebotsHinweisFuerDenKunden:
+          type: string
+        sonderZahlungen:
+          type: array
+          items:
+            $ref: "#/components/schemas/Sonderzahlung"
+        abschlussGebuehrenVerrechnung:
+          type: string
+          enum:
+          - SOFORTZAHLUNG
+          - VERRECHNUNG
+        sparBeginn:
+          type: string
+          format: date
+        vertragsPartnerIds:
+          type: array
+          description: Eindeutige interne vertragsPartnerID
+          items:
+            type: string
+            description: Eindeutige interne vertragsPartnerID
+        gesamtLaufzeitInJahren:
+          type: integer
+          format: int32
+      description: In anderen APIs als 'BausparAngebotExtern' bezeichnet.
     Bauspardarlehen:
       type: object
       description: Für leer gelassene Parameter werden automatisch Vorschläge berechnet.
@@ -2125,6 +2202,13 @@ components:
             - $ref: "#/components/schemas/RegionalFoerderDarlehen"
             - $ref: "#/components/schemas/VariablesDarlehen"
             - $ref: "#/components/schemas/Zwischenfinanzierung"
+        externeBausparangebote:
+          maxItems: 3
+          minItems: 0
+          type: array
+          description: 'Bestehender externer Bausparvertrag. '
+          items:
+            $ref: "#/components/schemas/BausparAngebotExtern"
         ratenschutzbausteine:
           maxItems: 2
           minItems: 0
