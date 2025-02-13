@@ -8,7 +8,7 @@ info:
     name: Europace AG
     url: http://developer.europace.de
     email: devsupport@europace2.de
-  version: 1.5.27; 52be70ea2e2bcf40bc2b7c32348d3cf316054509
+  version: 1.5.28; 5fdf7de38a1d10f3a8d0f6f9afc6d659aac03696
 externalDocs:
   url: https://developer.europace.de/api/baufismart-kundenangaben-api
 servers:
@@ -47,16 +47,6 @@ paths:
       responses:
         "503":
           $ref: "#/components/responses/ServiceNotAvailable"
-        "404":
-          $ref: "#/components/responses/NotFound"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "429":
-          $ref: "#/components/responses/TooManyRequests"
-        "403":
-          $ref: "#/components/responses/Forbidden"
-        "409":
-          $ref: "#/components/responses/Conflict"
         "200":
           description: Kundenangaben für einen bestehenden Vorgang
           headers:
@@ -67,6 +57,16 @@ paths:
             application/json;version=1.0:
               schema:
                 $ref: "#/components/schemas/Kundenangaben"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "409":
+          $ref: "#/components/responses/Conflict"
         "400":
           $ref: "#/components/responses/BadRequest"
       security:
@@ -109,16 +109,16 @@ paths:
           $ref: "#/components/responses/UnprocessableEntity"
         "401":
           $ref: "#/components/responses/Unauthorized"
-        "429":
-          $ref: "#/components/responses/TooManyRequests"
-        "403":
-          $ref: "#/components/responses/Forbidden"
         "204":
           description: Kundenangaben in einem bestehenden Vorgang überschrieben
           headers:
             X-TraceId:
               $ref: "#/components/headers/tracingIdHeader"
               style: simple
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "403":
+          $ref: "#/components/responses/Forbidden"
         "409":
           $ref: "#/components/responses/Conflict"
         "400":
@@ -1949,6 +1949,9 @@ components:
           - ENDENERGIEBEDARF
           - ENDENERGIEVERBRAUCH
         endEnergie:
+          type: integer
+          format: int32
+        co2Emissionen:
           type: integer
           format: int32
         primaerEnergieTraeger:
