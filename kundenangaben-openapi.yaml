@@ -8,7 +8,7 @@ info:
     name: Europace AG
     url: http://developer.europace.de
     email: devsupport@europace2.de
-  version: 1.5.28; 5fdf7de38a1d10f3a8d0f6f9afc6d659aac03696
+  version: 1.5.28; e12280ed12cb707d2c6d4523beac783fd96c4cf9
 externalDocs:
   url: https://developer.europace.de/api/baufismart-kundenangaben-api
 servers:
@@ -47,6 +47,12 @@ paths:
       responses:
         "503":
           $ref: "#/components/responses/ServiceNotAvailable"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "200":
           description: Kundenangaben für einen bestehenden Vorgang
           headers:
@@ -57,12 +63,6 @@ paths:
             application/json;version=1.0:
               schema:
                 $ref: "#/components/schemas/Kundenangaben"
-        "404":
-          $ref: "#/components/responses/NotFound"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "429":
-          $ref: "#/components/responses/TooManyRequests"
         "403":
           $ref: "#/components/responses/Forbidden"
         "409":
@@ -109,14 +109,14 @@ paths:
           $ref: "#/components/responses/UnprocessableEntity"
         "401":
           $ref: "#/components/responses/Unauthorized"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "204":
           description: Kundenangaben in einem bestehenden Vorgang überschrieben
           headers:
             X-TraceId:
               $ref: "#/components/headers/tracingIdHeader"
               style: simple
-        "429":
-          $ref: "#/components/responses/TooManyRequests"
         "403":
           $ref: "#/components/responses/Forbidden"
         "409":
@@ -154,12 +154,6 @@ paths:
       responses:
         "503":
           $ref: "#/components/responses/ServiceNotAvailable"
-        "422":
-          $ref: "#/components/responses/UnprocessableEntity"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "429":
-          $ref: "#/components/responses/TooManyRequests"
         "201":
           description: Kundenangaben in neuen Vorgang importiert
           headers:
@@ -170,6 +164,12 @@ paths:
             application/json;version=1.0:
               schema:
                 $ref: "#/components/schemas/KundenangabenImportResponse"
+        "422":
+          $ref: "#/components/responses/UnprocessableEntity"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
         "403":
           $ref: "#/components/responses/Forbidden"
         "409":
@@ -4644,6 +4644,7 @@ components:
             - PSD_NORD_FILIALE
             - PSD_NORD_RATENKREDIT
             - PSD_NUERNBERG
+            - PSD_NUERNBERG_VERM
             - PSD_RHEINNECKARSAAR
             - PSD_RHEINNECKARS_BEV
             - PSD_RHEINNECKARSAAR_RATENKREDIT
@@ -4712,6 +4713,7 @@ components:
             - RAIBA_STRAUBING
             - RAIBA_SUEDSTORMARN
             - RAIBA_TANNHAUSEN
+            - VR_TAUFKIRCHEN_DO
             - RAIBA_VAREL_NORD
             - RAIBA_WEISSENBURG
             - RAIBA_WESERMARSCH
@@ -4830,6 +4832,7 @@ components:
             - SPK_BURGENLANDKREIS
             - SPK_CHEMNITZ
             - SPK_CHEMNITZ_RATENKREDIT
+            - SPK_DACHAU
             - SPK_DARMSTADT
             - SPK_DEGGENDORF
             - SPK_DIEBURG
@@ -4868,6 +4871,7 @@ components:
             - SPK_GIESSEN
             - SPK_GIFHORN
             - SPK_GLADBECK
+            - SPK_GOETTINGEN
             - SSK_GREBENSTEIN
             - SPK_GUENZBURG_KRUM
             - SPK_GUETERSLOH
@@ -5012,6 +5016,7 @@ components:
             - SPK_SCHWEINFURT_HAS
             - SPK_SIEGEN
             - SPK_SOEST
+            - SPK_SONNEBERG
             - SPK_SPREE_NEISSE
             - SPK_ST_BLASIEN
             - SPK_STADE
@@ -5345,6 +5350,7 @@ components:
             - VON_ESSEN_BANK
             - VON_ESSEN_BANK_RATENKREDIT
             - VON_ESSEN_BANKGH
+            - VR_ALTENBURGER_LAND
             - VR_AMBERG
             - VR_BAD_HERSFELD
             - VR_BAD_KISSINGEN
@@ -5431,6 +5437,7 @@ components:
             - VR_SPANGENBERG_MOR
             - VR_SPARDA_HESSEN_BEV
             - VR_STEINLACH_W_H
+            - VR_SUEDBANK
             - VR_SUEDL_WEINSTRASSE
             - VR_SUEDNIEDERSACHSEN
             - VR_SUEDPFALZ
