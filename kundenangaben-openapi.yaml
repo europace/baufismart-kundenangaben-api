@@ -8,7 +8,7 @@ info:
     neuen Vorgang auf der Europace Plattform.
   termsOfService: https://docs.api.europace.de/nutzungsbedingungen/
   title: Kundenangaben API
-  version: 1.5.30; c87ff3bc8a6c33db456b639f92f5230b5a4557c1
+  version: 1.5.31; 806f5103bf8e90b235a5d76cb9eac761cebeb2f7
 externalDocs:
   url: https://developer.europace.de/api/baufismart-kundenangaben-api
 servers:
@@ -1718,6 +1718,9 @@ components:
           - KEIN_EINSATZ
           - VERKAUFEN
           - ALS_ZUSATZSICHERHEIT
+        einzusetzenderBetragBeiEinsatzAlsZusatzsicherheit:
+          type: number
+          format: double
         id:
           type: string
           description: Eindeutige interne ID
@@ -4894,6 +4897,7 @@ components:
             - PENKA
             - PILOT
             - POSTBANK
+            - POSTBANK_RATENKREDIT
             - PROLOSMART
             - PROVINZIAL_NW
             - PROVINZIAL_RHEINLAND
