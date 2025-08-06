@@ -8,7 +8,7 @@ info:
     neuen Vorgang auf der Europace Plattform.
   termsOfService: https://docs.api.europace.de/nutzungsbedingungen/
   title: Kundenangaben API
-  version: 1.5.31; 806f5103bf8e90b235a5d76cb9eac761cebeb2f7
+  version: 1.5.32; 669c2a1c1dfa91ccbf955c29de0eb5bd72023e76
 externalDocs:
   url: https://developer.europace.de/api/baufismart-kundenangaben-api
 servers:
@@ -2293,6 +2293,7 @@ components:
           BAUSPARDARLEHEN: "#/components/schemas/Bauspardarlehen"
           FORWARDDARLEHEN: "#/components/schemas/Forwarddarlehen"
           KFW_DARLEHEN: "#/components/schemas/KfwDarlehen"
+          KONSTANTDARLEHEN: "#/components/schemas/Konstantdarlehen"
           PRIVATDARLEHEN: "#/components/schemas/Privatdarlehen"
           REGIONAL_FOERDER_DARLEHEN: "#/components/schemas/RegionalFoerderDarlehen"
           VARIABLES_DARLEHEN: "#/components/schemas/VariablesDarlehen"
@@ -2329,6 +2330,7 @@ components:
             - $ref: "#/components/schemas/Bauspardarlehen"
             - $ref: "#/components/schemas/Forwarddarlehen"
             - $ref: "#/components/schemas/KfwDarlehen"
+            - $ref: "#/components/schemas/Konstantdarlehen"
             - $ref: "#/components/schemas/Privatdarlehen"
             - $ref: "#/components/schemas/RegionalFoerderDarlehen"
             - $ref: "#/components/schemas/VariablesDarlehen"
@@ -3769,6 +3771,39 @@ components:
           format: double
         kommentar:
           type: string
+    Konstantdarlehen:
+      type: object
+      allOf:
+      - $ref: "#/components/schemas/Finanzierungsbaustein"
+      - type: object
+        properties:
+          auszahlungszeitpunkt:
+            type: string
+            format: date
+          bereitstellungszinsfreieZeitInMonaten:
+            type: integer
+            format: int32
+            minimum: 0
+          darlehensbetrag:
+            type: number
+            format: double
+          id:
+            type: string
+            description: Eindeutige interne ID
+          provision:
+            type: number
+            format: double
+            description: Angabe in Prozent.
+          rate:
+            type: number
+            format: double
+            description: Gewünschte Rate in Euro pro Monat.
+          referenzId:
+            type: string
+            description: "Eindeutige Referenz-ID für diesen Finanzierungsbaustein.\
+              \ Sie gilt nur innerhalb dieses Aufrufs, ist freiwählbar und wird nicht\
+              \ abgespeichert. Auf sie wird beim (optionalen) Ablösen der bestehenden\
+              \ Darlehen bei Anschlussfinanzierung verwiesen."
     Kontakt:
       type: object
       properties:
