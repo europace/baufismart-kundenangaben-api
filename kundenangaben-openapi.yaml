@@ -8,7 +8,7 @@ info:
     neuen Vorgang auf der Europace Plattform.
   termsOfService: https://docs.api.europace.de/nutzungsbedingungen/
   title: Kundenangaben API
-  version: 1.5.32; 669c2a1c1dfa91ccbf955c29de0eb5bd72023e76
+  version: 1.5.33; 475fc7dfb2bb390765f630b5c229784a19842f4e
 externalDocs:
   url: https://developer.europace.de/api/baufismart-kundenangaben-api
 servers:
@@ -1701,6 +1701,8 @@ components:
           type: string
         darlehensliste:
           type: array
+          deprecated: true
+          description: Ersetzt durch 'darlehenslisteErfassung'
           items:
             oneOf:
             - $ref: "#/components/schemas/BestehendesBauspardarlehen"
@@ -2251,6 +2253,8 @@ components:
           $ref: "#/components/schemas/Haushaltsausgaben"
         bestehendeImmobilien:
           type: array
+          deprecated: true
+          description: Ersetzt durch 'bestehendeImmobilienErfassung'
           items:
             $ref: "#/components/schemas/BestehendeImmobilie"
         bestehendeImmobilienErfassung:
@@ -2416,6 +2420,8 @@ components:
       properties:
         darlehensliste:
           type: array
+          deprecated: true
+          description: Ersetzt durch 'darlehenslisteErfassung'
           items:
             $ref: "#/components/schemas/BestehendesDarlehenDesFinanzierungsobjektes"
         darlehenslisteErfassung:
@@ -2657,6 +2663,8 @@ components:
           description: Eindeutige interne ID
         kinder:
           type: array
+          deprecated: true
+          description: Ersetzt durch 'kinderErfassung'
           items:
             $ref: "#/components/schemas/Kind"
         kinderErfassung:
@@ -2783,6 +2791,8 @@ components:
           description: Eindeutige interne ID
         stellplaetze:
           type: array
+          deprecated: true
+          description: Ersetzt durch 'stellplaetzeErfassung'
           items:
             $ref: "#/components/schemas/Stellplatz"
         stellplaetzeErfassung:
@@ -3700,7 +3710,7 @@ components:
           tilgungsfreieAnlaufjahre:
             type: integer
             format: int32
-            description: "1, 2, 3, 4 oder 5 Jahre"
+            description: "1, 2, 3, 4, 5 oder 10 Jahre"
           zinsbindungInJahren:
             type: integer
             format: int32
@@ -3836,6 +3846,7 @@ components:
             \ dieses Aufrufs, ist freiwählbar und wird nicht abgespeichert. Auf sie\
             \ wird an mehreren Stellen verwiesen. Hier kann auch die externeKundenId\
             \ verwendet werden."
+          minLength: 1
         wohnsituation:
           $ref: "#/components/schemas/Wohnsituation"
         zusatzangaben:
@@ -4225,6 +4236,7 @@ components:
         eigenleistung:
           type: number
           format: double
+          deprecated: true
           description: Persönlich erbrachte Arbeitsleistung als Eigenleistung
         eigenleistungErfassung:
           $ref: "#/components/schemas/EigenleistungErfassung"
@@ -4851,6 +4863,7 @@ components:
             - KSK_REUTLINGEN
             - KSK_RHEIN_HUNSRUECK
             - KSK_SAALE_ORLA
+            - KSK_SAALE_ORLA_RATENKREDIT
             - KSK_SAARLOUIS
             - KSK_SAARPFALZ
             - KSK_SCHWALM_EDER
@@ -4877,6 +4890,7 @@ components:
             - LBS_BAYERN_BAUSPAREN
             - LBS_BREMEN
             - LBS_HESSEN_THUERINGEN
+            - LBS_MUSTER
             - LBS_NORD
             - LBS_OST
             - LBS_RHEINLAND_PFALZ
@@ -4893,6 +4907,7 @@ components:
             - MAINZ_VOBA
             - MHB
             - MHB_GENO_KOMBI_EP
+            - MHB_VERBUND_RELAX
             - MHB_VERBUND_VV
             - MITTELBRANDENBURGISCHE_SPK_POTSDAM
             - MITTELBRANDENBURGISCHE_SPK_TEST
@@ -5206,6 +5221,7 @@ components:
             - SPK_HANAU
             - SPK_HANAUERLAND
             - SPK_HANNOVER
+            - SPK_HANNOVER_V2
             - SPK_HARBURG_BUXTEHUDE
             - SPK_HASLACH_ZELL
             - SPK_HEGAUBODENSEE
@@ -5375,6 +5391,7 @@ components:
             - SPK_WESTERWALDSIEG
             - SPK_WESTHOLSTEIN
             - SPK_WESTMUENSTERLAND
+            - SPK_WETZLAR
             - SPK_WIEHL
             - SPK_WILHELMSHAVEN
             - SPK_WITTEN
@@ -6317,6 +6334,7 @@ components:
         mieteMonatlich:
           type: number
           format: double
+          deprecated: true
           description: "Bitte Feld 'mieteMonatlich' nicht mehr verwenden. Falls mitgeschickt,\
             \ werden die Angaben ins Feld 'vermietungErfassung' kopiert, falls 'vermietungErfassung'\
             \ leer ist."
