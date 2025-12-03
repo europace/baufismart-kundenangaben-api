@@ -8,7 +8,7 @@ info:
     neuen Vorgang auf der Europace Plattform.
   termsOfService: https://docs.api.europace.de/nutzungsbedingungen/
   title: Kundenangaben API
-  version: 1.5.34; 49065edfa161ac2570df9256d0dd593a9e7196d3
+  version: 1.5.35; 1bed543a46889cdf78a234e1845671e9999c282a
 externalDocs:
   url: https://developer.europace.de/api/baufismart-kundenangaben-api
 servers:
@@ -1282,14 +1282,25 @@ components:
               - SIGNAL_IDUNA_FREIRAUM_F_50
               - SIGNAL_IDUNA_FREIRAUM_F_50_16
               - BHW_TARIF_FI1
+              - BHW_TARIF_DB_FI1
               - BHW_TARIF_FI2
+              - BHW_TARIF_DB_FI2
               - BHW_TARIF_FI3
+              - BHW_TARIF_DB_FI3
               - BHW_TARIF_FI3N
               - BHW_TARIF_FI4
+              - BHW_TARIF_DB_FI4
               - BHW_TARIF_FI4N
+              - BHW_TARIF_DB_FI5
+              - BHW_TARIF_DB_FI6
               - BHW_TARIF_FX1
+              - BHW_TARIF_DB_FX1
               - BHW_TARIF_FX2
+              - BHW_TARIF_DB_FX2
+              - BHW_TARIF_DB_FX5
+              - BHW_TARIF_DB_FX6
               - BHW_TARIF_REN
+              - BHW_TARIF_DB_REN
               - BHW_TARIF_DISPOPLUS
               - BHW_TARIF_DX3
               - BHW_TARIF_DX4
@@ -1310,6 +1321,10 @@ components:
               - BHW_TARIF_DV3
               - BHW_TARIF_DV3N
               - BHW_TARIF_WM
+              - BHW_TARIF_DB_WR1
+              - BHW_TARIF_DB_WR2
+              - BHW_TARIF_DB_WU1
+              - BHW_TARIF_DB_WU2
               - BHW_TARIF_FI1N
               - BHW_TARIF_FI2N
               - BHW_TARIF_FX1N
