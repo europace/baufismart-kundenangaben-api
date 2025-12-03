@@ -8,7 +8,7 @@ info:
     neuen Vorgang auf der Europace Plattform.
   termsOfService: https://docs.api.europace.de/nutzungsbedingungen/
   title: Kundenangaben API
-  version: 1.5.35; 1bed543a46889cdf78a234e1845671e9999c282a
+  version: 1.5.35; <local>
 externalDocs:
   url: https://developer.europace.de/api/baufismart-kundenangaben-api
 servers:
@@ -1820,8 +1820,7 @@ components:
         zinsbindungBis:
           type: string
           format: date
-      required:
-      - '@type'
+      required: []
     BestehendesDarlehenDesFinanzierungsobjektes:
       type: object
       properties:
