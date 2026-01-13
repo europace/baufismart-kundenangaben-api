@@ -8,7 +8,7 @@ info:
     neuen Vorgang auf der Europace Plattform.
   termsOfService: https://docs.api.europace.de/nutzungsbedingungen/
   title: Kundenangaben API
-  version: 1.5.36; c4200fdf994d62a7e9077f626c6890bfe8cdd7aa
+  version: 1.5.37; 9c58ee69c890b4cd462e90ea82e0ec11a53c9f26
 externalDocs:
   url: https://developer.europace.de/api/baufismart-kundenangaben-api
 servers:
@@ -4596,6 +4596,7 @@ components:
           - $ref: "#/components/schemas/SoSchnellWieMoeglich"
     Praemienzahlung:
       type: object
+      deprecated: true
       description: "Mögliche Typen: MonatlichePraemienzahlung, EinmaligePraemienzahlung"
       discriminator:
         mapping:
@@ -5927,20 +5928,37 @@ components:
           type: string
           description: ReferenzId eines Kunden.
         praemienzahlung:
+          deprecated: true
+          description: This field is deprecated. Use ratenschutzDetailsBase64 instead.
+            May still be present in legacy data.
           oneOf:
           - $ref: "#/components/schemas/EinmaligePraemienzahlung"
           - $ref: "#/components/schemas/MonatlichePraemienzahlung"
+        ratenschutzDetailsBase64:
+          type: string
+          description: "Base64-kodierte Ratenschutzdetails aus dem BaufiSmart-Frontend.\
+            \ Maximale Größe: 100 KB. Format: Base64-String."
+          example: eyJwZXJzb25JZCI6IjEyMyIsIm1vZHVsZSI6IlJlc2lkdWFsIGRlYnQifQ==
+          maxLength: 140000
+          minLength: 0
         risikoabsicherungswuensche:
           type: array
+          deprecated: true
+          description: This field is deprecated. Use ratenschutzDetailsBase64 instead.
+            May still be present in legacy data.
           items:
             $ref: "#/components/schemas/Risikoabsicherungswunsch"
         versicherungsbeginn:
           type: string
           format: date
+          deprecated: true
           description: Der Versicherungsschutz muss in der Zukunft liegen.
         versicherungsdauerInJahren:
           type: integer
           format: int32
+          deprecated: true
+          description: This field is deprecated. Use ratenschutzDetailsBase64 instead.
+            May still be present in legacy data.
     Ratenspanne:
       type: object
       allOf:
@@ -6064,6 +6082,7 @@ components:
           type: string
     Risikoabsicherungswunsch:
       type: object
+      deprecated: true
       properties:
         abzusicherndesRisiko:
           type: string
