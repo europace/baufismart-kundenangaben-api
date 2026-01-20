@@ -257,6 +257,8 @@ example-response:
 }
 ```
 
+Hint: Do not forget to decide whether you want to have your case created in production oder in the test-area. Use the "datenkontext" "TEST_MODUS" or "ECHT_GESCHAEFT" accordingly. Note: You cannot transfer the case from test-area to production afterwards. 
+
 ## Get case
 
 As advisor, I can read out the data of the case, to create an individual financial proposal for a convincing sales story.
@@ -367,11 +369,32 @@ example-response:
 204 - no content
 ```
 
+## Test body
+You can check the validity of your request using 
+
+```http
+POST /kundenangaben/body-validation HTTP/1.1
+Host: baufinanzierung.api.europace.de
+Content-Type: application/json
+Authorization: Bearer eyJraWQiOiJZUUZYT...
+```
+
+Do not forget to put your case data in the body.
+The validation of your body is positive, if you get the response
+
+```http
+200 - ok
+{
+    "vorgangsnummer": "vorgangsnummer-Test123"
+}
+```
+
+
 ## FAQ
 
 ### Where is the case created?
 
-The owner of a case is always the advsior. His settings are applied to the case and teh advisor  usually also receives the sales commission. The editor of the case may differ, for example, if the completion of the customer data is done by a team assistant or a clearing takes place.
+The owner of a case is always the advsior. His settings are applied to the case and the advisor  usually also receives the sales commission. The editor of the case may differ, for example, if the completion of the customer data is done by a team assistant or a clearing takes place.
 
 If the advisor is not specified under 'betreuung', the subject of the API client is entered as advisor in the generated case. If no editor is specified, the user will be asked if he/she wants to take over the editing during the first editing.
 
