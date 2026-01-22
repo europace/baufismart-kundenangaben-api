@@ -8,7 +8,7 @@ info:
     neuen Vorgang auf der Europace Plattform.
   termsOfService: https://docs.api.europace.de/nutzungsbedingungen/
   title: Kundenangaben API
-  version: 1.5.37; 9c58ee69c890b4cd462e90ea82e0ec11a53c9f26
+  version: 1.5.38; 27caf6fef39b55a2c568f61123a8ec15969d772e
 externalDocs:
   url: https://developer.europace.de/api/baufismart-kundenangaben-api
 servers:
@@ -3684,7 +3684,7 @@ components:
           zinsbindungInJahren:
             type: integer
             format: int32
-            description: 10 oder 20 Jahre
+            description: 10 Jahre
       description: "Wohneigentum für Familien (Programm-Nr.: 300)"
       required:
       - tilgungsfreieAnlaufjahre
@@ -3706,7 +3706,7 @@ components:
           zinsbindungInJahren:
             type: integer
             format: int32
-            description: 10 oder 20 Jahre
+            description: 10 Jahre
       description: "Jung kauft Alt (Programm-Nr.: 308)"
       required:
       - tilgungsfreieAnlaufjahre
