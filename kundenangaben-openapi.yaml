@@ -8,7 +8,7 @@ info:
     neuen Vorgang auf der Europace Plattform.
   termsOfService: https://docs.api.europace.de/nutzungsbedingungen/
   title: Kundenangaben API
-  version: 1.5.38; 27caf6fef39b55a2c568f61123a8ec15969d772e
+  version: 1.5.39; 63ec55cd32d41132934200a7c82991730a09ef18
 externalDocs:
   url: https://developer.europace.de/api/baufismart-kundenangaben-api
 servers:
@@ -3774,6 +3774,8 @@ components:
         unterhalt:
           type: number
           format: double
+        unterhaltWirdBezogen:
+          type: boolean
     KinderErfassung:
       type: object
       description: "Mögliche Typen: VorhandeneKinder, KeineKinder"
@@ -5417,6 +5419,7 @@ components:
             - SPK_ZWICKAU
             - SPREEWALDBANK
             - SSK_AUGSBURG
+            - SSK_BAD_PYRMONT
             - SSK_BOCHOLT
             - SSK_BURGDORF
             - SSK_CUXHAVEN
@@ -5651,6 +5654,7 @@ components:
             - VOBA_RHEIN_WEHRA
             - VOBA_RHEIN_WUPPER
             - VOBA_RIESA
+            - VOBA_RNH_BAD_KREUZ
             - VOBA_RUESSELSHEIM
             - VOBA_RUHR_MITTE
             - VOBA_SAUERLAND
@@ -5773,6 +5777,7 @@ components:
             - VR_ODER_SPREE
             - VR_OSTBAYERN_MITTE
             - VR_OSTHOLSTEIN
+            - VR_PASSAU
             - VR_REGENSBURG_SCHWAN
             - VR_RHEIN_ERFT
             - VR_RHEIN_MOSEL
