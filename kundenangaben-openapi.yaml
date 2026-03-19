@@ -8,7 +8,7 @@ info:
     neuen Vorgang auf der Europace Plattform.
   termsOfService: https://docs.api.europace.de/nutzungsbedingungen/
   title: Kundenangaben API
-  version: 1.5.39; 63ec55cd32d41132934200a7c82991730a09ef18
+  version: 1.5.40; e51efd4978911f95ed53be533659bd1ada8afa59
 externalDocs:
   url: https://developer.europace.de/api/baufismart-kundenangaben-api
 servers:
@@ -3837,6 +3837,28 @@ components:
           type: string
         telefonnummer:
           $ref: "#/components/schemas/Telefonnummer"
+        validierungEmail:
+          type: string
+          description: Validierungsstatus für E-Mail
+          enum:
+          - UNGEPRUEFT
+          - FORMAT_VALIDIERT
+          - EXISTENZ_VALIDIERT
+          - VERBRAUCHER_VERIFIZIERT
+          - BERATER_VERIFIZIERT
+          - KEINE_ANTWORT
+          readOnly: true
+        validierungTelefonnummer:
+          type: string
+          description: Validierungsstatus für Telefonnummer
+          enum:
+          - UNGEPRUEFT
+          - FORMAT_VALIDIERT
+          - EXISTENZ_VALIDIERT
+          - VERBRAUCHER_VERIFIZIERT
+          - BERATER_VERIFIZIERT
+          - KEINE_ANTWORT
+          readOnly: true
         weitereKontaktmoeglichkeiten:
           type: string
     Kunde:
@@ -4908,6 +4930,7 @@ components:
             - LBS_BREMEN
             - LBS_HESSEN_THUERINGEN
             - LBS_MUSTER
+            - LBS_MUSTER_ZWEI
             - LBS_NORD
             - LBS_OST
             - LBS_RHEINLAND_PFALZ
