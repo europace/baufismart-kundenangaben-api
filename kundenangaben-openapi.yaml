@@ -8,7 +8,7 @@ info:
     neuen Vorgang auf der Europace Plattform.
   termsOfService: https://docs.api.europace.de/nutzungsbedingungen/
   title: Kundenangaben API
-  version: 1.5.40; e51efd4978911f95ed53be533659bd1ada8afa59
+  version: 1.5.41; 33ab04da3843cbb1026af7751ff0a112ea1aaa00
 externalDocs:
   url: https://developer.europace.de/api/baufismart-kundenangaben-api
 servers:
@@ -1281,30 +1281,48 @@ components:
               - SIGNAL_IDUNA_FREIRAUM_F_40_16
               - SIGNAL_IDUNA_FREIRAUM_F_50
               - SIGNAL_IDUNA_FREIRAUM_F_50_16
-              - BHW_TARIF_FI1
+              - BHW_TARIF_DB_C1
+              - BHW_TARIF_DB_C1L
+              - BHW_TARIF_DB_C1M
+              - BHW_TARIF_DB_C2
+              - BHW_TARIF_DB_C2L
+              - BHW_TARIF_DB_C2M
+              - BHW_TARIF_DB_C3
+              - BHW_TARIF_DB_C3L
+              - BHW_TARIF_DB_C3M
+              - BHW_TARIF_DB_C5
+              - BHW_TARIF_DB_C5L
+              - BHW_TARIF_DB_C5M
+              - BHW_TARIF_DB_C7
               - BHW_TARIF_DB_FI1
-              - BHW_TARIF_FI2
               - BHW_TARIF_DB_FI2
-              - BHW_TARIF_FI3
               - BHW_TARIF_DB_FI3
-              - BHW_TARIF_FI3N
-              - BHW_TARIF_FI4
               - BHW_TARIF_DB_FI4
-              - BHW_TARIF_FI4N
               - BHW_TARIF_DB_FI5
               - BHW_TARIF_DB_FI6
-              - BHW_TARIF_FX1
               - BHW_TARIF_DB_FX1
-              - BHW_TARIF_FX2
               - BHW_TARIF_DB_FX2
               - BHW_TARIF_DB_FX5
               - BHW_TARIF_DB_FX6
-              - BHW_TARIF_REN
+              - BHW_TARIF_DB_O1K
+              - BHW_TARIF_DB_O1L
+              - BHW_TARIF_DB_O1M
+              - BHW_TARIF_DB_O2K
+              - BHW_TARIF_DB_O2L
+              - BHW_TARIF_DB_O2M
+              - BHW_TARIF_DB_R1
+              - BHW_TARIF_DB_R2
+              - BHW_TARIF_DB_R2U
+              - BHW_TARIF_DB_R3
+              - BHW_TARIF_DB_R3U
               - BHW_TARIF_DB_REN
+              - BHW_TARIF_DB_RU1
+              - BHW_TARIF_DB_WR1
+              - BHW_TARIF_DB_WR1N
+              - BHW_TARIF_DB_WR2
+              - BHW_TARIF_DB_WU1
+              - BHW_TARIF_DB_WU2
               - BHW_TARIF_DISPOPLUS
-              - BHW_TARIF_DX3
-              - BHW_TARIF_DX4
-              - BHW_TARIF_DX5
               - BHW_TARIF_DM3
               - BHW_TARIF_DM3N
               - BHW_TARIF_DM4
@@ -1320,15 +1338,23 @@ components:
               - BHW_TARIF_DV2N
               - BHW_TARIF_DV3
               - BHW_TARIF_DV3N
-              - BHW_TARIF_WM
-              - BHW_TARIF_DB_WR1
-              - BHW_TARIF_DB_WR2
-              - BHW_TARIF_DB_WU1
-              - BHW_TARIF_DB_WU2
+              - BHW_TARIF_DX3
+              - BHW_TARIF_DX4
+              - BHW_TARIF_DX5
+              - BHW_TARIF_FI1
               - BHW_TARIF_FI1N
+              - BHW_TARIF_FI2
               - BHW_TARIF_FI2N
+              - BHW_TARIF_FI3
+              - BHW_TARIF_FI3N
+              - BHW_TARIF_FI4
+              - BHW_TARIF_FI4N
+              - BHW_TARIF_FX1
               - BHW_TARIF_FX1N
+              - BHW_TARIF_FX2
               - BHW_TARIF_FX2N
+              - BHW_TARIF_REN
+              - BHW_TARIF_WM
               - DT_RING_TARIF_FT
               - DT_RING_TARIF_FT_0
               - DT_RING_TARIF_FT_1
@@ -5058,6 +5084,7 @@ components:
             - RAIBA_HANDEWITT
             - RAIBA_HEILSBRONN_WIN
             - RAIBA_HESSENNORD
+            - RAIBA_HIRSCHAU
             - RAIBA_HOCHFRANKEN
             - RAIBA_IM_DONAUTAL
             - RAIBA_IM_OBERLAND
@@ -5366,6 +5393,7 @@ components:
             - SPK_OSNABRUECK
             - SPK_OSTERODE
             - SPK_OSTPRIGNITZ
+            - SPK_OSTPRIGNITZ_RATENKREDIT
             - SPK_PADERBORN_DET
             - SPK_PARCHIM
             - SPK_PASSAU
