@@ -367,6 +367,107 @@ example-response:
 204 - no content
 ```
 
+## Contact Data Validation Status
+
+The Kundenangaben API supports validation status fields for phone numbers and email addresses. These fields allow trusted systems to mark contact data as verified, which can be used by downstream processes for automated communication, quality assurance, and prioritization.
+
+### Validation Fields
+
+Two optional fields are available in the `kontakt` object:
+
+```json
+"kontakt": {
+    "telefonnummer": {
+        "vorwahl": "030",
+        "nummer": "420860"
+    },
+    "validierungTelefonnummer": "VERBRAUCHER_VERIFIZIERT",
+    "email": "max.mustermann@europace.de",
+    "validierungEmail": "VERBRAUCHER_VERIFIZIERT",
+    "weitereKontaktmoeglichkeiten": "beste Erreichbarkeit von 18-20Uhr"
+}
+```
+
+### Validation Status Values
+
+Both `validierungTelefonnummer` and `validierungEmail` use the same validation levels:
+
+| Status | Description |
+|--------|-------------|
+| `UNGEPRUEFT` | No validation performed (explicitly known as not checked) |
+| `FORMAT_VALIDIERT` | Format has been validated (e.g., valid phone number structure, valid email syntax) |
+| `EXISTENZ_VALIDIERT` | Existence has been technically validated (e.g., number is reachable, mailbox exists) |
+| `VERBRAUCHER_VERIFIZIERT` | Consumer has verified the contact data (e.g., SMS code entered, double opt-in link clicked) |
+| `BERATER_VERIFIZIERT` | Advisor has verified the contact data (e.g., successful phone call, email communication) |
+| `KEINE_ANTWORT` | Validation attempt was made but no response received (e.g., SMS not answered, confirmation email not clicked) |
+| `null` | Validation status is **unknown** (default for backward compatibility) |
+
+**Important distinction:**
+- `null` = No information about validation status (unknown, e.g., old data before feature introduction)
+- `UNGEPRUEFT` = Explicitly known that no validation has been performed yet
+
+### Read-Only Access for Most Partners
+
+The validation fields are **read-only for most partners**. Only trusted internal systems are allowed to set these fields. If you attempt to set validation status values, they will be automatically removed from your request.
+
+**When reading cases (GET):**
+- All partners can read the validation status
+- Use this information to adapt your processes (e.g., prioritize verified contact data)
+
+**When creating/updating cases (POST/PUT):**
+- Validation fields you send will be ignored
+- The API will automatically set them to `null`
+
+### Automatic Invalidation on Contact Data Changes
+
+**Important behavior:** When you update a case and change phone number or email address, the corresponding validation status is automatically set to `null`. This ensures that validation status always matches the actual contact data.
+
+**Example workflow:**
+
+1. **Case created by trusted system with validated data:**
+   ```json
+   {
+       "telefonnummer": {"vorwahl": "030", "nummer": "12345678"},
+       "validierungTelefonnummer": "VERBRAUCHER_VERIFIZIERT"
+   }
+   ```
+
+2. **You update the case and change the phone number:**
+   - GET the case data (including validation status)
+   - Change phone number to `{"vorwahl": "040", "nummer": "87654321"}`
+   - PUT the complete data back
+
+3. **Result after update:**
+   ```json
+   {
+       "telefonnummer": {"vorwahl": "040", "nummer": "87654321"},
+       "validierungTelefonnummer": null
+   }
+   ```
+   The validation status is automatically set to `null` because the phone number changed.
+
+### Update Without Contact Data Changes
+
+**Important:** If you update a case but **do not change** the phone number or email, the validation status is **preserved**.
+
+**Example:**
+- Case has validated phone number and `validierungTelefonnummer: "VERBRAUCHER_VERIFIZIERT"`
+- You update only financing preferences (phone number unchanged)
+- Result: `validierungTelefonnummer` remains `"VERBRAUCHER_VERIFIZIERT"`
+
+This is why you should always:
+1. GET the current case data
+2. Modify only the fields you need to change
+3. PUT the complete data back
+
+### Use Cases for Validation Status
+
+- **Automated communication**: Only send SMS/emails to verified contact data
+- **Quality assurance**: Distinguish between verified and unverified contact data
+- **Prioritization**: Prioritize cases with verified contact information
+- **Compliance**: Better data quality for GDPR compliance
+- **Process optimization**: Adapt workflows based on verification level
+
 ## FAQ
 
 ### Where is the case created?
