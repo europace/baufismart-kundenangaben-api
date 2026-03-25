@@ -8,7 +8,7 @@ info:
     neuen Vorgang auf der Europace Plattform.
   termsOfService: https://docs.api.europace.de/nutzungsbedingungen/
   title: Kundenangaben API
-  version: 1.5.41; 33ab04da3843cbb1026af7751ff0a112ea1aaa00
+  version: 1.5.42; d2d0378cd57ba98a3e29e337a0e1d20da8f4e1fe
 externalDocs:
   url: https://developer.europace.de/api/baufismart-kundenangaben-api
 servers:
@@ -3873,7 +3873,6 @@ components:
           - VERBRAUCHER_VERIFIZIERT
           - BERATER_VERIFIZIERT
           - KEINE_ANTWORT
-          readOnly: true
         validierungTelefonnummer:
           type: string
           description: Validierungsstatus für Telefonnummer
@@ -3884,7 +3883,6 @@ components:
           - VERBRAUCHER_VERIFIZIERT
           - BERATER_VERIFIZIERT
           - KEINE_ANTWORT
-          readOnly: true
         weitereKontaktmoeglichkeiten:
           type: string
     Kunde:
