@@ -8,7 +8,7 @@ info:
     neuen Vorgang auf der Europace Plattform.
   termsOfService: https://docs.api.europace.de/nutzungsbedingungen/
   title: Kundenangaben API
-  version: 1.5.42; d2d0378cd57ba98a3e29e337a0e1d20da8f4e1fe
+  version: 1.5.42; 64ed73e10310a7b2e6a50cd7b908771e79ec3c40
 externalDocs:
   url: https://developer.europace.de/api/baufismart-kundenangaben-api
 servers:
