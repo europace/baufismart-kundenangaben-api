@@ -8,7 +8,7 @@ info:
     neuen Vorgang auf der Europace Plattform.
   termsOfService: https://docs.api.europace.de/nutzungsbedingungen/
   title: Kundenangaben API
-  version: 1.5.42; 64ed73e10310a7b2e6a50cd7b908771e79ec3c40
+  version: 1.5.43; f42cdc34f50725b704af853c4a1910baba0cde8c
 externalDocs:
   url: https://developer.europace.de/api/baufismart-kundenangaben-api
 servers:
@@ -3931,6 +3931,12 @@ components:
             $ref: "#/components/schemas/Haushalt"
           maxItems: 4
           minItems: 0
+        sicherungsgeberHaushalte:
+          type: array
+          description: "Sicherungsgeber-Haushalte. Ergänzt das Feld 'haushalte', das\
+            \ ausschließlich Antragsteller-Haushalte enthält."
+          items:
+            $ref: "#/components/schemas/Haushalt"
     KundenangabenImportResponse:
       type: object
       description: Ergebnis des Imports der Kundenangaben.
@@ -4837,12 +4843,15 @@ components:
             - DZ_HYP_EP
             - DZ_HYP_TEST
             - DZ_HYP_OHNE_RV
+            - DZ_HYP_ORV_SMART
             - DZ_HYP_VERTRIEB_EP
             - DZ_PRIVATBANK
             - ELLWANGER
             - ERFURTER_BANK
             - ERGO
             - EVANGELISCHE_BANK
+            - FI_TEST_310
+            - FI_TEST_559
             - FINANSBANK
             - FOERDE_SPK
             - FRANKENBERGER_BANK
@@ -4966,6 +4975,7 @@ components:
             - LIFESTYLE_PROTECTION
             - LIFESTYLE_PROTECTION_LEBENSVERSICHERUNG
             - LIGA_BANK
+            - LLOYDS_BANK
             - L_BANK
             - MAERKISCHE_BANK
             - MAINZ_VOBA
@@ -5635,6 +5645,7 @@ components:
             - VOBA_LAHR
             - VOBA_LAUPHEIM_ILL
             - VOBA_LAUTERBACH_SCHL
+            - VOBA_LINGEN
             - VOBA_LIPPSTADT
             - VOBA_LIPPSTADT_UEBER
             - VOBA_LOEBAU_ZITTAU
@@ -5813,6 +5824,7 @@ components:
             - VR_MITTELSACHSEN
             - VR_MUSTERBANK
             - VR_MUSTERBANK_BTO
+            - VR_MUSTERBANK_KAM
             - VR_MUSTERBANK_VRB
             - VR_NEU_ULM
             - VR_NEUBURG_RAIN
