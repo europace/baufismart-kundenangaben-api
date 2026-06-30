@@ -5,6 +5,7 @@ on:
       - "publish/*"
 jobs:
   auto-pull-request:
+    if: github.event.created == true
     name: PullRequestAction
     runs-on: ubuntu-latest
     permissions:

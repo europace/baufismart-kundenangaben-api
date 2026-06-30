@@ -8,7 +8,7 @@ info:
     neuen Vorgang auf der Europace Plattform.
   termsOfService: https://docs.api.europace.de/nutzungsbedingungen/
   title: Kundenangaben API
-  version: 1.5.43; f42cdc34f50725b704af853c4a1910baba0cde8c
+  version: 1.5.44; 3ae3128423677dce7b235b542b3182164dff0a52
 externalDocs:
   url: https://developer.europace.de/api/baufismart-kundenangaben-api
 servers:
@@ -2806,6 +2806,85 @@ components:
           $ref: "#/components/schemas/SonstigesVermoegen"
         summeSparplaene:
           $ref: "#/components/schemas/Sparplaene"
+    IbshImmoeigentum:
+      type: object
+      allOf:
+      - $ref: "#/components/schemas/RegionalFoerderbankProgramm"
+      - type: object
+        properties:
+          tilgungsWunsch:
+            $ref: "#/components/schemas/IbshImmoeigentumTilgungsWunsch"
+          zinsbindungInJahren:
+            type: integer
+            format: int32
+            description: "Zinsbindung in Jahren. Erlaubte Werte: 10 oder 15"
+      description: IB.SH Immo Eigentum
+      required:
+      - zinsbindungInJahren
+    IbshImmoeigentumTilgungsWunsch:
+      type: object
+      properties:
+        anfaenglicheTilgung:
+          type: number
+          format: double
+          description: "Anfängliche Tilgung in Prozent. Erlaubte Werte: 1.0 oder 2.0"
+    IbshImmofix:
+      type: object
+      allOf:
+      - $ref: "#/components/schemas/RegionalFoerderbankProgramm"
+      - type: object
+        properties:
+          tilgungsWunsch:
+            $ref: "#/components/schemas/IbshImmofixTilgungsWunsch"
+          zinsbindungInJahren:
+            type: integer
+            format: int32
+            description: "Zinsbindung in Jahren. Erlaubte Werte: 10 oder 15"
+      description: IB.SH Immofix
+      required:
+      - zinsbindungInJahren
+    IbshImmofixTilgungsWunsch:
+      type: object
+      properties:
+        anfaenglicheTilgung:
+          type: number
+          format: double
+          description: "Anfängliche Tilgung in Prozent. Erlaubte Werte: 1.0 oder 2.0"
+    IbshImmoflex:
+      type: object
+      allOf:
+      - $ref: "#/components/schemas/RegionalFoerderbankProgramm"
+      - type: object
+        properties:
+          tilgungsWunsch:
+            $ref: "#/components/schemas/IbshImmoflexTilgungsWunsch"
+          zinsbindungInJahren:
+            type: integer
+            format: int32
+            description: "Zinsbindung in Jahren. Erlaubte Werte: 5, 10 oder 15"
+      description: IB.SH Immoflex
+      required:
+      - zinsbindungInJahren
+    IbshImmoflexTilgungsWunsch:
+      type: object
+      properties:
+        anfaenglicheTilgung:
+          type: number
+          format: double
+          description: "Anfängliche Tilgung in Prozent. Erlaubte Werte: 1.0 oder 2.0"
+    IbshImmokonstant:
+      type: object
+      allOf:
+      - $ref: "#/components/schemas/RegionalFoerderbankProgramm"
+      - type: object
+        properties:
+          volltilgerWennAnnuitaetenOderForward:
+            type: boolean
+            description: "Gibt an, dass das Darlehen als Volltilger (Annuitäten- oder\
+              \ Forward-Darlehen) genutzt wird. Muss true sein."
+      description: IB.SH Immokonstant
+      required:
+      - volltilgerWennAnnuitaetenOderForward
     Immobilie:
       type: object
       description: "Bitte Felder 'erbbaurecht', 'stellplaetze' und 'grundbuchangabe'\
@@ -5812,6 +5891,7 @@ components:
             - VR_KITZINGEN
             - VR_LANDAU_MENGKOFEN
             - VR_LAUSITZ
+            - VR_LEONBERG
             - VR_LEVO_BANK
             - VR_LICHTENFELS
             - VR_MAIN_KINZIG
@@ -6082,9 +6162,14 @@ components:
     RegionalFoerderbankProgramm:
       type: object
       description: "Mögliche Typen: LBankKombiDarlehenWohnen, LBankWohnenMitKind,\
-        \ LBankWohnenMitZukunft, NRWBankWohneigentum, NRWBankGebaeudesanierung, NRWBankNachhaltigWohnen"
+        \ LBankWohnenMitZukunft, NRWBankWohneigentum, NRWBankGebaeudesanierung, NRWBankNachhaltigWohnen,\
+        \ IbshImmoeigentum, IbshImmofix, IbshImmoflex, IbshImmokonstant"
       discriminator:
         mapping:
+          IBSH_IMMOEIGENTUM: "#/components/schemas/IbshImmoeigentum"
+          IBSH_IMMOFIX: "#/components/schemas/IbshImmofix"
+          IBSH_IMMOFLEX: "#/components/schemas/IbshImmoflex"
+          IBSH_IMMOKONSTANT: "#/components/schemas/IbshImmokonstant"
           L_BANK_KOMBI_DARLEHEN_WOHNEN: "#/components/schemas/LBankKombiDarlehenWohnen"
           L_BANK_WOHNEN_MIT_KIND: "#/components/schemas/LBankWohnenMitKind"
           L_BANK_WOHNEN_MIT_ZUKUNFT: "#/components/schemas/LBankWohnenMitZukunft"
