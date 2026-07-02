@@ -8,7 +8,7 @@ info:
     neuen Vorgang auf der Europace Plattform.
   termsOfService: https://docs.api.europace.de/nutzungsbedingungen/
   title: Kundenangaben API
-  version: 1.5.44; 3ae3128423677dce7b235b542b3182164dff0a52
+  version: 1.5.45; 6a3ecba3b9925ba8dc1c60536344e354781cce2f
 externalDocs:
   url: https://developer.europace.de/api/baufismart-kundenangaben-api
 servers:
@@ -843,6 +843,7 @@ components:
               - BKM_ZINS_PLUS_3_BONUS
               - BKM_HAUS_PLUS_WAHLZUTEILUNG
               - BKM_HAUS_PLUS_KOMBI
+              - BKM_HAUS_PLUS_GARANTIE_KONSTANT_RATE
               - FUCHS_IMMO_1
               - FUCHS_IMMO_1_PLUS
               - FUCHS_IMMO_2
