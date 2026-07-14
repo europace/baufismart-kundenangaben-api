@@ -4206,7 +4206,7 @@ components:
         ausstellungsdatum:
           type: string
           format: date
-          description: Das Ausstellungsdatum muss in der Zukunft liegen.
+          description: Das Ausstellungsdatum muss in der Vergangenheit liegen.
         ausweisart:
           oneOf:
           - $ref: "#/components/schemas/AndereAusweisart"
