@@ -2567,12 +2567,14 @@ components:
           type: integer
           format: int32
         ausstattung:
+          description: "SEHR_EINFACH wird noch nicht unterstützt."
           type: string
           enum:
           - STARK_GEHOBEN
           - GEHOBEN
           - MITTEL
           - EINFACH
+          - SEHR_EINFACH
         baujahr:
           type: integer
           format: int32
@@ -6903,6 +6905,16 @@ components:
             - HOCH
             - MITTEL
             - GERING
+          belWertVGrad:
+            description: "Wird aktuell noch nicht unterstützt. Bitte grad verwenden."
+            type: string
+            enum:
+              - KERNSANIERUNG
+              - UMFASSEND
+              - UEBERWIEGEND
+              - MITTEL
+              - GERING
+              - UNERHEBLICH
           jahr:
             type: integer
             format: int32
