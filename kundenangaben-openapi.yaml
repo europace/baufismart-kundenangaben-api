@@ -8,7 +8,7 @@ info:
     neuen Vorgang auf der Europace Plattform.
   termsOfService: https://docs.api.europace.de/nutzungsbedingungen/
   title: Kundenangaben API
-  version: 1.5.45; 6a3ecba3b9925ba8dc1c60536344e354781cce2f
+  version: 1.5.46; f54d8f07fa3fe2bfa3f2c01486f5c7bd4b37dd94
 externalDocs:
   url: https://developer.europace.de/api/baufismart-kundenangaben-api
 servers:
@@ -2568,11 +2568,13 @@ components:
           format: int32
         ausstattung:
           type: string
+          description: SEHR_EINFACH wird noch nicht unterstützt.
           enum:
           - STARK_GEHOBEN
           - GEHOBEN
           - MITTEL
           - EINFACH
+          - SEHR_EINFACH
         baujahr:
           type: integer
           format: int32
@@ -6897,6 +6899,17 @@ components:
       - $ref: "#/components/schemas/ModernisierungErfassung"
       - type: object
         properties:
+          belWertVGrad:
+            type: string
+            deprecated: true
+            description: Wird noch nicht unterstützt. Bitte 'grad' verwenden.
+            enum:
+            - KERNSANIERUNG
+            - UMFASSEND
+            - UEBERWIEGEND
+            - MITTEL
+            - GERING
+            - UNERHEBLICH
           grad:
             type: string
             enum:
