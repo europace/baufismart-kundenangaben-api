@@ -8,7 +8,7 @@ info:
     neuen Vorgang auf der Europace Plattform.
   termsOfService: https://docs.api.europace.de/nutzungsbedingungen/
   title: Kundenangaben API
-  version: 1.5.46; f54d8f07fa3fe2bfa3f2c01486f5c7bd4b37dd94
+  version: 1.5.47; afd0a80b88f4f5a463b84eab4836f069561e816f
 externalDocs:
   url: https://developer.europace.de/api/baufismart-kundenangaben-api
 servers:
@@ -1765,6 +1765,9 @@ components:
         einzusetzenderBetragBeiEinsatzAlsZusatzsicherheit:
           type: number
           format: double
+        externeId:
+          type: string
+          description: Vom Client verwaltete ID für das Matching
         id:
           type: string
           description: Eindeutige interne ID
@@ -3865,6 +3868,9 @@ components:
     Kind:
       type: object
       properties:
+        externeId:
+          type: string
+          description: Vom Client verwaltete ID für das Matching
         geburtsdatum:
           type: string
           format: date
@@ -4208,7 +4214,7 @@ components:
         ausstellungsdatum:
           type: string
           format: date
-          description: Das Ausstellungsdatum muss in der Zukunft liegen.
+          description: Das Ausstellungsdatum muss in der Vergangenheit liegen.
         ausweisart:
           oneOf:
           - $ref: "#/components/schemas/AndereAusweisart"
@@ -6764,6 +6770,9 @@ components:
         restschuld:
           type: number
           format: double
+        vertragsnummer:
+          type: string
+          description: Fachliche Schlüsselnummer des Vertrags beim Gläubiger
         wirdAbgeloest:
           type: boolean
     VerfuegbaresEinkommenAusschoepfen:
