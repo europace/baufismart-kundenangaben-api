@@ -8,7 +8,7 @@ info:
     neuen Vorgang auf der Europace Plattform.
   termsOfService: https://docs.api.europace.de/nutzungsbedingungen/
   title: Kundenangaben API
-  version: 1.5.47; afd0a80b88f4f5a463b84eab4836f069561e816f
+  version: 1.5.48; bbb067eea866cfb81dd19f74ecef2b39b3b305b1
 externalDocs:
   url: https://developer.europace.de/api/baufismart-kundenangaben-api
 servers:
@@ -3446,8 +3446,8 @@ components:
       type: object
       description: "Mögliche Typen: KfwProgramm124, KfwProgramm151, KfwProgramm152,\
         \ KfwProgramm153, KfwProgramm159, KfwProgramm167, KfwProgramm261Neubau, KfwProgramm261Sanierung,\
-        \ KfwProgramm262, KfwProgramm297, KfwProgramm298, KfwProgramm300, KfwProgramm308,\
-        \ KfwProgramm358, KfwProgramm359"
+        \ KfwProgramm262, KfwProgramm296, KfwProgramm297, KfwProgramm298, KfwProgramm300,\
+        \ KfwProgramm308, KfwProgramm358, KfwProgramm359"
       discriminator:
         mapping:
           KFW_PROGRAMM_124: "#/components/schemas/KfwProgramm124"
@@ -3459,6 +3459,7 @@ components:
           KFW_PROGRAMM_261_NEUBAU: "#/components/schemas/KfwProgramm261Neubau"
           KFW_PROGRAMM_261_SANIERUNG: "#/components/schemas/KfwProgramm261Sanierung"
           KFW_PROGRAMM_262: "#/components/schemas/KfwProgramm262"
+          KFW_PROGRAMM_296: "#/components/schemas/KfwProgramm296"
           KFW_PROGRAMM_297: "#/components/schemas/KfwProgramm297"
           KFW_PROGRAMM_298: "#/components/schemas/KfwProgramm298"
           KFW_PROGRAMM_300: "#/components/schemas/KfwProgramm300"
@@ -3712,6 +3713,35 @@ components:
       deprecated: true
       description: "Energieeffizient Bauen und Sanieren: Einzelmaßnahmen (Programm-Nr.:\
         \ 262). Die Zinsbindung beträgt immer 10 Jahre. Das Programm wurde eingestellt."
+    KfwProgramm296:
+      type: object
+      allOf:
+      - $ref: "#/components/schemas/KfwProgramm"
+      - type: object
+        properties:
+          kfwEnergieEffizienzStandard:
+            type: string
+            description: Standard = KLIMAFREUNDLICH_STANDARD
+            enum:
+            - KLIMAFREUNDLICH_STANDARD
+            - KLIMAFREUNDLICH_QNG
+            - STANDARD_55
+          laufzeitInJahren:
+            type: integer
+            format: int32
+            maximum: 35
+            minimum: 10
+          tilgungsfreieAnlaufjahre:
+            type: integer
+            format: int32
+            description: "1, 2, 3, 4, 5 oder 10 Jahre"
+          zinsbindungInJahren:
+            type: integer
+            format: int32
+            description: 10 Jahre
+      description: "Klimafreund. Neubau Niedrigpreissegment (Programm-Nr.: 296)"
+      required:
+      - tilgungsfreieAnlaufjahre
     KfwProgramm297:
       type: object
       allOf:
@@ -3720,7 +3750,7 @@ components:
         properties:
           kfwEnergieEffizienzStandard:
             type: string
-            description: 'Standard = KLIMAFREUNDLICH_STANDARD '
+            description: Standard = KLIMAFREUNDLICH_STANDARD
             enum:
             - KLIMAFREUNDLICH_STANDARD
             - KLIMAFREUNDLICH_QNG
@@ -3749,7 +3779,7 @@ components:
         properties:
           kfwEnergieEffizienzStandard:
             type: string
-            description: 'Standard = KLIMAFREUNDLICH_STANDARD '
+            description: Standard = KLIMAFREUNDLICH_STANDARD
             enum:
             - KLIMAFREUNDLICH_STANDARD
             - KLIMAFREUNDLICH_QNG
@@ -3779,7 +3809,7 @@ components:
           kfwEnergieEffizienzStandard:
             type: string
             default: KLIMAFREUNDLICH_STANDARD
-            description: 'Standard = KLIMAFREUNDLICH_STANDARD '
+            description: Standard = KLIMAFREUNDLICH_STANDARD
             enum:
             - KLIMAFREUNDLICH_STANDARD
             - KLIMAFREUNDLICH_QNG
