@@ -8,7 +8,7 @@ info:
     neuen Vorgang auf der Europace Plattform.
   termsOfService: https://docs.api.europace.de/nutzungsbedingungen/
   title: Kundenangaben API
-  version: 1.5.48; bbb067eea866cfb81dd19f74ecef2b39b3b305b1
+  version: 1.5.49; 07f14aa97e67d853515b40277af2633ad6d42f6b
 externalDocs:
   url: https://developer.europace.de/api/baufismart-kundenangaben-api
 servers:
@@ -947,6 +947,7 @@ components:
               - LBS_SUED_SPRINTER_RIESTER
               - LBS_SUED_SPRINTER_E_RIESTER
               - LBS_SUED_VORSORGER_RIESTER
+              - LBS_SUED_FLEX
               - LBS_HT_CLASSIC_S_2015
               - LBS_HT_CLASSIC_F_2015
               - LBS_HT_CLASSIC_L_2015
