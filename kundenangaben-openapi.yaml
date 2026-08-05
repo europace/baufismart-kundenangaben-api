@@ -8,7 +8,7 @@ info:
     neuen Vorgang auf der Europace Plattform.
   termsOfService: https://docs.api.europace.de/nutzungsbedingungen/
   title: Kundenangaben API
-  version: 1.5.49; 07f14aa97e67d853515b40277af2633ad6d42f6b
+  version: 1.5.50; a237a7102f6ff14f487a4a5a8cf8f617a837f64c
 externalDocs:
   url: https://developer.europace.de/api/baufismart-kundenangaben-api
 servers:
@@ -399,6 +399,24 @@ components:
         properties:
           typ:
             type: string
+    AngabenZurGewerkeVergabe:
+      type: object
+      properties:
+        baufirma:
+          $ref: "#/components/schemas/Baufirma"
+        gewerkeVergabe:
+          type: string
+          enum:
+          - EINZELVERGABE_ARCHITEKT
+          - GESAMTVERGABE_BAUFIRMA
+        zahlungsabwicklungParagraf3MaBV:
+          type: boolean
+          description: "Zahlungsabwicklung nach § 3 MaBV. Nur bei GESAMTVERGABE_BAUFIRMA\
+            \ relevant, wird anderenfalls ignoriert."
+        zahlungsabwicklungParagraf7MaBV:
+          type: boolean
+          description: "Zahlungsabwicklung nach § 7 MaBV. Nur bei GESAMTVERGABE_BAUFIRMA\
+            \ relevant, wird anderenfalls ignoriert."
     Angestellter:
       type: object
       allOf:
@@ -699,6 +717,14 @@ components:
         nameKontoinhaberKeinKunde:
           type: string
           description: Name des von den Kunden abweichenden Kontoinhabers.
+    Baufirma:
+      type: object
+      description: "Nur bei GESAMTVERGABE_BAUFIRMA relevant, wird anderenfalls ignoriert."
+      properties:
+        anschrift:
+          $ref: "#/components/schemas/Anschrift"
+        name:
+          type: string
     Baugrundstueck:
       type: object
       allOf:
@@ -4587,6 +4613,15 @@ components:
       - laufzeitInJahren
       - tilgungsfreieAnlaufjahre
       - zinsbindungInJahren
+    NahestehendePerson:
+      type: object
+      description: "Nahestehende Person. Nur bei POLITISCH_EXPONIERTE_PERSON_NAHESTEHEND\
+        \ relevant, wird anderenfalls ignoriert."
+      properties:
+        nachname:
+          type: string
+        vorname:
+          type: string
     Nebenkosten:
       type: object
       description: "Fehlt die Notargebühr, wird automatisch ein Standardwert in %\
@@ -4748,6 +4783,21 @@ components:
         staatsangehoerigkeit:
           type: string
           description: ISO 3166-1 alpha-2 code
+    PolitischExponiertePerson:
+      type: object
+      properties:
+        ausgeuebtesAmt:
+          type: string
+          description: "Ausgeübtes Amt. Nur bei POLITISCH_EXPONIERTE_PERSON_SELBST\
+            \ relevant, wird anderenfalls ignoriert."
+        nahestehendePerson:
+          $ref: "#/components/schemas/NahestehendePerson"
+        status:
+          type: string
+          enum:
+          - POLITISCH_EXPONIERTE_PERSON_KEIN_BEZUG
+          - POLITISCH_EXPONIERTE_PERSON_SELBST
+          - POLITISCH_EXPONIERTE_PERSON_NAHESTEHEND
     Praeferenzen:
       type: object
       properties:
@@ -7288,6 +7338,7 @@ components:
             oneOf:
             - $ref: "#/components/schemas/ZusatzangabenImmobilieDsl"
             - $ref: "#/components/schemas/ZusatzangabenImmobilieGenopace"
+            - $ref: "#/components/schemas/ZusatzangabenImmobilieIbsh"
             - $ref: "#/components/schemas/ZusatzangabenImmobilieIng"
             - $ref: "#/components/schemas/ZusatzangabenImmobilieSantander"
     ZusatzangabenImmobilieDsl:
@@ -7306,11 +7357,12 @@ components:
     ZusatzangabenImmobilieFuerProduktanbieter:
       type: object
       description: "Mögliche Typen: ZusatzangabenImmobilieIng, ZusatzangabenImmobilieSantander,\
-        \ ZusatzangabenImmobilieGenopace, ZusatzangabenImmobilieDsl"
+        \ ZusatzangabenImmobilieGenopace, ZusatzangabenImmobilieDsl, ZusatzangabenImmobilieIbsh"
       discriminator:
         mapping:
           ZUSATZANGABEN_IMMOBILIE_DSL: "#/components/schemas/ZusatzangabenImmobilieDsl"
           ZUSATZANGABEN_IMMOBILIE_GENOPACE: "#/components/schemas/ZusatzangabenImmobilieGenopace"
+          ZUSATZANGABEN_IMMOBILIE_IBSH: "#/components/schemas/ZusatzangabenImmobilieIbsh"
           ZUSATZANGABEN_IMMOBILIE_ING: "#/components/schemas/ZusatzangabenImmobilieIng"
           ZUSATZANGABEN_IMMOBILIE_SANTANDER: "#/components/schemas/ZusatzangabenImmobilieSantander"
         propertyName: '@type'
@@ -7328,6 +7380,19 @@ components:
           anpassungenNachBelWertV:
             $ref: "#/components/schemas/AnpassungenNachBelWertV"
       description: Volksbanken und Raiffeisenbanken
+    ZusatzangabenImmobilieIbsh:
+      type: object
+      allOf:
+      - $ref: "#/components/schemas/ZusatzangabenImmobilieFuerProduktanbieter"
+      - type: object
+        properties:
+          angabenZurGewerkeVergabe:
+            $ref: "#/components/schemas/AngabenZurGewerkeVergabe"
+          baujahrHeizung:
+            type: integer
+            format: int32
+            description: Baujahr der Heizung als vierstellige Jahreszahl.
+      description: IB.SH (Investitionsbank Schleswig-Holstein)
     ZusatzangabenImmobilieIng:
       type: object
       allOf:
@@ -7376,6 +7441,7 @@ components:
           items:
             oneOf:
             - $ref: "#/components/schemas/ZusatzangabenKundeDsl"
+            - $ref: "#/components/schemas/ZusatzangabenKundeIbsh"
             - $ref: "#/components/schemas/ZusatzangabenKundeIng"
             - $ref: "#/components/schemas/ZusatzangabenKundeMhb"
     ZusatzangabenKundeDsl:
@@ -7393,10 +7459,11 @@ components:
     ZusatzangabenKundeFuerProduktanbieter:
       type: object
       description: "Mögliche Typen: ZusatzangabenKundeIng, ZusatzangabenKundeMhb,\
-        \ ZusatzangabenKundeDsl"
+        \ ZusatzangabenKundeDsl, ZusatzangabenKundeIbsh"
       discriminator:
         mapping:
           ZUSATZANGABEN_KUNDE_DSL: "#/components/schemas/ZusatzangabenKundeDsl"
+          ZUSATZANGABEN_KUNDE_IBSH: "#/components/schemas/ZusatzangabenKundeIbsh"
           ZUSATZANGABEN_KUNDE_ING: "#/components/schemas/ZusatzangabenKundeIng"
           ZUSATZANGABEN_KUNDE_MHB: "#/components/schemas/ZusatzangabenKundeMhb"
         propertyName: '@type'
@@ -7405,6 +7472,15 @@ components:
           type: string
       required:
       - '@type'
+    ZusatzangabenKundeIbsh:
+      type: object
+      allOf:
+      - $ref: "#/components/schemas/ZusatzangabenKundeFuerProduktanbieter"
+      - type: object
+        properties:
+          politischExponiertePerson:
+            $ref: "#/components/schemas/PolitischExponiertePerson"
+      description: IB.SH (Investitionsbank Schleswig-Holstein)
     ZusatzangabenKundeIng:
       type: object
       allOf:
