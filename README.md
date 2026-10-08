@@ -21,7 +21,7 @@ Kundenangaben are also named as `Erfasste Daten` in Mortgage APIs (Vorgaenge-API
 
 Feedback and questions about the model are welcome as [GitHub Issue](https://github.com/europace/baufismart-kundenangaben-api/issues/new).
 
-## Usecases
+## Use cases
 
 - create case with customer data from CRM system or lead applications
 - get case with customer data
@@ -472,7 +472,7 @@ This is why you should always:
 
 ### Where is the case created?
 
-The owner of a case is always the advsior. His settings are applied to the case and teh advisor  usually also receives the sales commission. The editor of the case may differ, for example, if the completion of the customer data is done by a team assistant or a clearing takes place.
+The owner of a case is always the advsior. His settings are applied to the case and the advisor usually also receives the sales commission. The editor of the case may differ, for example, if the completion of the customer data is done by a team assistant or a clearing takes place.
 
 If the advisor is not specified under 'betreuung', the subject of the API client is entered as advisor in the generated case. If no editor is specified, the user will be asked if he/she wants to take over the editing during the first editing.
 
