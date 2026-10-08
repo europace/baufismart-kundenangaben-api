@@ -8,7 +8,7 @@ info:
     neuen Vorgang auf der Europace Plattform.
   termsOfService: https://docs.api.europace.de/nutzungsbedingungen/
   title: Kundenangaben API
-  version: 1.5.50; a237a7102f6ff14f487a4a5a8cf8f617a837f64c
+  version: 1.5.51; 93078b5c7af487ddbccf7c3d01e3d0c291d8d055
 externalDocs:
   url: https://developer.europace.de/api/baufismart-kundenangaben-api
 servers:
@@ -2622,12 +2622,45 @@ components:
           type: boolean
         energieEffizienzAusweis:
           $ref: "#/components/schemas/EnergieEffizienzAusweis"
+        geplanteModernisierungsangaben:
+          $ref: "#/components/schemas/GeplanteModernisierungsangaben"
         modernisierung:
           $ref: "#/components/schemas/Modernisierung"
         modernisierungErfassung:
           $ref: "#/components/schemas/ModernisierungErfassung"
         nutzung:
           $ref: "#/components/schemas/Nutzung"
+        zustand:
+          type: string
+          enum:
+          - SEHR_GUT
+          - GUT
+          - MITTEL
+          - MAESSIG
+          - SCHLECHT
+    GeplanteModernisierungsangaben:
+      type: object
+      properties:
+        ausstattung:
+          type: string
+          enum:
+          - STARK_GEHOBEN
+          - GEHOBEN
+          - MITTEL
+          - EINFACH
+          - SEHR_EINFACH
+        belWertVModernisierungsgrad:
+          type: string
+          enum:
+          - KERNSANIERUNG
+          - UMFASSEND
+          - UEBERWIEGEND
+          - MITTEL
+          - GERING
+          - UNERHEBLICH
+        modernisierungsjahr:
+          type: integer
+          format: int32
         zustand:
           type: string
           enum:
@@ -4788,8 +4821,9 @@ components:
       properties:
         ausgeuebtesAmt:
           type: string
-          description: "Ausgeübtes Amt. Nur bei POLITISCH_EXPONIERTE_PERSON_SELBST\
-            \ relevant, wird anderenfalls ignoriert."
+          description: "Ausgeübtes Amt. Relevant bei POLITISCH_EXPONIERTE_PERSON_SELBST\
+            \ (Amt des Antragstellers) und POLITISCH_EXPONIERTE_PERSON_NAHESTEHEND\
+            \ (Amt der nahestehenden Person), wird anderenfalls ignoriert."
         nahestehendePerson:
           $ref: "#/components/schemas/NahestehendePerson"
         status:
@@ -5020,6 +5054,8 @@ components:
             - ERGO
             - EVANGELISCHE_BANK
             - FI_TEST_310
+            - FI_TEST_421
+            - FI_TEST_541
             - FI_TEST_559
             - FINANSBANK
             - FOERDE_SPK
@@ -5027,6 +5063,7 @@ components:
             - FRANKFURTER_VOBA
             - GENERALI
             - GENO_BANK_ESSEN
+            - GENOBANK_ESSEN
             - GENOBAN_UNTERALLGAEU
             - GLADBACHER_BANK
             - GLADBACHER_BANK_EIGE
@@ -5867,6 +5904,7 @@ components:
             - VOBA_OEYNHAUSEN_SPEZ
             - VOBA_OFFENBURG
             - VOBA_OFFENBURG_SLBST
+            - VOBA_OLPE_WENDEN_DR
             - VOBA_PADERBORN_HOEXTER
             - VOBA_PFORZHEIM
             - VOBA_PINNEBERG
@@ -5984,6 +6022,7 @@ components:
             - VR_LEONBERG
             - VR_LEVO_BANK
             - VR_LICHTENFELS
+            - VR_LICHTENFELS_1
             - VR_MAIN_KINZIG
             - VR_MAIN_KINZIG_VER
             - VR_MECKLENBURG
@@ -6991,8 +7030,6 @@ components:
         properties:
           belWertVGrad:
             type: string
-            deprecated: true
-            description: Wird noch nicht unterstützt. Bitte 'grad' verwenden.
             enum:
             - KERNSANIERUNG
             - UMFASSEND
