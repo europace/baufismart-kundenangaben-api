@@ -367,6 +367,94 @@ example-response:
 204 - no content
 ```
 
+## Deviating owners of the property
+
+The owners of the property are maintained in `finanzierungsobjekt.immobilie`. The fields are optional and are supported in create (`POST /kundenangaben`), replace (`PUT /kundenangaben/{vorgangsnummer}`) and get (`GET /kundenangaben/{vorgangsnummer}`).
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `kundenreferenzIdsDerEigentuemer` | array of string | `referenzId`s of the applicants (`haushalte[].kunden[].referenzId`) who are owners of the property. |
+| `nameEigentuemerKeinKunde` | string | First and last name of **one** additional owner who is not captured as an applicant. |
+
+Meaning of the combinations:
+
+| `kundenreferenzIdsDerEigentuemer` | `nameEigentuemerKeinKunde` | Owners of the property |
+|---|---|---|
+| omitted | omitted | all applicants (default case) |
+| omitted | set | **only** the additional person, no applicant |
+| set | omitted | the listed applicants (all applicants = default case) |
+| set | set | the listed applicants and the additional person |
+
+Rules:
+* Every entry of `kundenreferenzIdsDerEigentuemer` must refer to an applicant of the case. Duplicates are not allowed. At most 8 entries.
+* An empty list `kundenreferenzIdsDerEigentuemer: []` is rejected.
+* An empty or whitespace-only `nameEigentuemerKeinKunde` is rejected.
+* Both fields may be omitted. Omitting both is the same as "all applicants are owners".
+* The fields are only allowed on the financed property (`finanzierungsobjekt.immobilie`). On existing properties (`haushalte[].finanzielleSituation.bestehendeImmobilienErfassung.bestehendeImmobilien[].immobilie`) they are rejected.
+
+Normalization to the default case:
+* If both fields are omitted, all applicants are owners. Separately stored owner data is removed on create and replace.
+* If `kundenreferenzIdsDerEigentuemer` contains exactly all applicants and `nameEigentuemerKeinKunde` is omitted, this is also the default case. The owner data is not stored separately.
+* Only if at least one applicant is missing from `kundenreferenzIdsDerEigentuemer` or `nameEigentuemerKeinKunde` is set, the deviating owner constellation is stored.
+
+Response behavior (get):
+* The fields are returned only for a deviating owner constellation.
+* In the default case, including cases without any owner data (older cases), both fields are missing from the response.
+
+example-request (applicants `jsonRef1` and `jsonRef2`; `jsonRef2` and one additional owner are the owners):
+```http
+POST /kundenangaben HTTP/1.1
+Host: baufinanzierung.api.europace.de
+Content-Type: application/json;version=1.0
+Authorization: Bearer eyJraWQiOiJZUUZYT...
+```
+```json
+{
+  "importMetadaten": { ... },
+  "kundenangaben": {
+    "haushalte": [
+      {
+        "kunden": [
+          { "referenzId": "jsonRef1", "personendaten": { ... } },
+          { "referenzId": "jsonRef2", "personendaten": { ... } }
+        ]
+      }
+    ],
+    "finanzierungsobjekt": {
+      "immobilie": {
+        "kundenreferenzIdsDerEigentuemer": ["jsonRef2"],
+        "nameEigentuemerKeinKunde": "Erika Musterfrau"
+      }
+    }
+  }
+}
+```
+
+example-response (get, same case):
+```json
+{
+  "haushalte": [ ... ],
+  "finanzierungsobjekt": {
+    "immobilie": {
+      "kundenreferenzIdsDerEigentuemer": ["jsonRef2"],
+      "nameEigentuemerKeinKunde": "Erika Musterfrau"
+    }
+  }
+}
+```
+
+example-response (get, default case: all applicants are owners, no additional owner):
+```json
+{
+  "haushalte": [ ... ],
+  "finanzierungsobjekt": {
+    "immobilie": {
+      ...
+    }
+  }
+}
+```
+
 ## Contact Data Validation Status
 
 The Kundenangaben API supports validation status fields for phone numbers and email addresses. These fields allow trusted systems to mark contact data as verified, which can be used by downstream processes for automated communication, quality assurance, and prioritization.

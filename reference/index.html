@@ -2950,7 +2950,7 @@
           <div class="sect2">
             <h3 id="_aktuelle_version">Aktuelle Version</h3>
             <div class="paragraph">
-              <p><em>Version</em> : 1.5.51; 93078b5c7af487ddbccf7c3d01e3d0c291d8d055</p>
+              <p><em>Version</em> : 1.5.52; 89347eb4ac0acf59b2d74090e7067d44dca5954c</p>
             </div>
           </div>
         <div class="sect2">
@@ -25790,6 +25790,66 @@
                   <td class="tableblock halign-left valign-middle">
                     <div class="content">
                       <div class="paragraph">
+                        <p><strong>kundenreferenzIdsDerEigentuemer</strong>
+                          <br><em>optional</em>
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p>Nur für &#39;finanzierungsobjekt.immobilie&#39; erlaubt; bei bestehenden Immobilien wird der Request abgelehnt. ReferenzIds der Antragstellenden, die Eigentümer der Immobilie sind. Muss mindestens einen Eintrag enthalten, wenn das Feld gesetzt ist. Jede ReferenzId muss zu einem Antragstellenden des Vorgangs gehören und darf nur einmal vorkommen. Bedeutung zusammen mit &#39;nameEigentuemerKeinKunde&#39;: Fehlen beide Felder, sind alle Antragstellenden Eigentümer (Standardfall). Ist nur &#39;nameEigentuemerKeinKunde&#39; gesetzt, ist kein Antragstellender Eigentümer, sondern ausschließlich die zusätzliche Person. Sind beide gesetzt, sind die hier genannten Antragstellenden und die zusätzliche Person Eigentümer. Sind alle Antragstellenden enthalten und &#39;nameEigentuemerKeinKunde&#39; fehlt, gilt ebenfalls der Standardfall; in der Response werden die Felder im Standardfall nicht ausgegeben.</p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                      <p>
+    
+                          <a href="#_string">set[String]</a>
+      
+            
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p><strong>nameEigentuemerKeinKunde</strong>
+                          <br><em>optional</em>
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                        <p>Nur für &#39;finanzierungsobjekt.immobilie&#39; erlaubt; bei bestehenden Immobilien wird der Request abgelehnt. Vor- und Nachname eines zusätzlichen Eigentümers, der nicht als Antragstellender erfasst ist. Es kann genau eine solche Person angegeben werden. Darf nicht leer sein oder nur aus Leerzeichen bestehen. Fehlt &#39;kundenreferenzIdsDerEigentuemer&#39;, ist kein Antragstellender Eigentümer, sondern ausschließlich diese Person.</p>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
+                      <p>
+    
+                          <a href="#_string">String</a>
+      
+      
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="tableblock halign-left valign-middle">
+                    <div class="content">
+                      <div class="paragraph">
                         <p><strong>stellplaetze</strong>
                           <br><em>optional</em>
                         </p>
@@ -26031,7 +26091,7 @@
                   <td class="tableblock halign-left valign-middle">
                     <div class="content">
                       <div class="paragraph">
-                        <p></p>
+                        <p>Jahr, bis zu dem das Erbbaurecht läuft (1000–9999).</p>
                       </div>
                     </div>
                   </td>
@@ -49819,7 +49879,7 @@
                   <td class="tableblock halign-left valign-middle">
                     <div class="content">
                       <div class="paragraph">
-                        <p></p>
+                        <p>Jahr, bis zu dem das Erbbaurecht läuft (1000–9999).</p>
                       </div>
                     </div>
                   </td>

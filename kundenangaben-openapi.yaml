@@ -8,7 +8,7 @@ info:
     neuen Vorgang auf der Europace Plattform.
   termsOfService: https://docs.api.europace.de/nutzungsbedingungen/
   title: Kundenangaben API
-  version: 1.5.51; 93078b5c7af487ddbccf7c3d01e3d0c291d8d055
+  version: 1.5.52; 89347eb4ac0acf59b2d74090e7067d44dca5954c
 externalDocs:
   url: https://developer.europace.de/api/baufismart-kundenangaben-api
 servers:
@@ -2974,6 +2974,38 @@ components:
         id:
           type: string
           description: Eindeutige interne ID
+        kundenreferenzIdsDerEigentuemer:
+          type: array
+          description: "Nur für 'finanzierungsobjekt.immobilie' erlaubt; bei bestehenden\
+            \ Immobilien wird der Request abgelehnt. ReferenzIds der Antragstellenden,\
+            \ die Eigentümer der Immobilie sind. Muss mindestens einen Eintrag enthalten,\
+            \ wenn das Feld gesetzt ist. Jede ReferenzId muss zu einem Antragstellenden\
+            \ des Vorgangs gehören und darf nur einmal vorkommen. Bedeutung zusammen\
+            \ mit 'nameEigentuemerKeinKunde': Fehlen beide Felder, sind alle Antragstellenden\
+            \ Eigentümer (Standardfall). Ist nur 'nameEigentuemerKeinKunde' gesetzt,\
+            \ ist kein Antragstellender Eigentümer, sondern ausschließlich die zusä\
+            tzliche Person. Sind beide gesetzt, sind die hier genannten Antragstellenden\
+            \ und die zusätzliche Person Eigentümer. Sind alle Antragstellenden enthalten\
+            \ und 'nameEigentuemerKeinKunde' fehlt, gilt ebenfalls der Standardfall;\
+            \ in der Response werden die Felder im Standardfall nicht ausgegeben."
+          example:
+          - jsonRef2
+          items:
+            type: string
+          maxItems: 8
+          minItems: 1
+          uniqueItems: true
+        nameEigentuemerKeinKunde:
+          type: string
+          description: "Nur für 'finanzierungsobjekt.immobilie' erlaubt; bei bestehenden\
+            \ Immobilien wird der Request abgelehnt. Vor- und Nachname eines zusä\
+            tzlichen Eigentümers, der nicht als Antragstellender erfasst ist. Es kann\
+            \ genau eine solche Person angegeben werden. Darf nicht leer sein oder\
+            \ nur aus Leerzeichen bestehen. Fehlt 'kundenreferenzIdsDerEigentuemer',\
+            \ ist kein Antragstellender Eigentümer, sondern ausschließlich diese Person."
+          example: Max Mustermann
+          pattern: "[\\s\\S]*[^\\s\\u001C-\\u001F\\u00A0\\u1680\\u2000-\\u200A\\u2028\\\
+            u2029\\u202F\\u205F\\u3000\\uFEFF][\\s\\S]*"
         stellplaetze:
           type: array
           deprecated: true
@@ -4991,6 +5023,7 @@ components:
             - BSQ_BAUSPAR
             - BW_BANK
             - BW_BANK_EP2
+            - BW_BANK_RATENKREDIT
             - CAIXABANK
             - CARDIF
             - CLEARING_BFT
@@ -7149,6 +7182,9 @@ components:
           laufzeitBis:
             type: integer
             format: int32
+            description: "Jahr, bis zu dem das Erbbaurecht läuft (1000–9999)."
+            maximum: 9999
+            minimum: 1000
     VorhandenesGewerbe:
       type: object
       allOf:
