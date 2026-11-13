@@ -8,7 +8,7 @@ info:
     neuen Vorgang auf der Europace Plattform.
   termsOfService: https://docs.api.europace.de/nutzungsbedingungen/
   title: Kundenangaben API
-  version: 1.5.37; 9c58ee69c890b4cd462e90ea82e0ec11a53c9f26
+  version: 1.5.53; 1ef7f53c863dc5c8b27c289e4189589712ecd263
 externalDocs:
   url: https://developer.europace.de/api/baufismart-kundenangaben-api
 servers:
@@ -399,6 +399,24 @@ components:
         properties:
           typ:
             type: string
+    AngabenZurGewerkeVergabe:
+      type: object
+      properties:
+        baufirma:
+          $ref: "#/components/schemas/Baufirma"
+        gewerkeVergabe:
+          type: string
+          enum:
+          - EINZELVERGABE_ARCHITEKT
+          - GESAMTVERGABE_BAUFIRMA
+        zahlungsabwicklungParagraf3MaBV:
+          type: boolean
+          description: "Zahlungsabwicklung nach § 3 MaBV. Nur bei GESAMTVERGABE_BAUFIRMA\
+            \ relevant, wird anderenfalls ignoriert."
+        zahlungsabwicklungParagraf7MaBV:
+          type: boolean
+          description: "Zahlungsabwicklung nach § 7 MaBV. Nur bei GESAMTVERGABE_BAUFIRMA\
+            \ relevant, wird anderenfalls ignoriert."
     Angestellter:
       type: object
       allOf:
@@ -452,7 +470,7 @@ components:
         auszahlungszeitpunkt:
           type: string
           format: date
-          description: Der Auszahlungzeitpunkt muss in der Zukunft liegen.
+          description: Beim Import muss der Auszahlungzeitpunkt in der Zukunft liegen.
         sondertilgungJaehrlich:
           type: number
           format: double
@@ -572,7 +590,8 @@ components:
           befristetBis:
             type: string
             format: date
-            description: Die Befristung der Arbeitserlaubnis muss in der Zukunft liegen.
+            description: Beim Import muss die Befristung der Arbeitserlaubnis in der
+              Zukunft liegen.
     Arbeitsloser:
       type: object
       allOf:
@@ -607,7 +626,7 @@ components:
           befristetBis:
             type: string
             format: date
-            description: Die Aufenthaltserlaubnis muss gültig sein.
+            description: Beim Import muss die Aufenthaltserlaubnis gültig sein.
     Aufenthaltstitel:
       type: object
       description: "Mögliche Typen: Visum, Aufenthaltserlaubnis, Niederlassungserlaubnis,\
@@ -699,6 +718,14 @@ components:
         nameKontoinhaberKeinKunde:
           type: string
           description: Name des von den Kunden abweichenden Kontoinhabers.
+    Baufirma:
+      type: object
+      description: "Nur bei GESAMTVERGABE_BAUFIRMA relevant, wird anderenfalls ignoriert."
+      properties:
+        anschrift:
+          $ref: "#/components/schemas/Anschrift"
+        name:
+          type: string
     Baugrundstueck:
       type: object
       allOf:
@@ -843,6 +870,7 @@ components:
               - BKM_ZINS_PLUS_3_BONUS
               - BKM_HAUS_PLUS_WAHLZUTEILUNG
               - BKM_HAUS_PLUS_KOMBI
+              - BKM_HAUS_PLUS_GARANTIE_KONSTANT_RATE
               - FUCHS_IMMO_1
               - FUCHS_IMMO_1_PLUS
               - FUCHS_IMMO_2
@@ -946,6 +974,7 @@ components:
               - LBS_SUED_SPRINTER_RIESTER
               - LBS_SUED_SPRINTER_E_RIESTER
               - LBS_SUED_VORSORGER_RIESTER
+              - LBS_SUED_FLEX
               - LBS_HT_CLASSIC_S_2015
               - LBS_HT_CLASSIC_F_2015
               - LBS_HT_CLASSIC_L_2015
@@ -1281,30 +1310,48 @@ components:
               - SIGNAL_IDUNA_FREIRAUM_F_40_16
               - SIGNAL_IDUNA_FREIRAUM_F_50
               - SIGNAL_IDUNA_FREIRAUM_F_50_16
-              - BHW_TARIF_FI1
+              - BHW_TARIF_DB_C1
+              - BHW_TARIF_DB_C1L
+              - BHW_TARIF_DB_C1M
+              - BHW_TARIF_DB_C2
+              - BHW_TARIF_DB_C2L
+              - BHW_TARIF_DB_C2M
+              - BHW_TARIF_DB_C3
+              - BHW_TARIF_DB_C3L
+              - BHW_TARIF_DB_C3M
+              - BHW_TARIF_DB_C5
+              - BHW_TARIF_DB_C5L
+              - BHW_TARIF_DB_C5M
+              - BHW_TARIF_DB_C7
               - BHW_TARIF_DB_FI1
-              - BHW_TARIF_FI2
               - BHW_TARIF_DB_FI2
-              - BHW_TARIF_FI3
               - BHW_TARIF_DB_FI3
-              - BHW_TARIF_FI3N
-              - BHW_TARIF_FI4
               - BHW_TARIF_DB_FI4
-              - BHW_TARIF_FI4N
               - BHW_TARIF_DB_FI5
               - BHW_TARIF_DB_FI6
-              - BHW_TARIF_FX1
               - BHW_TARIF_DB_FX1
-              - BHW_TARIF_FX2
               - BHW_TARIF_DB_FX2
               - BHW_TARIF_DB_FX5
               - BHW_TARIF_DB_FX6
-              - BHW_TARIF_REN
+              - BHW_TARIF_DB_O1K
+              - BHW_TARIF_DB_O1L
+              - BHW_TARIF_DB_O1M
+              - BHW_TARIF_DB_O2K
+              - BHW_TARIF_DB_O2L
+              - BHW_TARIF_DB_O2M
+              - BHW_TARIF_DB_R1
+              - BHW_TARIF_DB_R2
+              - BHW_TARIF_DB_R2U
+              - BHW_TARIF_DB_R3
+              - BHW_TARIF_DB_R3U
               - BHW_TARIF_DB_REN
+              - BHW_TARIF_DB_RU1
+              - BHW_TARIF_DB_WR1
+              - BHW_TARIF_DB_WR1N
+              - BHW_TARIF_DB_WR2
+              - BHW_TARIF_DB_WU1
+              - BHW_TARIF_DB_WU2
               - BHW_TARIF_DISPOPLUS
-              - BHW_TARIF_DX3
-              - BHW_TARIF_DX4
-              - BHW_TARIF_DX5
               - BHW_TARIF_DM3
               - BHW_TARIF_DM3N
               - BHW_TARIF_DM4
@@ -1320,15 +1367,23 @@ components:
               - BHW_TARIF_DV2N
               - BHW_TARIF_DV3
               - BHW_TARIF_DV3N
-              - BHW_TARIF_WM
-              - BHW_TARIF_DB_WR1
-              - BHW_TARIF_DB_WR2
-              - BHW_TARIF_DB_WU1
-              - BHW_TARIF_DB_WU2
+              - BHW_TARIF_DX3
+              - BHW_TARIF_DX4
+              - BHW_TARIF_DX5
+              - BHW_TARIF_FI1
               - BHW_TARIF_FI1N
+              - BHW_TARIF_FI2
               - BHW_TARIF_FI2N
+              - BHW_TARIF_FI3
+              - BHW_TARIF_FI3N
+              - BHW_TARIF_FI4
+              - BHW_TARIF_FI4N
+              - BHW_TARIF_FX1
               - BHW_TARIF_FX1N
+              - BHW_TARIF_FX2
               - BHW_TARIF_FX2N
+              - BHW_TARIF_REN
+              - BHW_TARIF_WM
               - DT_RING_TARIF_FT
               - DT_RING_TARIF_FT_0
               - DT_RING_TARIF_FT_1
@@ -1738,6 +1793,9 @@ components:
         einzusetzenderBetragBeiEinsatzAlsZusatzsicherheit:
           type: number
           format: double
+        externeId:
+          type: string
+          description: Vom Client verwaltete ID für das Matching
         id:
           type: string
           description: Eindeutige interne ID
@@ -1932,7 +1990,7 @@ components:
           befristetBis:
             type: string
             format: date
-            description: Die EU Blue Card muss gültig sein.
+            description: Beim Import muss die EU Blue Card gültig sein.
     DarlehensbetragBenoetigtKurzNachDarlehensvertrag:
       type: object
       allOf:
@@ -2541,11 +2599,13 @@ components:
           format: int32
         ausstattung:
           type: string
+          description: SEHR_EINFACH wird noch nicht unterstützt.
           enum:
           - STARK_GEHOBEN
           - GEHOBEN
           - MITTEL
           - EINFACH
+          - SEHR_EINFACH
         baujahr:
           type: integer
           format: int32
@@ -2563,12 +2623,45 @@ components:
           type: boolean
         energieEffizienzAusweis:
           $ref: "#/components/schemas/EnergieEffizienzAusweis"
+        geplanteModernisierungsangaben:
+          $ref: "#/components/schemas/GeplanteModernisierungsangaben"
         modernisierung:
           $ref: "#/components/schemas/Modernisierung"
         modernisierungErfassung:
           $ref: "#/components/schemas/ModernisierungErfassung"
         nutzung:
           $ref: "#/components/schemas/Nutzung"
+        zustand:
+          type: string
+          enum:
+          - SEHR_GUT
+          - GUT
+          - MITTEL
+          - MAESSIG
+          - SCHLECHT
+    GeplanteModernisierungsangaben:
+      type: object
+      properties:
+        ausstattung:
+          type: string
+          enum:
+          - STARK_GEHOBEN
+          - GEHOBEN
+          - MITTEL
+          - EINFACH
+          - SEHR_EINFACH
+        belWertVModernisierungsgrad:
+          type: string
+          enum:
+          - KERNSANIERUNG
+          - UMFASSEND
+          - UEBERWIEGEND
+          - MITTEL
+          - GERING
+          - UNERHEBLICH
+        modernisierungsjahr:
+          type: integer
+          format: int32
         zustand:
           type: string
           enum:
@@ -2780,6 +2873,85 @@ components:
           $ref: "#/components/schemas/SonstigesVermoegen"
         summeSparplaene:
           $ref: "#/components/schemas/Sparplaene"
+    IbshImmoeigentum:
+      type: object
+      allOf:
+      - $ref: "#/components/schemas/RegionalFoerderbankProgramm"
+      - type: object
+        properties:
+          tilgungsWunsch:
+            $ref: "#/components/schemas/IbshImmoeigentumTilgungsWunsch"
+          zinsbindungInJahren:
+            type: integer
+            format: int32
+            description: "Zinsbindung in Jahren. Erlaubte Werte: 10 oder 15"
+      description: IB.SH Immo Eigentum
+      required:
+      - zinsbindungInJahren
+    IbshImmoeigentumTilgungsWunsch:
+      type: object
+      properties:
+        anfaenglicheTilgung:
+          type: number
+          format: double
+          description: "Anfängliche Tilgung in Prozent. Erlaubte Werte: 1.0 oder 2.0"
+    IbshImmofix:
+      type: object
+      allOf:
+      - $ref: "#/components/schemas/RegionalFoerderbankProgramm"
+      - type: object
+        properties:
+          tilgungsWunsch:
+            $ref: "#/components/schemas/IbshImmofixTilgungsWunsch"
+          zinsbindungInJahren:
+            type: integer
+            format: int32
+            description: "Zinsbindung in Jahren. Erlaubte Werte: 10 oder 15"
+      description: IB.SH Immofix
+      required:
+      - zinsbindungInJahren
+    IbshImmofixTilgungsWunsch:
+      type: object
+      properties:
+        anfaenglicheTilgung:
+          type: number
+          format: double
+          description: "Anfängliche Tilgung in Prozent. Erlaubte Werte: 1.0 oder 2.0"
+    IbshImmoflex:
+      type: object
+      allOf:
+      - $ref: "#/components/schemas/RegionalFoerderbankProgramm"
+      - type: object
+        properties:
+          tilgungsWunsch:
+            $ref: "#/components/schemas/IbshImmoflexTilgungsWunsch"
+          zinsbindungInJahren:
+            type: integer
+            format: int32
+            description: "Zinsbindung in Jahren. Erlaubte Werte: 5, 10 oder 15"
+      description: IB.SH Immoflex
+      required:
+      - zinsbindungInJahren
+    IbshImmoflexTilgungsWunsch:
+      type: object
+      properties:
+        anfaenglicheTilgung:
+          type: number
+          format: double
+          description: "Anfängliche Tilgung in Prozent. Erlaubte Werte: 1.0 oder 2.0"
+    IbshImmokonstant:
+      type: object
+      allOf:
+      - $ref: "#/components/schemas/RegionalFoerderbankProgramm"
+      - type: object
+        properties:
+          volltilgerWennAnnuitaetenOderForward:
+            type: boolean
+            description: "Gibt an, dass das Darlehen als Volltilger (Annuitäten- oder\
+              \ Forward-Darlehen) genutzt wird. Muss true sein."
+      description: IB.SH Immokonstant
+      required:
+      - volltilgerWennAnnuitaetenOderForward
     Immobilie:
       type: object
       description: "Bitte Felder 'erbbaurecht', 'stellplaetze' und 'grundbuchangabe'\
@@ -2803,6 +2975,38 @@ components:
         id:
           type: string
           description: Eindeutige interne ID
+        kundenreferenzIdsDerEigentuemer:
+          type: array
+          description: "Nur für 'finanzierungsobjekt.immobilie' erlaubt; bei bestehenden\
+            \ Immobilien wird der Request abgelehnt. ReferenzIds der Antragstellenden,\
+            \ die Eigentümer der Immobilie sind. Muss mindestens einen Eintrag enthalten,\
+            \ wenn das Feld gesetzt ist. Jede ReferenzId muss zu einem Antragstellenden\
+            \ des Vorgangs gehören und darf nur einmal vorkommen. Bedeutung zusammen\
+            \ mit 'nameEigentuemerKeinKunde': Fehlen beide Felder, sind alle Antragstellenden\
+            \ Eigentümer (Standardfall). Ist nur 'nameEigentuemerKeinKunde' gesetzt,\
+            \ ist kein Antragstellender Eigentümer, sondern ausschließlich die zusä\
+            tzliche Person. Sind beide gesetzt, sind die hier genannten Antragstellenden\
+            \ und die zusätzliche Person Eigentümer. Sind alle Antragstellenden enthalten\
+            \ und 'nameEigentuemerKeinKunde' fehlt, gilt ebenfalls der Standardfall;\
+            \ in der Response werden die Felder im Standardfall nicht ausgegeben."
+          example:
+          - jsonRef2
+          items:
+            type: string
+          maxItems: 8
+          minItems: 1
+          uniqueItems: true
+        nameEigentuemerKeinKunde:
+          type: string
+          description: "Nur für 'finanzierungsobjekt.immobilie' erlaubt; bei bestehenden\
+            \ Immobilien wird der Request abgelehnt. Vor- und Nachname eines zusä\
+            tzlichen Eigentümers, der nicht als Antragstellender erfasst ist. Es kann\
+            \ genau eine solche Person angegeben werden. Darf nicht leer sein oder\
+            \ nur aus Leerzeichen bestehen. Fehlt 'kundenreferenzIdsDerEigentuemer',\
+            \ ist kein Antragstellender Eigentümer, sondern ausschließlich diese Person."
+          example: Max Mustermann
+          pattern: "[\\s\\S]*[^\\s\\u001C-\\u001F\\u00A0\\u1680\\u2000-\\u200A\\u2028\\\
+            u2029\\u202F\\u205F\\u3000\\uFEFF][\\s\\S]*"
         stellplaetze:
           type: array
           deprecated: true
@@ -3335,8 +3539,8 @@ components:
       type: object
       description: "Mögliche Typen: KfwProgramm124, KfwProgramm151, KfwProgramm152,\
         \ KfwProgramm153, KfwProgramm159, KfwProgramm167, KfwProgramm261Neubau, KfwProgramm261Sanierung,\
-        \ KfwProgramm262, KfwProgramm297, KfwProgramm298, KfwProgramm300, KfwProgramm308,\
-        \ KfwProgramm358, KfwProgramm359"
+        \ KfwProgramm262, KfwProgramm296, KfwProgramm297, KfwProgramm298, KfwProgramm300,\
+        \ KfwProgramm308, KfwProgramm358, KfwProgramm359"
       discriminator:
         mapping:
           KFW_PROGRAMM_124: "#/components/schemas/KfwProgramm124"
@@ -3348,6 +3552,7 @@ components:
           KFW_PROGRAMM_261_NEUBAU: "#/components/schemas/KfwProgramm261Neubau"
           KFW_PROGRAMM_261_SANIERUNG: "#/components/schemas/KfwProgramm261Sanierung"
           KFW_PROGRAMM_262: "#/components/schemas/KfwProgramm262"
+          KFW_PROGRAMM_296: "#/components/schemas/KfwProgramm296"
           KFW_PROGRAMM_297: "#/components/schemas/KfwProgramm297"
           KFW_PROGRAMM_298: "#/components/schemas/KfwProgramm298"
           KFW_PROGRAMM_300: "#/components/schemas/KfwProgramm300"
@@ -3601,6 +3806,35 @@ components:
       deprecated: true
       description: "Energieeffizient Bauen und Sanieren: Einzelmaßnahmen (Programm-Nr.:\
         \ 262). Die Zinsbindung beträgt immer 10 Jahre. Das Programm wurde eingestellt."
+    KfwProgramm296:
+      type: object
+      allOf:
+      - $ref: "#/components/schemas/KfwProgramm"
+      - type: object
+        properties:
+          kfwEnergieEffizienzStandard:
+            type: string
+            description: Standard = KLIMAFREUNDLICH_STANDARD
+            enum:
+            - KLIMAFREUNDLICH_STANDARD
+            - KLIMAFREUNDLICH_QNG
+            - STANDARD_55
+          laufzeitInJahren:
+            type: integer
+            format: int32
+            maximum: 35
+            minimum: 10
+          tilgungsfreieAnlaufjahre:
+            type: integer
+            format: int32
+            description: "1, 2, 3, 4, 5 oder 10 Jahre"
+          zinsbindungInJahren:
+            type: integer
+            format: int32
+            description: 10 Jahre
+      description: "Klimafreund. Neubau Niedrigpreissegment (Programm-Nr.: 296)"
+      required:
+      - tilgungsfreieAnlaufjahre
     KfwProgramm297:
       type: object
       allOf:
@@ -3609,7 +3843,7 @@ components:
         properties:
           kfwEnergieEffizienzStandard:
             type: string
-            description: 'Standard = KLIMAFREUNDLICH_STANDARD '
+            description: Standard = KLIMAFREUNDLICH_STANDARD
             enum:
             - KLIMAFREUNDLICH_STANDARD
             - KLIMAFREUNDLICH_QNG
@@ -3638,7 +3872,7 @@ components:
         properties:
           kfwEnergieEffizienzStandard:
             type: string
-            description: 'Standard = KLIMAFREUNDLICH_STANDARD '
+            description: Standard = KLIMAFREUNDLICH_STANDARD
             enum:
             - KLIMAFREUNDLICH_STANDARD
             - KLIMAFREUNDLICH_QNG
@@ -3668,7 +3902,7 @@ components:
           kfwEnergieEffizienzStandard:
             type: string
             default: KLIMAFREUNDLICH_STANDARD
-            description: 'Standard = KLIMAFREUNDLICH_STANDARD '
+            description: Standard = KLIMAFREUNDLICH_STANDARD
             enum:
             - KLIMAFREUNDLICH_STANDARD
             - KLIMAFREUNDLICH_QNG
@@ -3684,7 +3918,7 @@ components:
           zinsbindungInJahren:
             type: integer
             format: int32
-            description: 10 oder 20 Jahre
+            description: 10 Jahre
       description: "Wohneigentum für Familien (Programm-Nr.: 300)"
       required:
       - tilgungsfreieAnlaufjahre
@@ -3706,7 +3940,7 @@ components:
           zinsbindungInJahren:
             type: integer
             format: int32
-            description: 10 oder 20 Jahre
+            description: 10 Jahre
       description: "Jung kauft Alt (Programm-Nr.: 308)"
       required:
       - tilgungsfreieAnlaufjahre
@@ -3757,6 +3991,9 @@ components:
     Kind:
       type: object
       properties:
+        externeId:
+          type: string
+          description: Vom Client verwaltete ID für das Matching
         geburtsdatum:
           type: string
           format: date
@@ -3774,6 +4011,8 @@ components:
         unterhalt:
           type: number
           format: double
+        unterhaltWirdBezogen:
+          type: boolean
     KinderErfassung:
       type: object
       description: "Mögliche Typen: VorhandeneKinder, KeineKinder"
@@ -3835,6 +4074,26 @@ components:
           type: string
         telefonnummer:
           $ref: "#/components/schemas/Telefonnummer"
+        validierungEmail:
+          type: string
+          description: Validierungsstatus für E-Mail
+          enum:
+          - UNGEPRUEFT
+          - FORMAT_VALIDIERT
+          - EXISTENZ_VALIDIERT
+          - VERBRAUCHER_VERIFIZIERT
+          - BERATER_VERIFIZIERT
+          - KEINE_ANTWORT
+        validierungTelefonnummer:
+          type: string
+          description: Validierungsstatus für Telefonnummer
+          enum:
+          - UNGEPRUEFT
+          - FORMAT_VALIDIERT
+          - EXISTENZ_VALIDIERT
+          - VERBRAUCHER_VERIFIZIERT
+          - BERATER_VERIFIZIERT
+          - KEINE_ANTWORT
         weitereKontaktmoeglichkeiten:
           type: string
     Kunde:
@@ -3883,6 +4142,12 @@ components:
             $ref: "#/components/schemas/Haushalt"
           maxItems: 4
           minItems: 0
+        sicherungsgeberHaushalte:
+          type: array
+          description: "Sicherungsgeber-Haushalte. Ergänzt das Feld 'haushalte', das\
+            \ ausschließlich Antragsteller-Haushalte enthält."
+          items:
+            $ref: "#/components/schemas/Haushalt"
     KundenangabenImportResponse:
       type: object
       description: Ergebnis des Imports der Kundenangaben.
@@ -4072,7 +4337,7 @@ components:
         ausstellungsdatum:
           type: string
           format: date
-          description: Das Ausstellungsdatum muss in der Zukunft liegen.
+          description: Das Ausstellungsdatum muss in der Vergangenheit liegen.
         ausweisart:
           oneOf:
           - $ref: "#/components/schemas/AndereAusweisart"
@@ -4414,6 +4679,15 @@ components:
       - laufzeitInJahren
       - tilgungsfreieAnlaufjahre
       - zinsbindungInJahren
+    NahestehendePerson:
+      type: object
+      description: "Nahestehende Person. Nur bei POLITISCH_EXPONIERTE_PERSON_NAHESTEHEND\
+        \ relevant, wird anderenfalls ignoriert."
+      properties:
+        nachname:
+          type: string
+        vorname:
+          type: string
     Nebenkosten:
       type: object
       description: "Fehlt die Notargebühr, wird automatisch ein Standardwert in %\
@@ -4575,6 +4849,22 @@ components:
         staatsangehoerigkeit:
           type: string
           description: ISO 3166-1 alpha-2 code
+    PolitischExponiertePerson:
+      type: object
+      properties:
+        ausgeuebtesAmt:
+          type: string
+          description: "Ausgeübtes Amt. Relevant bei POLITISCH_EXPONIERTE_PERSON_SELBST\
+            \ (Amt des Antragstellers) und POLITISCH_EXPONIERTE_PERSON_NAHESTEHEND\
+            \ (Amt der nahestehenden Person), wird anderenfalls ignoriert."
+        nahestehendePerson:
+          $ref: "#/components/schemas/NahestehendePerson"
+        status:
+          type: string
+          enum:
+          - POLITISCH_EXPONIERTE_PERSON_KEIN_BEZUG
+          - POLITISCH_EXPONIERTE_PERSON_SELBST
+          - POLITISCH_EXPONIERTE_PERSON_NAHESTEHEND
     Praeferenzen:
       type: object
       properties:
@@ -4734,6 +5024,7 @@ components:
             - BSQ_BAUSPAR
             - BW_BANK
             - BW_BANK_EP2
+            - BW_BANK_RATENKREDIT
             - CAIXABANK
             - CARDIF
             - CLEARING_BFT
@@ -4789,18 +5080,24 @@ components:
             - DZ_HYP_EP
             - DZ_HYP_TEST
             - DZ_HYP_OHNE_RV
+            - DZ_HYP_ORV_SMART
             - DZ_HYP_VERTRIEB_EP
             - DZ_PRIVATBANK
             - ELLWANGER
             - ERFURTER_BANK
             - ERGO
             - EVANGELISCHE_BANK
+            - FI_TEST_310
+            - FI_TEST_421
+            - FI_TEST_541
+            - FI_TEST_559
             - FINANSBANK
             - FOERDE_SPK
             - FRANKENBERGER_BANK
             - FRANKFURTER_VOBA
             - GENERALI
             - GENO_BANK_ESSEN
+            - GENOBANK_ESSEN
             - GENOBAN_UNTERALLGAEU
             - GLADBACHER_BANK
             - GLADBACHER_BANK_EIGE
@@ -4906,6 +5203,7 @@ components:
             - LBS_BREMEN
             - LBS_HESSEN_THUERINGEN
             - LBS_MUSTER
+            - LBS_MUSTER_ZWEI
             - LBS_NORD
             - LBS_OST
             - LBS_RHEINLAND_PFALZ
@@ -4917,6 +5215,7 @@ components:
             - LIFESTYLE_PROTECTION
             - LIFESTYLE_PROTECTION_LEBENSVERSICHERUNG
             - LIGA_BANK
+            - LLOYDS_BANK
             - L_BANK
             - MAERKISCHE_BANK
             - MAINZ_VOBA
@@ -5033,6 +5332,7 @@ components:
             - RAIBA_HANDEWITT
             - RAIBA_HEILSBRONN_WIN
             - RAIBA_HESSENNORD
+            - RAIBA_HIRSCHAU
             - RAIBA_HOCHFRANKEN
             - RAIBA_IM_DONAUTAL
             - RAIBA_IM_OBERLAND
@@ -5341,6 +5641,7 @@ components:
             - SPK_OSNABRUECK
             - SPK_OSTERODE
             - SPK_OSTPRIGNITZ
+            - SPK_OSTPRIGNITZ_RATENKREDIT
             - SPK_PADERBORN_DET
             - SPK_PARCHIM
             - SPK_PASSAU
@@ -5417,6 +5718,7 @@ components:
             - SPK_ZWICKAU
             - SPREEWALDBANK
             - SSK_AUGSBURG
+            - SSK_BAD_PYRMONT
             - SSK_BOCHOLT
             - SSK_BURGDORF
             - SSK_CUXHAVEN
@@ -5583,6 +5885,7 @@ components:
             - VOBA_LAHR
             - VOBA_LAUPHEIM_ILL
             - VOBA_LAUTERBACH_SCHL
+            - VOBA_LINGEN
             - VOBA_LIPPSTADT
             - VOBA_LIPPSTADT_UEBER
             - VOBA_LOEBAU_ZITTAU
@@ -5635,6 +5938,7 @@ components:
             - VOBA_OEYNHAUSEN_SPEZ
             - VOBA_OFFENBURG
             - VOBA_OFFENBURG_SLBST
+            - VOBA_OLPE_WENDEN_DR
             - VOBA_PADERBORN_HOEXTER
             - VOBA_PFORZHEIM
             - VOBA_PINNEBERG
@@ -5651,6 +5955,7 @@ components:
             - VOBA_RHEIN_WEHRA
             - VOBA_RHEIN_WUPPER
             - VOBA_RIESA
+            - VOBA_RNH_BAD_KREUZ
             - VOBA_RUESSELSHEIM
             - VOBA_RUHR_MITTE
             - VOBA_SAUERLAND
@@ -5748,8 +6053,10 @@ components:
             - VR_KITZINGEN
             - VR_LANDAU_MENGKOFEN
             - VR_LAUSITZ
+            - VR_LEONBERG
             - VR_LEVO_BANK
             - VR_LICHTENFELS
+            - VR_LICHTENFELS_1
             - VR_MAIN_KINZIG
             - VR_MAIN_KINZIG_VER
             - VR_MECKLENBURG
@@ -5760,6 +6067,7 @@ components:
             - VR_MITTELSACHSEN
             - VR_MUSTERBANK
             - VR_MUSTERBANK_BTO
+            - VR_MUSTERBANK_KAM
             - VR_MUSTERBANK_VRB
             - VR_NEU_ULM
             - VR_NEUBURG_RAIN
@@ -5773,6 +6081,7 @@ components:
             - VR_ODER_SPREE
             - VR_OSTBAYERN_MITTE
             - VR_OSTHOLSTEIN
+            - VR_PASSAU
             - VR_REGENSBURG_SCHWAN
             - VR_RHEIN_ERFT
             - VR_RHEIN_MOSEL
@@ -5887,7 +6196,8 @@ components:
           tilgungsbeginn:
             type: string
             format: date
-            description: Der Beginn der Rückzahlung muss in der Zukunft liegen.
+            description: Beim Import muss der Beginn der Rückzahlung in der Zukunft
+              liegen.
     RateAlsBetrag:
       type: object
       allOf:
@@ -5952,7 +6262,7 @@ components:
           type: string
           format: date
           deprecated: true
-          description: Der Versicherungsschutz muss in der Zukunft liegen.
+          description: Beim Import muss der Versicherungsschutz in der Zukunft liegen.
         versicherungsdauerInJahren:
           type: integer
           format: int32
@@ -6016,9 +6326,14 @@ components:
     RegionalFoerderbankProgramm:
       type: object
       description: "Mögliche Typen: LBankKombiDarlehenWohnen, LBankWohnenMitKind,\
-        \ LBankWohnenMitZukunft, NRWBankWohneigentum, NRWBankGebaeudesanierung, NRWBankNachhaltigWohnen"
+        \ LBankWohnenMitZukunft, NRWBankWohneigentum, NRWBankGebaeudesanierung, NRWBankNachhaltigWohnen,\
+        \ IbshImmoeigentum, IbshImmofix, IbshImmoflex, IbshImmokonstant"
       discriminator:
         mapping:
+          IBSH_IMMOEIGENTUM: "#/components/schemas/IbshImmoeigentum"
+          IBSH_IMMOFIX: "#/components/schemas/IbshImmofix"
+          IBSH_IMMOFLEX: "#/components/schemas/IbshImmoflex"
+          IBSH_IMMOKONSTANT: "#/components/schemas/IbshImmokonstant"
           L_BANK_KOMBI_DARLEHEN_WOHNEN: "#/components/schemas/LBankKombiDarlehenWohnen"
           L_BANK_WOHNEN_MIT_KIND: "#/components/schemas/LBankWohnenMitKind"
           L_BANK_WOHNEN_MIT_ZUKUNFT: "#/components/schemas/LBankWohnenMitZukunft"
@@ -6334,7 +6649,7 @@ components:
           beginn:
             type: string
             format: date
-            description: Der Sparbeginn muss in der Zukunft liegen.
+            description: Beim Import muss der Sparbeginn in der Zukunft liegen.
     Sparplaene:
       type: object
       properties:
@@ -6442,7 +6757,8 @@ components:
           tilgungsbeginn:
             type: string
             format: date
-            description: Der Beginn der Rückzahlung muss in der Zukunft liegen.
+            description: Beim Import muss der Beginn der Rückzahlung in der Zukunft
+              liegen.
           tilgungssatzInProzent:
             type: number
             format: double
@@ -6536,7 +6852,7 @@ components:
         laufzeitende:
           type: string
           format: date
-          description: Das Ende der Laufzeit muss in der Zukunft liegen.
+          description: Beim Import muss das Ende der Laufzeit in der Zukunft liegen.
         rateMonatlich:
           type: number
           format: double
@@ -6610,6 +6926,9 @@ components:
         restschuld:
           type: number
           format: double
+        vertragsnummer:
+          type: string
+          description: Fachliche Schlüsselnummer des Vertrags beim Gläubiger
         wirdAbgeloest:
           type: boolean
     VerfuegbaresEinkommenAusschoepfen:
@@ -6653,7 +6972,7 @@ components:
           befristetBis:
             type: string
             format: date
-            description: Das Visum muss gültig sein.
+            description: Beim Import muss das Visum gültig sein.
     Volltilger:
       type: object
       allOf:
@@ -6663,7 +6982,8 @@ components:
           tilgungsbeginn:
             type: string
             format: date
-            description: Der Beginn der Rückzahlung muss in der Zukunft liegen.
+            description: Beim Import muss der Beginn der Rückzahlung in der Zukunft
+              liegen.
     VorhandeneBestehendeDarlehen:
       type: object
       allOf:
@@ -6745,6 +7065,15 @@ components:
       - $ref: "#/components/schemas/ModernisierungErfassung"
       - type: object
         properties:
+          belWertVGrad:
+            type: string
+            enum:
+            - KERNSANIERUNG
+            - UMFASSEND
+            - UEBERWIEGEND
+            - MITTEL
+            - GERING
+            - UNERHEBLICH
           grad:
             type: string
             enum:
@@ -6857,6 +7186,9 @@ components:
           laufzeitBis:
             type: integer
             format: int32
+            description: "Jahr, bis zu dem das Erbbaurecht läuft (1000–9999)."
+            maximum: 9999
+            minimum: 1000
     VorhandenesGewerbe:
       type: object
       allOf:
@@ -7083,6 +7415,7 @@ components:
             oneOf:
             - $ref: "#/components/schemas/ZusatzangabenImmobilieDsl"
             - $ref: "#/components/schemas/ZusatzangabenImmobilieGenopace"
+            - $ref: "#/components/schemas/ZusatzangabenImmobilieIbsh"
             - $ref: "#/components/schemas/ZusatzangabenImmobilieIng"
             - $ref: "#/components/schemas/ZusatzangabenImmobilieSantander"
     ZusatzangabenImmobilieDsl:
@@ -7101,11 +7434,12 @@ components:
     ZusatzangabenImmobilieFuerProduktanbieter:
       type: object
       description: "Mögliche Typen: ZusatzangabenImmobilieIng, ZusatzangabenImmobilieSantander,\
-        \ ZusatzangabenImmobilieGenopace, ZusatzangabenImmobilieDsl"
+        \ ZusatzangabenImmobilieGenopace, ZusatzangabenImmobilieDsl, ZusatzangabenImmobilieIbsh"
       discriminator:
         mapping:
           ZUSATZANGABEN_IMMOBILIE_DSL: "#/components/schemas/ZusatzangabenImmobilieDsl"
           ZUSATZANGABEN_IMMOBILIE_GENOPACE: "#/components/schemas/ZusatzangabenImmobilieGenopace"
+          ZUSATZANGABEN_IMMOBILIE_IBSH: "#/components/schemas/ZusatzangabenImmobilieIbsh"
           ZUSATZANGABEN_IMMOBILIE_ING: "#/components/schemas/ZusatzangabenImmobilieIng"
           ZUSATZANGABEN_IMMOBILIE_SANTANDER: "#/components/schemas/ZusatzangabenImmobilieSantander"
         propertyName: '@type'
@@ -7123,6 +7457,19 @@ components:
           anpassungenNachBelWertV:
             $ref: "#/components/schemas/AnpassungenNachBelWertV"
       description: Volksbanken und Raiffeisenbanken
+    ZusatzangabenImmobilieIbsh:
+      type: object
+      allOf:
+      - $ref: "#/components/schemas/ZusatzangabenImmobilieFuerProduktanbieter"
+      - type: object
+        properties:
+          angabenZurGewerkeVergabe:
+            $ref: "#/components/schemas/AngabenZurGewerkeVergabe"
+          baujahrHeizung:
+            type: integer
+            format: int32
+            description: Baujahr der Heizung als vierstellige Jahreszahl.
+      description: IB.SH (Investitionsbank Schleswig-Holstein)
     ZusatzangabenImmobilieIng:
       type: object
       allOf:
@@ -7171,6 +7518,7 @@ components:
           items:
             oneOf:
             - $ref: "#/components/schemas/ZusatzangabenKundeDsl"
+            - $ref: "#/components/schemas/ZusatzangabenKundeIbsh"
             - $ref: "#/components/schemas/ZusatzangabenKundeIng"
             - $ref: "#/components/schemas/ZusatzangabenKundeMhb"
     ZusatzangabenKundeDsl:
@@ -7188,10 +7536,11 @@ components:
     ZusatzangabenKundeFuerProduktanbieter:
       type: object
       description: "Mögliche Typen: ZusatzangabenKundeIng, ZusatzangabenKundeMhb,\
-        \ ZusatzangabenKundeDsl"
+        \ ZusatzangabenKundeDsl, ZusatzangabenKundeIbsh"
       discriminator:
         mapping:
           ZUSATZANGABEN_KUNDE_DSL: "#/components/schemas/ZusatzangabenKundeDsl"
+          ZUSATZANGABEN_KUNDE_IBSH: "#/components/schemas/ZusatzangabenKundeIbsh"
           ZUSATZANGABEN_KUNDE_ING: "#/components/schemas/ZusatzangabenKundeIng"
           ZUSATZANGABEN_KUNDE_MHB: "#/components/schemas/ZusatzangabenKundeMhb"
         propertyName: '@type'
@@ -7200,6 +7549,15 @@ components:
           type: string
       required:
       - '@type'
+    ZusatzangabenKundeIbsh:
+      type: object
+      allOf:
+      - $ref: "#/components/schemas/ZusatzangabenKundeFuerProduktanbieter"
+      - type: object
+        properties:
+          politischExponiertePerson:
+            $ref: "#/components/schemas/PolitischExponiertePerson"
+      description: IB.SH (Investitionsbank Schleswig-Holstein)
     ZusatzangabenKundeIng:
       type: object
       allOf:
@@ -7286,7 +7644,7 @@ components:
           zeitpunkt:
             type: string
             format: date
-            description: Der Zuteilungszeitpunkt muss in der Zukunft liegen.
+            description: Beim Import muss der Zuteilungszeitpunkt in der Zukunft liegen.
       required:
       - zeitpunkt
     Zweifamilienhaus:

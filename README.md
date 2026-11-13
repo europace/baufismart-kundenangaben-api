@@ -21,7 +21,7 @@ Kundenangaben are also named as `Erfasste Daten` in Mortgage APIs (Vorgaenge-API
 
 Feedback and questions about the model are welcome as [GitHub Issue](https://github.com/europace/baufismart-kundenangaben-api/issues/new).
 
-## Usecases
+## Use cases
 
 - create case with customer data from CRM system or lead applications
 - get case with customer data
@@ -370,6 +370,7 @@ example-response:
 ```
 
 ## Test body
+
 You can check the validity of your request using 
 
 ```http
@@ -389,12 +390,200 @@ The validation of your body is positive, if you get the response
 }
 ```
 
+## Deviating owners of the property
+
+The owners of the property are maintained in `finanzierungsobjekt.immobilie`. The fields are optional and are supported in create (`POST /kundenangaben`), replace (`PUT /kundenangaben/{vorgangsnummer}`) and get (`GET /kundenangaben/{vorgangsnummer}`).
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `kundenreferenzIdsDerEigentuemer` | array of string | `referenzId`s of the applicants (`haushalte[].kunden[].referenzId`) who are owners of the property. |
+| `nameEigentuemerKeinKunde` | string | First and last name of **one** additional owner who is not captured as an applicant. |
+
+Meaning of the combinations:
+
+| `kundenreferenzIdsDerEigentuemer` | `nameEigentuemerKeinKunde` | Owners of the property |
+|---|---|---|
+| omitted | omitted | all applicants (default case) |
+| omitted | set | **only** the additional person, no applicant |
+| set | omitted | the listed applicants (all applicants = default case) |
+| set | set | the listed applicants and the additional person |
+
+Rules:
+* Every entry of `kundenreferenzIdsDerEigentuemer` must refer to an applicant of the case. Duplicates are not allowed. At most 8 entries.
+* An empty list `kundenreferenzIdsDerEigentuemer: []` is rejected.
+* An empty or whitespace-only `nameEigentuemerKeinKunde` is rejected.
+* Both fields may be omitted. Omitting both is the same as "all applicants are owners".
+* The fields are only allowed on the financed property (`finanzierungsobjekt.immobilie`). On existing properties (`haushalte[].finanzielleSituation.bestehendeImmobilienErfassung.bestehendeImmobilien[].immobilie`) they are rejected.
+
+Normalization to the default case:
+* If both fields are omitted, all applicants are owners. Separately stored owner data is removed on create and replace.
+* If `kundenreferenzIdsDerEigentuemer` contains exactly all applicants and `nameEigentuemerKeinKunde` is omitted, this is also the default case. The owner data is not stored separately.
+* Only if at least one applicant is missing from `kundenreferenzIdsDerEigentuemer` or `nameEigentuemerKeinKunde` is set, the deviating owner constellation is stored.
+
+Response behavior (get):
+* The fields are returned only for a deviating owner constellation.
+* In the default case, including cases without any owner data (older cases), both fields are missing from the response.
+
+example-request (applicants `jsonRef1` and `jsonRef2`; `jsonRef2` and one additional owner are the owners):
+```http
+POST /kundenangaben HTTP/1.1
+Host: baufinanzierung.api.europace.de
+Content-Type: application/json;version=1.0
+Authorization: Bearer eyJraWQiOiJZUUZYT...
+```
+```json
+{
+  "importMetadaten": { ... },
+  "kundenangaben": {
+    "haushalte": [
+      {
+        "kunden": [
+          { "referenzId": "jsonRef1", "personendaten": { ... } },
+          { "referenzId": "jsonRef2", "personendaten": { ... } }
+        ]
+      }
+    ],
+    "finanzierungsobjekt": {
+      "immobilie": {
+        "kundenreferenzIdsDerEigentuemer": ["jsonRef2"],
+        "nameEigentuemerKeinKunde": "Erika Musterfrau"
+      }
+    }
+  }
+}
+```
+
+example-response (get, same case):
+```json
+{
+  "haushalte": [ ... ],
+  "finanzierungsobjekt": {
+    "immobilie": {
+      "kundenreferenzIdsDerEigentuemer": ["jsonRef2"],
+      "nameEigentuemerKeinKunde": "Erika Musterfrau"
+    }
+  }
+}
+```
+
+example-response (get, default case: all applicants are owners, no additional owner):
+```json
+{
+  "haushalte": [ ... ],
+  "finanzierungsobjekt": {
+    "immobilie": {
+      ...
+    }
+  }
+}
+```
+
+## Contact Data Validation Status
+
+The Kundenangaben API supports validation status fields for phone numbers and email addresses. These fields allow trusted systems to mark contact data as verified, which can be used by downstream processes for automated communication, quality assurance, and prioritization.
+
+### Validation Fields
+
+Two optional fields are available in the `kontakt` object:
+
+```json
+"kontakt": {
+    "telefonnummer": {
+        "vorwahl": "030",
+        "nummer": "420860"
+    },
+    "validierungTelefonnummer": "VERBRAUCHER_VERIFIZIERT",
+    "email": "max.mustermann@europace.de",
+    "validierungEmail": "VERBRAUCHER_VERIFIZIERT",
+    "weitereKontaktmoeglichkeiten": "beste Erreichbarkeit von 18-20Uhr"
+}
+```
+
+### Validation Status Values
+
+Both `validierungTelefonnummer` and `validierungEmail` use the same validation levels:
+
+| Status | Description |
+|--------|-------------|
+| `UNGEPRUEFT` | No validation performed (explicitly known as not checked) |
+| `FORMAT_VALIDIERT` | Format has been validated (e.g., valid phone number structure, valid email syntax) |
+| `EXISTENZ_VALIDIERT` | Existence has been technically validated (e.g., number is reachable, mailbox exists) |
+| `VERBRAUCHER_VERIFIZIERT` | Consumer has verified the contact data (e.g., SMS code entered, double opt-in link clicked) |
+| `BERATER_VERIFIZIERT` | Advisor has verified the contact data (e.g., successful phone call, email communication) |
+| `KEINE_ANTWORT` | Validation attempt was made but no response received (e.g., SMS not answered, confirmation email not clicked) |
+| `null` | Validation status is **unknown** (default for backward compatibility) |
+
+**Important distinction:**
+- `null` = No information about validation status (unknown, e.g., old data before feature introduction)
+- `UNGEPRUEFT` = Explicitly known that no validation has been performed yet
+
+### Read-Only Access for Most Partners
+
+The validation fields are **read-only for most partners**. Only trusted internal systems are allowed to set these fields. If you attempt to set validation status values, they will be automatically removed from your request.
+
+**When reading cases (GET):**
+- All partners can read the validation status
+- Use this information to adapt your processes (e.g., prioritize verified contact data)
+
+**When creating/updating cases (POST/PUT):**
+- Validation fields you send will be ignored
+- The API will automatically set them to `null`
+
+### Automatic Invalidation on Contact Data Changes
+
+**Important behavior:** When you update a case and change phone number or email address, the corresponding validation status is automatically set to `null`. This ensures that validation status always matches the actual contact data.
+
+**Example workflow:**
+
+1. **Case created by trusted system with validated data:**
+   ```json
+   {
+       "telefonnummer": {"vorwahl": "030", "nummer": "12345678"},
+       "validierungTelefonnummer": "VERBRAUCHER_VERIFIZIERT"
+   }
+   ```
+
+2. **You update the case and change the phone number:**
+  - GET the case data (including validation status)
+  - Change phone number to `{"vorwahl": "040", "nummer": "87654321"}`
+  - PUT the complete data back
+
+3. **Result after update:**
+   ```json
+   {
+       "telefonnummer": {"vorwahl": "040", "nummer": "87654321"},
+       "validierungTelefonnummer": null
+   }
+   ```
+   The validation status is automatically set to `null` because the phone number changed.
+
+### Update Without Contact Data Changes
+
+**Important:** If you update a case but **do not change** the phone number or email, the validation status is **preserved**.
+
+**Example:**
+- Case has validated phone number and `validierungTelefonnummer: "VERBRAUCHER_VERIFIZIERT"`
+- You update only financing preferences (phone number unchanged)
+- Result: `validierungTelefonnummer` remains `"VERBRAUCHER_VERIFIZIERT"`
+
+This is why you should always:
+1. GET the current case data
+2. Modify only the fields you need to change
+3. PUT the complete data back
+
+### Use Cases for Validation Status
+
+- **Automated communication**: Only send SMS/emails to verified contact data
+- **Quality assurance**: Distinguish between verified and unverified contact data
+- **Prioritization**: Prioritize cases with verified contact information
+- **Compliance**: Better data quality for GDPR compliance
+- **Process optimization**: Adapt workflows based on verification level
 
 ## FAQ
 
 ### Where is the case created?
 
-The owner of a case is always the advsior. His settings are applied to the case and the advisor  usually also receives the sales commission. The editor of the case may differ, for example, if the completion of the customer data is done by a team assistant or a clearing takes place.
+The owner of a case is always the advsior. His settings are applied to the case and the advisor usually also receives the sales commission. The editor of the case may differ, for example, if the completion of the customer data is done by a team assistant or a clearing takes place.
 
 If the advisor is not specified under 'betreuung', the subject of the API client is entered as advisor in the generated case. If no editor is specified, the user will be asked if he/she wants to take over the editing during the first editing.
 
@@ -402,11 +591,11 @@ If the case is to be created for a different advisor than the API user, then we 
 
 ```json
 "importMetadaten": {
-        "betreuung": {
-            "kundenbetreuer": "{{PARTNER_ID}}",
-            "bearbeiter": "{{PARTNER_ID}}"
-        },
-        ...
+"betreuung": {
+"kundenbetreuer": "{{PARTNER_ID}}",
+"bearbeiter": "{{PARTNER_ID}}"
+},
+...
 ```
 
 With "impersonation" it is also possible to create the case in the name of another user. How to do this exactly is described in the [Autorization-API](https://docs.api.europace.de/baufinanzierung/authentifizierung/#wie-authentifiziere-ich-verschiedene-benutzer-mit-einem-client-impersionieren) erklärt.
