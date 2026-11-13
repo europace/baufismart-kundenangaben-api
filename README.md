@@ -257,6 +257,8 @@ example-response:
 }
 ```
 
+Hint: Do not forget to decide whether you want to have your case created in production oder in the test-area. Use the "datenkontext" "TEST_MODUS" or "ECHT_GESCHAEFT" accordingly. Note: You cannot transfer the case from test-area to production afterwards. 
+
 ## Get case
 
 As advisor, I can read out the data of the case, to create an individual financial proposal for a convincing sales story.
@@ -365,6 +367,27 @@ Authorization: Bearer eyJraWQiOiJZUUZYT...
 example-response:
 ```http
 204 - no content
+```
+
+## Test body
+
+You can check the validity of your request using 
+
+```http
+POST /kundenangaben/body-validation HTTP/1.1
+Host: baufinanzierung.api.europace.de
+Content-Type: application/json
+Authorization: Bearer eyJraWQiOiJZUUZYT...
+```
+
+Do not forget to put your case data in the body.
+The validation of your body is positive, if you get the response
+
+```http
+200 - ok
+{
+    "vorgangsnummer": "vorgangsnummer-Test123"
+}
 ```
 
 ## Deviating owners of the property
