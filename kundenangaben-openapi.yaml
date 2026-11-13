@@ -8,7 +8,7 @@ info:
     neuen Vorgang auf der Europace Plattform.
   termsOfService: https://docs.api.europace.de/nutzungsbedingungen/
   title: Kundenangaben API
-  version: 1.5.52; 89347eb4ac0acf59b2d74090e7067d44dca5954c
+  version: 1.5.53; 1ef7f53c863dc5c8b27c289e4189589712ecd263
 externalDocs:
   url: https://developer.europace.de/api/baufismart-kundenangaben-api
 servers:
@@ -470,7 +470,7 @@ components:
         auszahlungszeitpunkt:
           type: string
           format: date
-          description: Der Auszahlungzeitpunkt muss in der Zukunft liegen.
+          description: Beim Import muss der Auszahlungzeitpunkt in der Zukunft liegen.
         sondertilgungJaehrlich:
           type: number
           format: double
@@ -590,7 +590,8 @@ components:
           befristetBis:
             type: string
             format: date
-            description: Die Befristung der Arbeitserlaubnis muss in der Zukunft liegen.
+            description: Beim Import muss die Befristung der Arbeitserlaubnis in der
+              Zukunft liegen.
     Arbeitsloser:
       type: object
       allOf:
@@ -625,7 +626,7 @@ components:
           befristetBis:
             type: string
             format: date
-            description: Die Aufenthaltserlaubnis muss gültig sein.
+            description: Beim Import muss die Aufenthaltserlaubnis gültig sein.
     Aufenthaltstitel:
       type: object
       description: "Mögliche Typen: Visum, Aufenthaltserlaubnis, Niederlassungserlaubnis,\
@@ -1989,7 +1990,7 @@ components:
           befristetBis:
             type: string
             format: date
-            description: Die EU Blue Card muss gültig sein.
+            description: Beim Import muss die EU Blue Card gültig sein.
     DarlehensbetragBenoetigtKurzNachDarlehensvertrag:
       type: object
       allOf:
@@ -6195,7 +6196,8 @@ components:
           tilgungsbeginn:
             type: string
             format: date
-            description: Der Beginn der Rückzahlung muss in der Zukunft liegen.
+            description: Beim Import muss der Beginn der Rückzahlung in der Zukunft
+              liegen.
     RateAlsBetrag:
       type: object
       allOf:
@@ -6260,7 +6262,7 @@ components:
           type: string
           format: date
           deprecated: true
-          description: Der Versicherungsschutz muss in der Zukunft liegen.
+          description: Beim Import muss der Versicherungsschutz in der Zukunft liegen.
         versicherungsdauerInJahren:
           type: integer
           format: int32
@@ -6647,7 +6649,7 @@ components:
           beginn:
             type: string
             format: date
-            description: Der Sparbeginn muss in der Zukunft liegen.
+            description: Beim Import muss der Sparbeginn in der Zukunft liegen.
     Sparplaene:
       type: object
       properties:
@@ -6755,7 +6757,8 @@ components:
           tilgungsbeginn:
             type: string
             format: date
-            description: Der Beginn der Rückzahlung muss in der Zukunft liegen.
+            description: Beim Import muss der Beginn der Rückzahlung in der Zukunft
+              liegen.
           tilgungssatzInProzent:
             type: number
             format: double
@@ -6849,7 +6852,7 @@ components:
         laufzeitende:
           type: string
           format: date
-          description: Das Ende der Laufzeit muss in der Zukunft liegen.
+          description: Beim Import muss das Ende der Laufzeit in der Zukunft liegen.
         rateMonatlich:
           type: number
           format: double
@@ -6969,7 +6972,7 @@ components:
           befristetBis:
             type: string
             format: date
-            description: Das Visum muss gültig sein.
+            description: Beim Import muss das Visum gültig sein.
     Volltilger:
       type: object
       allOf:
@@ -6979,7 +6982,8 @@ components:
           tilgungsbeginn:
             type: string
             format: date
-            description: Der Beginn der Rückzahlung muss in der Zukunft liegen.
+            description: Beim Import muss der Beginn der Rückzahlung in der Zukunft
+              liegen.
     VorhandeneBestehendeDarlehen:
       type: object
       allOf:
@@ -7640,7 +7644,7 @@ components:
           zeitpunkt:
             type: string
             format: date
-            description: Der Zuteilungszeitpunkt muss in der Zukunft liegen.
+            description: Beim Import muss der Zuteilungszeitpunkt in der Zukunft liegen.
       required:
       - zeitpunkt
     Zweifamilienhaus:
