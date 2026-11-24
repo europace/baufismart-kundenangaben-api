@@ -8,7 +8,7 @@ info:
     neuen Vorgang auf der Europace Plattform.
   termsOfService: https://docs.api.europace.de/nutzungsbedingungen/
   title: Kundenangaben API
-  version: 1.5.53; 1ef7f53c863dc5c8b27c289e4189589712ecd263
+  version: 1.5.54; fa720c15e2c401d81d494b3a6eb3e92778ab473a
 externalDocs:
   url: https://developer.europace.de/api/baufismart-kundenangaben-api
 servers:
@@ -773,6 +773,7 @@ components:
           - BADENIA
           - DEUTSCHER_RING
           - LBS_BAYERN
+          - LBS_MUSTER_ZWEI
           - LBS_NORD
           - LBS_BREMEN
           - LBS_HESSEN_THUERINGEN
@@ -975,16 +976,81 @@ components:
               - LBS_SUED_SPRINTER_E_RIESTER
               - LBS_SUED_VORSORGER_RIESTER
               - LBS_SUED_FLEX
-              - LBS_HT_CLASSIC_S_2015
-              - LBS_HT_CLASSIC_F_2015
-              - LBS_HT_CLASSIC_L_2015
-              - LBS_HT_CLASSIC_N_2015
               - LBS_HT_HOME_M
               - LBS_HT_HOME_L
               - LBS_HT_HOME_XL
               - LBS_HT_COMFORT_S
               - LBS_HT_COMFORT_N
               - LBS_HT_FLEX
+              - LBS_HT_BESTAND_A
+              - LBS_HT_BESTAND_A_DISAGIO
+              - LBS_HT_BESTAND_A_DISAGIO_DYN_TILG
+              - LBS_HT_BESTAND_A_DYN_TILG
+              - LBS_HT_BESTAND_B
+              - LBS_HT_BESTAND_B_DISAGIO
+              - LBS_HT_BESTAND_B_DISAGIO_DYN_TILG
+              - LBS_HT_BESTAND_B_DYN_TILG
+              - LBS_HT_BESTAND_C
+              - LBS_HT_BESTAND_D
+              - LBS_HT_BESTAND_D_BONUS
+              - LBS_HT_BESTAND_D_BONUS_DISAGIO
+              - LBS_HT_BESTAND_D_DISAGIO
+              - LBS_HT_BESTAND_CLASSIC
+              - LBS_HT_BESTAND_CLASSIC_F1
+              - LBS_HT_BESTAND_CLASSIC_L
+              - LBS_HT_BESTAND_CLASSIC_L1
+              - LBS_HT_BESTAND_CLASSIC_N1
+              - LBS_HT_BESTAND_CLASSIC_S
+              - LBS_HT_BESTAND_CLASSIC_S1
+              - LBS_HT_BESTAND_CLASSIC_V
+              - LBS_HT_BESTAND_CLASSIC_B_2007
+              - LBS_HT_BESTAND_CLASSIC_F_2007
+              - LBS_HT_BESTAND_CLASSIC_N_2007
+              - LBS_HT_BESTAND_CLASSIC_S_2007
+              - LBS_HT_BESTAND_CLASSIC_YOUNG
+              - LBS_HT_BESTAND_CLASSIC_B_2012
+              - LBS_HT_BESTAND_CLASSIC_F_2012
+              - LBS_HT_BESTAND_CLASSIC_FL_2012
+              - LBS_HT_BESTAND_CLASSIC_N_2012
+              - LBS_HT_BESTAND_CLASSIC_S_2012
+              - LBS_HT_BESTAND_CLASSIC_YOUNG_2012
+              - LBS_HT_BESTAND_CLASSIC_B_2014
+              - LBS_HT_BESTAND_CLASSIC_F_2014
+              - LBS_HT_BESTAND_CLASSIC_FL_2014
+              - LBS_HT_BESTAND_CLASSIC_N_2014
+              - LBS_HT_BESTAND_CLASSIC_S_2014
+              - LBS_HT_BESTAND_CLASSIC_YOUNG_2014
+              - LBS_HT_CLASSIC_F_2015
+              - LBS_HT_CLASSIC_L_2015
+              - LBS_HT_CLASSIC_N_2015
+              - LBS_HT_CLASSIC_S_2015
+              - LBS_HT_BESTAND_CLASSIC_YOUNG_2015
+              - LBS_HT_BESTAND_VARIO_1
+              - LBS_HT_BESTAND_VARIO_2
+              - LBS_HT_BESTAND_VARIO_3
+              - LBS_HT_BESTAND_VARIO_E
+              - LBS_HT_BESTAND_VARIO_E1
+              - LBS_HT_BESTAND_VARIO_R
+              - LBS_HT_BESTAND_VARIO_R1
+              - LBS_HT_BESTAND_VARIO_U
+              - LBS_HT_BESTAND_VARIO_U1
+              - LBS_HT_BESTAND_XTRA_COMFORT_N
+              - LBS_HT_BESTAND_XTRA_COMFORT_S
+              - LBS_HT_BESTAND_XTRA_FLEX
+              - LBS_HT_BESTAND_XTRA_FUTURE
+              - LBS_HT_BESTAND_XTRA_HOME_L
+              - LBS_HT_BESTAND_XTRA_HOME_M
+              - LBS_HT_BESTAND_XTRA_HOME_XL
+              - LBS_HT_BESTAND_XTRA_YOUNG
+              - LBS_HT_BESTAND_XTRA_COMFORT_N_2020
+              - LBS_HT_BESTAND_XTRA_COMFORT_S_2020
+              - LBS_HT_BESTAND_XTRA_FLEX_2020
+              - LBS_HT_BESTAND_XTRA_HOME_L_2020
+              - LBS_HT_BESTAND_XTRA_HOME_M_2020
+              - LBS_HT_BESTAND_XTRA_HOME_XL_2020
+              - LBS_MUSTER_IMMO_FIN_10V1
+              - LBS_MUSTER_IMMO_FIN_15V2
+              - LBS_MUSTER_IMMO_MOD_FLEX
               - LBS_NORDWEST_TRAUMSTART_YOUNG
               - LBS_NORDWEST_WT_FIN_10_V1_2024
               - LBS_NORDWEST_WT_FIN_10_V2_2024
@@ -1577,6 +1643,7 @@ components:
           - BADENIA
           - DEUTSCHER_RING
           - LBS_BAYERN
+          - LBS_MUSTER_ZWEI
           - LBS_NORD
           - LBS_BREMEN
           - LBS_HESSEN_THUERINGEN
